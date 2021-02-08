@@ -1,0 +1,27 @@
+[
+    {
+        "_": true,
+        "Functional": {
+            "event": {
+                "_set_": []
+            },
+            "agent": {
+                "_": true,
+                "Entity": {}
+            },
+            "operation": {
+                "_": true,
+                "Operation": {}
+            },
+            "input": {
+                "_set_": []
+            },
+            "output": {
+                "_set_": []
+            },
+            "restriction": {
+                "_set_": []
+            }
+        }
+    }
+]

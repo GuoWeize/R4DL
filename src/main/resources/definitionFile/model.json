@@ -1,0 +1,46 @@
+{
+    "entity": {
+        "Operation": {
+            "reaction": "string",
+            "isAble": "boolean",
+            "isNot": "boolean"
+        },
+        "Entity": {
+            "base": "string",
+            "modifier": "set[string]",
+            "entirety": "Entity",
+            "isAll": "boolean"
+        },
+        "Condition": {
+            "agent": "Entity",
+            "operation": "Operation",
+            "input": "set[Entity]",
+            "output": "set[Entity]",
+            "restriction": "set[string]"
+        }
+    },
+    "requirement": {
+        "Functional" : {
+            "event": "set[Condition]",
+            "agent": "Entity",
+            "operation": "Operation",
+            "input": "set[Entity]",
+            "output": "set[Entity]",
+            "restriction": "set[string]"
+        },
+        "Performance": {
+            "metrics": "string",
+            "statistics": "integer",
+            "comp": "integer",
+            "value": "integer",
+            "unit": "string"
+        },
+        "Reliability": {
+            "metrics": "string",
+            "comp1": "integer",
+            "time": "string",
+            "comp2": "integer",
+            "probability": "integer"
+        }
+    }
+}
