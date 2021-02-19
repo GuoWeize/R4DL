@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author gwz
+ * @author Guo Weize
  */
 public final class TypeManager {
 

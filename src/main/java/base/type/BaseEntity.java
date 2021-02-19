@@ -3,9 +3,12 @@ package base.type;
 import base.type.primitive.BoolEntity;
 
 /**
- * Abstract class for basic entity.
- * All entities must inheritance it.
+ * Abstract base class for all types.<p>
+ * All entities must inheritance it and implement 4 methods:
+ * {@code getType}, {@code isPrimitive}, {@code isRequirement}, {@code equal}.
+ *
  * @author Guo Weize
+ * @date 2021/2/1
  */
 public abstract class BaseEntity {
 

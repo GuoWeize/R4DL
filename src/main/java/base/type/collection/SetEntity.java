@@ -11,11 +11,18 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
+ * Set class that store data by keys.<p>
+ * There are 5 specific methods:
+ * {@code allMatch}, {@code anyMatch}, {@code contains}, {@code include}, {@code add}.
+ *
  * @author Guo Weize
  */
 public final class SetEntity<E extends BaseEntity> extends CollectionEntity {
 
+    /** Entity type of this set */
     private String type = "";
+
+    /** Storage data structure of SetEntity */
     private final Set<E> entities = new HashSet<>();
 
     public SetEntity() {}
@@ -31,31 +38,55 @@ public final class SetEntity<E extends BaseEntity> extends CollectionEntity {
         this.entities.addAll(Arrays.asList(entities));
     }
 
+    /**
+     * Add an entity to this set, change inner stored data.
+     * @param entity to be added to this set.
+     * @throws IllegalArgumentException if entity has illegal type.
+     */
     public void add(E entity) {
         if ("".equals(type)) {
             type = entity.getType();
         }
+        else if (! type.equals(entity.getType())) {
+            throw new IllegalArgumentException();
+        }
         entities.add(entity);
     }
 
-    public BoolEntity allMatch(Function<E, BoolEntity> function) {
+    /**
+     * Return whether all entities in set satisfy the specific condition.
+     * @param condition that entity shall satisfy.
+     * @return True if all entities satisfy the condition, otherwise False.
+     */
+    public BoolEntity allMatch(Function<E, BoolEntity> condition) {
         for (E entity: entities) {
-            if (! function.apply(entity).getValue()) {
+            if (! condition.apply(entity).getValue()) {
                 return False;
             }
         }
         return True;
     }
 
-    public BoolEntity anyMatch(Function<E, BoolEntity> function) {
+    /**
+     * Return whether any entity in set satisfies the specific condition.
+     * @param condition that entity shall satisfy.
+     * @return True if any entity satisfies the condition, otherwise False.
+     */
+    public BoolEntity anyMatch(Function<E, BoolEntity> condition) {
         for (E entity: entities) {
-            if (function.apply(entity).getValue()) {
+            if (condition.apply(entity).getValue()) {
                 return True;
             }
         }
         return False;
     }
 
+    /**
+     * Return whether this set contain the specific entity or not.
+     * @param entity the specific entity.
+     * @return True if this set contain the specific entity, otherwise False.
+     * @throws IllegalArgumentException if entity has illegal type.
+     */
     public BoolEntity contains(BaseEntity entity) {
         if (! type.equals(entity.getType())) {
             return False;
@@ -63,6 +94,12 @@ public final class SetEntity<E extends BaseEntity> extends CollectionEntity {
         return anyMatch(entity::equal);
     }
 
+    /**
+     * Return whether this set include another set or not.
+     * @param set another set.
+     * @return True if this set include another set, otherwise False.
+     * @throws IllegalArgumentException if entity has illegal type.
+     */
     public BoolEntity include(SetEntity<?> set) {
         return set.allMatch(this::contains);
     }

@@ -9,6 +9,11 @@ import java.util.Map;
 import java.util.function.Function;
 
 /**
+ * Map class that store data by key-value pairs.<p>
+ * There are 6 specific methods:
+ * {@code allMatch}, {@code anyMatch}, {@code contains}, {@code containsKey}, {@code containsValue},
+ * {@code include}, {@code add}, {@code get}.
+ *
  * @author Guo Weize
  */
 public final class MapEntity<K extends BaseEntity, V extends BaseEntity> extends CollectionEntity {
@@ -25,34 +30,88 @@ public final class MapEntity<K extends BaseEntity, V extends BaseEntity> extends
         this.entities.putAll(entities);
     }
 
-    public BoolEntity allMatch(Function<K, BoolEntity> function) {
+    /**
+     * Add an key-value pair to this map, change inner stored data.
+     * @param key to be added to this map.
+     * @param value to be added to this map.
+     * @throws IllegalArgumentException if entity has illegal type.
+     */
+    public void add(K key, V value) {
+        if ("".equals(keyType)) {
+            keyType = key.getType();
+            valueType = value.getType();
+        }
+        else if (! keyType.equals(key.getType()) || ! valueType.equals(value.getType())) {
+            throw new IllegalArgumentException();
+        }
+        entities.put(key, value);
+    }
+
+    /**
+     * Return value entity with the specific key.
+     * @param key to get value.
+     * @return the entity if this map contains key.
+     * @throws IllegalArgumentException if this map not contains key.
+     */
+    public V get(BaseEntity key) {
+        for (Map.Entry<K, V> entry: entities.entrySet()) {
+            if (entry.getKey().equal(key).getValue()) {
+                return entry.getValue();
+            }
+        }
+        throw new IllegalArgumentException();
+    }
+
+    /**
+     * Return whether all keys in map satisfy the specific condition.
+     * @param condition that key shall satisfy.
+     * @return True if all keys satisfy the condition, otherwise False.
+     */
+    public BoolEntity allMatch(Function<K, BoolEntity> condition) {
         for (K key: entities.keySet()) {
-            if (! function.apply(key).getValue()) {
+            if (! condition.apply(key).getValue()) {
                 return False;
             }
         }
         return True;
     }
 
-    public BoolEntity anyMatch(Function<K, BoolEntity> function) {
+    /**
+     * Return whether any key in map satisfies the specific condition.
+     * @param condition that key shall satisfy.
+     * @return True if any key satisfies the condition, otherwise False.
+     */
+    public BoolEntity anyMatch(Function<K, BoolEntity> condition) {
         for (K key: entities.keySet()) {
-            if (function.apply(key).getValue()) {
+            if (condition.apply(key).getValue()) {
                 return True;
             }
         }
         return False;
     }
 
+    /**
+     * Return whether this map contain the specific key or not.
+     * @param key the specific key.
+     * @return True if this map contain the specific key, otherwise False.
+     * @throws IllegalArgumentException if key has illegal type.
+     */
     public BoolEntity containsKey(BaseEntity key) {
         if (! keyType.equals(key.getType())) {
-            return False;
+            throw new IllegalArgumentException();
         }
         return anyMatch(key::equal);
     }
 
+    /**
+     * Return whether this map contain the specific value or not.
+     * @param value the specific value.
+     * @return True if this map contain the specific value, otherwise False.
+     * @throws IllegalArgumentException if value has illegal type.
+     */
     public BoolEntity containsValue(BaseEntity value) {
         if (! valueType.equals(value.getType())) {
-            return False;
+            throw new IllegalArgumentException();
         }
         for (V v: entities.values()) {
             if (v.equal(value).getValue()) {
@@ -62,32 +121,31 @@ public final class MapEntity<K extends BaseEntity, V extends BaseEntity> extends
         return False;
     }
 
+    /**
+     * Return whether this map contain the specific key-value pair.
+     * @param key the specific key.
+     * @param value the specific value.
+     * @return True if this map contain the specific key-value pair, otherwise False.
+     * @throws IllegalArgumentException if key or value has illegal type.
+     */
     public BoolEntity contains(BaseEntity key, BaseEntity value) {
+        if (! keyType.equals(key.getType()) || ! valueType.equals(value.getType())) {
+            throw new IllegalArgumentException();
+        }
         if (! containsKey(key).getValue()) {
             return False;
         }
         return value.equal(get(key));
     }
 
+    /**
+     * Return whether this map include another map or not.
+     * @param map another map.
+     * @return True if this map include another map, otherwise False.
+     * @throws IllegalArgumentException if entity has illegal type.
+     */
     public BoolEntity include(MapEntity<?, ?> map) {
         return map.allMatch(key -> contains(key, map.get(key)));
-    }
-
-    public void add(K key, V value) {
-        if ("".equals(keyType)) {
-            keyType = key.getType();
-            valueType = value.getType();
-        }
-        entities.put(key, value);
-    }
-
-    public V get(BaseEntity key) {
-        for (Map.Entry<K, V> entry: entities.entrySet()) {
-            if (entry.getKey().equal(key).getValue()) {
-                return entry.getValue();
-            }
-        }
-        return null;
     }
 
     @Override

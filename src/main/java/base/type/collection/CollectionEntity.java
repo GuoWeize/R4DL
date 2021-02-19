@@ -5,7 +5,11 @@ import base.type.primitive.BoolEntity;
 import base.type.primitive.IntEntity;
 
 /**
- * @author gwz
+ * Abstract base class for all collection types, including list, set and map.<p>
+ * Must implement 2 methods: {@code getItemType}, {@code size}
+ *
+ * @author Guo Weize
+ * @date 2021/2/1
  */
 public abstract class CollectionEntity extends BaseEntity {
 
@@ -33,5 +37,4 @@ public abstract class CollectionEntity extends BaseEntity {
      * @return An IntEntity containing the size of collection
      */
     public abstract IntEntity size();
-
 }

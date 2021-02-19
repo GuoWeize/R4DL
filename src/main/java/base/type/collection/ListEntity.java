@@ -11,11 +11,18 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
+ * List class that store data by indexes.<p>
+ * There are 6 specific methods:
+ * {@code allMatch}, {@code anyMatch}, {@code contains}, {@code include}, {@code add}, {@code get}.
+ *
  * @author Guo Weize
  */
 public final class ListEntity<E extends BaseEntity> extends CollectionEntity {
 
+    /** Entity type of this list */
     private String type = "";
+
+    /** Storage data structure of ListEntity */
     private final List<E> entities = new ArrayList<>();
 
     public ListEntity(String type, List<E> entities){
@@ -31,42 +38,81 @@ public final class ListEntity<E extends BaseEntity> extends CollectionEntity {
 
     public ListEntity() {}
 
+    /**
+     * Get entity at the specific index
+     * @param index the specific index number, must in bounds.
+     * @return entity at the specified position in this list.
+     * @throws IndexOutOfBoundsException if the index is out of range
+     */
     public E get(int index) {
         return entities.get(index);
     }
+    public E get(IntEntity index) {
+        return entities.get(index.getValue());
+    }
 
+    /**
+     * Add an entity to the end of this list, change inner stored data.
+     * @param entity to be added to this list.
+     * @throws IllegalArgumentException if entity has illegal type.
+     */
     public void add(E entity) {
         if ("".equals(type)) {
             type = entity.getType();
         }
+        else if (! type.equals(entity.getType())) {
+            throw new IllegalArgumentException();
+        }
         entities.add(entity);
     }
 
-    public BoolEntity allMatch(Function<E, BoolEntity> function) {
+    /**
+     * Return whether all entities in list satisfy the specific condition.
+     * @param condition that entity shall satisfy.
+     * @return True if all entities satisfy the condition, otherwise False.
+     */
+    public BoolEntity allMatch(Function<E, BoolEntity> condition) {
         for (E entity: entities) {
-            if (! function.apply(entity).getValue()) {
+            if (! condition.apply(entity).getValue()) {
                 return False;
             }
         }
         return True;
     }
 
-    public BoolEntity anyMatch(Function<E, BoolEntity> function) {
+    /**
+     * Return whether any entity in list satisfies the specific condition.
+     * @param condition that entity shall satisfy.
+     * @return True if any entity satisfies the condition, otherwise False.
+     */
+    public BoolEntity anyMatch(Function<E, BoolEntity> condition) {
         for (E entity: entities) {
-            if (function.apply(entity).getValue()) {
+            if (condition.apply(entity).getValue()) {
                 return True;
             }
         }
         return False;
     }
 
+    /**
+     * Return whether this list contain the specific entity or not.
+     * @param entity the specific entity.
+     * @return True if this list contain the specific entity, otherwise False.
+     * @throws IllegalArgumentException if entity has illegal type.
+     */
     public BoolEntity contains(BaseEntity entity) {
         if (! type.equals(entity.getType())) {
-            return False;
+            throw new IllegalArgumentException();
         }
         return anyMatch(entity::equal);
     }
 
+    /**
+     * Return whether this list include another list or not.
+     * @param list another list.
+     * @return True if this list include another list, otherwise False.
+     * @throws IllegalArgumentException if entity has illegal type.
+     */
     public BoolEntity include(ListEntity<?> list) {
         return list.allMatch(this::contains);
     }
