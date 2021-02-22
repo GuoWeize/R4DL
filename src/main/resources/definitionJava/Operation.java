@@ -19,12 +19,13 @@ public class Operation extends BaseEntity {
     @Override
     public BoolEntity equal(BaseEntity entity) {
         if (! getType().equals(entity.getType())) {
-            return new BoolEntity(false);
+            return BoolEntity.FALSE;
         }
         Operation that = (Operation) entity;
-        return (reaction.equal(that.reaction).getValue() &&
-               isAble.equal(that.isAble).getValue() &&
-               isNot.equal(that.isNot).getValue())
-               ? (new BoolEntity(true)) : (new BoolEntity(false));
+        return BoolEntity.valueOf(
+                   reaction.equal(that.reaction).getValue() &&
+                   isAble.equal(that.isAble).getValue() &&
+                   isNot.equal(that.isNot).getValue()
+        );
     }
 }

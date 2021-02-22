@@ -9,13 +9,14 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * @author gwz
+ * Parse entity models from file.
+ *
+ * @author Guo Weize
+ * @date 2021/2/1
  */
 public final class ModelParser extends StdDeserializer<Object> {
 
@@ -36,60 +37,64 @@ public final class ModelParser extends StdDeserializer<Object> {
     public Object deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
             throws IOException {
         JsonNode root = jsonParser.getCodec().readTree(jsonParser);
+
+        Set<String> allTypeName = new HashSet<>();
+        root.get(ENTITY_SIGNAL).fieldNames().forEachRemaining(allTypeName::add);
+        root.get(REQUIREMENT_SIGNAL).fieldNames().forEachRemaining(allTypeName::add);
+        TypeManager.initialization(allTypeName);
+
         parseNode(root.get(ENTITY_SIGNAL), false);
         parseNode(root.get(REQUIREMENT_SIGNAL), true);
         return null;
     }
 
-    private void parseNode(JsonNode node, boolean isRequirement) throws IOException {
-        Iterator<Map.Entry<String, JsonNode>> iterator = node.fields();
-        while (iterator.hasNext()) {
-            Map.Entry<String, JsonNode> entry = iterator.next();
-            String name = entry.getKey();
-            Map<String, String> field2type = parseFields(entry.getValue());
-            TypeManager.addType(name, field2type);
-            generateJavaFile(name, field2type, isRequirement);
-        }
+    private void parseNode(JsonNode node, boolean isRequirement) {
+        node.fields().forEachRemaining(entry -> {
+            String typeName = entry.getKey();
+            Map<String, String> fields2type = parseFields(entry.getValue());
+            generateJavaFile(typeName, fields2type, isRequirement);
+        });
     }
 
     private Map<String, String> parseFields(JsonNode node) {
         Map<String, String> fields2type = new HashMap<>(8);
-        Iterator<Map.Entry<String, JsonNode>> iterator = node.fields();
-        while (iterator.hasNext()) {
-            Map.Entry<String, JsonNode> entry = iterator.next();
+        node.fields().forEachRemaining(entry -> {
             String fieldName = entry.getKey();
             String type = entry.getValue().asText();
             TypeManager.checkType(type);
             fields2type.put(fieldName, type);
-        }
+        });
         return fields2type;
     }
 
-    private void generateJavaFile(String name, Map<String, String> fields2type, boolean isRequirement)
-            throws IOException {
-        String content = generateFileHead(name) +
-                generateFields(fields2type) +
-                generateGetType(name) +
-                generateIsPrimitive() +
-                generateIsRequirement(isRequirement) +
-                generateEquals(name, fields2type) +
-                generateFileEnd();
+    private void generateJavaFile(String name, Map<String, String> fields2type, boolean isRequirement) {
+        String content = generateFileHead(name)
+                + generateFields(fields2type)
+                + generateGetType(name)
+                + generateIsPrimitive()
+                + generateIsRequirement(isRequirement)
+                + generateEquals(name, fields2type)
+                + generateFileEnd();
 
-        File file = new File(JAVA_FILE_PATH + name + ".java");
-        if (! file.createNewFile()) {
-            System.out.println("Replace file " + name + ".java" + " before.");
+        try {
+            File file = new File(JAVA_FILE_PATH + name + ".java");
+            if (!file.createNewFile()) {
+                System.out.println("Replace existing file \"" + name + ".java\".");
+            }
+            FileWriter fileWriter = new FileWriter(file);
+            fileWriter.write(content);
+            fileWriter.flush();
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        FileWriter fileWriter = new FileWriter(file);
-        fileWriter.write(content);
-        fileWriter.flush();
-        fileWriter.close();
     }
 
     private String generateFileHead(String name) {
         return  "import base.type.BaseEntity;\n" +
                 "import base.type.primitive.*;\n" +
-                "import base.type.collection.*;\n" +
-                "\npublic class " + name + " extends BaseEntity {\n";
+                "import base.type.collection.*;\n\n" +
+                "public class " + name + " extends BaseEntity {\n";
     }
 
     private String generateFields(Map<String, String> fields2type) {
@@ -122,15 +127,16 @@ public final class ModelParser extends StdDeserializer<Object> {
     private String generateEquals(String name, Map<String, String> fields2type) {
         String result = fields2type.keySet().stream()
                 .map(f -> f + ".equal(that." + f + ").getValue()")
-                .collect(Collectors.joining(" &&\n               "));
+                .collect(Collectors.joining(" &&\n                   "));
         return  "\n    @Override\n" +
                 "    public BoolEntity equal(BaseEntity entity) {\n" +
                 "        if (! getType().equals(entity.getType())) {\n" +
-                "            return new BoolEntity(false);\n" +
+                "            return BoolEntity.FALSE;\n" +
                 "        }\n" +
                 "        " + name + " that = (" + name + ") entity;\n" +
-                "        return (" + result + ")\n" +
-                "               ? (new BoolEntity(true)) : (new BoolEntity(false));\n" +
+                "        return BoolEntity.valueOf(\n" +
+                "                   " + result + "\n" +
+                "        );\n" +
                 "    }\n";
     }
 

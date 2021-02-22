@@ -15,10 +15,10 @@ class MapEntityTest {
 
     @BeforeEach
     void setUp() {
-        BoolEntity b1 = new BoolEntity(true);
-        BoolEntity b2 = new BoolEntity(true);
-        IntEntity i1 = new IntEntity(1);
-        IntEntity i2 = new IntEntity(2);
+        BoolEntity b1 = BoolEntity.TRUE;
+        BoolEntity b2 = BoolEntity.TRUE;
+        IntEntity i1 = IntEntity.valueOf(1);
+        IntEntity i2 = IntEntity.valueOf(2);
         Map<IntEntity, BoolEntity> temp = new HashMap<>();
         temp.put(i1, b1);
         temp.put(i2, b2);
@@ -27,26 +27,26 @@ class MapEntityTest {
 
     @Test
     void containsKey() {
-        IntEntity i = new IntEntity(1);
+        IntEntity i = IntEntity.valueOf(1);
         assertTrue(m.containsKey(i).getValue());
-        i = new IntEntity(3);
+        i = IntEntity.valueOf(3);
         assertFalse(m.containsKey(i).getValue());
     }
 
     @Test
     void containsValue() {
-        BoolEntity b = new BoolEntity(true);
+        BoolEntity b = BoolEntity.TRUE;
         assertTrue(m.containsValue(b).getValue());
-        b = new BoolEntity(false);
+        b = BoolEntity.FALSE;
         assertFalse(m.containsValue(b).getValue());
     }
 
     @Test
     void testEquals() {
-        BoolEntity b1 = new BoolEntity(true);
-        BoolEntity b2 = new BoolEntity(true);
-        IntEntity i1 = new IntEntity(1);
-        IntEntity i2 = new IntEntity(2);
+        BoolEntity b1 = BoolEntity.TRUE;
+        BoolEntity b2 = BoolEntity.TRUE;
+        IntEntity i1 = IntEntity.valueOf(1);
+        IntEntity i2 = IntEntity.valueOf(2);
         Map<IntEntity, BoolEntity> temp = new HashMap<>();
         temp.put(i1, b1);
         temp.put(i2, b2);
@@ -54,7 +54,7 @@ class MapEntityTest {
         assertTrue(m_new.equal(m).getValue());
 
         temp.clear();
-        b2 = new BoolEntity(false);
+        b2 = BoolEntity.FALSE;
         temp.put(i1, b1);
         temp.put(i2, b2);
         m_new = new MapEntity<>("integer", "boolean", temp);

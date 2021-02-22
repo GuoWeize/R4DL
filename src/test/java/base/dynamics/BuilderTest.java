@@ -28,18 +28,17 @@ class BuilderTest {
 
     @Test
     void setField() {
-        Object operation1 = Builder.newInstance("Operation");
-        Builder.setField("Operation", "reaction", operation1, new StringEntity("test"));
-        BaseEntity b1 = (BaseEntity) Builder.getField("Operation", "reaction", operation1);
+        BaseEntity operation1 = Builder.newInstance("Operation");
+        Builder.setField(operation1, "reaction", StringEntity.valueOf("test"));
+        BaseEntity b1 = Builder.getField(operation1, "reaction");
         assert b1 != null;
         assertEquals("\"test\"", b1.toString());
     }
 
     @Test
     void newInstance() {
-        Object operation1 = Builder.newInstance("Operation");
+        BaseEntity operation1 = Builder.newInstance("Operation");
         assertNotNull(operation1);
-        BaseEntity obj = (BaseEntity) operation1;
-        assertEquals("Operation", obj.getType());
+        assertEquals("Operation", operation1.getType());
     }
 }

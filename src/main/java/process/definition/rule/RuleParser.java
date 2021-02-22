@@ -10,12 +10,13 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 /**
- * @author gwz
+ * Parse recognition rules from file.
+ *
+ * @author Guo Weize
+ * @date 2021/2/1
  */
 public final class RuleParser extends StdDeserializer<Object> {
 
@@ -52,11 +53,9 @@ public final class RuleParser extends StdDeserializer<Object> {
         return null;
     }
 
-    private String parseRoot(JsonNode node, boolean isRule) throws IOException {
-        Iterator<Map.Entry<String, JsonNode>> iterator = node.fields();
+    private String parseRoot(JsonNode node, boolean isRule) {
         StringBuilder contents = new StringBuilder();
-        while (iterator.hasNext()) {
-            Map.Entry<String, JsonNode> entry = iterator.next();
+        node.fields().forEachRemaining(entry -> {
             String name = entry.getKey();
             JsonNode n = entry.getValue();
             List<String> arguments = parseArgument(n.get(ARGUMENT_SIGNAL));
@@ -65,7 +64,7 @@ public final class RuleParser extends StdDeserializer<Object> {
             for (String argument: arguments) {
                 contents.append(generateRuleFunction(name, argument, returns, logic, isRule));
             }
-        }
+        });
         return contents.toString();
     }
 
@@ -85,26 +84,25 @@ public final class RuleParser extends StdDeserializer<Object> {
         return TypeManager.type2class(node.asText());
     }
 
-    private void addToJavaFile(String contents) throws IOException {
-        File file = new File(JAVA_FILE_PATH + "Rule.java");
-        if (! file.createNewFile()) {
-            System.out.println("Replace file Rule.java" + " before.");
+    private void addToJavaFile(String contents){
+        try {
+            File file = new File(JAVA_FILE_PATH + "Rule.java");
+            if (!file.createNewFile()) {
+                System.out.println("Replace file Rule.java" + " before.");
+            }
+            FileWriter fileWriter = new FileWriter(file);
+            fileWriter.write(contents);
+            fileWriter.flush();
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        FileWriter fileWriter = new FileWriter(file);
-        fileWriter.write(contents);
-        fileWriter.flush();
-        fileWriter.close();
     }
 
     private String generateRuleFunction(String name, String argument, String returns, String logic, boolean isRule) {
-        String contents = "    ";
-        contents += (isRule ? "public": "private");
-        contents += " static " + returns + " " + name + "(" + argument + ") {\n";
-        contents += "        return " + logic + ";\n";
-        contents += "    }\n\n";
-        return contents;
+        return "    " + (isRule ? "public": "private")
+                + " static " + returns + " " + name + "(" + argument + ") {\n"
+                + "        return " + logic + ";\n"
+                + "    }\n\n";
     }
-
-
-
 }

@@ -21,7 +21,10 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
- * @author gwz
+ * Parse entities from json file.
+ *
+ * @author Guo Weize
+ * @date 2021/2/1
  */
 public final class EntityParser extends StdDeserializer<Object> {
 
@@ -73,17 +76,13 @@ public final class EntityParser extends StdDeserializer<Object> {
     }
 
     private BaseEntity generateEntity(String type, JsonNode fieldsNode) {
-        String fieldName;
-        BaseEntity fieldValue;
-        Object result = Builder.newInstance(type);
-        Iterator<Map.Entry<String, JsonNode>> iterator = fieldsNode.fields();
-        while (iterator.hasNext()) {
-            Map.Entry<String, JsonNode> entry = iterator.next();
-            fieldName = entry.getKey();
-            fieldValue = parseNode(entry.getValue());
-            Builder.setField(type, fieldName, result, fieldValue);
-        }
-        return (BaseEntity) result;
+        BaseEntity result = Builder.newInstance(type);
+        fieldsNode.fields().forEachRemaining(entry -> {
+            String fieldName = entry.getKey();
+            BaseEntity fieldValue = parseNode(entry.getValue());
+            Builder.setField(result, fieldName, fieldValue);
+        });
+        return result;
     }
 
     private BaseEntity parseEntity(JsonNode node) {
@@ -126,19 +125,19 @@ public final class EntityParser extends StdDeserializer<Object> {
     }
 
     private BaseEntity parseString(JsonNode node) {
-        return new StringEntity(node.asText());
+        return StringEntity.valueOf(node.asText());
     }
 
     private BaseEntity parseInt(JsonNode node) {
-        return new IntEntity(node.asInt());
+        return IntEntity.valueOf(node.asInt());
     }
 
     private BaseEntity parseBool(JsonNode node) {
-        return new BoolEntity(node.asBoolean());
+        return BoolEntity.valueOf(node.asBoolean());
     }
 
     private BaseEntity parseFloat(JsonNode node) {
-        return new FloatEntity(node.asDouble());
+        return FloatEntity.valueOf(node.asDouble());
     }
 
 }

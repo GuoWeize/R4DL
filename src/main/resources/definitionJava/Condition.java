@@ -21,14 +21,15 @@ public class Condition extends BaseEntity {
     @Override
     public BoolEntity equal(BaseEntity entity) {
         if (! getType().equals(entity.getType())) {
-            return new BoolEntity(false);
+            return BoolEntity.FALSE;
         }
         Condition that = (Condition) entity;
-        return (output.equal(that.output).getValue() &&
-               restriction.equal(that.restriction).getValue() &&
-               input.equal(that.input).getValue() &&
-               agent.equal(that.agent).getValue() &&
-               operation.equal(that.operation).getValue())
-               ? (new BoolEntity(true)) : (new BoolEntity(false));
+        return BoolEntity.valueOf(
+                   output.equal(that.output).getValue() &&
+                   restriction.equal(that.restriction).getValue() &&
+                   input.equal(that.input).getValue() &&
+                   agent.equal(that.agent).getValue() &&
+                   operation.equal(that.operation).getValue()
+        );
     }
 }

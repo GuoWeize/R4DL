@@ -74,10 +74,10 @@ public final class ListEntity<E extends BaseEntity> extends CollectionEntity {
     public BoolEntity allMatch(Function<E, BoolEntity> condition) {
         for (E entity: entities) {
             if (! condition.apply(entity).getValue()) {
-                return False;
+                return BoolEntity.FALSE;
             }
         }
-        return True;
+        return BoolEntity.TRUE;
     }
 
     /**
@@ -88,10 +88,10 @@ public final class ListEntity<E extends BaseEntity> extends CollectionEntity {
     public BoolEntity anyMatch(Function<E, BoolEntity> condition) {
         for (E entity: entities) {
             if (condition.apply(entity).getValue()) {
-                return True;
+                return BoolEntity.TRUE;
             }
         }
-        return False;
+        return BoolEntity.FALSE;
     }
 
     /**
@@ -119,24 +119,24 @@ public final class ListEntity<E extends BaseEntity> extends CollectionEntity {
 
     @Override
     public IntEntity size() {
-        return new IntEntity(entities.size());
+        return IntEntity.valueOf(entities.size());
     }
 
     @Override
     public BoolEntity equal(BaseEntity entity) {
         if (! entity.getType().equals(this.getType())) {
-            return False;
+            return BoolEntity.FALSE;
         }
         ListEntity<?> list = (ListEntity<?>) entity;
         if (this.entities.size() != list.entities.size()) {
-            return False;
+            return BoolEntity.FALSE;
         }
         for (int i = 0; i < entities.size(); i++) {
             if (! entities.get(i).equal(list.entities.get(i)).getValue()) {
-                return False;
+                return BoolEntity.FALSE;
             }
         }
-        return True;
+        return BoolEntity.TRUE;
     }
 
     @Override

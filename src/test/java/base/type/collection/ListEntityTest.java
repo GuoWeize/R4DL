@@ -11,8 +11,8 @@ class ListEntityTest {
 
     @BeforeEach
     void setUp() {
-        BoolEntity b = new BoolEntity(true);
-        BoolEntity b2 = new BoolEntity(false);
+        BoolEntity b = BoolEntity.TRUE;
+        BoolEntity b2 = BoolEntity.FALSE;
         l = new ListEntity<>("boolean", b, b2);
     }
 
@@ -23,7 +23,7 @@ class ListEntityTest {
 
     @Test
     void contains() {
-        BoolEntity b = new BoolEntity(true);
+        BoolEntity b = BoolEntity.TRUE;
         assertTrue(l.contains(b).getValue());
     }
 
@@ -45,8 +45,8 @@ class ListEntityTest {
 
     @Test
     void testEquals() {
-        BoolEntity b = new BoolEntity(true);
-        BoolEntity b2 = new BoolEntity(false);
+        BoolEntity b = BoolEntity.TRUE;
+        BoolEntity b2 = BoolEntity.FALSE;
 
         ListEntity<BoolEntity> l_new = new ListEntity<>("boolean", b, b2);
         assertTrue(l.equal(l_new).getValue());

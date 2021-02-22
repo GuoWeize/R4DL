@@ -22,15 +22,16 @@ public class Functional extends BaseEntity {
     @Override
     public BoolEntity equal(BaseEntity entity) {
         if (! getType().equals(entity.getType())) {
-            return new BoolEntity(false);
+            return BoolEntity.FALSE;
         }
         Functional that = (Functional) entity;
-        return (output.equal(that.output).getValue() &&
-               restriction.equal(that.restriction).getValue() &&
-               input.equal(that.input).getValue() &&
-               agent.equal(that.agent).getValue() &&
-               event.equal(that.event).getValue() &&
-               operation.equal(that.operation).getValue())
-               ? (new BoolEntity(true)) : (new BoolEntity(false));
+        return BoolEntity.valueOf(
+                   output.equal(that.output).getValue() &&
+                   restriction.equal(that.restriction).getValue() &&
+                   input.equal(that.input).getValue() &&
+                   agent.equal(that.agent).getValue() &&
+                   event.equal(that.event).getValue() &&
+                   operation.equal(that.operation).getValue()
+        );
     }
 }

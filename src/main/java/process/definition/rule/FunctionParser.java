@@ -1,16 +1,20 @@
 package process.definition.rule;
 
+import base.dynamics.TypeManager;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.*;
 import java.util.function.Function;
 
 /**
- * @author gwz
+ * Parse recognition functions from file.
+ *
+ * @author Guo Weize
+ * @date 2021/2/1
  */
 public final class FunctionParser {
 
-    private static final String FOR_DELIMITER = "$";
+    private static final String FOR_DELIMITER = "@";
 
     private static final int SINGLE_ARGUMENT = 1;
     private static final int TWO_ARGUMENT = 2;
@@ -71,7 +75,7 @@ public final class FunctionParser {
         return String.join(".", result);
     }
 
-    private static void checkArguments(List<String> arguments, int size) {
+    private static void checkArgumentsNumber(List<String> arguments, int size) {
         if (arguments.size() != size) {
             throw new IllegalArgumentException();
         }
@@ -90,55 +94,55 @@ public final class FunctionParser {
     }
 
     private static String equal(List<String> arguments) {
-        checkArguments(arguments, TWO_ARGUMENT);
+        checkArgumentsNumber(arguments, TWO_ARGUMENT);
         return arguments.get(0) + ".equal(" + arguments.get(1) + ")";
     }
 
     private static String notEqual(List<String> arguments) {
-        checkArguments(arguments, TWO_ARGUMENT);
+        checkArgumentsNumber(arguments, TWO_ARGUMENT);
         return "(! " + arguments.get(0) + ".equal(" + arguments.get(1) + ") )";
     }
 
     private static String include(List<String> arguments) {
-        checkArguments(arguments, TWO_ARGUMENT);
+        checkArgumentsNumber(arguments, TWO_ARGUMENT);
         return arguments.get(0) + ".include(" + arguments.get(1) + ")";
     }
 
     private static String size(List<String> arguments) {
-        checkArguments(arguments, SINGLE_ARGUMENT);
+        checkArgumentsNumber(arguments, SINGLE_ARGUMENT);
         return arguments.get(0) + ".size()";
     }
 
     private static String all(List<String> arguments) {
-        checkArguments(arguments, THREE_ARGUMENT);
-        return arguments.get(1) + ".allMatch( (" + arguments.get(0) + ") -> " + arguments.get(2) + ")";
+        checkArgumentsNumber(arguments, THREE_ARGUMENT);
+        return arguments.get(1) + ".allMatch(" + arguments.get(0) + " -> " + arguments.get(2) + ")";
     }
 
     private static String any(List<String> arguments) {
-        checkArguments(arguments, THREE_ARGUMENT);
-        return arguments.get(1) + ".anyMatch( (" + arguments.get(0) + ") -> " + arguments.get(2) + ")";
+        checkArgumentsNumber(arguments, THREE_ARGUMENT);
+        return arguments.get(1) + ".anyMatch(" + arguments.get(0) + " -> " + arguments.get(2) + ")";
     }
 
     private static String allArgument(List<String> arguments) {
-        checkArguments(arguments, FOUR_ARGUMENT);
+        checkArgumentsNumber(arguments, FOUR_ARGUMENT);
         String type = "Functional";
-        String list = "( new ListEntity(\"" + type + "\", Arrays.asList(" + arguments.get(1) + ")) )";
+        String list = "ListEntity<" + TypeManager.type2class(type) + "> _list = new ListEntity<>(\"" + type + "\", Arrays.asList(" + arguments.get(1) + "));";
         String bound = arguments.get(2);
-        String logic = forArgumentTransform(arguments.get(3), list);
-        String result = "IntStream.range(0, " + "Arrays.asList(" + arguments.get(1) + ").size()" + bound + ")";
-        result += ".allMatch(" + arguments.get(0) + " -> ( " + logic + " ).getValue() )";
-        result = "new BoolEntity(" + result + ")";
+        String logic = forArgumentTransform(arguments.get(3));
+        String result = "IntStream.range(0, " + "Arrays.asList(" + arguments.get(1) + ").size()" + bound + ")"
+                + ".allMatch(" + arguments.get(0) + " -> { " + list + " return (" + logic + ").getValue(); })";
+        result = "BoolEntity.valueOf(" + result + ")";
         return result;
     }
 
-    private static String forArgumentTransform(String logic, String list) {
+    private static String forArgumentTransform(String logic) {
         int left = logic.indexOf(FOR_DELIMITER);
         int right;
         while (left >= 0) {
             right = logic.indexOf(FOR_DELIMITER, left +1);
             String previous = logic.substring(left, right +1);
             String number = logic.substring(left+1, right);
-            String replacement = list + ".get(" + number + ")";
+            String replacement = "_list.get(" + number + ")";
             logic = logic.replace(previous, replacement);
             left = logic.indexOf(FOR_DELIMITER);
         }

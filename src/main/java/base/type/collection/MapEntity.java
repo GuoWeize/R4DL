@@ -70,10 +70,10 @@ public final class MapEntity<K extends BaseEntity, V extends BaseEntity> extends
     public BoolEntity allMatch(Function<K, BoolEntity> condition) {
         for (K key: entities.keySet()) {
             if (! condition.apply(key).getValue()) {
-                return False;
+                return BoolEntity.FALSE;
             }
         }
-        return True;
+        return BoolEntity.TRUE;
     }
 
     /**
@@ -84,10 +84,10 @@ public final class MapEntity<K extends BaseEntity, V extends BaseEntity> extends
     public BoolEntity anyMatch(Function<K, BoolEntity> condition) {
         for (K key: entities.keySet()) {
             if (condition.apply(key).getValue()) {
-                return True;
+                return BoolEntity.TRUE;
             }
         }
-        return False;
+        return BoolEntity.FALSE;
     }
 
     /**
@@ -115,10 +115,10 @@ public final class MapEntity<K extends BaseEntity, V extends BaseEntity> extends
         }
         for (V v: entities.values()) {
             if (v.equal(value).getValue()) {
-                return True;
+                return BoolEntity.TRUE;
             }
         }
-        return False;
+        return BoolEntity.FALSE;
     }
 
     /**
@@ -133,7 +133,7 @@ public final class MapEntity<K extends BaseEntity, V extends BaseEntity> extends
             throw new IllegalArgumentException();
         }
         if (! containsKey(key).getValue()) {
-            return False;
+            return BoolEntity.FALSE;
         }
         return value.equal(get(key));
     }
@@ -150,17 +150,17 @@ public final class MapEntity<K extends BaseEntity, V extends BaseEntity> extends
 
     @Override
     public IntEntity size() {
-        return new IntEntity(entities.size());
+        return IntEntity.valueOf(entities.size());
     }
 
     @Override
     public BoolEntity equal(BaseEntity entity) {
         if (! entity.getType().equals(this.getType())) {
-            return False;
+            return BoolEntity.FALSE;
         }
         MapEntity<?, ?> map = (MapEntity<?, ?>) entity;
         if (this.entities.size() != map.entities.size()) {
-            return False;
+            return BoolEntity.FALSE;
         }
         return include(map);
     }

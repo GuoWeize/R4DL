@@ -1,5 +1,6 @@
 package base.dynamics;
 
+import base.type.BaseEntity;
 import base.type.primitive.StringEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,22 +25,19 @@ class ProcessorTest {
         Compiler.compile(l);
         var classes = Compiler.loadClass(l);
         Builder.initialization(classes);
-        Processor.initialization(classes.get("Rule"));
+        Processor.initialization();
     }
 
     @Test
     void process() {
-        Object operation1 = Builder.newInstance("Operation");
-        Object operation2 = Builder.newInstance("Operation");
-        Builder.setField("Operation", "reaction", operation1, new StringEntity("test"));
-        Builder.setField("Operation", "reaction", operation2, new StringEntity("passed"));
+        BaseEntity operation1 = Builder.newInstance("Operation");
+        BaseEntity operation2 = Builder.newInstance("Operation");
+        Builder.setField(operation1, "reaction", StringEntity.valueOf("test"));
+        Builder.setField(operation2, "reaction", StringEntity.valueOf("passed"));
 
-        Object functional1 = Builder.newInstance("Functional");
-        Object functional2 = Builder.newInstance("Functional");
-        Builder.setField("Functional", "operation", functional1, operation1);
-        Builder.setField("Functional", "operation", functional2, operation2);
-
-        Object r = Processor.process("cal", functional1, functional2);
-        assertEquals("\"test\" \"passed\"", r);
+        BaseEntity functional1 = Builder.newInstance("Functional");
+        BaseEntity functional2 = Builder.newInstance("Functional");
+        Builder.setField(functional1, "operation", operation1);
+        Builder.setField(functional2, "operation", operation2);
     }
 }

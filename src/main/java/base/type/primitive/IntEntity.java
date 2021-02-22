@@ -5,13 +5,20 @@ import base.type.BaseEntity;
 import java.util.Objects;
 
 /**
+ * Class that store integer data.
+ *
  * @author Guo Weize
+ * @date 2021/2/1
  */
 public final class IntEntity extends PrimitiveEntity {
     private final int value;
 
-    public IntEntity(int value) {
+    private IntEntity(int value) {
         this.value = value;
+    }
+
+    public static IntEntity valueOf(int value) {
+        return new IntEntity(value);
     }
 
     public int getValue() {
@@ -26,11 +33,11 @@ public final class IntEntity extends PrimitiveEntity {
     @Override
     public BoolEntity equal(BaseEntity entity) {
         if (! getType().equals(entity.getType())) {
-            return new BoolEntity(false);
+            return BoolEntity.FALSE;
         }
-        return getValue() == ((IntEntity) entity).getValue() ?
-                new BoolEntity(true):
-                new BoolEntity(false);
+        return BoolEntity.valueOf(
+                getValue() == ((IntEntity) entity).getValue()
+        );
     }
 
     @Override

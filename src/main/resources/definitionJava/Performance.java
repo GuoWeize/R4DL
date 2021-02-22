@@ -21,14 +21,15 @@ public class Performance extends BaseEntity {
     @Override
     public BoolEntity equal(BaseEntity entity) {
         if (! getType().equals(entity.getType())) {
-            return new BoolEntity(false);
+            return BoolEntity.FALSE;
         }
         Performance that = (Performance) entity;
-        return (comp.equal(that.comp).getValue() &&
-               unit.equal(that.unit).getValue() &&
-               metrics.equal(that.metrics).getValue() &&
-               value.equal(that.value).getValue() &&
-               statistics.equal(that.statistics).getValue())
-               ? (new BoolEntity(true)) : (new BoolEntity(false));
+        return BoolEntity.valueOf(
+                   comp.equal(that.comp).getValue() &&
+                   unit.equal(that.unit).getValue() &&
+                   metrics.equal(that.metrics).getValue() &&
+                   value.equal(that.value).getValue() &&
+                   statistics.equal(that.statistics).getValue()
+        );
     }
 }

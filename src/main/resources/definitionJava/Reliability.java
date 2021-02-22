@@ -21,14 +21,15 @@ public class Reliability extends BaseEntity {
     @Override
     public BoolEntity equal(BaseEntity entity) {
         if (! getType().equals(entity.getType())) {
-            return new BoolEntity(false);
+            return BoolEntity.FALSE;
         }
         Reliability that = (Reliability) entity;
-        return (metrics.equal(that.metrics).getValue() &&
-               time.equal(that.time).getValue() &&
-               comp2.equal(that.comp2).getValue() &&
-               comp1.equal(that.comp1).getValue() &&
-               probability.equal(that.probability).getValue())
-               ? (new BoolEntity(true)) : (new BoolEntity(false));
+        return BoolEntity.valueOf(
+                   metrics.equal(that.metrics).getValue() &&
+                   time.equal(that.time).getValue() &&
+                   comp2.equal(that.comp2).getValue() &&
+                   comp1.equal(that.comp1).getValue() &&
+                   probability.equal(that.probability).getValue()
+        );
     }
 }

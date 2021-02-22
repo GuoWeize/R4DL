@@ -3,17 +3,20 @@ package base.type.primitive;
 import base.type.BaseEntity;
 
 /**
+ * Class that store float data.
+ *
  * @author Guo Weize
+ * @date 2021/2/1
  */
 public final class FloatEntity extends PrimitiveEntity {
     private final double value;
 
-    public FloatEntity(double value) {
+    private FloatEntity(double value) {
         this.value = value;
     }
 
-    public FloatEntity(float value) {
-        this.value = value;
+    public static FloatEntity valueOf(double value) {
+        return new FloatEntity(value);
     }
 
     public double getValue() {
@@ -28,11 +31,11 @@ public final class FloatEntity extends PrimitiveEntity {
     @Override
     public BoolEntity equal(BaseEntity entity) {
         if (! getType().equals(entity.getType())) {
-            return new BoolEntity(false);
+            return BoolEntity.FALSE;
         }
-        return getValue() == ((FloatEntity) entity).getValue() ?
-                new BoolEntity(true):
-                new BoolEntity(false);
+        return BoolEntity.valueOf(
+                getValue() == ((FloatEntity) entity).getValue()
+        );
     }
 
     @Override

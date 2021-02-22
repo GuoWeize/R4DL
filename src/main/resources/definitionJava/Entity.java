@@ -20,13 +20,14 @@ public class Entity extends BaseEntity {
     @Override
     public BoolEntity equal(BaseEntity entity) {
         if (! getType().equals(entity.getType())) {
-            return new BoolEntity(false);
+            return BoolEntity.FALSE;
         }
         Entity that = (Entity) entity;
-        return (isAll.equal(that.isAll).getValue() &&
-               entirety.equal(that.entirety).getValue() &&
-               base.equal(that.base).getValue() &&
-               modifier.equal(that.modifier).getValue())
-               ? (new BoolEntity(true)) : (new BoolEntity(false));
+        return BoolEntity.valueOf(
+                   isAll.equal(that.isAll).getValue() &&
+                   entirety.equal(that.entirety).getValue() &&
+                   base.equal(that.base).getValue() &&
+                   modifier.equal(that.modifier).getValue()
+        );
     }
 }

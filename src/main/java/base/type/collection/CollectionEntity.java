@@ -1,7 +1,6 @@
 package base.type.collection;
 
 import base.type.BaseEntity;
-import base.type.primitive.BoolEntity;
 import base.type.primitive.IntEntity;
 
 /**
@@ -12,9 +11,6 @@ import base.type.primitive.IntEntity;
  * @date 2021/2/1
  */
 public abstract class CollectionEntity extends BaseEntity {
-
-    protected final BoolEntity True = new BoolEntity(true);
-    protected final BoolEntity False = new BoolEntity(false);
 
     @Override
     public final boolean isPrimitive() {

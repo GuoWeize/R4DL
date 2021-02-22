@@ -1,30 +1,55 @@
 package process.judge;
 
+import base.type.BaseEntity;
+import base.type.primitive.BoolEntity;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
+ * Recognize relationships between requirements.
+ *
  * @author Guo Weize
  */
 public final class Processor {
-    public static final Map<String, Method> NAME_2_METHOD = new HashMap<>();
+    private static final Map<Method, List<String>> METHOD_2_ARGUMENTS = new HashMap<>();
 
-    public static void initialization(Class<?> rule) {
-        NAME_2_METHOD.clear();
-        for (Method r: rule.getMethods()) {
-            NAME_2_METHOD.put(r.getName(), r);
-        }
+    public static void initialization() {
+        METHOD_2_ARGUMENTS.clear();
     }
 
-    public static Object process(String ruleName, Object... arguments) {
-        Method rule = NAME_2_METHOD.get(ruleName);
+    public static void addRule(Method rule, List<String> arguments) {
+        METHOD_2_ARGUMENTS.put(rule, arguments);
+    }
+
+    public static String recognition(Map<String, List<BaseEntity>> requirements) {
+        String result = "";
+        for (Map.Entry<Method, List<String>> entry: METHOD_2_ARGUMENTS.entrySet()) {
+            Method rule = entry.getKey();
+            List<String> types = entry.getValue();
+            List<List<BaseEntity>> requirementsByTypes = types.stream().map(requirements::get).collect(Collectors.toList());
+
+
+        }
+        return result;
+    }
+
+    private static String process(Method rule, Object... arguments) {
         try {
-            return rule.invoke(null, arguments);
+            Object result = rule.invoke(null, arguments);
+            if (! (result instanceof BoolEntity)) {
+                throw new IllegalArgumentException();
+            }
+            if (((BoolEntity) result).getValue()) {
+                return "Relationship " + rule.getName() + " between ";
+            }
         } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
-            return null;
         }
+        return "";
     }
 }

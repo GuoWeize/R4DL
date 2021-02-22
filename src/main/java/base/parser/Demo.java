@@ -1,5 +1,7 @@
 package base.parser;
 
+import base.type.primitive.BoolEntity;
+
 import java.util.*;
 import java.util.stream.IntStream;
 
@@ -9,6 +11,7 @@ import java.util.stream.IntStream;
 public class Demo {
 
     public static void main(String[] args) {
+
     }
 
 

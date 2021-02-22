@@ -54,11 +54,11 @@ public class Rule {
     }
 
     private static BoolEntity operation_event_condition(Functional _1, Functional _2) {
-        return _2.event.allMatch( (condition) -> operation_include(_1.operation, condition));
+        return _2.event.allMatch(condition -> operation_include(_1.operation, condition));
     }
 
     private static BoolEntity input_output_condition(Functional _1, Functional _2) {
-        return _2.input.anyMatch( (inEntity) -> _1.output.anyMatch( (outEntity) -> entity_include(outEntity, inEntity)));
+        return _2.input.anyMatch(inEntity -> _1.output.anyMatch(outEntity -> entity_include(outEntity, inEntity)));
     }
 
     private static BoolEntity operation_include(Operation _1, Operation _2) {
@@ -82,7 +82,7 @@ public class Rule {
     }
 
     public static BoolEntity event_inconsistency(Functional _1) {
-        return _1.event.allMatch( (event1) -> _1.event.anyMatch( (event2) -> base_contradict(event1, event2)));
+        return _1.event.allMatch(event1 -> _1.event.anyMatch(event2 -> base_contradict(event1, event2)));
     }
 
     public static BoolEntity operation_inclusion(Functional _1, Functional _2) {
@@ -94,11 +94,11 @@ public class Rule {
     }
 
     public static BoolEntity operation_event_interlock(Functional... _1) {
-        return new BoolEntity(IntStream.range(0, Arrays.asList(_1).size()-1).allMatch(i -> ( operation_event_condition(( new ListEntity("Functional", Arrays.asList(_1)) ).get(i), ( new ListEntity("Functional", Arrays.asList(_1)) ).get(i+1)) ).getValue() ));
+        return BoolEntity.valueOf(IntStream.range(0, Arrays.asList(_1).size()-1).allMatch(i -> { ListEntity<Functional> _list = new ListEntity<>("Functional", Arrays.asList(_1)); return (operation_event_condition(_list.get(i), _list.get(i+1))).getValue(); }));
     }
 
     public static BoolEntity input_output_interlock(Functional... _1) {
-        return new BoolEntity(IntStream.range(0, Arrays.asList(_1).size()-1).allMatch(i -> ( input_output_condition(( new ListEntity("Functional", Arrays.asList(_1)) ).get(i), ( new ListEntity("Functional", Arrays.asList(_1)) ).get(i+1)) ).getValue() ));
+        return BoolEntity.valueOf(IntStream.range(0, Arrays.asList(_1).size()-1).allMatch(i -> { ListEntity<Functional> _list = new ListEntity<>("Functional", Arrays.asList(_1)); return (input_output_condition(_list.get(i), _list.get(i+1))).getValue(); }));
     }
 
 }
