@@ -1,85 +1,64 @@
-需求元模型描述语言
+EBNF形式
 
-需求类型名称  元组名称  元组类型  元组限制条件
+<num> := 0 | ... | 9
+<number> := { <num> }
+<alphabet> := a | ... | z | A | ... | Z
+<letter> := <alphabet> | _
+<word> := <alphabet> { {<letter>} {<num>} }
 
-requirement <requirement_type_name> {
-    <tuple_name> <tuple_type>;
-    <tuple_name> <tuple_type>;
-    ...
-    <约束条件> (rel-tuple)
-}
+保留字：
+boolean, integer, float, string, requirement, list, set, map
+type, requirement, function, rule
+sum, mul, and, or, for, in, all, any, include, size of, merge
 
-关系规则描述语言
+类型定义:
+<type signature> := <base type> | <user-defined type> | <collection type>
+<base type> := boolean | integer | float | string
+<user-defined type> := <word>
+<collection type> := list '<' <type signature> '>' | set '<' <type signature> '>' | map '<' <type signature>, <type signature> '>'
 
-逻辑运算、数值运算、集合运算
+模型定义:
+<type definition> := type <definition>
+<requirement definition> := requirement <definition>
+<definition> := <entity name> '{' <field definition> <constraint definition> '}'
+<entity name> := <word>
+<field definition> := { <field name> <field type>; }
+<field name> := <word>
+<field type> := <type signature>
+<constraint definition> := { <function body> }
 
-relationship <relationship_name> {
-    [<requirement_type>, ...]
-    {<约束条件>}
-    [<requirement_type>, ...]
-    {<约束条件>}
-}
+规则定义:
+<function definition> := function <name> <parameter signatures> -> <return type> <function body>
+<rule definition> := rule <name> <parameter signatures> -> boolean <function body>
+<name> := <word>
+<parameter signatures> := '(' <optional signature> ')'
+<simple signature> := <type signature> {, <type signature>}
+<compound signature> := <simple signature> { \ <simple signature> }
+<return type> := <type signature>
+<function body> := '{' <statement> '}'
 
-逻辑运算:
-and: bool, bool, ... -> bool
-or: bool, bool, ... -> bool
-not: bool -> bool
-xor: bool, bool, ... -> bool
+<statement> := <logic statement> | <not statement> | <for statement> | <calculate statement> | <function statement> |
+               <compare statement> | <collection statement> | <element>
+<logic statement> := <logic operator> '{' <statement> {, <statement>} '}'
+<logic operator> := and | or
+<not statement> := '(' ! <statement> ')'
+<for statement> := for <set operator> <variable> in <statement> '{' <statement> '}'
+<for operator> := all | any
+<calculate statement> := <common> | <special>
+<common> := '(' <statement> (+ | - | * | /) <statement> ')'
+<special> := (sum | mul) '{' <statement> {, <statement>} '}'
+<function statement> := <function name> '{' <statement> {, <statement>} '}'
+<function name> := <word>
+<compare statement> := '(' <statement> <compare operation> <statement> ')'
+<compare operation> := < | > | <= | >= | ==
+<collection statement> := <collection size> | <collection include> | <collection merge> | <collection value>
+<collection size> := '(' size of <statement> ')'
+<collection include> := '(' <statement> include <statement> ')'
+<collection merge> := merge '{' <statement> {, <statement>} '}'
+<collection in> := '(' <statement> in <statement> ')'
+<collection value> := <statement> '[' <number> ']'
 
-数值运算
-+ - * / //
-
-集合运算
-& | ^
-
-
-
-<new_line>
-<indent>
-<divider> ::= {<new_line>}+
-<number> ::= [-] (1 | ... | 9) {0 | ... | 9}
-<string> ::= {a | ... | z | A | ... | Z | _}+
-
-基本类型包括：布尔型、整型、字符型、集合、列表、字典
-<single_type> ::= bool | int | string | <string>
-<collection_type> ::= set | list | dict
-<definition_type> ::= <single_type> | list "<" <definition_type> ">" | set "<" <single_type> ">" | dict "<" <single_type>, <definition_type> ">"
-<base.type> ::= <collection_type> | <definition_type>
-<requirement_type> ::= functional | performance | reliability | security | <string>
-
-定义
-<type_define> ::= base.type <string>: {<new_line> <indent> <string>: <base.type>}+
-<requirement_define> ::= requirement <string>: {<new_line> <indent> <string>: <base.type>}+
-<function_define> ::= function <string>: { <new_line> <indent> <base.type> {, <base.type>} [, ... <base.type> ...] <new_line> <indent> <condition> }+
-其中，第X个位置的元素用%X%表示
-
-元素包含各个类型的元素
-<element> ::= <bool_element> | <int_element> | <string_element> | <set_element> | <list_element> | <dict_element> | %<number>% | <function_element>
-<bool_element> ::= True | False
-<int_element> ::= <number>
-<string_element> ::= """ <string> """
-<set_element> ::= "{" [<element>]{, <element>} "}"
-<list_element> ::= "[" [<element>]{, <element>} "]"
-<dict_element> ::= "{" [<element>: <element>]{, <element>: <element>} "}"
-<function_element> ::= <function>: {<new_line> <indent> <element>}+
-
-基本操作
-<function> ::= <calculation> | <more_or_less> | <equivalence> | <length> | <exists> | <include> | <logic> | <string>
-<calculation> ::= + | - | * | /             int, int -> int
-<more_or_less> ::= > | < | >= | <=          int, int -> bool
-<equivalence> ::= == | !=                   T, T -> bool
-<length> ::= len                            set -> int | list -> int | dict -> int
-<exists> ::= isin | isnotin                 T, set -> bool | T, list -> bool
-<include> ::= include                       list, list -> bool | set, set -> bool | dict, dcit -> bool
-<logic> ::= and | or | not
-
-条件
-<condition> ::= <element> | <for_all> | <for_any>
-<for_all> ::= forall: <new_line> <indent> <string> in <string> <new_line> <indent> <condition>
-<for_any> ::= forany: <new_line> <indent> <string> in <string> <new_line> <indent> <condition>
-
-规则
-<rule_define> ::= rule <string>: <new_line> <indent> <requirement_type> {, <requirement_type>} [, ... <requirement_type> ...] <new_line> <indent> <condition>
-
-规则文件
-<Rule_file> ::= {<type_define> <divider>} {<requirement_define> <divider>} {<function_define> <divider>} {<rule_define> <divider>}+
+<element> := <base entity> | <parameter> | <entity field>
+<base entity> := <word>
+<parameter> := $<number>$
+<entity field> := <element>.<field name>

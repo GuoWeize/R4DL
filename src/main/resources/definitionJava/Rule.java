@@ -6,51 +6,51 @@ import java.util.stream.IntStream;
 public class Rule {
 
     private static BoolEntity inout_include(Functional _1, Functional _2) {
-        return ((_1.input.include(_2.input).getValue() && _1.output.include(_2.output).getValue()).getValue() || (_2.input.include(_1.input).getValue() && _2.output.include(_1.output).getValue()).getValue());
+        return BoolEntity.or(BoolEntity.and(_1.input.include(_2.input), _1.output.include(_2.output)), BoolEntity.and(_2.input.include(_1.input), _2.output.include(_1.output)));
     }
 
     private static BoolEntity inout_include(Functional _1, Condition _2) {
-        return ((_1.input.include(_2.input).getValue() && _1.output.include(_2.output).getValue()).getValue() || (_2.input.include(_1.input).getValue() && _2.output.include(_1.output).getValue()).getValue());
+        return BoolEntity.or(BoolEntity.and(_1.input.include(_2.input), _1.output.include(_2.output)), BoolEntity.and(_2.input.include(_1.input), _2.output.include(_1.output)));
     }
 
     private static BoolEntity inout_include(Condition _1, Functional _2) {
-        return ((_1.input.include(_2.input).getValue() && _1.output.include(_2.output).getValue()).getValue() || (_2.input.include(_1.input).getValue() && _2.output.include(_1.output).getValue()).getValue());
+        return BoolEntity.or(BoolEntity.and(_1.input.include(_2.input), _1.output.include(_2.output)), BoolEntity.and(_2.input.include(_1.input), _2.output.include(_1.output)));
     }
 
     private static BoolEntity inout_include(Condition _1, Condition _2) {
-        return ((_1.input.include(_2.input).getValue() && _1.output.include(_2.output).getValue()).getValue() || (_2.input.include(_1.input).getValue() && _2.output.include(_1.output).getValue()).getValue());
+        return BoolEntity.or(BoolEntity.and(_1.input.include(_2.input), _1.output.include(_2.output)), BoolEntity.and(_2.input.include(_1.input), _2.output.include(_1.output)));
     }
 
     private static BoolEntity base_contradict(Functional _1, Functional _2) {
-        return (_1.agent.equal(_2.agent).getValue() && contradict(_1.operation, _2.operation).getValue() && inout_include(_1, _2).getValue());
+        return BoolEntity.and(_1.agent.equal(_2.agent), contradict(_1.operation, _2.operation), inout_include(_1, _2));
     }
 
     private static BoolEntity base_contradict(Functional _1, Condition _2) {
-        return (_1.agent.equal(_2.agent).getValue() && contradict(_1.operation, _2.operation).getValue() && inout_include(_1, _2).getValue());
+        return BoolEntity.and(_1.agent.equal(_2.agent), contradict(_1.operation, _2.operation), inout_include(_1, _2));
     }
 
     private static BoolEntity base_contradict(Condition _1, Functional _2) {
-        return (_1.agent.equal(_2.agent).getValue() && contradict(_1.operation, _2.operation).getValue() && inout_include(_1, _2).getValue());
+        return BoolEntity.and(_1.agent.equal(_2.agent), contradict(_1.operation, _2.operation), inout_include(_1, _2));
     }
 
     private static BoolEntity base_contradict(Condition _1, Condition _2) {
-        return (_1.agent.equal(_2.agent).getValue() && contradict(_1.operation, _2.operation).getValue() && inout_include(_1, _2).getValue());
+        return BoolEntity.and(_1.agent.equal(_2.agent), contradict(_1.operation, _2.operation), inout_include(_1, _2));
     }
 
     private static BoolEntity base_include(Functional _1, Functional _2) {
-        return (_1.agent.equal(_2.agent).getValue() && _1.operation.include(_2.operation).getValue() && _1.input.include(_2.input).getValue() && _1.output.include(_2.output).getValue() && _1.restriction.include(_2.restriction).getValue());
+        return BoolEntity.and(_1.agent.equal(_2.agent), _1.operation.include(_2.operation), _1.input.include(_2.input), _1.output.include(_2.output), _1.restriction.include(_2.restriction));
     }
 
     private static BoolEntity base_include(Functional _1, Condition _2) {
-        return (_1.agent.equal(_2.agent).getValue() && _1.operation.include(_2.operation).getValue() && _1.input.include(_2.input).getValue() && _1.output.include(_2.output).getValue() && _1.restriction.include(_2.restriction).getValue());
+        return BoolEntity.and(_1.agent.equal(_2.agent), _1.operation.include(_2.operation), _1.input.include(_2.input), _1.output.include(_2.output), _1.restriction.include(_2.restriction));
     }
 
     private static BoolEntity base_include(Condition _1, Functional _2) {
-        return (_1.agent.equal(_2.agent).getValue() && _1.operation.include(_2.operation).getValue() && _1.input.include(_2.input).getValue() && _1.output.include(_2.output).getValue() && _1.restriction.include(_2.restriction).getValue());
+        return BoolEntity.and(_1.agent.equal(_2.agent), _1.operation.include(_2.operation), _1.input.include(_2.input), _1.output.include(_2.output), _1.restriction.include(_2.restriction));
     }
 
     private static BoolEntity base_include(Condition _1, Condition _2) {
-        return (_1.agent.equal(_2.agent).getValue() && _1.operation.include(_2.operation).getValue() && _1.input.include(_2.input).getValue() && _1.output.include(_2.output).getValue() && _1.restriction.include(_2.restriction).getValue());
+        return BoolEntity.and(_1.agent.equal(_2.agent), _1.operation.include(_2.operation), _1.input.include(_2.input), _1.output.include(_2.output), _1.restriction.include(_2.restriction));
     }
 
     private static BoolEntity operation_event_condition(Functional _1, Functional _2) {
@@ -62,23 +62,23 @@ public class Rule {
     }
 
     private static BoolEntity operation_include(Operation _1, Operation _2) {
-        return (_1.equal(_2).getValue() || (_2.isAble.getValue() && _1.reaction.equal(_2.reaction).getValue() && not(_1.isAble).getValue()).getValue());
+        return BoolEntity.or(_1.equal(_2), BoolEntity.and(_2.isAble, _1.reaction.equal(_2.reaction), not(_1.isAble)));
     }
 
     private static BoolEntity entity_include(Entity _1, Entity _2) {
-        return ((_1.base.equal(_2.base).getValue() && _1.modifier.include(_2.modifier).getValue()).getValue() || _1.equal(_2.entirety).getValue());
+        return BoolEntity.or(BoolEntity.and(_1.base.equal(_2.base), _1.modifier.include(_2.modifier)), _1.equal(_2.entirety));
     }
 
     private static BoolEntity operation_contradict(Operation _1, Operation _2) {
-        return (_1.reaction.equal(_2.reaction).getValue() && not(_1.isAble).getValue() && not(_2.isAble).getValue() && not(_1.isNot.equal(_2.isNot)).getValue());
+        return BoolEntity.and(_1.reaction.equal(_2.reaction), not(_1.isAble), not(_2.isAble), not(_1.isNot.equal(_2.isNot)));
     }
 
     public static BoolEntity operation_inconsistency(Functional _1, Functional _2) {
-        return (_1.event.equal(_2.event).getValue() && base_contradict(_1, _2).getValue());
+        return BoolEntity.and(_1.event.equal(_2.event), base_contradict(_1, _2));
     }
 
     public static BoolEntity restriction_inconsistency(Functional _1, Functional _2) {
-        return (_1.event.equal(_2.event).getValue() && _1.agent.equal(_2.agent).getValue() && _1.operation.equal(_2.operation).getValue() && inout_include(_1, _2).getValue() && (! _1.restriction.equal(_2.restriction) ).getValue());
+        return BoolEntity.and(_1.event.equal(_2.event), _1.agent.equal(_2.agent), _1.operation.equal(_2.operation), inout_include(_1, _2), (! _1.restriction.equal(_2.restriction) ));
     }
 
     public static BoolEntity event_inconsistency(Functional _1) {
@@ -86,11 +86,11 @@ public class Rule {
     }
 
     public static BoolEntity operation_inclusion(Functional _1, Functional _2) {
-        return (_1.event.equal(_2.event).getValue() && base_include(_1, _2).getValue());
+        return BoolEntity.and(_1.event.equal(_2.event), base_include(_1, _2));
     }
 
     public static BoolEntity event_inclusion(Functional _1, Functional _2) {
-        return (_1.event.include(_2.event).getValue() && _1.agent.equal(_2.agent).getValue() && _1.operation.equal(_2.operation).getValue() && _1.input.include(_2.input).getValue() && _1.output.include(_2.output).getValue() && _1.restriction.equal(_2.restriction).getValue());
+        return BoolEntity.and(_1.event.include(_2.event), _1.agent.equal(_2.agent), _1.operation.equal(_2.operation), _1.input.include(_2.input), _1.output.include(_2.output), _1.restriction.equal(_2.restriction));
     }
 
     public static BoolEntity operation_event_interlock(Functional... _1) {

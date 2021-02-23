@@ -1,199 +1,144 @@
-function listInclude (list, list) {
-    all (b in %2%) {
-        any (a in %1%) {
-            equal(a, b);
-        }
-    }
-}
-
-function listEqual (list, list) {
-    and {
-        listInclude(%1%, %2%);
-        listInclude(%2%, %1%);
-    }
-}
-
-function inoutInclude (Functional / condition, Functional / condition) {
+function in_out_include
+(functional, functional / functional, condition / condition, function / condition, condition) -> boolean {
     or {
         and {
-            include(%1%.input, %2%.input);
-            include(%1%.output, %2%.output);
-        }
+            ($1$.input include $2$.input), ($1$.output include $2$.output)
+        },
         and {
-            include(%2%.input, %1%.input);
-            include(%2%.output, %1%.output);
+            ($2$.input include $1$.input), ($2$.output include $1$.output)
         }
     }
 }
 
-function baseContradict (Functional / condition, Functional / condition) {
+function base_contradict
+(functional, functional / functional, condition / condition, function / condition, condition) -> boolean {
     and {
-        equal(%1%.agent, %2%.agent);
-        contradict(%1%.operation, %2%.operation);
-        inoutInclude(%1%, %2%);
+        ($1$.agent == $2$.agent),
+        contradict{$1$.operation, $2$.operation},
+        in_out_include{$1$, $2$}
     }
 }
 
-function baseInclude (Functional / condition, Functional / condition) {
+function base_include
+(functional, functional / functional, condition / condition, function / condition, condition) -> boolean {
     and {
-        equal(%1%.agent, %2%.agent);
-        include(%1%.operation, %2%.operation);
-        include(%1%.input, %2%.input);
-        include(%1%.output, %2%.output);
-        include(%1%.restriction, %2%.restriction);
+        ($1$.agent == $2$.agent),
+        operation_include{$1$.operation, $2$.operation},
+        ($1$.input include $2$.input),
+        ($1$.output include $2$.output),
+        ($1$.restriction include $2$.restriction)
     }
 }
 
-function operationEventInterlock (Functional, Functional) {
-    all (condition in %2%.event) {
-        include(%1%.operation, condition);
+function operation_event_condition
+(functional, functional) -> boolean {
+    for all condition in $2$.event {
+        base_include{$1$, condition}
     }
 }
 
-function inputOutputInterlock (Functional, Functional) {
-    any (inEntity in %2%.input) {
-        any (outEntity in %1%.output) {
-            include(outEntity, inEntity);
+function input_output_condition
+(functional, functional) -> boolean {
+    for any inEntity in $2$.input {
+        for any outEntity in $1$.output {
+            include{outEntity, inEntity}
         }
     }
 }
 
-function equal (entity, entity) {
+function entity_include
+(entity, entity) -> boolean {
     or {
+        ($1$ == $2$.entirety),
         and {
-            %1%.base == %2%.base;
-            equal(%1%.modifier, %2%.modifier);
-        }
-        and {
-            %1%.isAll;
-            not {
-                %2%.isAll;
-            }
-        }
-        and {
-            %2%.isAll;
-            not {
-                %1%.isAll;
-            }
+            ($1$.base == $2$.base), ($2$.modifier include $1$.modifier)
         }
     }
 }
 
-function equal (condition, condition) {
-    equal(%1%.agent, %2%.agent);
-    equal(%1%.operation, %2%.operation);
-    equal(%1%.input, %2%.input);
-    equal(%1%.output, %2%.output);
-    equal(%1%.restriction, %2%.restriction);
-}
-
-function equal (operation, operation) {
-    and {
-        %1%.reaction == %2%.reaction;
-        %1%.isAble == %2%.isAble;
-        %1%.isNot == %2%.isNot;
-    }
-}
-
-function equal (list, list) {
-    listEqual(%1%, %2%);
-}
-
-function include (entity, entity) {
+function operation_include
+(operation, operation) -> boolean {
     or {
+        ($1$ == $2$),
         and {
-            %1%.base == %2%.base;
-            listInclude(%2%.modifier, %1%.modifier);
-        }
-        equal(%1%, %2%.entirety);
-    }
-}
-
-function include (operation, operation) {
-    or {
-        equal(%1%, %2%);
-        and {
-            %1%.reaction == %2%.reaction;
-            %2%.isAble;
-            not {
-                %1%.isAble;
-            }
+            ($1$.reaction == $2$.reaction), $2$.isAble, (! $1$.isAble)
         }
     }
 }
 
-function include (list, list) {
-    listInclude(%1%, %2%);
-}
-
-function contradict (operation, operation) {
+function operation_contradict
+(operation, operation) -> boolean {
     and {
-        %1%.reaction == %2%.reaction;
-        not {
-            %1%.isAble;
-        }
-        not {
-            %2%.isAble;
-        }
-        not {
-            %1%.isNot == %2%.isNot;
-        }
+        ($1$.reaction == $2$.reaction),
+        (! $1$.isAble), (! $2$.isAble),
+        (! ($1$.isNot == $2$.isNot))
     }
 }
 
-rule operationInconsistency (Functional, Functional) {
+rule operation_inconsistency
+(functional, functional) -> boolean {
     and {
-        equal(%1%.event, %2%.event);
-        baseContradict(%1%, %2%);
+        ($1$.event == $2$.event),
+        base_contradict{$1$, $2$}
     }
 }
 
-rule restrictionInconsistency (Functional, Functional) {
+rule restriction_inconsistency
+(functional, functional) -> boolean {
     and {
-        equal(%1%.event, %2%.event);
-        equal(%1%.agent, %2%.agent);
-        equal(%1%.operation, %2%.operation);
-        inoutInclude(%1%, %2%);
-        not {
-            equal(%1%.restriction, %2%.restriction);
+        ($1$.event == $2$.event),
+        ($1$.agent == $2$.agent),
+        ($1$.operation == $2$.operation),
+        in_out_include{$1$, $2$},
+        (! ($1$.restriction == $2$.restriction))
+    }
+}
+
+rule event_inconsistency
+(functional) -> boolean {
+    for all event1 in $1$.event {
+        for any event2 in $1$.event {
+            base_contradict{event1, event2}
         }
     }
 }
 
-rule eventInconsistency (Functional) {
-    all (event1 in %1%.event) {
-        any (event2 in %1%.event) {
-            baseContradict(event1, event2);
+rule operation_inclusion
+(functional, functional) -> boolean {
+    and {
+        ($1$.event == $2$.event),
+        base_include{$1$, $2$}
+    }
+}
+
+rule event_inclusion
+(functional, functional) -> boolean {
+    and {
+        ($1$.event include $2$.event),
+        ($1$.agent == $2$.agent),
+        ($1$.operation == $2$.operation),
+        ($1$.input include $2$.input),
+        ($1$.output include $2$.output),
+        ($1$.restriction == $2$.restriction)
+    }
+}
+
+rule operation_event_interlock
+(list<functional>) -> boolean {
+    and {
+        operation_event_condition{$1$[-1], $1$[0]},
+        for all index in <0: ((size of $1$) - 1)> {
+            operation_event_condition{$1$[index], $1$[(index + 1)]}
         }
     }
 }
 
-rule operationInclusion (Functional, Functional) {
+rule input_output_interlock
+(list<functional>) -> boolean {
     and {
-        equal(%1%.event, %2%.event);
-        baseInclude(%1%, %2%);
-    }
-}
-
-rule eventInclusion (Functional, Functional) {
-    and {
-        include(%1%.event, %2%.event);
-        equal(%1%.agent, %2%.agent);
-        equal(%1%.operation, %2%.operation);
-        include(%1%.input, %2%.input);
-        include(%1%.output, %2%.output);
-        equal(%1%.restriction, %2%.restriction);
-    }
-}
-
-rule operationEventInterlock (Functional ...) {
-    all (%i%) {
-        operationEventInterlock(%i%, %i+1%);
-    }
-}
-
-rule inputOutputInterlock (Functional ...) {
-    all (%i%) {
-        inputOutputInterlock(%i%, %i+1%);
+        input_output_condition($1$[-1], $1$[0]),
+        for all index in <0: ((size of $1$) - 1)> {
+            input_output_condition{$1$[index], $1$[(index + 1)]}
+        }
     }
 }

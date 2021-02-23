@@ -14,6 +14,8 @@ import java.util.function.Function;
  */
 public final class FunctionParser {
 
+    private static final String AUTO_CREATED_PREFIX = "_";
+    private static final String PARAMETER_DELIMITER = "$";
     private static final String FOR_DELIMITER = "@";
 
     private static final int SINGLE_ARGUMENT = 1;
@@ -62,17 +64,15 @@ public final class FunctionParser {
     }
 
     private static String argumentTransform(String itemString) {
-        List<String> result = new ArrayList<>();
-        String[] singles = itemString.split("\\.");
-        for (String s: singles) {
-            if (s.startsWith("argument ")) {
-                result.add(s.replace("argument ", "_"));
+        int left = itemString.indexOf(PARAMETER_DELIMITER);
+        if (left >= 0) {
+            int right = itemString.indexOf(PARAMETER_DELIMITER, left+1);
+            if (right + 1 == itemString.length()) {
+                return AUTO_CREATED_PREFIX + itemString.substring(left+1, right);
             }
-            else {
-                result.add(s);
-            }
+            return AUTO_CREATED_PREFIX + itemString.substring(left+1, right) + itemString.substring(right+1);
         }
-        return String.join(".", result);
+        return itemString;
     }
 
     private static void checkArgumentsNumber(List<String> arguments, int size) {
@@ -86,11 +86,11 @@ public final class FunctionParser {
     }
 
     private static String and(List<String> arguments) {
-        return "(" + String.join(".getValue() && ", arguments) + ".getValue())";
+        return "BoolEntity.and(" + String.join(", ", arguments) + ")";
     }
 
     private static String or(List<String> arguments) {
-        return "(" + String.join(".getValue() || ", arguments) + ".getValue())";
+        return "BoolEntity.or(" + String.join(", ", arguments) + ")";
     }
 
     private static String equal(List<String> arguments) {

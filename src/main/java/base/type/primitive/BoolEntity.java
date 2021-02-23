@@ -2,13 +2,15 @@ package base.type.primitive;
 
 import base.type.BaseEntity;
 
+import java.util.Arrays;
+
 /**
  * Class that store boolean data.
  *
  * @author Guo Weize
  * @date 2021/2/1
  */
-public final class BoolEntity extends PrimitiveEntity {
+public final class BoolEntity extends BasePrimitiveEntity {
     public final static BoolEntity TRUE = new BoolEntity(true);
     public final static BoolEntity FALSE = new BoolEntity(false);
 
@@ -20,6 +22,14 @@ public final class BoolEntity extends PrimitiveEntity {
 
     public static BoolEntity valueOf(boolean value) {
         return value ? TRUE: FALSE;
+    }
+
+    public static BoolEntity and(BoolEntity... arguments) {
+        return Arrays.stream(arguments).allMatch(BoolEntity::getValue) ? TRUE: FALSE;
+    }
+
+    public static BoolEntity or(BoolEntity... arguments) {
+        return Arrays.stream(arguments).anyMatch(BoolEntity::getValue) ? TRUE: FALSE;
     }
 
     public boolean getValue() {

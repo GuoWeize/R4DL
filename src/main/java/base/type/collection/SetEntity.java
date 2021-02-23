@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  *
  * @author Guo Weize
  */
-public final class SetEntity<E extends BaseEntity> extends CollectionEntity {
+public final class SetEntity<E extends BaseEntity> extends BaseCollectionEntity {
 
     /** Entity type of this set */
     private String type = "";

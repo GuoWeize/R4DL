@@ -8,7 +8,7 @@ import base.type.BaseEntity;
  * @author Guo Weize
  * @date 2021/2/1
  */
-public abstract class PrimitiveEntity extends BaseEntity {
+public abstract class BasePrimitiveEntity extends BaseEntity {
 
     @Override
     public final boolean isPrimitive() {

@@ -16,7 +16,7 @@ import java.util.function.Function;
  *
  * @author Guo Weize
  */
-public final class MapEntity<K extends BaseEntity, V extends BaseEntity> extends CollectionEntity {
+public final class MapEntity<K extends BaseEntity, V extends BaseEntity> extends BaseCollectionEntity {
 
     private String keyType = "";
     private String valueType = "";

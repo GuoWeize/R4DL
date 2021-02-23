@@ -26,6 +26,7 @@ public final class TypeManager {
     private static final String LIST = "list";
     private static final String SET = "set";
     private static final String MAP = "map";
+    private static final int MAP_PARA_NUM = 2;
 
     /**
      * initialization with all types.
@@ -50,7 +51,7 @@ public final class TypeManager {
             }
             else if (type.startsWith(MAP)) {
                 List<String> temp = Arrays.asList(type.split(", "));
-                if (temp.size() != 2) {
+                if (temp.size() != MAP_PARA_NUM) {
                     throw new IllegalArgumentException();
                 }
                 checkType(temp.get(0).substring(4));

@@ -10,7 +10,7 @@ import base.type.primitive.IntEntity;
  * @author Guo Weize
  * @date 2021/2/1
  */
-public abstract class CollectionEntity extends BaseEntity {
+public abstract class BaseCollectionEntity extends BaseEntity {
 
     @Override
     public final boolean isPrimitive() {

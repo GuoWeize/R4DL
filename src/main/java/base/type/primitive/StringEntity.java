@@ -8,7 +8,7 @@ import base.type.BaseEntity;
  * @author Guo Weize
  * @date 2021/2/1
  */
-public final class StringEntity extends PrimitiveEntity {
+public final class StringEntity extends BasePrimitiveEntity {
     private final String value;
 
     private StringEntity(String value) {
@@ -17,6 +17,14 @@ public final class StringEntity extends PrimitiveEntity {
 
     public static StringEntity valueOf(String value) {
         return new StringEntity(value);
+    }
+
+    public static StringEntity append(StringEntity... arguments) {
+        StringBuilder sb = new StringBuilder();
+        for (StringEntity substring: arguments) {
+            sb.append(substring.value);
+        }
+        return StringEntity.valueOf(sb.toString());
     }
 
     public String getValue() {

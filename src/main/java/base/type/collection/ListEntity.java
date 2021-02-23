@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  *
  * @author Guo Weize
  */
-public final class ListEntity<E extends BaseEntity> extends CollectionEntity {
+public final class ListEntity<E extends BaseEntity> extends BaseCollectionEntity {
 
     /** Entity type of this list */
     private String type = "";

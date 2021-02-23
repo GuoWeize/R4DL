@@ -6,7 +6,7 @@ type operation {
 
 type entity {
     base string;
-    modifier set[string];
+    modifier set<string>;
     entirety entity;
     isAll boolean;
 }
@@ -14,18 +14,18 @@ type entity {
 type condition {
     agent entity;
     operation operation;
-    input set[entity];
-    output set[entity];
-    restriction set[string];
+    input set<entity>;
+    output set<entity>;
+    restriction set<string>;
 }
 
 requirement functional {
-    event set[condition];
+    event set<condition>;
     agent entity;
     operation operation;
-    input set[entity];
-    output set[entity];
-    restriction set[string];
+    input set<entity>;
+    output set<entity>;
+    restriction set<string>;
 }
 
 requirement performance {
