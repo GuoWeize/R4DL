@@ -31,7 +31,7 @@ sum, mul, and, or, for, in, all, any, include, size of, merge
 <function definition> := function <name> <parameter signatures> -> <return type> <function body>
 <rule definition> := rule <name> <parameter signatures> -> boolean <function body>
 <name> := <word>
-<parameter signatures> := '(' <optional signature> ')'
+<parameter signatures> := '(' <compound signature> ')'
 <simple signature> := <type signature> {, <type signature>}
 <compound signature> := <simple signature> { \ <simple signature> }
 <return type> := <type signature>
@@ -50,8 +50,8 @@ sum, mul, and, or, for, in, all, any, include, size of, merge
 <function statement> := <function name> '{' <statement> {, <statement>} '}'
 <function name> := <word>
 <compare statement> := '(' <statement> <compare operation> <statement> ')'
-<compare operation> := < | > | <= | >= | ==
-<collection statement> := <collection size> | <collection include> | <collection merge> | <collection value>
+<compare operation> := < | > | <= | >= | == | !=
+<collection statement> := <collection size> | <collection include> | <collection merge> | <collection in> | <collection value>
 <collection size> := '(' size of <statement> ')'
 <collection include> := '(' <statement> include <statement> ')'
 <collection merge> := merge '{' <statement> {, <statement>} '}'

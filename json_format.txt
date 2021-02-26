@@ -1,0 +1,110 @@
+json 格式
+
+[
+    {
+        "_type_": "entity / requirement",
+        "_name_": "<type name>",
+        "<field name>" : "",
+        ...
+    },
+    ...
+]
+
+{
+    "function": {
+        "<name>": {
+            "argument": [
+                ["<type signature>", ...],
+                ...
+            ],
+            "return": "<type signature>",
+            "logic": <logic json>
+        },
+        ...
+    },
+    "rule": {
+        "<name>": {
+            "argument": [
+                ["<type signature>", ...],
+                ...
+            ],
+            "return": "boolean",
+            "logic": <logic json>
+        },
+        ...
+    }
+}
+
+<logic json>:
+{
+    "and / or": [
+        <logic json>, // and语句的子句
+        ...
+    ]
+}
+{
+    "not": [
+        <logic json> // not子句
+    ]
+}
+{
+    "for all": [
+        "<variable>", // 循环变量
+        <logic json>, // 被循环的值
+        <logic json>  // 循环逻辑
+    ]
+}
+{
+    "for any": [
+        "<variable>", // 循环变量
+        <logic json>, // 被循环的值
+        <logic json>  // 循环逻辑
+    ]
+}
+{
+    "+ / - / * / /": [
+        <logic json>, // 运算量
+        <logic json>  // 运算量
+    ]
+}
+{
+    "sum / mul": [
+        <logic json>, // 运算量
+        ...
+    ]
+}
+{
+    "<function name>": [
+        <logic json>, // 参数
+        ...
+    ]
+}
+{
+    "< / > / <= / >= / == / !=": [
+        <logic json>, // 比较量
+        <logic json>  // 比较量
+    ]
+}
+{
+    "size of": [
+        <logic json> // 集合类型变量
+    ]
+}
+{
+    "include": [
+        <logic json>, // 集合类型变量
+        <logic json>  // 集合类型变量
+    ]
+}
+{
+    "merge": [
+        <logic json>, // 集合类型变量
+        ...
+    ]
+}
+{
+    "in": [
+        <logic json>, // 集合元素变量
+        <logic json>  // 集合类型变量
+    ]
+}

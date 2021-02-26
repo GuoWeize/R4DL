@@ -9,7 +9,6 @@ import base.type.BaseEntity;
  * @date 2021/2/1
  */
 public final class IntEntity extends BasePrimitiveEntity {
-    private static final String INTEGER = "integer";
 
     private final int value;
 
@@ -19,50 +18,6 @@ public final class IntEntity extends BasePrimitiveEntity {
 
     public static IntEntity valueOf(int value) {
         return new IntEntity(value);
-    }
-
-    public static IntEntity add(BaseEntity... arguments) {
-        int result = 0;
-        for (BaseEntity entity: arguments) {
-            if (INTEGER.equals(entity.getType())) {
-                result += ((IntEntity) entity).getValue();
-            }
-            else {
-                throw new IllegalArgumentException();
-            }
-        }
-        return IntEntity.valueOf(result);
-    }
-
-    public static IntEntity sub(BaseEntity minuend, BaseEntity subtrahend) {
-        if (INTEGER.equals(minuend.getType()) && INTEGER.equals(subtrahend.getType())) {
-            return IntEntity.valueOf(((IntEntity) minuend).getValue() - ((IntEntity) subtrahend).getValue());
-        }
-        else {
-            throw new IllegalArgumentException();
-        }
-    }
-
-    public static IntEntity mult(BaseEntity... arguments) {
-        int result = 1;
-        for (BaseEntity entity: arguments) {
-            if (INTEGER.equals(entity.getType())) {
-                result *= ((IntEntity) entity).getValue();
-            }
-            else {
-                throw new IllegalArgumentException();
-            }
-        }
-        return IntEntity.valueOf(result);
-    }
-
-    public static IntEntity div(BaseEntity dividend, BaseEntity divisor) {
-        if (INTEGER.equals(dividend.getType()) && INTEGER.equals(divisor.getType())) {
-            return IntEntity.valueOf(((IntEntity) dividend).getValue() / ((IntEntity) divisor).getValue());
-        }
-        else {
-            throw new IllegalArgumentException();
-        }
     }
 
     public int getValue() {
