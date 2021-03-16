@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
@@ -13,42 +14,31 @@ import java.io.IOException;
 public class Generator {
 
     private static JsonGenerator jg;
+    public static final String PROJECT_PATH = System.getProperty("user.dir");
+    public static final String MODEL_JSON_FILE = PROJECT_PATH + "/src/main/resources/definitionFile/model.json";
 
     public static void initialization() {
         try {
-            jg = (new JsonFactory()).createGenerator(System.out, JsonEncoding.UTF8);
+            FileOutputStream file = new FileOutputStream(MODEL_JSON_FILE);
+            jg = (new JsonFactory()).createGenerator(file, JsonEncoding.UTF8);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     static void parseModelFile() throws IOException {
-        jg.writeStartObject();
-        LanguageParser.parseTypes();
-        LanguageParser.parseRequirements();
-        jg.writeEndObject();
+        jg.writeStartArray();
+        LanguageParser.parseEntities();
+        jg.writeEndArray();
         jg.flush();
         jg.close();
     }
 
-    static void parseType() throws IOException {
-        jg.writeFieldName("type");
+    static void parseEntity(String type, String name) throws IOException {
         jg.writeStartObject();
-        LanguageParser.parseEntities(true);
-        jg.writeEndObject();
-    }
-
-    static void parseRequirement() throws IOException {
-        jg.writeFieldName("requirement");
-        jg.writeStartObject();
-        LanguageParser.parseEntities(false);
-        jg.writeEndObject();
-    }
-
-    static void parseEntity(String entityName) throws IOException {
-        jg.writeFieldName(entityName);
-        jg.writeStartObject();
-        LanguageParser.parseField();
+        jg.writeStringField("_type_", type);
+        jg.writeStringField("_name_", name);
+        LanguageParser.parseFields();
         jg.writeEndObject();
     }
 

@@ -9,45 +9,9 @@ import java.util.*;
  */
 public class LanguageParser {
 
-    private static final List<List<String>> TYPES = new ArrayList<>();
-    private static final List<List<String>> REQUIREMENTS = new ArrayList<>();
-    private static final Map<String, String> FIELDS = new HashMap<>();
-
     private static void initialization() {
         Util.readModelFile();
-        String token = Util.nextToken();
-        List<String> tokens = new ArrayList<>();
-        boolean isType = false;
-        while (token.length() > 0) {
-            if ("type".equals(token)) {
-                if (! tokens.isEmpty()) {
-                    addTokens(tokens, isType);
-                    tokens = new ArrayList<>();
-                }
-                isType = true;
-            }
-            else if ("requirement".equals(token)) {
-                if (! tokens.isEmpty()) {
-                    addTokens(tokens, isType);
-                    tokens = new ArrayList<>();
-                }
-                isType = false;
-            }
-            else {
-                tokens.add(token);
-            }
-            token = Util.nextToken();
-        }
-        addTokens(tokens, isType);
-    }
-
-    private static void addTokens(List<String> tokens, boolean isType) {
-        if (isType) {
-            TYPES.add(tokens);
-        }
-        else {
-            REQUIREMENTS.add(tokens);
-        }
+        Generator.initialization();
     }
 
     public static void parseModelFile() {
@@ -59,33 +23,33 @@ public class LanguageParser {
         }
     }
 
-    static void parseTypes() throws IOException {
-        Generator.parseType();
-    }
-
-    static void parseRequirements() throws IOException {
-        Generator.parseRequirement();
-    }
-
-    static void parseEntities(boolean isType) throws IOException {
-        for (List<String> entity: isType ? TYPES: REQUIREMENTS) {
-            for (int i=2; i < entity.size(); i++) {
-
-
+    static void parseEntities() throws IOException {
+        String type = Util.nextToken();
+        while (! "".equals(type)) {
+            String name = Util.nextToken();
+            if (! "{".equals(Util.nextToken())) {
+                throw new InvalidPropertiesFormatException("need a \"{\"");
             }
-            String name = entity.get(0);
-            Generator.parseEntity(name);
+            Generator.parseEntity(type, name);
+            type = Util.nextToken();
         }
     }
 
-    static void parseField() throws IOException {
-        for (Map.Entry<String, String> entry: FIELDS.entrySet()) {
-            Generator.parseField(entry.getKey(), entry.getValue());
+    static void parseFields() throws IOException {
+        String fieldName = Util.nextToken();
+        while (! "}".equals(fieldName)) {
+            StringBuilder fieldType = new StringBuilder();
+            String temp = Util.nextToken();
+            while (! ";".equals(temp)) {
+                fieldType.append(temp);
+                temp = Util.nextToken();
+            }
+            Generator.parseField(fieldName, fieldType.toString());
+            fieldName = Util.nextToken();
         }
     }
 
     public static void main(String[] args) {
-        Generator.initialization();
         parseModelFile();
     }
 
