@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import util.Configs;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -15,8 +16,7 @@ class ModelParserTest {
 
     @BeforeEach
     void setUp() {
-        String path = System.getProperty("user.dir") + "/src/main/resources/definitionFile/model.json";
-        File file = new File(path);
+        File file = new File(Configs.MODEL_JSON_FILE);
         long length = file.length();
         byte[] content = new byte[(int) length];
         try {
@@ -33,7 +33,7 @@ class ModelParserTest {
     void deserialize() {
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
-        module.addDeserializer(Object.class, new ModelParser());
+        module.addDeserializer(Object.class, new ModelJsonParser());
         mapper.registerModule(module);
 
         try {

@@ -20,16 +20,18 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
  * @author Guo Weize
  * @date 2021/2/1
  */
-public final class ModelParser extends StdDeserializer<Object> {
+public final class ModelJsonParser extends StdDeserializer<Object> {
 
-    private static final String ENTITY_SIGNAL = "entity";
+    private static final String TYPE_FIELD = "_type_";
+    private static final String NAME_FIELD = "_name_";
+    private static final String ENTITY_SIGNAL = "type";
     private static final String REQUIREMENT_SIGNAL = "requirement";
 
-    protected ModelParser(Class<?> vc) {
+    protected ModelJsonParser(Class<?> vc) {
         super(vc);
     }
 
-    public ModelParser() {
+    public ModelJsonParser() {
         this(null);
     }
 
@@ -39,30 +41,28 @@ public final class ModelParser extends StdDeserializer<Object> {
         JsonNode root = jsonParser.getCodec().readTree(jsonParser);
 
         Set<String> allTypeName = new HashSet<>();
-        root.get(ENTITY_SIGNAL).fieldNames().forEachRemaining(allTypeName::add);
-        root.get(REQUIREMENT_SIGNAL).fieldNames().forEachRemaining(allTypeName::add);
+        root.forEach(typeNode -> allTypeName.add(typeNode.get(NAME_FIELD).asText()));
         TypeManager.initialization(allTypeName);
 
-        parseNode(root.get(ENTITY_SIGNAL), false);
-        parseNode(root.get(REQUIREMENT_SIGNAL), true);
+        for (JsonNode typeNode: root) {
+            String name = typeNode.get(NAME_FIELD).asText();
+            String type = typeNode.get(TYPE_FIELD).asText();
+            Map<String, String> fields2type = parseFields(typeNode);
+            generateJavaFile(name, fields2type, type.equals(REQUIREMENT_SIGNAL));
+            System.out.println(type + " " + name);
+        }
         return null;
-    }
-
-    private void parseNode(JsonNode node, boolean isRequirement) {
-        node.fields().forEachRemaining(entry -> {
-            String typeName = entry.getKey();
-            Map<String, String> fields2type = parseFields(entry.getValue());
-            generateJavaFile(typeName, fields2type, isRequirement);
-        });
     }
 
     private Map<String, String> parseFields(JsonNode node) {
         Map<String, String> fields2type = new HashMap<>(8);
         node.fields().forEachRemaining(entry -> {
             String fieldName = entry.getKey();
-            String type = entry.getValue().asText();
-            TypeManager.checkType(type);
-            fields2type.put(fieldName, type);
+            if (!fieldName.equals(TYPE_FIELD) && !fieldName.equals(NAME_FIELD)) {
+                String type = entry.getValue().asText();
+                TypeManager.checkType(type);
+                fields2type.put(fieldName, type);
+            }
         });
         return fields2type;
     }
