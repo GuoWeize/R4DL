@@ -1,5 +1,7 @@
 package base.parser;
 
+import util.Configs;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -10,54 +12,66 @@ import java.util.Set;
  * @author Guo Weize
  * @date 2021/2/25
  */
-public class Util {
+public final class FileReader {
+
+    public static final String EMPTY_STRING = "";
+    public static final String OPEN_BRACE = "{";
+    public static final String CLOSE_BRACE = "}";
+    public static final String SEMICOLON = ";";
+
     private static FileInputStream file;
     private static int symbolChar = -1;
 
     private static final Set<Integer> ENTITY_CHAR = new HashSet<>();
-    static {
-        for (int i=48; i<=57; i++) {
-            ENTITY_CHAR.add(i);
-        }
-        for (int i=65; i<=90; i++) {
-            ENTITY_CHAR.add(i);
-        }
-        for (int i=97; i<=122; i++) {
-            ENTITY_CHAR.add(i);
-        }
-        ENTITY_CHAR.add(36);
-        ENTITY_CHAR.add(46);
-        ENTITY_CHAR.add(95);
-    }
     private static final Set<Integer> SYMBOL_CHAR = new HashSet<>();
     static {
-        for (int i=33; i<=45; i++) {
-            SYMBOL_CHAR.add(i);
+        for (int i = '!'; i <= '~'; i++) {
+            if (i == '$' || i == '.') {
+                ENTITY_CHAR.add(i);
+            }
+            else if (i == '`') {
+                SYMBOL_CHAR.add(i);
+            }
+            else if (i <= '/') {
+                SYMBOL_CHAR.add(i);
+            }
+            else if (i <= '9') {
+                ENTITY_CHAR.add(i);
+            }
+            else if (i <= '@') {
+                SYMBOL_CHAR.add(i);
+            }
+            else if (i <= 'Z') {
+                ENTITY_CHAR.add(i);
+            }
+            else if (i <= '^') {
+                SYMBOL_CHAR.add(i);
+            }
+            else if (i <= 'z') {
+                ENTITY_CHAR.add(i);
+            }
+            else { // '{' to '~'
+                SYMBOL_CHAR.add(i);
+            }
         }
-        SYMBOL_CHAR.remove(36);
-        for (int i=58; i<=64; i++) {
-            SYMBOL_CHAR.add(i);
-        }
-        for (int i=91; i<=94; i++) {
-            SYMBOL_CHAR.add(i);
-        }
-        for (int i=123; i<=126; i++) {
-            SYMBOL_CHAR.add(i);
-        }
-        SYMBOL_CHAR.add(47);
     }
 
-    private static final String PROJECT_PATH = System.getProperty("user.dir");
-    private static final String DEFINITION_FILE_PATH = PROJECT_PATH + "/src/main/resources/definitionFile/";
-
-    static void readModelFile() {
+    /**
+     * read the specific file
+     * @param filePath path of the file
+     */
+    static void readFile(String filePath) {
         try {
-            file = new FileInputStream(DEFINITION_FILE_PATH + "model.txt");
+            file = new FileInputStream(filePath);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * read the next token in the file
+     * @return the next token read
+     */
     static String nextToken() {
         if (symbolChar != -1) {
             char c = ((char) symbolChar);
@@ -90,11 +104,12 @@ public class Util {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "";
+        return EMPTY_STRING;
     }
 
     public static void main(String[] args) {
-        readModelFile();
+        String filePath = Configs.MODEL_TEXT_FILE;
+        readFile(filePath);
         String token = nextToken();
         while (! "".equals(token)) {
             System.out.print(token);

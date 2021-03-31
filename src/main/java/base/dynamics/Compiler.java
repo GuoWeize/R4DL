@@ -10,18 +10,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import util.Configs;
+
 /**
  * @author Guo Weize
  * @date 2021/2/1
  */
 public final class Compiler {
-    public static final String PROJECT_PATH = System.getProperty("user.dir");
-    public static final String JAVA_FILE_PATH = PROJECT_PATH + "/src/main/resources/definitionJava/";
-    public static final String CLASS_FILE_PATH = PROJECT_PATH + "/src/main/resources/definitionClass/";
     public static URLClassLoader loader;
     static {
         try {
-            loader = new URLClassLoader(new URL[]{new URL("file://" + CLASS_FILE_PATH)});
+            loader = new URLClassLoader(new URL[]{new URL("file://" + Configs.DYNAMICS_CLASS_PATH)});
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -29,8 +28,8 @@ public final class Compiler {
 
     public static void compile(List<String> classNames) {
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-        classNames = classNames.stream().map( (name) -> JAVA_FILE_PATH + name + ".java" ).collect(Collectors.toList());
-        classNames.add(0, CLASS_FILE_PATH);
+        classNames = classNames.stream().map( (name) -> Configs.DYNAMICS_JAVA_CODE_PATH + name + ".java" ).collect(Collectors.toList());
+        classNames.add(0, Configs.DYNAMICS_CLASS_PATH);
         classNames.add(0, "-d");
         String[] arguments = classNames.toArray(new String[0]);
         int result = compiler.run(null, null, null, arguments);

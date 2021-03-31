@@ -1,16 +1,18 @@
 package process.definition.rule;
 
 import base.dynamics.TypeManager;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import util.Configs;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 
 /**
  * Parse recognition rules from file.
@@ -25,9 +27,6 @@ public final class RuleParser extends StdDeserializer<Object> {
     private static final String ARGUMENT_SIGNAL = "argument";
     private static final String LOGIC_SIGNAL = "logic";
     private static final String RETURN_SIGNAL = "return";
-
-    public static final String PROJECT_PATH = System.getProperty("user.dir");
-    public static final String JAVA_FILE_PATH = PROJECT_PATH + "/src/main/resources/definitionJava/";
 
     public RuleParser() {
         this(null);
@@ -86,7 +85,7 @@ public final class RuleParser extends StdDeserializer<Object> {
 
     private void addToJavaFile(String contents){
         try {
-            File file = new File(JAVA_FILE_PATH + "Rule.java");
+            File file = new File(Configs.DYNAMICS_JAVA_CODE_PATH + "Rule.java");
             if (!file.createNewFile()) {
                 System.out.println("Replace file Rule.java" + " before.");
             }

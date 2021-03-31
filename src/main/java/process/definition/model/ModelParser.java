@@ -1,16 +1,18 @@
 package process.definition.model;
 
 import base.dynamics.TypeManager;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import util.Configs;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 
 /**
  * Parse entity models from file.
@@ -22,8 +24,6 @@ public final class ModelParser extends StdDeserializer<Object> {
 
     private static final String ENTITY_SIGNAL = "entity";
     private static final String REQUIREMENT_SIGNAL = "requirement";
-    public static final String PROJECT_PATH = System.getProperty("user.dir");
-    public static final String JAVA_FILE_PATH = PROJECT_PATH + "/src/main/resources/definitionJava/";
 
     protected ModelParser(Class<?> vc) {
         super(vc);
@@ -77,7 +77,7 @@ public final class ModelParser extends StdDeserializer<Object> {
                 + generateFileEnd();
 
         try {
-            File file = new File(JAVA_FILE_PATH + name + ".java");
+            File file = new File(Configs.DYNAMICS_JAVA_CODE_PATH + name + ".java");
             if (!file.createNewFile()) {
                 System.out.println("Replace existing file \"" + name + ".java\".");
             }
