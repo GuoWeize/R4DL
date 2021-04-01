@@ -1,4 +1,4 @@
-package base.parser;
+package process.parser;
 
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;

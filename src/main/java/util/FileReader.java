@@ -1,6 +1,4 @@
-package base.parser;
-
-import util.Configs;
+package util;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -60,7 +58,7 @@ public final class FileReader {
      * read the specific file
      * @param filePath path of the file
      */
-    static void readFile(String filePath) {
+    public static void readFile(String filePath) {
         try {
             file = new FileInputStream(filePath);
         } catch (FileNotFoundException e) {
@@ -72,7 +70,7 @@ public final class FileReader {
      * read the next token in the file
      * @return the next token read
      */
-    static String nextToken() {
+    public static String nextToken() {
         if (symbolChar != -1) {
             char c = ((char) symbolChar);
             symbolChar = -1;

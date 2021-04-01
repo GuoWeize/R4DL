@@ -28,7 +28,9 @@ public final class Compiler {
 
     public static void compile(List<String> classNames) {
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-        classNames = classNames.stream().map( (name) -> Configs.DYNAMICS_JAVA_CODE_PATH + name + ".java" ).collect(Collectors.toList());
+        classNames = classNames.stream()
+                .map( (name) -> Configs.DYNAMICS_JAVA_CODE_PATH + name + ".java" )
+                .collect(Collectors.toList());
         classNames.add(0, Configs.DYNAMICS_CLASS_PATH);
         classNames.add(0, "-d");
         String[] arguments = classNames.toArray(new String[0]);
