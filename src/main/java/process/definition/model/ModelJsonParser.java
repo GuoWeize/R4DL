@@ -2,6 +2,7 @@ package process.definition.model;
 
 import base.dynamics.TypeManager;
 import util.Configs;
+import util.Formats;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -22,11 +23,6 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
  */
 public final class ModelJsonParser extends StdDeserializer<Object> {
 
-    private static final String TYPE_FIELD = "_type_";
-    private static final String NAME_FIELD = "_name_";
-    private static final String ENTITY_SIGNAL = "type";
-    private static final String REQUIREMENT_SIGNAL = "requirement";
-
     protected ModelJsonParser(Class<?> vc) {
         super(vc);
     }
@@ -41,14 +37,25 @@ public final class ModelJsonParser extends StdDeserializer<Object> {
         JsonNode root = jsonParser.getCodec().readTree(jsonParser);
 
         Set<String> allTypeName = new HashSet<>();
-        root.forEach(typeNode -> allTypeName.add(typeNode.get(NAME_FIELD).asText()));
+        root.forEach(typeNode -> allTypeName.add(typeNode.get(Formats.NAME_FIELD).asText()));
         TypeManager.initialization(allTypeName);
 
         for (JsonNode typeNode: root) {
-            String name = typeNode.get(NAME_FIELD).asText();
-            String type = typeNode.get(TYPE_FIELD).asText();
+            String name = typeNode.get(Formats.NAME_FIELD).asText();
+            String type = typeNode.get(Formats.TYPE_FIELD).asText();
             Map<String, String> fields2type = parseFields(typeNode);
-            generateJavaFile(name, fields2type, type.equals(REQUIREMENT_SIGNAL));
+            boolean kind;
+            if (type.equals(Formats.REQUIREMENT_DEFINE)) {
+                kind = true;
+            }
+            else if (type.equals(Formats.ENTITY_DEFINE)) {
+                kind = false;
+            }
+            else {
+                throw new IllegalArgumentException();
+            }
+
+            generateJavaFile(name, fields2type, kind);
             System.out.println(type + " " + name);
         }
         return null;
@@ -58,7 +65,7 @@ public final class ModelJsonParser extends StdDeserializer<Object> {
         Map<String, String> fields2type = new HashMap<>(8);
         node.fields().forEachRemaining(entry -> {
             String fieldName = entry.getKey();
-            if (!fieldName.equals(TYPE_FIELD) && !fieldName.equals(NAME_FIELD)) {
+            if (!fieldName.equals(Formats.TYPE_FIELD) && !fieldName.equals(Formats.NAME_FIELD)) {
                 String type = entry.getValue().asText();
                 TypeManager.checkType(type);
                 fields2type.put(fieldName, type);

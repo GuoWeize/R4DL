@@ -3,6 +3,7 @@ package process.parser;
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
+import util.Formats;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -34,8 +35,8 @@ public final class ModelJsonGenerator {
 
     static void generateEntity(String type, String name) throws IOException {
         jg.writeStartObject();
-        jg.writeStringField("_type_", type);
-        jg.writeStringField("_name_", name);
+        jg.writeStringField(Formats.TYPE_FIELD, type);
+        jg.writeStringField(Formats.NAME_FIELD, name);
         ModelTextParser.parseFields();
         jg.writeEndObject();
     }
