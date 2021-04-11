@@ -35,8 +35,8 @@ public final class ModelJsonGenerator {
 
     static void generateEntity(String type, String name) throws IOException {
         jg.writeStartObject();
-        jg.writeStringField(Formats.TYPE_FIELD, type);
-        jg.writeStringField(Formats.NAME_FIELD, name);
+        jg.writeStringField(Formats.MODEL_TYPE_FIELD, type);
+        jg.writeStringField(Formats.MODEL_NAME_FIELD, name);
         ModelTextParser.parseFields();
         jg.writeEndObject();
     }

@@ -29,17 +29,23 @@ public final class Formats {
         }
     }
 
-    public static final String TYPE_FIELD = FORMATS.get("model_type_field");
-    public static final String NAME_FIELD = FORMATS.get("model_name_field");
-    public static final String FUNCTIONS_FIELD = FORMATS.get("functions_field");
-    public static final String RULES_FIELD = FORMATS.get("rules_field");
+    public static final String MODEL_TYPE_FIELD = FORMATS.get("model_type_field");
+    public static final String MODEL_NAME_FIELD = FORMATS.get("model_name_field");
+    public static final String RULE_TYPE_FIELD = FORMATS.get("rule_type_field");
+    public static final String RULE_ARGUMENT_FIELD = FORMATS.get("rule_argument_types_field");
+    public static final String RULE_RETURN_FIELD = FORMATS.get("rule_return_type_field");
+    public static final String RULE_LOGIC_FIELD = FORMATS.get("rule_body_field");
 
     public static final String ENTITY_DEFINE = FORMATS.get("entity_model_define");
     public static final String REQUIREMENT_DEFINE = FORMATS.get("requirement_model_define");
     public static final String FUNCTION_DEFINE = FORMATS.get("function_define");
     public static final String RULE_DEFINE = FORMATS.get("rule_define");
 
-    public static final String SUM_OF_NUMBERS =FORMATS.get("sum_of_numbers");
+    public static final String SUM_OF_NUMBERS = FORMATS.get("sum_of_numbers");
+    public static final String PRODUCT_OF_NUMBERS = FORMATS.get("product_of_numbers");
+    public static final String AND_BOOL_OPERATE = FORMATS.get("and_bool_operate");
+    public static final String OR_BOOL_OPERATE = FORMATS.get("or_bool_operate");
+    public static final String COLLECTION_MERGE = FORMATS.get("collection_merge");
 
 
     public static void main(String[] args) {

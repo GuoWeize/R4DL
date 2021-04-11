@@ -37,12 +37,12 @@ public final class ModelJsonParser extends StdDeserializer<Object> {
         JsonNode root = jsonParser.getCodec().readTree(jsonParser);
 
         Set<String> allTypeName = new HashSet<>();
-        root.forEach(typeNode -> allTypeName.add(typeNode.get(Formats.NAME_FIELD).asText()));
+        root.forEach(typeNode -> allTypeName.add(typeNode.get(Formats.MODEL_NAME_FIELD).asText()));
         TypeManager.initialization(allTypeName);
 
         for (JsonNode typeNode: root) {
-            String name = typeNode.get(Formats.NAME_FIELD).asText();
-            String type = typeNode.get(Formats.TYPE_FIELD).asText();
+            String name = typeNode.get(Formats.MODEL_NAME_FIELD).asText();
+            String type = typeNode.get(Formats.MODEL_TYPE_FIELD).asText();
             Map<String, String> fields2type = parseFields(typeNode);
             boolean kind;
             if (type.equals(Formats.REQUIREMENT_DEFINE)) {
@@ -65,7 +65,7 @@ public final class ModelJsonParser extends StdDeserializer<Object> {
         Map<String, String> fields2type = new HashMap<>(8);
         node.fields().forEachRemaining(entry -> {
             String fieldName = entry.getKey();
-            if (!fieldName.equals(Formats.TYPE_FIELD) && !fieldName.equals(Formats.NAME_FIELD)) {
+            if (!fieldName.equals(Formats.MODEL_TYPE_FIELD) && !fieldName.equals(Formats.MODEL_NAME_FIELD)) {
                 String type = entry.getValue().asText();
                 TypeManager.checkType(type);
                 fields2type.put(fieldName, type);

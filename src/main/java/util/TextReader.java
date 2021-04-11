@@ -9,9 +9,10 @@ import java.util.*;
  * @author Guo Weize
  * @date 2021/2/25
  */
-public final class FileReader {
+public final class TextReader {
 
     public static final String EMPTY_STRING = "";
+    public static final String COMMA = ",";
     public static final String SEMICOLON = ";";
     public static final String EXCLAMATION = "!";
     public static final String PLUS = "+";

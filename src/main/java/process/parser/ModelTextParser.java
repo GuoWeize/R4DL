@@ -1,7 +1,7 @@
 package process.parser;
 
 import util.Configs;
-import util.FileReader;
+import util.TextReader;
 
 import java.io.IOException;
 
@@ -15,7 +15,7 @@ public final class ModelTextParser {
      * entry of the function of parsing the model text file.
      */
     public static void parseModelFile() {
-        FileReader.readFile(Configs.MODEL_TEXT_FILE);
+        TextReader.readFile(Configs.MODEL_TEXT_FILE);
         ModelJsonGenerator.initialization();
         try {
             ModelJsonGenerator.generateModel();
@@ -29,14 +29,14 @@ public final class ModelTextParser {
      * @throws IOException if there is a syntax error
      */
     static void parseEntities() throws IOException {
-        String type = FileReader.nextToken();
-        while (! FileReader.EMPTY_STRING.equals(type)) {
-            String name = FileReader.nextToken();
-            if (! FileReader.OPEN_BRACE.equals(FileReader.nextToken())) {
+        String type = TextReader.nextToken();
+        while (! TextReader.EMPTY_STRING.equals(type)) {
+            String name = TextReader.nextToken();
+            if (! TextReader.OPEN_BRACE.equals(TextReader.nextToken())) {
                 throw new IOException("need a \"{\" in file " + Configs.MODEL_TEXT_FILE);
             }
             ModelJsonGenerator.generateEntity(type, name);
-            type = FileReader.nextToken();
+            type = TextReader.nextToken();
         }
     }
 
@@ -45,16 +45,16 @@ public final class ModelTextParser {
      * @throws IOException if there is a syntax error
      */
     static void parseFields() throws IOException {
-        String fieldName = FileReader.nextToken();
-        while (! FileReader.CLOSE_BRACE.equals(fieldName)) {
+        String fieldName = TextReader.nextToken();
+        while (! TextReader.CLOSE_BRACE.equals(fieldName)) {
             StringBuilder fieldType = new StringBuilder();
-            String temp = FileReader.nextToken();
-            while (! FileReader.SEMICOLON.equals(temp)) {
+            String temp = TextReader.nextToken();
+            while (! TextReader.SEMICOLON.equals(temp)) {
                 fieldType.append(temp);
-                temp = FileReader.nextToken();
+                temp = TextReader.nextToken();
             }
             ModelJsonGenerator.generateField(fieldName, fieldType.toString());
-            fieldName = FileReader.nextToken();
+            fieldName = TextReader.nextToken();
         }
     }
 
