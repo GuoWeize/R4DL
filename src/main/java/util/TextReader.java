@@ -152,6 +152,14 @@ public final class TextReader {
         return EMPTY_STRING;
     }
 
+    public static void nextTokenWithTest(String expectation) throws LanguageFormatException {
+        String testString = nextToken();
+        if (! testString.equals(expectation)) {
+            throw new LanguageFormatException(testString, expectation);
+        }
+    }
+
+
 
     public static void main(String[] args) {
         String filePath = Configs.RULE_TEXT_FILE;

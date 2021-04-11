@@ -62,7 +62,7 @@ public final class RuleJsonGenerator {
         jg.writeStringField(Formats.RULE_RETURN_FIELD, returnType);
     }
 
-    static void generateLogic() throws IOException {
+    static void generatePreOperator(String operator) throws IOException {
 
     }
 

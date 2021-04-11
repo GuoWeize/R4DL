@@ -2,17 +2,32 @@ package process.parser;
 
 import util.Configs;
 import util.Formats;
+import util.LanguageFormatException;
 import util.TextReader;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Guo Weize
  * @date 2021/4/3
  */
 public final class RuleTextParser {
+
+    private static final Set<String> CUSTOMIZED_OPERATORS = new HashSet<>();
+    private static final Set<String> UNITARY_OPERATORS = new HashSet<>();
+    private static final Set<String> BINARY_OPERATORS = new HashSet<>();
+    private static final Set<String> MULTIPLE_OPERATORS = new HashSet<>();
+    static {
+        MULTIPLE_OPERATORS.add(Formats.SUM_OF_NUMBERS);
+        MULTIPLE_OPERATORS.add(Formats.PRODUCT_OF_NUMBERS);
+        MULTIPLE_OPERATORS.add(Formats.AND_BOOL_OPERATE);
+        MULTIPLE_OPERATORS.add(Formats.OR_BOOL_OPERATE);
+        MULTIPLE_OPERATORS.add(Formats.COLLECTION_MERGE);
+    }
 
     /**
      * entry of the function of parsing the rule text file.
@@ -35,18 +50,16 @@ public final class RuleTextParser {
                 break;
             }
             else if (! Formats.FUNCTION_DEFINE.equals(type) && ! Formats.RULE_DEFINE.equals(type) ) {
-                throw new IllegalArgumentException();
+                throw new LanguageFormatException(type, Formats.FUNCTION_DEFINE + "\" or \"" + Formats.RULE_DEFINE);
             }
             name = TextReader.nextToken();
+            CUSTOMIZED_OPERATORS.add(name);
             RuleJsonGenerator.generateRule(name, type);
         }
     }
 
     static void parseArguments() throws IOException {
-        String symbol = TextReader.nextToken();
-        if (! TextReader.OPEN_PAREN.equals(symbol)) {
-            throw new IllegalArgumentException();
-        }
+        TextReader.nextTokenWithTest(TextReader.OPEN_PAREN);
         List<List<String>> arguments = new ArrayList<>();
         while (true) {
             List<String> argument = new ArrayList<>();
@@ -61,39 +74,34 @@ public final class RuleTextParser {
             if (TextReader.CLOSE_PAREN.equals(next)) {
                 break;
             }
-            else if (! TextReader.DIV.equals(next)) {
-                throw new IllegalArgumentException();
+            else {
+                TextReader.nextTokenWithTest(TextReader.DIV);
             }
         }
         RuleJsonGenerator.generateArguments(arguments);
     }
 
     static void parseReturn() throws IOException {
-        String symbol = TextReader.nextToken();
-        if (! TextReader.ARROW.equals(symbol)) {
-            throw new IllegalArgumentException();
-        }
-        symbol = TextReader.nextToken();
-        RuleJsonGenerator.generateReturn(symbol);
+        TextReader.nextTokenWithTest(TextReader.ARROW);
+        RuleJsonGenerator.generateReturn(TextReader.nextToken());
     }
 
     static void parseLogic() throws IOException {
-        String symbol = TextReader.nextToken();
-        if (TextReader.OPEN_BRACE.equals(symbol)) {
-            String operator = TextReader.nextToken();
-            if (Formats.SUM_OF_NUMBERS.equals(operator)) {
+        TextReader.nextTokenWithTest(TextReader.OPEN_BRACE);
+        parseTerm();
+        TextReader.nextTokenWithTest(TextReader.CLOSE_BRACE);
+    }
 
-            }
-            else if () {
-
-            }
+    static void parseTerm() throws IOException {
+        String preReadToken = TextReader.nextToken();
+        if (TextReader.OPEN_PAREN.equals(preReadToken)) {
 
         }
-        else if (TextReader.OPEN_PAREN.equals(symbol)) {
-
+        else if (MULTIPLE_OPERATORS.contains(preReadToken) || CUSTOMIZED_OPERATORS.contains(preReadToken)) {
+            RuleJsonGenerator.generatePreOperator(preReadToken);
         }
         else {
-            throw new IllegalArgumentException();
+
         }
     }
 
