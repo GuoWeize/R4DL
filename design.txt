@@ -38,7 +38,7 @@ sum, mul, and, or, for, in, all, any, include, size of, merge
 <function body> := '{' <statement> '}'
 
 <statement> := <logic statement> | <not statement> | <for statement> | <calculate statement> | <function statement> |
-               <compare statement> | <collection statement> | <element>
+               <comparison statement> | <collection statement> | <element>
 <logic statement> := <logic operator> '{' <statement> {, <statement>} '}'
 <logic operator> := and | or
 <not statement> := '(' ! <statement> ')'
@@ -49,8 +49,8 @@ sum, mul, and, or, for, in, all, any, include, size of, merge
 <special> := (sum | mul) '{' <statement> {, <statement>} '}'
 <function statement> := <function name> '{' <statement> {, <statement>} '}'
 <function name> := <word>
-<compare statement> := '(' <statement> <compare operation> <statement> ')'
-<compare operation> := < | > | <= | >= | == | !=
+<comparison statement> := '(' <statement> <comparison operation> <statement> ')'
+<comparison operation> := < | > | <= | >= | == | !=
 <collection statement> := <collection size> | <collection include> | <collection merge> | <collection in> | <collection value>
 <collection size> := '(' size of <statement> ')'
 <collection include> := '(' <statement> include <statement> ')'

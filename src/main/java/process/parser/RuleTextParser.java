@@ -1,33 +1,17 @@
 package process.parser;
 
-import util.Configs;
-import util.Formats;
-import util.LanguageFormatException;
-import util.TextReader;
+import util.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Guo Weize
  * @date 2021/4/3
  */
 public final class RuleTextParser {
-
-    private static final Set<String> CUSTOMIZED_OPERATORS = new HashSet<>();
-    private static final Set<String> UNITARY_OPERATORS = new HashSet<>();
-    private static final Set<String> BINARY_OPERATORS = new HashSet<>();
-    private static final Set<String> MULTIPLE_OPERATORS = new HashSet<>();
-    static {
-        MULTIPLE_OPERATORS.add(Formats.SUM_OF_NUMBERS);
-        MULTIPLE_OPERATORS.add(Formats.PRODUCT_OF_NUMBERS);
-        MULTIPLE_OPERATORS.add(Formats.AND_BOOL_OPERATE);
-        MULTIPLE_OPERATORS.add(Formats.OR_BOOL_OPERATE);
-        MULTIPLE_OPERATORS.add(Formats.COLLECTION_MERGE);
-    }
 
     /**
      * entry of the function of parsing the rule text file.
@@ -50,10 +34,10 @@ public final class RuleTextParser {
                 break;
             }
             else if (! Formats.FUNCTION_DEFINE.equals(type) && ! Formats.RULE_DEFINE.equals(type) ) {
-                throw new LanguageFormatException(type, Formats.FUNCTION_DEFINE + "\" or \"" + Formats.RULE_DEFINE);
+                throw new TokenNotExpectationException(type, Arrays.asList(Formats.FUNCTION_DEFINE, Formats.RULE_DEFINE));
             }
             name = TextReader.nextToken();
-            CUSTOMIZED_OPERATORS.add(name);
+            Formats.CUSTOMIZED_OPERATORS.add(name);
             RuleJsonGenerator.generateRule(name, type);
         }
     }
@@ -94,14 +78,22 @@ public final class RuleTextParser {
 
     static void parseTerm() throws IOException {
         String preReadToken = TextReader.nextToken();
-        if (TextReader.OPEN_PAREN.equals(preReadToken)) {
+        if (Formats.UNITARY_OPERATORS.contains(preReadToken)) {
 
         }
-        else if (MULTIPLE_OPERATORS.contains(preReadToken) || CUSTOMIZED_OPERATORS.contains(preReadToken)) {
-            RuleJsonGenerator.generatePreOperator(preReadToken);
+        else if (Formats.BINARY_OPERATORS.contains(preReadToken)) {
+
+        }
+        else if (Formats.MULTIPLE_ARG_OPERATORS.contains(preReadToken)
+                || Formats.CUSTOMIZED_OPERATORS.contains(preReadToken)) {
+
+        }
+        else if (Formats.LOOP_BEGIN_SIGNAL.equals(preReadToken)) {
+
         }
         else {
-
+            throw new TokenInvalidException(preReadToken,
+                    "token should be contained in operators, view all operators in file \"formats.properties\".");
         }
     }
 

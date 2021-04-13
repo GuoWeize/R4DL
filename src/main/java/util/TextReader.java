@@ -155,7 +155,7 @@ public final class TextReader {
     public static void nextTokenWithTest(String expectation) throws LanguageFormatException {
         String testString = nextToken();
         if (! testString.equals(expectation)) {
-            throw new LanguageFormatException(testString, expectation);
+            throw new TokenNotExpectationException(testString, expectation);
         }
     }
 
