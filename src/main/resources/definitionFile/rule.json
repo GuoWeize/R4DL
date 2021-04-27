@@ -2,10 +2,10 @@
     "inout_include": {
         "_type_": "function",
         "_argument_": [
-            ["Functional", "Functional"],
-            ["Functional", "Condition"],
-            ["Condition", "Functional"],
-            ["Condition", "Condition"]
+            ["functional", "functional"],
+            ["functional", "condition"],
+            ["condition", "functional"],
+            ["condition", "condition"]
         ],
         "_return_": "boolean",
         "_logic_": {
@@ -49,10 +49,10 @@
     "base_contradict": {
         "_type_": "function",
         "_argument_": [
-            ["Functional", "Functional"],
-            ["Functional", "Condition"],
-            ["Condition", "Functional"],
-            ["Condition", "Condition"]
+            ["functional", "functional"],
+            ["functional", "condition"],
+            ["condition", "functional"],
+            ["condition", "condition"]
         ],
         "_return_": "boolean",
         "_logic_": {
@@ -82,10 +82,10 @@
     "base_include": {
         "_type_": "function",
         "_argument_": [
-            ["Functional", "Functional"],
-            ["Functional", "Condition"],
-            ["Condition", "Functional"],
-            ["Condition", "Condition"]
+            ["functional", "functional"],
+            ["functional", "condition"],
+            ["condition", "functional"],
+            ["condition", "condition"]
         ],
         "_return_": "boolean",
         "_logic_": {
@@ -126,7 +126,7 @@
 
     "operation_event_condition": {
         "_type_": "function",
-        "_argument_": [["Functional", "Functional"]],
+        "_argument_": [["functional", "functional"]],
         "_return_": "boolean",
         "_logic_": {
             "all": [
@@ -144,7 +144,7 @@
 
     "input_output_condition": {
         "_type_": "function",
-        "_argument_": [["Functional", "Functional"]],
+        "_argument_": [["functional", "functional"]],
         "_return_": "boolean",
         "_logic_": {
             "any": [
@@ -168,7 +168,7 @@
 
     "operation_include": {
         "_type_": "function",
-        "_argument_": [["Operation", "Operation"]],
+        "_argument_": [["operation", "operation"]],
         "_return_": "boolean",
         "_logic_": {
             "or": [
@@ -232,7 +232,7 @@
 
     "operation_contradict": {
         "_type_": "function",
-        "_argument_": [["Operation", "Operation"]],
+        "_argument_": [["operation", "operation"]],
         "_return_": "boolean",
         "_logic_": {
             "and": [
@@ -268,7 +268,7 @@
 
     "operation_inconsistency": {
         "_type_": "rule",
-        "_argument_": [["Functional", "Functional"]],
+        "_argument_": [["functional", "functional"]],
         "_return_": "boolean",
         "_logic_": {
             "and": [
@@ -290,7 +290,7 @@
 
     "restriction_inconsistency": {
         "_type_": "rule",
-        "_argument_": [["Functional", "Functional"]],
+        "_argument_": [["functional", "functional"]],
         "_return_": "boolean",
         "_logic_": {
             "and": [
@@ -330,7 +330,7 @@
 
     "event_inconsistency": {
         "_type_": "rule",
-        "_argument_": [["Functional"]],
+        "_argument_": [["functional"]],
         "_return_": "boolean",
         "_logic_": {
             "all": [
@@ -354,7 +354,7 @@
 
     "operation_inclusion": {
         "_type_": "rule",
-        "_argument_": [["Functional", "Functional"]],
+        "_argument_": [["functional", "functional"]],
         "_return_": "boolean",
         "_logic_": {
             "and": [
@@ -376,7 +376,7 @@
 
     "event_inclusion": {
         "_type_": "rule",
-        "_argument_": [["Functional", "Functional"]],
+        "_argument_": [["functional", "functional"]],
         "_return_": "boolean",
         "_logic_": {
             "and": [
@@ -422,7 +422,7 @@
 
     "operation_event_interlock": {
         "_type_": "rule",
-        "_argument_": [["Functional..."]],
+        "_argument_": [["functional..."]],
         "_return_": "boolean",
         "_logic_": {
             "all argument": [
@@ -441,7 +441,7 @@
 
     "input_output_interlock": {
         "_type_": "rule",
-        "_argument_": [["Functional..."]],
+        "_argument_": [["functional..."]],
         "_return_": "boolean",
         "_logic_": {
             "all argument": [

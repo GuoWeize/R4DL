@@ -9,7 +9,7 @@ EBNF形式
 保留字：
 boolean, integer, float, string, requirement, list, set, map
 type, requirement, function, rule
-sum, mul, and, or, for, in, all, any, include, size of, merge
+and, or, for, in, all, any, include, size_of, merge, from, to
 
 类型定义:
 <type signature> := <base type> | <user-defined type> | <collection type>
@@ -37,28 +37,31 @@ sum, mul, and, or, for, in, all, any, include, size of, merge
 <return type> := <type signature>
 <function body> := '{' <statement> '}'
 
-<statement> := <logic statement> | <not statement> | <for statement> | <calculate statement> | <function statement> |
-               <comparison statement> | <collection statement> | <element>
-<logic statement> := <logic operator> '{' <statement> {, <statement>} '}'
-<logic operator> := and | or
-<not statement> := '(' ! <statement> ')'
-<for statement> := for <set operator> <variable> in <statement> '{' <statement> '}'
-<for operator> := all | any
-<calculate statement> := <common> | <special>
-<common> := '(' <statement> (+ | - | * | /) <statement> ')'
-<special> := (sum | mul) '{' <statement> {, <statement>} '}'
-<function statement> := <function name> '{' <statement> {, <statement>} '}'
-<function name> := <word>
-<comparison statement> := '(' <statement> <comparison operation> <statement> ')'
-<comparison operation> := < | > | <= | >= | == | !=
-<collection statement> := <collection size> | <collection include> | <collection merge> | <collection in> | <collection value>
-<collection size> := '(' size of <statement> ')'
-<collection include> := '(' <statement> include <statement> ')'
-<collection merge> := merge '{' <statement> {, <statement>} '}'
-<collection in> := '(' <statement> in <statement> ')'
-<collection value> := <statement> '[' <number> ']'
+<statement> := <unary operator statement>
+             | <binary operator statement>
+             | <multi-operator statement>
+             | <loop statement>
+             | <statement> '[' <statement> ']'
+             | <statement>.<word>
+             | '%' <statement> '%'
+             | '{' <statement> '}'
+             | <word>
 
-<element> := <base entity> | <parameter> | <entity field>
-<base entity> := <word>
-<parameter> := $<number>$
-<entity field> := <element>.<field name>
+<unary operator statement> := '{' <unary operator> <statement> '}'
+<unary operator> := size_of | ! ｜ -
+
+<binary operator statement> := '{' <statement> <binary operator> <statement> '}'
+<binary operator> := <calculation binary operator>
+                   | <logic binary operator>
+                   | <comparison operator>
+                   | include
+                   | in
+<calculation binary operator> := + ｜ - ｜ * ｜ \
+<logic binary operator> := and | or
+<comparison operator> := < | > | <= | >= | == | !=
+
+<multi-operator statement> := <multi-operator> '(' <statement> {, <statement>} ')'
+<multi-operator> := + ｜* | merge | <logic binary operator> | <customized operator>
+<customized operator> := <word>
+<loop statement> := for (all | any) <statement> <range> '(' <statement> ')'
+<range> := in <statement> | from <statement> to <statement>
