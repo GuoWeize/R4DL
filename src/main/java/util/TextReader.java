@@ -15,11 +15,15 @@ public final class TextReader {
 
     private static FileInputStream file;
     private static final int END_OF_FILE = -1;
-    private static final int SPACE = 32;
     public static final String EMPTY_STRING = "";
+    public static final String SPACE_STRING = "";
 
     private static int charRead = END_OF_FILE;
-    private static String previousRead = EMPTY_STRING;
+    private static int previousRead = END_OF_FILE;
+    private final static Set<Integer> MULTIPLE_CHARS_SIGNAL_HEAD =
+            Formats.MULTIPLE_CHARS_SIGNAL.stream()
+                    .map(s -> (int) s.charAt(0))
+                    .collect(Collectors.toCollection(HashSet::new));
 
     private static final Set<Integer> ENTITY_CHAR = Stream.of(
             '$', '.', '_', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
@@ -40,6 +44,8 @@ public final class TextReader {
     public static void readFile(String filePath) {
         try {
             file = new FileInputStream(filePath);
+            charRead = END_OF_FILE;
+            previousRead = END_OF_FILE;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -50,58 +56,66 @@ public final class TextReader {
      * @return the next token read
      */
     public static String nextToken() {
-        if (charRead != -1) {
-            char c = ((char) charRead);
-            charRead = -1;
-            return Character.toString(c);
-        }
         try {
-            StringBuilder result = new StringBuilder();
-            boolean multipleFlag = false;
-            int c = file.read();
-            while (c != -1) {
-                // multiple characters
-                int finalC = c;
-                if (multipleFlag && result.length() == 1) {
-                    String multipleChars = result + Character.toString(c);
-                    if (Formats.MULTIPLE_CHARS_SIGNAL.contains(multipleChars)) {
-                        return multipleChars;
-                    }
-                    else {
-                        return result.toString();
-                    }
+            String result;
+            if (previousRead != END_OF_FILE) {
+                result = readEntity(previousRead);
+                if (! EMPTY_STRING.equals(result)) {
+                    return result;
                 }
-                if (Formats.MULTIPLE_CHARS_SIGNAL.stream().anyMatch(word -> word.charAt(0) == finalC)) {
-                    result.append((char) c);
-                    multipleFlag = true;
-                    c = file.read();
-                    continue;
-                }
-
-                // name and other symbols
-                if (SYMBOL_CHAR.contains(c)) {
-                    if (result.length() > 0) {
-                        charRead = c;
-                        return result.toString();
-                    }
-                    else {
-                        return Character.toString((char) c);
-                    }
-                }
-                else if (ENTITY_CHAR.contains(c)) {
-                    result.append((char) c);
-                }
-                else {
-                    if (result.length() > 0) {
-                        return result.toString();
-                    }
-                }
-                c = file.read();
+                return readSymbol(charRead);
             }
+            charRead = file.read();
+            while (! SYMBOL_CHAR.contains(charRead) && ! ENTITY_CHAR.contains(charRead)) {
+                charRead = file.read();
+                if (charRead == END_OF_FILE) {
+                    return EMPTY_STRING;
+                }
+            }
+            result = readEntity(charRead);
+            if (! EMPTY_STRING.equals(result)) {
+                return result;
+            }
+            return readSymbol(charRead);
         } catch (IOException e) {
             e.printStackTrace();
         }
         return EMPTY_STRING;
+    }
+
+    private static String readEntity(int head) throws IOException {
+        StringBuilder result = new StringBuilder();
+        if (ENTITY_CHAR.contains(head)) {
+            while (ENTITY_CHAR.contains(charRead)) {
+                result.append((char) charRead);
+                charRead = file.read();
+            }
+            if (SYMBOL_CHAR.contains(charRead)) {
+                previousRead = charRead;
+            }
+            return result.toString();
+        }
+        return EMPTY_STRING;
+    }
+
+    private static String readSymbol(int head) throws IOException {
+        if (MULTIPLE_CHARS_SIGNAL_HEAD.contains(head)) {
+            charRead = file.read();
+            String temp = Character.toString((char) head) + (char) charRead;
+            if (Formats.MULTIPLE_CHARS_SIGNAL.contains(temp)) {
+                previousRead = END_OF_FILE;
+                return temp;
+            }
+            else {
+                while (! SYMBOL_CHAR.contains(charRead) && ! ENTITY_CHAR.contains(charRead)) {
+                    charRead = file.read();
+                }
+                previousRead = charRead;
+                return Character.toString((char) head);
+            }
+        }
+        previousRead = END_OF_FILE;
+        return Character.toString((char) head);
     }
 
     public static void nextTokenWithTest(String expectation) throws LanguageFormatException {
