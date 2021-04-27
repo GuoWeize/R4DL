@@ -33,8 +33,8 @@ public final class RuleTextParser {
             if (TextReader.EMPTY_STRING.equals(type)) {
                 break;
             }
-            else if (! Formats.FUNCTION_DEFINE.equals(type) && ! Formats.RULE_DEFINE.equals(type) ) {
-                throw new TokenNotExpectationException(type, Arrays.asList(Formats.FUNCTION_DEFINE, Formats.RULE_DEFINE));
+            else if (! Formats.DEFINE_FUNCTION.equals(type) && ! Formats.DEFINE_RULE.equals(type) ) {
+                throw new TokenNotExpectationException(type, Arrays.asList(Formats.DEFINE_FUNCTION, Formats.DEFINE_RULE));
             }
             name = TextReader.nextToken();
             Formats.CUSTOMIZED_OPERATORS.add(name);
@@ -43,37 +43,37 @@ public final class RuleTextParser {
     }
 
     static void parseArguments() throws IOException {
-        TextReader.nextTokenWithTest(TextReader.OPEN_PAREN);
+        TextReader.nextTokenWithTest(Formats.OPEN_PAREN);
         List<List<String>> arguments = new ArrayList<>();
         while (true) {
             List<String> argument = new ArrayList<>();
             String next = TextReader.nextToken();
             argument.add(next);
             next = TextReader.nextToken();
-            while (TextReader.COMMA.equals(next)) {
+            while (Formats.COMMA.equals(next)) {
                 argument.add(TextReader.nextToken());
                 next = TextReader.nextToken();
             }
             arguments.add(argument);
-            if (TextReader.CLOSE_PAREN.equals(next)) {
+            if (Formats.CLOSE_PAREN.equals(next)) {
                 break;
             }
             else {
-                TextReader.nextTokenWithTest(TextReader.DIV);
+                TextReader.nextTokenWithTest(Formats.SEPARATOR);
             }
         }
         RuleJsonGenerator.generateArguments(arguments);
     }
 
     static void parseReturn() throws IOException {
-        TextReader.nextTokenWithTest(TextReader.ARROW);
+        TextReader.nextTokenWithTest(Formats.ARROW);
         RuleJsonGenerator.generateReturn(TextReader.nextToken());
     }
 
     static void parseLogic() throws IOException {
-        TextReader.nextTokenWithTest(TextReader.OPEN_BRACE);
+        TextReader.nextTokenWithTest(Formats.OPEN_BRACE);
         parseTerm();
-        TextReader.nextTokenWithTest(TextReader.CLOSE_BRACE);
+        TextReader.nextTokenWithTest(Formats.CLOSE_BRACE);
     }
 
     static void parseTerm() throws IOException {
@@ -88,7 +88,7 @@ public final class RuleTextParser {
                 || Formats.CUSTOMIZED_OPERATORS.contains(preReadToken)) {
 
         }
-        else if (Formats.LOOP_BEGIN_SIGNAL.equals(preReadToken)) {
+        else if (Formats.LOOP_SIGNAL.equals(preReadToken)) {
 
         }
         else {

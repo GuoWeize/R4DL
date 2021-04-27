@@ -45,10 +45,10 @@ public final class ModelJsonParser extends StdDeserializer<Object> {
             String type = typeNode.get(Formats.MODEL_TYPE_FIELD).asText();
             Map<String, String> fields2type = parseFields(typeNode);
             boolean kind;
-            if (type.equals(Formats.REQUIREMENT_DEFINE)) {
+            if (type.equals(Formats.DEFINE_REQUIREMENT)) {
                 kind = true;
             }
-            else if (type.equals(Formats.ENTITY_DEFINE)) {
+            else if (type.equals(Formats.DEFINE_ENTITY)) {
                 kind = false;
             }
             else {

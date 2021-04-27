@@ -26,6 +26,35 @@ public final class Formats {
         }
     }
 
+    /* Definition words */
+
+    public static final String DEFINE_ENTITY = FORMATS.get("define_entity");
+    public static final String DEFINE_REQUIREMENT = FORMATS.get("define_requirement");
+    public static final String DEFINE_FUNCTION = FORMATS.get("define_function");
+    public static final String DEFINE_RULE = FORMATS.get("define_rule");
+
+    /* Signals */
+
+    public static final String COMMA = ",";
+    public static final String SEPARATOR = "/";
+    public static final String SEMICOLON = ";";
+    public static final String OPEN_BRACE = "{";
+    public static final String CLOSE_BRACE = "}";
+    public static final String OPEN_PAREN = "(";
+    public static final String CLOSE_PAREN = ")";
+    public static final String OPEN_BRACKET = "[";
+    public static final String CLOSE_BRACKET = "]";
+    public static final String EQUAL = "==";
+    public static final String NOT_EQUAL = "!=";
+    public static final String NOT_LESS = ">=";
+    public static final String NOT_GREATER = "<=";
+    public static final String ARROW = "->";
+    public static final String PARAMETER_DELIMITER = FORMATS.get("parameter_delimiter");
+    public static final String VARIABLE_PARAMETERS = FORMATS.get("variable_parameters");
+    static final Set<String> MULTIPLE_CHARS_SIGNAL = Set.of(
+            EQUAL, NOT_EQUAL, NOT_LESS, NOT_GREATER, ARROW
+    );
+
     /* Json file formats: fields' names */
 
     public static final String MODEL_TYPE_FIELD = FORMATS.get("model_type_field");
@@ -35,78 +64,73 @@ public final class Formats {
     public static final String RULE_RETURN_FIELD = FORMATS.get("rule_return_type_field");
     public static final String RULE_LOGIC_FIELD = FORMATS.get("rule_logic_field");
 
-    /* Specific reserved words */
+    /* Calculations */
 
-    public static final String ENTITY_DEFINE = FORMATS.get("entity_model_define");
-    public static final String REQUIREMENT_DEFINE = FORMATS.get("requirement_model_define");
-    public static final String FUNCTION_DEFINE = FORMATS.get("function_define");
-    public static final String RULE_DEFINE = FORMATS.get("rule_define");
+    public static final String CALCULATE_ADDITION = FORMATS.get("calculate_addition");
+    public static final String CALCULATE_SUBTRACTION = FORMATS.get("calculate_subtraction");
+    public static final String CALCULATE_MULTIPLE = FORMATS.get("calculate_multiple");
+    public static final String CALCULATE_DIVISION = FORMATS.get("calculate_division");
+    public static final String CALCULATE_SUMMATION = FORMATS.get("calculate_summation");
+    public static final String CALCULATE_MULTIPLICATION = FORMATS.get("calculate_multiplication");
 
-    /* Unitary operators */
+    /* Comparisons */
 
-    public static final String NOT_BOOLEAN = FORMATS.get("not_boolean");
-    public static final String SIZE_OF_COLLECTION = FORMATS.get("size_of_collection");
+    public static final String COMPARE_EQUAL = FORMATS.get("compare_equal");
+    public static final String COMPARE_NOT_EQUAL = FORMATS.get("compare_not_equal");
+    public static final String COMPARE_GREATER = FORMATS.get("compare_greater");
+    public static final String COMPARE_LESS = FORMATS.get("compare_less");
+    public static final String COMPARE_NOT_GREATER = FORMATS.get("compare_not_greater");
+    public static final String COMPARE_NOT_LESS = FORMATS.get("compare_not_less");
 
-    /* Binary operators */
+    /* Logical operators */
 
-    public static final String ADDITION_CALCULATE = FORMATS.get("addition_calculate");
-    public static final String SUBTRACTION_CALCULATE = FORMATS.get("subtraction_calculate");
-    public static final String MULTIPLE_CALCULATE = FORMATS.get("multiple_calculate");
-    public static final String DIVISION_CALCULATE = FORMATS.get("division_calculate");
-    public static final String EQUAL_COMPARISON = FORMATS.get("equal_comparison");
-    public static final String NOT_EQUAL_COMPARISON = FORMATS.get("not_equal_comparison");
-    public static final String GREATER_COMPARISON = FORMATS.get("greater_comparison");
-    public static final String LESS_COMPARISON = FORMATS.get("less_comparison");
-    public static final String NOT_GREATER_COMPARISON = FORMATS.get("not_greater_comparison");
-    public static final String NOT_LESS_COMPARISON = FORMATS.get("not_less_comparison");
+    public static final String LOGICAL_NOT = FORMATS.get("logical_not");
+    public static final String LOGICAL_AND = FORMATS.get("logical_and");
+    public static final String LOGICAL_OR = FORMATS.get("logical_or");
+
+    /* Collection operators */
+
+    public static final String COLLECTION_SIZE_OF = FORMATS.get("collection_size_of");
     public static final String COLLECTION_INCLUDE = FORMATS.get("collection_include");
-
-    /* Multiple arguments operators */
-
-    public static final String SUM_OF_NUMBERS = FORMATS.get("sum_of_numbers");
-    public static final String PRODUCT_OF_NUMBERS = FORMATS.get("product_of_numbers");
-    public static final String AND_BOOL_OPERATE = FORMATS.get("and_boolean");
-    public static final String OR_BOOL_OPERATE = FORMATS.get("or_boolean");
+    public static final String COLLECTION_IN = FORMATS.get("collection_in");
     public static final String COLLECTION_MERGE = FORMATS.get("collection_merge");
 
-    /* loop operators */
+    /* Loop operators */
 
-    public static final String LOOP_BEGIN_SIGNAL = FORMATS.get("loop_begin_signal");
+    public static final String LOOP_SIGNAL = FORMATS.get("loop_signal");
     public static final String ALL_SATISFY = FORMATS.get("all_satisfy");
     public static final String ANY_SATISFY = FORMATS.get("any_satisfy");
     public static final String RANGE_SIGNAL = FORMATS.get("range_signal");
     public static final String RANGE_BEGIN_SIGNAL = FORMATS.get("range_begin_signal");
     public static final String RANGE_END_SIGNAL = FORMATS.get("range_end_signal");
 
-    public static final Set<String> UNITARY_OPERATORS = new HashSet<>();
-    public static final Set<String> BINARY_OPERATORS = new HashSet<>();
-    public static final Set<String> MULTIPLE_ARG_OPERATORS = new HashSet<>();
+    public static final Set<String> UNITARY_OPERATORS = Set.of(
+            LOGICAL_NOT,
+            COLLECTION_SIZE_OF
+    );
+    public static final Set<String> BINARY_OPERATORS = Set.of(
+            CALCULATE_ADDITION,
+            CALCULATE_SUBTRACTION,
+            CALCULATE_MULTIPLE,
+            CALCULATE_DIVISION,
+            LOGICAL_AND,
+            LOGICAL_OR,
+            COMPARE_EQUAL,
+            COMPARE_NOT_EQUAL,
+            COMPARE_GREATER,
+            COMPARE_LESS,
+            COMPARE_NOT_GREATER,
+            COMPARE_NOT_LESS,
+            COLLECTION_INCLUDE,
+            COLLECTION_IN
+    );
+    public static final Set<String> MULTIPLE_ARG_OPERATORS = Set.of(
+            CALCULATE_SUMMATION,
+            CALCULATE_MULTIPLICATION,
+            LOGICAL_AND,
+            LOGICAL_OR,
+            COLLECTION_MERGE
+    );
     public static final Set<String> CUSTOMIZED_OPERATORS = new HashSet<>();
-    static {
-        UNITARY_OPERATORS.add(NOT_BOOLEAN);
-        UNITARY_OPERATORS.add(SIZE_OF_COLLECTION);
-
-        BINARY_OPERATORS.add(ADDITION_CALCULATE);
-        BINARY_OPERATORS.add(SUBTRACTION_CALCULATE);
-        BINARY_OPERATORS.add(MULTIPLE_CALCULATE);
-        BINARY_OPERATORS.add(DIVISION_CALCULATE);
-        BINARY_OPERATORS.add(EQUAL_COMPARISON);
-        BINARY_OPERATORS.add(NOT_EQUAL_COMPARISON);
-        BINARY_OPERATORS.add(GREATER_COMPARISON);
-        BINARY_OPERATORS.add(LESS_COMPARISON);
-        BINARY_OPERATORS.add(NOT_GREATER_COMPARISON);
-        BINARY_OPERATORS.add(NOT_LESS_COMPARISON);
-        BINARY_OPERATORS.add(COLLECTION_INCLUDE);
-
-        MULTIPLE_ARG_OPERATORS.add(Formats.SUM_OF_NUMBERS);
-        MULTIPLE_ARG_OPERATORS.add(Formats.PRODUCT_OF_NUMBERS);
-        MULTIPLE_ARG_OPERATORS.add(Formats.AND_BOOL_OPERATE);
-        MULTIPLE_ARG_OPERATORS.add(Formats.OR_BOOL_OPERATE);
-        MULTIPLE_ARG_OPERATORS.add(Formats.COLLECTION_MERGE);
-    }
-
-    public static void main(String[] args) {
-        System.out.println(SUM_OF_NUMBERS);
-    }
 
 }

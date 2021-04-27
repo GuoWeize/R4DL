@@ -1,6 +1,7 @@
 package process.parser;
 
 import util.Configs;
+import util.Formats;
 import util.TextReader;
 
 import java.io.IOException;
@@ -32,7 +33,7 @@ public final class ModelTextParser {
         String type = TextReader.nextToken();
         while (! TextReader.EMPTY_STRING.equals(type)) {
             String name = TextReader.nextToken();
-            if (! TextReader.OPEN_BRACE.equals(TextReader.nextToken())) {
+            if (! Formats.OPEN_BRACE.equals(TextReader.nextToken())) {
                 throw new IOException("need a \"{\" in file " + Configs.MODEL_TEXT_FILE);
             }
             ModelJsonGenerator.generateEntity(type, name);
@@ -46,10 +47,10 @@ public final class ModelTextParser {
      */
     static void parseFields() throws IOException {
         String fieldName = TextReader.nextToken();
-        while (! TextReader.CLOSE_BRACE.equals(fieldName)) {
+        while (! Formats.CLOSE_BRACE.equals(fieldName)) {
             StringBuilder fieldType = new StringBuilder();
             String temp = TextReader.nextToken();
-            while (! TextReader.SEMICOLON.equals(temp)) {
+            while (! Formats.SEMICOLON.equals(temp)) {
                 fieldType.append(temp);
                 temp = TextReader.nextToken();
             }

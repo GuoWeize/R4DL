@@ -4,6 +4,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Guo Weize
@@ -11,75 +13,25 @@ import java.util.*;
  */
 public final class TextReader {
 
-    public static final String EMPTY_STRING = "";
-    public static final String COMMA = ",";
-    public static final String SEMICOLON = ";";
-    public static final String EXCLAMATION = "!";
-    public static final String PLUS = "+";
-    public static final String MINUS = "-";
-    public static final String STAR = "*";
-    public static final String DIV = "/";
-    public static final String LESS = "<";
-    public static final String GREATER = ">";
-    public static final String DOLLAR = "$";
-
-    public static final String OPEN_BRACE = "{";
-    public static final String CLOSE_BRACE = "}";
-    public static final String OPEN_PAREN = "(";
-    public static final String CLOSE_PAREN = ")";
-    public static final String OPEN_BRACKET = "[";
-    public static final String CLOSE_BRACKET = "]";
-
-    public static final String EQUAL = "==";
-    public static final String NOT_EQUAL = "!=";
-    public static final String NOT_LESS = ">=";
-    public static final String NOT_GREATER = "<=";
-    public static final String ARROW = "->";
-    private static final Set<String> MULTIPLE = new HashSet<>();
-    static {
-        MULTIPLE.add(EQUAL);
-        MULTIPLE.add(NOT_EQUAL);
-        MULTIPLE.add(NOT_LESS);
-        MULTIPLE.add(NOT_GREATER);
-        MULTIPLE.add(ARROW);
-    }
-
     private static FileInputStream file;
-    private static int symbolChar = -1;
+    private static final int END_OF_FILE = -1;
+    private static final int SPACE = 32;
+    public static final String EMPTY_STRING = "";
 
-    private static final Set<Integer> ENTITY_CHAR = new HashSet<>();
-    private static final Set<Integer> SYMBOL_CHAR = new HashSet<>();
-    static {
-        for (int i = '!'; i <= '~'; i++) {
-            if (i == '$' || i == '.') {
-                ENTITY_CHAR.add(i);
-            }
-            else if (i == '`') {
-                SYMBOL_CHAR.add(i);
-            }
-            else if (i <= '/') {
-                SYMBOL_CHAR.add(i);
-            }
-            else if (i <= '9') {
-                ENTITY_CHAR.add(i);
-            }
-            else if (i <= '@') {
-                SYMBOL_CHAR.add(i);
-            }
-            else if (i <= 'Z') {
-                ENTITY_CHAR.add(i);
-            }
-            else if (i <= '^') {
-                SYMBOL_CHAR.add(i);
-            }
-            else if (i <= 'z') {
-                ENTITY_CHAR.add(i);
-            }
-            else { // '{' to '~'
-                SYMBOL_CHAR.add(i);
-            }
-        }
-    }
+    private static int charRead = END_OF_FILE;
+    private static String previousRead = EMPTY_STRING;
+
+    private static final Set<Integer> ENTITY_CHAR = Stream.of(
+            '$', '.', '_', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+            'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
+            'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'
+    ).map(character -> (int)character )
+            .collect(Collectors.toCollection(HashSet::new));
+    private static final Set<Integer> SYMBOL_CHAR = Stream.of(
+            '`', '!', '"', '#', '%', '&', '\'', '(', ')', '*', '+', ',', '-', '/', ':', ';',
+            '<', '=', '>', '?', '@', '[', '\\', ']', '^', '`', '{', '|', '}', '~'
+    ).map(character -> (int)character )
+            .collect(Collectors.toCollection(HashSet::new));
 
     /**
      * read the specific file
@@ -98,9 +50,9 @@ public final class TextReader {
      * @return the next token read
      */
     public static String nextToken() {
-        if (symbolChar != -1) {
-            char c = ((char) symbolChar);
-            symbolChar = -1;
+        if (charRead != -1) {
+            char c = ((char) charRead);
+            charRead = -1;
             return Character.toString(c);
         }
         try {
@@ -111,15 +63,15 @@ public final class TextReader {
                 // multiple characters
                 int finalC = c;
                 if (multipleFlag && result.length() == 1) {
-                    String multipleChars = result.toString() + Character.toString(c);
-                    if (MULTIPLE.contains(multipleChars)) {
+                    String multipleChars = result + Character.toString(c);
+                    if (Formats.MULTIPLE_CHARS_SIGNAL.contains(multipleChars)) {
                         return multipleChars;
                     }
                     else {
                         return result.toString();
                     }
                 }
-                if (MULTIPLE.stream().anyMatch(word -> word.charAt(0) == finalC)) {
+                if (Formats.MULTIPLE_CHARS_SIGNAL.stream().anyMatch(word -> word.charAt(0) == finalC)) {
                     result.append((char) c);
                     multipleFlag = true;
                     c = file.read();
@@ -129,7 +81,7 @@ public final class TextReader {
                 // name and other symbols
                 if (SYMBOL_CHAR.contains(c)) {
                     if (result.length() > 0) {
-                        symbolChar = c;
+                        charRead = c;
                         return result.toString();
                     }
                     else {
@@ -159,13 +111,10 @@ public final class TextReader {
         }
     }
 
-
-
     public static void main(String[] args) {
-        String filePath = Configs.RULE_TEXT_FILE;
-        readFile(filePath);
+        readFile(Configs.RULE_TEXT_FILE);
         String token = nextToken();
-        while (! "".equals(token)) {
+        while (! EMPTY_STRING.equals(token)) {
             System.out.print(token);
             System.out.print(" ");
             token = nextToken();

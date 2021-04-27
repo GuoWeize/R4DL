@@ -37,7 +37,7 @@ and, or, for, in, all, any, include, size_of, merge, from, to
 <return type> := <type signature>
 <function body> := '{' <statement> '}'
 
-<statement> := <unary operator statement>
+<statement> := <unitary operator statement>
              | <binary operator statement>
              | <multi-operator statement>
              | <loop statement>
@@ -47,8 +47,8 @@ and, or, for, in, all, any, include, size_of, merge, from, to
              | '{' <statement> '}'
              | <word>
 
-<unary operator statement> := '{' <unary operator> <statement> '}'
-<unary operator> := size_of | ! ｜ -
+<unitary operator statement> := '{' <unitary operator> <statement> '}'
+<unitary operator> := size_of | ! ｜ -
 
 <binary operator statement> := '{' <statement> <binary operator> <statement> '}'
 <binary operator> := <calculation binary operator>
