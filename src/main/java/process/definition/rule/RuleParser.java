@@ -13,6 +13,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import util.Formats;
 
 /**
  * Parse recognition rules from file.
@@ -21,12 +22,6 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
  * @date 2021/2/1
  */
 public final class RuleParser extends StdDeserializer<Object> {
-
-    private static final String FUNCTION_SIGNAL = "function";
-    private static final String RULE_SIGNAL = "rule";
-    private static final String ARGUMENT_SIGNAL = "argument";
-    private static final String LOGIC_SIGNAL = "logic";
-    private static final String RETURN_SIGNAL = "return";
 
     public RuleParser() {
         this(null);
@@ -45,8 +40,8 @@ public final class RuleParser extends StdDeserializer<Object> {
                 "import base.type.collection.*;\n" +
                 "import java.util.stream.IntStream;\n\n" +
                 "public class Rule {\n\n" +
-                parseRoot(root.get(FUNCTION_SIGNAL), false) +
-                parseRoot(root.get(RULE_SIGNAL), true) +
+                parseRoot(root.get(Formats.DEFINE_FUNCTION), false) +
+                parseRoot(root.get(Formats.DEFINE_RULE), true) +
                 "}\n";
         addToJavaFile(contents);
         return null;
@@ -57,9 +52,9 @@ public final class RuleParser extends StdDeserializer<Object> {
         node.fields().forEachRemaining(entry -> {
             String name = entry.getKey();
             JsonNode n = entry.getValue();
-            List<String> arguments = parseArgument(n.get(ARGUMENT_SIGNAL));
-            String returns = parseReturn(n.get(RETURN_SIGNAL));
-            String logic = FunctionParser.parse(n.get(LOGIC_SIGNAL));
+            List<String> arguments = parseArgument(n.get(Formats.RULE_ARGUMENT_FIELD));
+            String returns = parseReturn(n.get(Formats.RULE_RETURN_FIELD));
+            String logic = FunctionParser.parse(n.get(Formats.RULE_LOGIC_FIELD));
             for (String argument: arguments) {
                 contents.append(generateRuleFunction(name, argument, returns, logic, isRule));
             }
@@ -85,9 +80,9 @@ public final class RuleParser extends StdDeserializer<Object> {
 
     private void addToJavaFile(String contents){
         try {
-            File file = new File(Configs.DYNAMICS_JAVA_CODE_PATH + "Rule.java");
-            if (!file.createNewFile()) {
-                System.out.println("Replace file Rule.java" + " before.");
+            File file = new File(Configs.RULE_JAVA_FILE);
+            if (! file.createNewFile()) {
+                System.out.println("Replace \"" + Configs.RULE_JAVA_NAME + "\" before.");
             }
             FileWriter fileWriter = new FileWriter(file);
             fileWriter.write(contents);

@@ -41,6 +41,9 @@ public final class Configs {
     public static final String RULE_TEXT_FILE = DEFINITION_PATH + CONFIGS.get("rule_text_file_name");
     public static final String RULE_JSON_FILE = DEFINITION_PATH + CONFIGS.get("rule_json_file_name");
 
+    public static final String RULE_JAVA_NAME = CONFIGS.get("rule_java_file_name");
+    public static final String RULE_JAVA_FILE = DYNAMICS_CLASS_PATH + RULE_JAVA_NAME;
+
 
     public static void main(String[] args) {
         System.out.println(MODEL_TEXT_FILE);

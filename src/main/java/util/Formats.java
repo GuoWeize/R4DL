@@ -2,7 +2,12 @@ package util;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.*;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Properties;
+import java.util.Set;
 
 /**
  * @author Guo Weize
@@ -33,7 +38,7 @@ public final class Formats {
     public static final String DEFINE_FUNCTION = FORMATS.get("define_function");
     public static final String DEFINE_RULE = FORMATS.get("define_rule");
 
-    /* Signals */
+    /* Symbols */
 
     public static final String COMMA = ",";
     public static final String SEPARATOR = "/";
@@ -63,6 +68,15 @@ public final class Formats {
     public static final String RULE_ARGUMENT_FIELD = FORMATS.get("rule_argument_types_field");
     public static final String RULE_RETURN_FIELD = FORMATS.get("rule_return_type_field");
     public static final String RULE_LOGIC_FIELD = FORMATS.get("rule_logic_field");
+
+    /* Requirement elements formats */
+
+    public static final String ENTITY_SIGNAL = FORMATS.get("entity_signal");
+    public static final String MAP_SIGNAL = FORMATS.get("map_signal");
+    public static final String LIST_SIGNAL = FORMATS.get("list_signal");
+    public static final String SET_SIGNAL = FORMATS.get("set_signal");
+    public static final String KEY_SIGNAL = FORMATS.get("key_signal");
+    public static final String VALUE_SIGNAL = FORMATS.get("value_signal");
 
     /* Calculations */
 

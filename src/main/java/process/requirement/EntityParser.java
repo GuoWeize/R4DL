@@ -14,6 +14,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import util.Formats;
 
 import java.io.IOException;
 import java.util.*;
@@ -28,11 +29,93 @@ import java.util.function.Predicate;
  */
 public final class EntityParser extends StdDeserializer<Object> {
 
-    private static final String ENTITY_SIGNAL = "_";
-    private static final String MAP_SIGNAL = "_map_";
-    private static final String LIST_SIGNAL = "_list_";
-    private static final String SET_SIGNAL = "_set_";
-    private static final Map<Predicate<JsonNode>, Function<JsonNode, BaseEntity>> CASES = new HashMap<>(8);
+    private static class Inner {
+        static final Map<Predicate<JsonNode>, Function<JsonNode, BaseEntity>> CASES = Map.of(
+                (node) -> node.has(Formats.ENTITY_SIGNAL), Inner::parseEntity,
+                (node) -> node.has(Formats.SET_SIGNAL), Inner::parseSet,
+                (node) -> node.has(Formats.LIST_SIGNAL), Inner::parseList,
+                (node) -> node.has(Formats.MAP_SIGNAL), Inner::parseMap,
+                JsonNode::isTextual, Inner::parseString,
+                JsonNode::isInt, Inner::parseInt,
+                JsonNode::asBoolean, Inner::parseBool,
+                (node) -> (node.isFloat() || node.isDouble()), Inner::parseFloat
+        );
+
+        static BaseEntity parseNode(JsonNode node) {
+            for (var entry: CASES.entrySet()) {
+                if (entry.getKey().test(node)) {
+                    return entry.getValue().apply(node);
+                }
+            }
+            return null;
+        }
+
+        static BaseEntity generateEntity(String type, JsonNode fieldsNode) {
+            BaseEntity result = Builder.newInstance(type);
+            fieldsNode.fields().forEachRemaining(entry -> {
+                String fieldName = entry.getKey();
+                BaseEntity fieldValue = parseNode(entry.getValue());
+                Builder.setField(result, fieldName, fieldValue);
+            });
+            return result;
+        }
+
+        static BaseEntity parseEntity(JsonNode node) {
+            Iterator<Map.Entry<String, JsonNode>> iterator = node.fields();
+            while (iterator.hasNext()) {
+                Map.Entry<String, JsonNode> entry = iterator.next();
+                String type = entry.getKey();
+                if (! Formats.ENTITY_SIGNAL.equals(type)) {
+                    JsonNode fieldsNode = entry.getValue();
+                    return generateEntity(type, fieldsNode);
+                }
+            }
+            return null;
+        }
+
+        static BaseEntity parseSet(JsonNode node) {
+            SetEntity<BaseEntity> result = new SetEntity<>();
+            for (JsonNode n: node.get(Formats.SET_SIGNAL)) {
+                result.add(parseNode(n));
+            }
+            return result;
+        }
+
+        static BaseEntity parseList(JsonNode node) {
+            ListEntity<BaseEntity> result = new ListEntity<>();
+            for (JsonNode n: node.get(Formats.LIST_SIGNAL)) {
+                result.add(parseNode(n));
+            }
+            return result;
+        }
+
+        static BaseEntity parseMap(JsonNode node) {
+            MapEntity<BaseEntity, BaseEntity> result = new MapEntity<>();
+            for (JsonNode n: node.get(Formats.MAP_SIGNAL)) {
+                BaseEntity key = parseNode(n.get(Formats.KEY_SIGNAL));
+                BaseEntity value = parseNode(n.get(Formats.VALUE_SIGNAL));
+                result.add(key, value);
+            }
+            return result;
+        }
+
+        static BaseEntity parseString(JsonNode node) {
+            return StringEntity.valueOf(node.asText());
+        }
+
+        static BaseEntity parseInt(JsonNode node) {
+            return IntEntity.valueOf(node.asInt());
+        }
+
+        static BaseEntity parseBool(JsonNode node) {
+            return BoolEntity.valueOf(node.asBoolean());
+        }
+
+        static BaseEntity parseFloat(JsonNode node) {
+            return FloatEntity.valueOf(node.asDouble());
+        }
+
+    }
 
     public EntityParser() {
         this(null);
@@ -45,99 +128,12 @@ public final class EntityParser extends StdDeserializer<Object> {
     @Override
     public List<BaseEntity> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
             throws IOException {
-        init();
         List<BaseEntity> result = new ArrayList<>();
         JsonNode node = jsonParser.getCodec().readTree(jsonParser);
         for (JsonNode n: node) {
-            result.add(parseNode(n));
+            result.add(Inner.parseNode(n));
         }
         return result;
-    }
-
-    private void init() {
-        CASES.clear();
-        CASES.put((node) -> node.has(ENTITY_SIGNAL), this::parseEntity);
-        CASES.put((node) -> node.has(SET_SIGNAL), this::parseSet);
-        CASES.put((node) -> node.has(LIST_SIGNAL), this::parseList);
-        CASES.put((node) -> node.has(MAP_SIGNAL), this::parseMap);
-        CASES.put(JsonNode::isTextual, this::parseString);
-        CASES.put(JsonNode::isInt, this::parseInt);
-        CASES.put(JsonNode::asBoolean, this::parseBool);
-        CASES.put((node) -> (node.isFloat() || node.isDouble()), this::parseFloat);
-    }
-
-    private BaseEntity parseNode(JsonNode node) {
-        for (var entry: CASES.entrySet()) {
-            if (entry.getKey().test(node)) {
-                return entry.getValue().apply(node);
-            }
-        }
-        return null;
-    }
-
-    private BaseEntity generateEntity(String type, JsonNode fieldsNode) {
-        BaseEntity result = Builder.newInstance(type);
-        fieldsNode.fields().forEachRemaining(entry -> {
-            String fieldName = entry.getKey();
-            BaseEntity fieldValue = parseNode(entry.getValue());
-            Builder.setField(result, fieldName, fieldValue);
-        });
-        return result;
-    }
-
-    private BaseEntity parseEntity(JsonNode node) {
-        Iterator<Map.Entry<String, JsonNode>> iterator = node.fields();
-        while (iterator.hasNext()) {
-            Map.Entry<String, JsonNode> entry = iterator.next();
-            String type = entry.getKey();
-            if (! ENTITY_SIGNAL.equals(type)) {
-                JsonNode fieldsNode = entry.getValue();
-                return generateEntity(type, fieldsNode);
-            }
-        }
-        return null;
-    }
-
-    private BaseEntity parseSet(JsonNode node) {
-        SetEntity<BaseEntity> result = new SetEntity<>();
-        for (JsonNode n: node.get(SET_SIGNAL)) {
-            result.add(parseNode(n));
-        }
-        return result;
-    }
-
-    private BaseEntity parseList(JsonNode node) {
-        ListEntity<BaseEntity> result = new ListEntity<>();
-        for (JsonNode n: node.get(SET_SIGNAL)) {
-            result.add(parseNode(n));
-        }
-        return result;
-    }
-
-    private BaseEntity parseMap(JsonNode node) {
-        MapEntity<BaseEntity, BaseEntity> result = new MapEntity<>();
-        for (JsonNode n: node.get(MAP_SIGNAL)) {
-            BaseEntity key = parseNode(n.get("key"));
-            BaseEntity value = parseNode(n.get("value"));
-            result.add(key, value);
-        }
-        return result;
-    }
-
-    private BaseEntity parseString(JsonNode node) {
-        return StringEntity.valueOf(node.asText());
-    }
-
-    private BaseEntity parseInt(JsonNode node) {
-        return IntEntity.valueOf(node.asInt());
-    }
-
-    private BaseEntity parseBool(JsonNode node) {
-        return BoolEntity.valueOf(node.asBoolean());
-    }
-
-    private BaseEntity parseFloat(JsonNode node) {
-        return FloatEntity.valueOf(node.asDouble());
     }
 
 }

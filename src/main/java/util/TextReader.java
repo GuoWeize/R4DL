@@ -1,9 +1,12 @@
 package util;
 
+import exception.TokenInvalidException;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -118,10 +121,10 @@ public final class TextReader {
         return Character.toString((char) head);
     }
 
-    public static void nextTokenWithTest(String expectation) throws LanguageFormatException {
+    public static void nextTokenWithTest(String expectation) throws TokenInvalidException {
         String testString = nextToken();
         if (! testString.equals(expectation)) {
-            throw new TokenNotExpectationException(testString, expectation);
+            throw new TokenInvalidException(testString, expectation);
         }
     }
 

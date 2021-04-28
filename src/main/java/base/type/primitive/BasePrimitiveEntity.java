@@ -3,7 +3,7 @@ package base.type.primitive;
 import base.type.BaseEntity;
 
 /**
- * Abstract base class for all collection types, including boolean, integer, float and string.<p>
+ * Abstract base class for all collection types, including boolean, integer, float and string.
  *
  * @author Guo Weize
  * @date 2021/2/1

@@ -3,6 +3,7 @@ package base.type.collection;
 import base.type.BaseEntity;
 import base.type.primitive.BoolEntity;
 import base.type.primitive.IntEntity;
+import exception.TypeInvalidException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
 public final class ListEntity<E extends BaseEntity> extends BaseCollectionEntity {
 
     /** Entity type of this list */
-    private String type = "";
+    private String type = TYPE_UNDEFINED;
 
     /** Storage data structure of ListEntity */
     private final List<E> entities = new ArrayList<>();
@@ -44,25 +45,23 @@ public final class ListEntity<E extends BaseEntity> extends BaseCollectionEntity
      * @return entity at the specified position in this list.
      * @throws IndexOutOfBoundsException if the index is out of range
      */
-    public E get(int index) {
-        return entities.get(index);
-    }
     public E get(IntEntity index) {
         return entities.get(index.getValue());
+    }
+    public E get(int index) {
+        return entities.get(index);
     }
 
     /**
      * Add an entity to the end of this list, change inner stored data.
      * @param entity to be added to this list.
-     * @throws IllegalArgumentException if entity has illegal type.
+     * @throws TypeInvalidException if entity has illegal type.
      */
     public void add(E entity) {
-        if ("".equals(type)) {
+        if (TYPE_UNDEFINED.equals(type)) {
             type = entity.getType();
         }
-        else if (! type.equals(entity.getType())) {
-            throw new IllegalArgumentException();
-        }
+        checkType(entity.getType(), type);
         entities.add(entity);
     }
 
@@ -98,12 +97,10 @@ public final class ListEntity<E extends BaseEntity> extends BaseCollectionEntity
      * Return whether this list contain the specific entity or not.
      * @param entity the specific entity.
      * @return True if this list contain the specific entity, otherwise False.
-     * @throws IllegalArgumentException if entity has illegal type.
+     * @throws TypeInvalidException if entity has illegal type.
      */
     public BoolEntity contains(BaseEntity entity) {
-        if (! type.equals(entity.getType())) {
-            throw new IllegalArgumentException();
-        }
+        checkType(entity.getType(), type);
         return anyMatch(entity::equal);
     }
 
@@ -111,7 +108,7 @@ public final class ListEntity<E extends BaseEntity> extends BaseCollectionEntity
      * Return whether this list include another list or not.
      * @param list another list.
      * @return True if this list include another list, otherwise False.
-     * @throws IllegalArgumentException if entity has illegal type.
+     * @throws TypeInvalidException if entity has illegal type.
      */
     public BoolEntity include(ListEntity<?> list) {
         return list.allMatch(this::contains);

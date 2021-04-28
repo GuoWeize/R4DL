@@ -7,7 +7,10 @@ import util.Formats;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.core.JsonParser;
@@ -36,7 +39,7 @@ public final class ModelJsonParser extends StdDeserializer<Object> {
             throws IOException {
         JsonNode root = jsonParser.getCodec().readTree(jsonParser);
 
-        Set<String> allTypeName = new HashSet<>();
+        Set<String> allTypeName = new HashSet<>(16);
         root.forEach(typeNode -> allTypeName.add(typeNode.get(Formats.MODEL_NAME_FIELD).asText()));
         TypeManager.initialization(allTypeName);
 
@@ -54,7 +57,6 @@ public final class ModelJsonParser extends StdDeserializer<Object> {
             else {
                 throw new IllegalArgumentException();
             }
-
             generateJavaFile(name, fields2type, kind);
             System.out.println(type + " " + name);
         }

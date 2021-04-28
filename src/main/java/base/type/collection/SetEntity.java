@@ -3,6 +3,7 @@ package base.type.collection;
 import base.type.BaseEntity;
 import base.type.primitive.BoolEntity;
 import base.type.primitive.IntEntity;
+import exception.TypeInvalidException;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
 public final class SetEntity<E extends BaseEntity> extends BaseCollectionEntity {
 
     /** Entity type of this set */
-    private String type = "";
+    private String type = TYPE_UNDEFINED;
 
     /** Storage data structure of SetEntity */
     private final Set<E> entities = new HashSet<>();
@@ -41,15 +42,13 @@ public final class SetEntity<E extends BaseEntity> extends BaseCollectionEntity 
     /**
      * Add an entity to this set, change inner stored data.
      * @param entity to be added to this set.
-     * @throws IllegalArgumentException if entity has illegal type.
+     * @throws TypeInvalidException if entity has illegal type.
      */
     public void add(E entity) {
-        if ("".equals(type)) {
+        if (TYPE_UNDEFINED.equals(type)) {
             type = entity.getType();
         }
-        else if (! type.equals(entity.getType())) {
-            throw new IllegalArgumentException();
-        }
+        checkType(entity.getType(), type);
         entities.add(entity);
     }
 
@@ -85,12 +84,10 @@ public final class SetEntity<E extends BaseEntity> extends BaseCollectionEntity 
      * Return whether this set contain the specific entity or not.
      * @param entity the specific entity.
      * @return True if this set contain the specific entity, otherwise False.
-     * @throws IllegalArgumentException if entity has illegal type.
+     * @throws TypeInvalidException if entity has illegal type.
      */
     public BoolEntity contains(BaseEntity entity) {
-        if (! type.equals(entity.getType())) {
-            return BoolEntity.FALSE;
-        }
+        checkType(entity.getType(), type);
         return anyMatch(entity::equal);
     }
 
@@ -98,7 +95,7 @@ public final class SetEntity<E extends BaseEntity> extends BaseCollectionEntity 
      * Return whether this set include another set or not.
      * @param set another set.
      * @return True if this set include another set, otherwise False.
-     * @throws IllegalArgumentException if entity has illegal type.
+     * @throws TypeInvalidException if entity has illegal type.
      */
     public BoolEntity include(SetEntity<?> set) {
         return set.allMatch(this::contains);

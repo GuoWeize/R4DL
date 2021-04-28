@@ -1,10 +1,12 @@
 package process.parser;
 
-import util.*;
+import exception.TokenInvalidException;
+import util.Configs;
+import util.Formats;
+import util.TextReader;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -34,7 +36,7 @@ public final class RuleTextParser {
                 break;
             }
             else if (! Formats.DEFINE_FUNCTION.equals(type) && ! Formats.DEFINE_RULE.equals(type) ) {
-                throw new TokenNotExpectationException(type, Arrays.asList(Formats.DEFINE_FUNCTION, Formats.DEFINE_RULE));
+                throw new TokenInvalidException(type, List.of(Formats.DEFINE_FUNCTION, Formats.DEFINE_RULE));
             }
             name = TextReader.nextToken();
             Formats.CUSTOMIZED_OPERATORS.add(name);
@@ -92,8 +94,7 @@ public final class RuleTextParser {
 
         }
         else {
-            throw new TokenInvalidException(preReadToken,
-                    "token should be contained in operators, view all operators in file \"formats.properties\".");
+            throw new TokenInvalidException("Token should be contained in operators, view all operators in file \"formats.properties\".");
         }
     }
 

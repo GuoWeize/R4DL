@@ -3,6 +3,7 @@ package base.type.collection;
 import base.type.BaseEntity;
 import base.type.primitive.BoolEntity;
 import base.type.primitive.IntEntity;
+import exception.TypeInvalidException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,8 +19,8 @@ import java.util.function.Function;
  */
 public final class MapEntity<K extends BaseEntity, V extends BaseEntity> extends BaseCollectionEntity {
 
-    private String keyType = "";
-    private String valueType = "";
+    private String keyType = TYPE_UNDEFINED;
+    private String valueType = TYPE_UNDEFINED;
     private final Map<K, V> entities = new HashMap<>();
 
     public MapEntity() {}
@@ -34,15 +35,16 @@ public final class MapEntity<K extends BaseEntity, V extends BaseEntity> extends
      * Add an key-value pair to this map, change inner stored data.
      * @param key to be added to this map.
      * @param value to be added to this map.
-     * @throws IllegalArgumentException if entity has illegal type.
+     * @throws TypeInvalidException if entity has illegal type.
      */
     public void add(K key, V value) {
-        if ("".equals(keyType)) {
+        if (TYPE_UNDEFINED.equals(keyType)) {
             keyType = key.getType();
             valueType = value.getType();
         }
-        else if (! keyType.equals(key.getType()) || ! valueType.equals(value.getType())) {
-            throw new IllegalArgumentException();
+        else {
+            checkType(key.getType(), keyType);
+            checkType(value.getType(), valueType);
         }
         entities.put(key, value);
     }
@@ -51,7 +53,7 @@ public final class MapEntity<K extends BaseEntity, V extends BaseEntity> extends
      * Return value entity with the specific key.
      * @param key to get value.
      * @return the entity if this map contains key.
-     * @throws IllegalArgumentException if this map not contains key.
+     * @throws IllegalArgumentException if this map not contains certain key.
      */
     public V get(BaseEntity key) {
         for (Map.Entry<K, V> entry: entities.entrySet()) {
@@ -94,12 +96,10 @@ public final class MapEntity<K extends BaseEntity, V extends BaseEntity> extends
      * Return whether this map contain the specific key or not.
      * @param key the specific key.
      * @return True if this map contain the specific key, otherwise False.
-     * @throws IllegalArgumentException if key has illegal type.
+     * @throws TypeInvalidException if key has illegal type.
      */
     public BoolEntity containsKey(BaseEntity key) {
-        if (! keyType.equals(key.getType())) {
-            throw new IllegalArgumentException();
-        }
+        checkType(key.getType(), keyType);
         return anyMatch(key::equal);
     }
 
@@ -107,12 +107,10 @@ public final class MapEntity<K extends BaseEntity, V extends BaseEntity> extends
      * Return whether this map contain the specific value or not.
      * @param value the specific value.
      * @return True if this map contain the specific value, otherwise False.
-     * @throws IllegalArgumentException if value has illegal type.
+     * @throws TypeInvalidException if value has illegal type.
      */
     public BoolEntity containsValue(BaseEntity value) {
-        if (! valueType.equals(value.getType())) {
-            throw new IllegalArgumentException();
-        }
+        checkType(value.getType(), valueType);
         for (V v: entities.values()) {
             if (v.equal(value).getValue()) {
                 return BoolEntity.TRUE;
@@ -126,12 +124,11 @@ public final class MapEntity<K extends BaseEntity, V extends BaseEntity> extends
      * @param key the specific key.
      * @param value the specific value.
      * @return True if this map contain the specific key-value pair, otherwise False.
-     * @throws IllegalArgumentException if key or value has illegal type.
+     * @throws TypeInvalidException if key or value has illegal type.
      */
     public BoolEntity contains(BaseEntity key, BaseEntity value) {
-        if (! keyType.equals(key.getType()) || ! valueType.equals(value.getType())) {
-            throw new IllegalArgumentException();
-        }
+        checkType(key.getType(), keyType);
+        checkType(value.getType(), valueType);
         if (! containsKey(key).getValue()) {
             return BoolEntity.FALSE;
         }
@@ -142,7 +139,7 @@ public final class MapEntity<K extends BaseEntity, V extends BaseEntity> extends
      * Return whether this map include another map or not.
      * @param map another map.
      * @return True if this map include another map, otherwise False.
-     * @throws IllegalArgumentException if entity has illegal type.
+     * @throws TypeInvalidException if entity has illegal type.
      */
     public BoolEntity include(MapEntity<?, ?> map) {
         return map.allMatch(key -> contains(key, map.get(key)));

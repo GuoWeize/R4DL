@@ -1,8 +1,14 @@
 package base.dynamics;
 
 import base.type.BaseEntity;
+import exception.TypeInvalidException;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Manager of all entity types.<p>
@@ -13,16 +19,15 @@ import java.util.*;
  */
 public final class TypeManager {
 
-    private static final Map<String, String> TYPE_2_CLASS = new HashMap<>();
-    static {
-        TYPE_2_CLASS.put("list", "ListEntity");
-        TYPE_2_CLASS.put("map", "MapEntity");
-        TYPE_2_CLASS.put("set", "SetEntity");
-        TYPE_2_CLASS.put("boolean", "BoolEntity");
-        TYPE_2_CLASS.put("float", "FloatEntity");
-        TYPE_2_CLASS.put("integer", "IntEntity");
-        TYPE_2_CLASS.put("string", "StringEntity");
-    }
+    private static final Map<String, String> TYPE_2_CLASS = Stream.of(new String[][] {
+            {"list", "ListEntity"},
+            {"map", "MapEntity"},
+            {"set", "SetEntity"},
+            {"boolean", "BoolEntity"},
+            {"float", "FloatEntity"},
+            {"integer", "IntEntity"},
+            {"string", "StringEntity"}
+    }).collect(Collectors.toMap(data -> data[0], data -> data[1]));
     private static final String LIST = "list";
     private static final String SET = "set";
     private static final String MAP = "map";
@@ -39,7 +44,7 @@ public final class TypeManager {
     /**
      * check whether type is valid, if not, throw IllegalArgumentException.
      * @param type to be checked.
-     * @throws IllegalArgumentException if type is not valid.
+     * @throws TypeInvalidException if type is not valid.
      */
     public static void checkType(String type) {
         if (! TYPE_2_CLASS.containsKey(type)) {
@@ -52,13 +57,13 @@ public final class TypeManager {
             else if (type.startsWith(MAP)) {
                 List<String> temp = Arrays.asList(type.split(", "));
                 if (temp.size() != MAP_PARA_NUM) {
-                    throw new IllegalArgumentException();
+                    throw new TypeInvalidException("Map type requires 2 types in template, but got " + temp.size() + ".");
                 }
                 checkType(temp.get(0).substring(4));
                 checkType(temp.get(1).substring(0, temp.get(1).length() -1));
             }
             else {
-                throw new IllegalArgumentException();
+                throw new TypeInvalidException("Type \"" + type + "\" is not defined.");
             }
         }
     }
@@ -69,7 +74,6 @@ public final class TypeManager {
      * @return signature of class that extends {@link BaseEntity}.
      */
     public static String type2class(String type) {
-        type = type.replace("[", "<").replace("]", ">");
         for (Map.Entry<String, String> entry: TYPE_2_CLASS.entrySet()) {
             type = type.replace(entry.getKey(), entry.getValue());
         }
