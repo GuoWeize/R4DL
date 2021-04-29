@@ -44,7 +44,6 @@ and, or, for, in, all, any, include, size_of, merge, from, to
              | <statement> '[' <statement> ']'
              | <statement>.<word>
              | '%' <statement> '%'
-             | '{' <statement> '}'
              | <word>
 
 <unitary operator statement> := '{' <unitary operator> <statement> '}'

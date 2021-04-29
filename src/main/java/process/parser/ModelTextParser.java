@@ -33,9 +33,7 @@ public final class ModelTextParser {
         String type = TextReader.nextToken();
         while (! TextReader.EMPTY_STRING.equals(type)) {
             String name = TextReader.nextToken();
-            if (! Formats.OPEN_BRACE.equals(TextReader.nextToken())) {
-                throw new IOException("need a \"{\" in file " + Configs.MODEL_TEXT_FILE);
-            }
+            TextReader.nextTokenWithTest(Formats.OPEN_BRACE);
             ModelJsonGenerator.generateEntity(type, name);
             type = TextReader.nextToken();
         }
