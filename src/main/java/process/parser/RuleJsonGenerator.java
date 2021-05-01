@@ -7,6 +7,10 @@ import util.FormatsConsts;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.List;
 
 /**
@@ -41,8 +45,21 @@ public final class RuleJsonGenerator {
         jg.writeStringField(FormatsConsts.RULE_TYPE_FIELD, type);
         RuleTextParser.parseArguments();
         RuleTextParser.parseReturn();
-        RuleTextParser.parseLogic();
+        jg.writeFieldName(FormatsConsts.RULE_LOGIC_FIELD);
+        jg.flush();
+
+        String logic = RuleTextParser.parseLogic();
+        addLogic(logic);
+
         jg.writeEndObject();
+    }
+
+    static void addLogic(String logic) throws IOException {
+        Files.write(
+            Paths.get("demo.json"),
+            logic.getBytes(StandardCharsets.UTF_8),
+            StandardOpenOption.APPEND
+        );
     }
 
     static void generateArguments(List<List<String>> arguments) throws IOException {

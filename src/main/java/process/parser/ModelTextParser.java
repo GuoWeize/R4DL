@@ -5,6 +5,7 @@ import util.FormatsConsts;
 import util.TextReader;
 
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * @author Guo Weize
@@ -31,7 +32,7 @@ public final class ModelTextParser {
      */
     static void parseEntities() throws IOException {
         String type = TextReader.nextToken();
-        while (! TextReader.EMPTY_STRING.equals(type)) {
+        while (! Objects.equals(type, TextReader.EMPTY_STRING)) {
             String name = TextReader.nextToken();
             TextReader.nextTokenWithTest(FormatsConsts.OPEN_BRACE);
             ModelJsonGenerator.generateEntity(type, name);
@@ -45,10 +46,10 @@ public final class ModelTextParser {
      */
     static void parseFields() throws IOException {
         String fieldName = TextReader.nextToken();
-        while (! FormatsConsts.CLOSE_BRACE.equals(fieldName)) {
+        while (! Objects.equals(fieldName, FormatsConsts.CLOSE_BRACE)) {
             StringBuilder fieldType = new StringBuilder();
             String temp = TextReader.nextToken();
-            while (! FormatsConsts.SEMICOLON.equals(temp)) {
+            while (! Objects.equals(temp, FormatsConsts.SEMICOLON)) {
                 fieldType.append(temp);
                 temp = TextReader.nextToken();
             }

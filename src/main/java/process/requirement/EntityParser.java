@@ -65,7 +65,7 @@ public final class EntityParser extends StdDeserializer<Object> {
             while (iterator.hasNext()) {
                 Map.Entry<String, JsonNode> entry = iterator.next();
                 String type = entry.getKey();
-                if (! FormatsConsts.ENTITY_SIGNAL.equals(type)) {
+                if (! Objects.equals(type, FormatsConsts.ENTITY_SIGNAL)) {
                     JsonNode fieldsNode = entry.getValue();
                     return generateEntity(type, fieldsNode);
                 }

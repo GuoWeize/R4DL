@@ -46,9 +46,7 @@ public final class RuleParser extends StdDeserializer<Object> {
     }
 
     private String generateJavadoc() {
-        return "import base.type.BaseEntity;\n"
-            + "import base.type.primitive.*;\n"
-            + "import base.type.collection.*;\n"
+        return "import base.type.BaseEntity;\nimport base.type.primitive.*;\nimport base.type.collection.*;\n"
             + "import java.util.stream.IntStream;\n\n";
     }
 
@@ -72,7 +70,7 @@ public final class RuleParser extends StdDeserializer<Object> {
         for (JsonNode arguments: node) {
             List<String> temp = new ArrayList<>();
             for (int i = 0; i < arguments.size(); i++) {
-                temp.add(TypeManager.type2class(arguments.get(i).asText()) + " _" + (i+1));
+                temp.add(String.format("%s _%d", TypeManager.type2class(arguments.get(i).asText()), i + 1));
             }
             result.add(String.join(", ", temp));
         }
@@ -87,7 +85,7 @@ public final class RuleParser extends StdDeserializer<Object> {
         try {
             File file = new File(PathConsts.RULE_JAVA_FILE);
             if (! file.createNewFile()) {
-                System.out.println("Replace \"" + PathConsts.RULE_JAVA_NAME + "\" before.");
+                System.out.printf("Replace \"%s\" before.%n", PathConsts.RULE_JAVA_NAME);
             }
             FileWriter fileWriter = new FileWriter(file);
             fileWriter.write(contents);
@@ -99,9 +97,7 @@ public final class RuleParser extends StdDeserializer<Object> {
     }
 
     private String generateRuleFunction(String name, String argument, String returns, String logic, boolean isRule) {
-        return "    " + (isRule ? "public": "private")
-            + " static " + returns + " " + name + "(" + argument + ") {\n"
-            + "        return " + logic + ";\n"
-            + "    }\n\n";
+        return String.format("    %s static %s %s(%s) {\n        return %s;\n    }\n\n",
+            (isRule ? "public": "private"), returns, name, argument, logic);
     }
 }

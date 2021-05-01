@@ -13,7 +13,11 @@ import java.util.stream.Stream;
  * @date 2021/2/22
  */
 public class Demo {
+    public int a = 1;
+
     public static void main(String[] args) {
-        System.out.println(String.format("%b", true));
+        List<Demo> l = List.of(new Demo());
+        int q = l.get(0).a;
+        System.out.println(q);
     }
 }

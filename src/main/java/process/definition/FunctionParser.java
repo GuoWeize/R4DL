@@ -19,6 +19,7 @@ public final class FunctionParser {
     private static final String AUTO_CREATED_PREFIX = "_";
     private static final String PARAMETER_DELIMITER = "$";
     private static final String FOR_DELIMITER = "@";
+    private static final String ARGS_DELIMITER = ", ";
 
     private static final int SINGLE_ARGUMENT = 1;
     private static final int TWO_ARGUMENT = 2;
@@ -41,27 +42,19 @@ public final class FunctionParser {
         if (node.isTextual()) {
             return argumentTransform(node.asText());
         }
-
         List<String> list = new ArrayList<>();
         node.fieldNames().forEachRemaining(list::add);
         if (list.size() != SINGLE_ARGUMENT) {
             throw new IllegalArgumentException();
         }
-
         String operation = list.get(0);
         JsonNode subNodes = node.get(operation);
-
         List<String> arguments = new ArrayList<>();
         for (JsonNode n: subNodes) {
             arguments.add(parse(n));
         }
-
-        if (WORDS.containsKey(operation)) {
-            return WORDS.get(operation).apply(arguments);
-        }
-        else {
-            return customizedFunction(operation, arguments);
-        }
+        return WORDS.containsKey(operation) ?
+            WORDS.get(operation).apply(arguments) : customizedFunction(operation, arguments);
     }
 
     private static String argumentTransform(String itemString) {
@@ -83,57 +76,58 @@ public final class FunctionParser {
     }
 
     private static String customizedFunction(String name, List<String> arguments) {
-        return name + "(" + String.join(", ", arguments) + ")";
+        return String.format("%s(%s)", name, String.join(ARGS_DELIMITER, arguments));
     }
 
     private static String and(List<String> arguments) {
-        return "BoolEntity.and(" + String.join(", ", arguments) + ")";
+        return String.format("BoolEntity.and(%s)", String.join(ARGS_DELIMITER, arguments));
     }
 
     private static String or(List<String> arguments) {
-        return "BoolEntity.or(" + String.join(", ", arguments) + ")";
+        return String.format("BoolEntity.or(%s)", String.join(ARGS_DELIMITER, arguments));
     }
 
     private static String equal(List<String> arguments) {
         checkArgumentsNumber(arguments, TWO_ARGUMENT);
-        return arguments.get(0) + ".equal(" + arguments.get(1) + ")";
+        return String.format("%s.equal(%s)", arguments.get(0), arguments.get(1));
     }
 
     private static String notEqual(List<String> arguments) {
         checkArgumentsNumber(arguments, TWO_ARGUMENT);
-        return "(! " + arguments.get(0) + ".equal(" + arguments.get(1) + ") )";
+        return String.format("(! %s.equal(%s))", arguments.get(0), arguments.get(1));
     }
 
     private static String include(List<String> arguments) {
         checkArgumentsNumber(arguments, TWO_ARGUMENT);
-        return arguments.get(0) + ".include(" + arguments.get(1) + ")";
+        return String.format("%s.include(%s)", arguments.get(0), arguments.get(1));
     }
 
     private static String size(List<String> arguments) {
         checkArgumentsNumber(arguments, SINGLE_ARGUMENT);
-        return arguments.get(0) + ".size()";
+        return String.format("%s.size()", arguments.get(0));
     }
 
     private static String all(List<String> arguments) {
         checkArgumentsNumber(arguments, THREE_ARGUMENT);
-        return arguments.get(1) + ".allMatch(" + arguments.get(0) + " -> " + arguments.get(2) + ")";
+        return String.format("%s.allMatch(%s -> %s)", arguments.get(1), arguments.get(0), arguments.get(2));
     }
 
     private static String any(List<String> arguments) {
         checkArgumentsNumber(arguments, THREE_ARGUMENT);
-        return arguments.get(1) + ".anyMatch(" + arguments.get(0) + " -> " + arguments.get(2) + ")";
+        return String.format("%s.anyMatch(%s -> %s)", arguments.get(1), arguments.get(0), arguments.get(2));
     }
 
     private static String allArgument(List<String> arguments) {
         checkArgumentsNumber(arguments, FOUR_ARGUMENT);
         String type = "Functional";
-        String list = "ListEntity<" + TypeManager.type2class(type) + "> _list = new ListEntity<>(\"" + type + "\", Arrays.asList(" + arguments.get(1) + "));";
+        String list = String.format("ListEntity<%s> _list = new ListEntity<>(\"%s\", Arrays.asList(%s));",
+            TypeManager.type2class(type), type, arguments.get(1));
         String bound = arguments.get(2);
         String logic = forArgumentTransform(arguments.get(3));
-        String result = "IntStream.range(0, " + "Arrays.asList(" + arguments.get(1) + ").size()" + bound + ")"
-                + ".allMatch(" + arguments.get(0) + " -> { " + list + " return (" + logic + ").getValue(); })";
-        result = "BoolEntity.valueOf(" + result + ")";
-        return result;
+        return String.format(
+            "BoolEntity.valueOf(IntStream.range(0, Arrays.asList(%s).size()%s).allMatch(%s -> {%s return (%s).getValue();}))",
+            arguments.get(1), bound, arguments.get(0), list, logic
+        );
     }
 
     private static String forArgumentTransform(String logic) {
@@ -143,7 +137,7 @@ public final class FunctionParser {
             right = logic.indexOf(FOR_DELIMITER, left +1);
             String previous = logic.substring(left, right +1);
             String number = logic.substring(left+1, right);
-            String replacement = "_list.get(" + number + ")";
+            String replacement = String.format("_list.get(%s)", number);
             logic = logic.replace(previous, replacement);
             left = logic.indexOf(FOR_DELIMITER);
         }

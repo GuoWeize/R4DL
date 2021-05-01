@@ -120,7 +120,7 @@ public final class FormatsConsts {
     public static final String RANGE_BEGIN_SIGNAL = FORMATS.get("range_begin_signal");
     public static final String RANGE_END_SIGNAL = FORMATS.get("range_end_signal");
 
-    public static final Set<String> UNITARY_OPERATORS = Set.of(
+    public static final Set<String> UNARY_OPERATORS = Set.of(
         LOGICAL_NOT,
         COLLECTION_SIZE_OF
     );

@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -19,7 +20,7 @@ public final class TextReader {
     private static FileInputStream file;
     private static final int END_OF_FILE = -1;
     public static final String EMPTY_STRING = "";
-    public static final String SPACE_STRING = "";
+    public static final String SPACE_STRING = " ";
 
     private static int charRead = END_OF_FILE;
     private static int previousRead = END_OF_FILE;
@@ -62,7 +63,7 @@ public final class TextReader {
             String result;
             if (previousRead != END_OF_FILE) {
                 result = readEntity(previousRead);
-                if (! EMPTY_STRING.equals(result)) {
+                if (! Objects.equals(result, EMPTY_STRING)) {
                     return result;
                 }
                 return readSymbol(charRead);
@@ -75,7 +76,7 @@ public final class TextReader {
                 }
             }
             result = readEntity(charRead);
-            if (! EMPTY_STRING.equals(result)) {
+            if (! Objects.equals(result, EMPTY_STRING)) {
                 return result;
             }
             return readSymbol(charRead);
@@ -121,7 +122,7 @@ public final class TextReader {
 
     public static void nextTokenWithTest(String expectation) throws TokenInvalidException {
         String testString = nextToken();
-        if (! testString.equals(expectation)) {
+        if (! Objects.equals(testString, expectation)) {
             throw new TokenInvalidException(testString, expectation);
         }
     }
@@ -129,7 +130,7 @@ public final class TextReader {
     public static void main(String[] args) {
         readFile(PathConsts.RULE_TEXT_FILE);
         String token = nextToken();
-        while (! EMPTY_STRING.equals(token)) {
+        while (! Objects.equals(token, EMPTY_STRING)) {
             System.out.print(token);
             System.out.print(" ");
             token = nextToken();
