@@ -3,6 +3,7 @@ package base.type.primitive;
 import base.type.BaseEntity;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Class that store boolean data.
@@ -43,7 +44,7 @@ public final class BoolEntity extends BasePrimitiveEntity {
 
     @Override
     public BoolEntity equal(BaseEntity entity) {
-        if (! getType().equals(entity.getType())) {
+        if (! Objects.equals(getType(), entity.getType())) {
             return FALSE;
         }
         return getValue() == ((BoolEntity) entity).getValue() ? TRUE: FALSE;

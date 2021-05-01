@@ -11,7 +11,7 @@ import java.util.Properties;
  * @author Guo Weize
  * @date 2021/3/27
  */
-public final class Configs {
+public final class PathConsts {
 
     public static final String PROJECT_PATH = System.getProperty("user.dir");
 
@@ -43,10 +43,4 @@ public final class Configs {
 
     public static final String RULE_JAVA_NAME = CONFIGS.get("rule_java_file_name");
     public static final String RULE_JAVA_FILE = DYNAMICS_CLASS_PATH + RULE_JAVA_NAME;
-
-
-    public static void main(String[] args) {
-        System.out.println(MODEL_TEXT_FILE);
-    }
-
 }

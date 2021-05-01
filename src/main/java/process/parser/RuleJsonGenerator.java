@@ -3,7 +3,7 @@ package process.parser;
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
-import util.Formats;
+import util.FormatsConsts;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -19,7 +19,7 @@ public final class RuleJsonGenerator {
 
     static void initialization() {
         try {
-//            FileOutputStream file = new FileOutputStream(Configs.RULE_JSON_FILE);
+//            FileOutputStream file = new FileOutputStream(PathConsts.RULE_JSON_FILE);
             FileOutputStream file = new FileOutputStream("demo.json");
             jg = (new JsonFactory()).createGenerator(file, JsonEncoding.UTF8);
         } catch (IOException e) {
@@ -38,7 +38,7 @@ public final class RuleJsonGenerator {
     static void generateRule(String name, String type) throws IOException {
         jg.writeFieldName(name);
         jg.writeStartObject();
-        jg.writeStringField(Formats.RULE_TYPE_FIELD, type);
+        jg.writeStringField(FormatsConsts.RULE_TYPE_FIELD, type);
         RuleTextParser.parseArguments();
         RuleTextParser.parseReturn();
         RuleTextParser.parseLogic();
@@ -46,7 +46,7 @@ public final class RuleJsonGenerator {
     }
 
     static void generateArguments(List<List<String>> arguments) throws IOException {
-        jg.writeFieldName(Formats.RULE_ARGUMENT_FIELD);
+        jg.writeFieldName(FormatsConsts.RULE_ARGUMENT_FIELD);
         jg.writeStartArray();
         for (List<String> argument: arguments) {
             jg.writeStartArray();
@@ -59,7 +59,7 @@ public final class RuleJsonGenerator {
     }
 
     static void generateReturn(String returnType) throws IOException {
-        jg.writeStringField(Formats.RULE_RETURN_FIELD, returnType);
+        jg.writeStringField(FormatsConsts.RULE_RETURN_FIELD, returnType);
     }
 
 }

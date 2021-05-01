@@ -13,13 +13,15 @@ import java.util.Set;
  * @author Guo Weize
  * @date 2021/4/3
  */
-public final class Formats {
+public final class FormatsConsts {
 
-    private static final Map<String, String> FORMATS = new HashMap<>(32);
+    private static final Map<String, String> FORMATS = new HashMap<>(128);
     static {
         Properties props = new Properties();
         try {
-            props.load(new FileInputStream(System.getProperty("user.dir") + "/src/main/resources/formats.properties"));
+            props.load(new FileInputStream(
+                System.getProperty("user.dir") + "/src/main/resources/formats.properties")
+            );
             Enumeration<?> en = props.propertyNames();
             while (en.hasMoreElements()) {
                 String key = (String) en.nextElement();
@@ -119,32 +121,32 @@ public final class Formats {
     public static final String RANGE_END_SIGNAL = FORMATS.get("range_end_signal");
 
     public static final Set<String> UNITARY_OPERATORS = Set.of(
-            LOGICAL_NOT,
-            COLLECTION_SIZE_OF
+        LOGICAL_NOT,
+        COLLECTION_SIZE_OF
     );
     public static final Set<String> BINARY_OPERATORS = Set.of(
-            CALCULATE_ADDITION,
-            CALCULATE_SUBTRACTION,
-            CALCULATE_MULTIPLE,
-            CALCULATE_DIVISION,
-            LOGICAL_AND,
-            LOGICAL_OR,
-            COMPARE_EQUAL,
-            COMPARE_NOT_EQUAL,
-            COMPARE_GREATER,
-            COMPARE_LESS,
-            COMPARE_NOT_GREATER,
-            COMPARE_NOT_LESS,
-            COLLECTION_INCLUDE,
-            COLLECTION_IN
+        CALCULATE_ADDITION,
+        CALCULATE_SUBTRACTION,
+        CALCULATE_MULTIPLE,
+        CALCULATE_DIVISION,
+        LOGICAL_AND,
+        LOGICAL_OR,
+        COMPARE_EQUAL,
+        COMPARE_NOT_EQUAL,
+        COMPARE_GREATER,
+        COMPARE_LESS,
+        COMPARE_NOT_GREATER,
+        COMPARE_NOT_LESS,
+        COLLECTION_INCLUDE,
+        COLLECTION_IN
     );
     public static final Set<String> MULTIPLE_ARG_OPERATORS = Set.of(
-            CALCULATE_SUMMATION,
-            CALCULATE_MULTIPLICATION,
-            LOGICAL_AND,
-            LOGICAL_OR,
-            COLLECTION_MERGE
+        CALCULATE_SUMMATION,
+        CALCULATE_MULTIPLICATION,
+        LOGICAL_AND,
+        LOGICAL_OR,
+        COLLECTION_MERGE
     );
-    public static final Set<String> CUSTOMIZED_OPERATORS = new HashSet<>();
+    public static final Set<String> CUSTOMIZED_OPERATORS = new HashSet<>(32);
 
 }

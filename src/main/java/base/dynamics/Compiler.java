@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import util.Configs;
+import util.PathConsts;
 
 /**
  * @author Guo Weize
@@ -20,7 +20,7 @@ public final class Compiler {
     public static URLClassLoader loader;
     static {
         try {
-            loader = new URLClassLoader(new URL[]{new URL("file://" + Configs.DYNAMICS_CLASS_PATH)});
+            loader = new URLClassLoader(new URL[]{new URL("file://" + PathConsts.DYNAMICS_CLASS_PATH)});
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -29,13 +29,13 @@ public final class Compiler {
     public static void compile(List<String> classNames) {
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         classNames = classNames.stream()
-                .map( (name) -> Configs.DYNAMICS_JAVA_CODE_PATH + name + ".java" )
-                .collect(Collectors.toList());
-        classNames.add(0, Configs.DYNAMICS_CLASS_PATH);
+            .map( (name) -> PathConsts.DYNAMICS_JAVA_CODE_PATH + name + ".java" )
+            .collect(Collectors.toList());
+        classNames.add(0, PathConsts.DYNAMICS_CLASS_PATH);
         classNames.add(0, "-d");
         String[] arguments = classNames.toArray(new String[0]);
         int result = compiler.run(null, null, null, arguments);
-        System.out.println(result == 0 ? "compile succeed": "compile failed");
+        System.out.println(result == 0 ? "Compile succeed.": "Compile failed.");
     }
 
     public static Map<String, Class<?>> loadClass(List<String> classNames) {

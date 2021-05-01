@@ -2,6 +2,8 @@ package base.type.primitive;
 
 import base.type.BaseEntity;
 
+import java.util.Objects;
+
 /**
  * Class that store string data.
  *
@@ -38,16 +40,14 @@ public final class StringEntity extends BasePrimitiveEntity {
 
     @Override
     public BoolEntity equal(BaseEntity entity) {
-        if (! getType().equals(entity.getType())) {
+        if (! Objects.equals(getType(), entity.getType())) {
             return BoolEntity.FALSE;
         }
-        return BoolEntity.valueOf(
-                ((StringEntity) entity).getValue().equals(getValue())
-        );
+        return BoolEntity.valueOf(Objects.equals(getValue(), ((StringEntity)entity).getValue()));
     }
 
     @Override
     public String toString() {
-        return "\"" + value + "\"";
+        return String.format("\"%s\"", value);
     }
 }

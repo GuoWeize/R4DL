@@ -1,8 +1,8 @@
-package process.definition.model;
+package process.definition;
 
 import base.dynamics.TypeManager;
-import util.Configs;
-import util.Formats;
+import util.PathConsts;
+import util.FormatsConsts;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -40,25 +40,22 @@ public final class ModelJsonParser extends StdDeserializer<Object> {
         JsonNode root = jsonParser.getCodec().readTree(jsonParser);
 
         Set<String> allTypeName = new HashSet<>(16);
-        root.forEach(typeNode -> allTypeName.add(typeNode.get(Formats.MODEL_NAME_FIELD).asText()));
+        root.forEach(typeNode -> allTypeName.add(typeNode.get(FormatsConsts.MODEL_NAME_FIELD).asText()));
         TypeManager.initialization(allTypeName);
 
         for (JsonNode typeNode: root) {
-            String name = typeNode.get(Formats.MODEL_NAME_FIELD).asText();
-            String type = typeNode.get(Formats.MODEL_TYPE_FIELD).asText();
+            String name = typeNode.get(FormatsConsts.MODEL_NAME_FIELD).asText();
+            String type = typeNode.get(FormatsConsts.MODEL_TYPE_FIELD).asText();
             Map<String, String> fields2type = parseFields(typeNode);
             boolean kind;
-            if (type.equals(Formats.DEFINE_REQUIREMENT)) {
+            if (type.equals(FormatsConsts.DEFINE_REQUIREMENT)) {
                 kind = true;
-            }
-            else if (type.equals(Formats.DEFINE_ENTITY)) {
+            } else if (type.equals(FormatsConsts.DEFINE_ENTITY)) {
                 kind = false;
-            }
-            else {
+            } else {
                 throw new IllegalArgumentException();
             }
             generateJavaFile(name, fields2type, kind);
-            System.out.println(type + " " + name);
         }
         return null;
     }
@@ -67,7 +64,7 @@ public final class ModelJsonParser extends StdDeserializer<Object> {
         Map<String, String> fields2type = new HashMap<>(8);
         node.fields().forEachRemaining(entry -> {
             String fieldName = entry.getKey();
-            if (!fieldName.equals(Formats.MODEL_TYPE_FIELD) && !fieldName.equals(Formats.MODEL_NAME_FIELD)) {
+            if (!fieldName.equals(FormatsConsts.MODEL_TYPE_FIELD) && !fieldName.equals(FormatsConsts.MODEL_NAME_FIELD)) {
                 String type = entry.getValue().asText();
                 TypeManager.checkType(type);
                 fields2type.put(fieldName, type);
@@ -77,18 +74,20 @@ public final class ModelJsonParser extends StdDeserializer<Object> {
     }
 
     private void generateJavaFile(String name, Map<String, String> fields2type, boolean isRequirement) {
-        String content = generateFileHead(name)
-                + generateFields(fields2type)
-                + generateGetType(name)
-                + generateIsPrimitive()
-                + generateIsRequirement(isRequirement)
-                + generateEquals(name, fields2type)
-                + generateFileEnd();
+        String content = generateImports()
+            + GeneralJavaHeaderGenerator.generateJavadoc(name + ".java", PathConsts.MODEL_JSON_FILE)
+            + generateFileHead(name)
+            + generateFields(fields2type)
+            + generateGetType(name)
+            + generateIsPrimitive()
+            + generateIsRequirement(isRequirement)
+            + generateEquals(name, fields2type)
+            + generateFileEnd();
 
         try {
-            File file = new File(Configs.DYNAMICS_JAVA_CODE_PATH + name + ".java");
+            File file = new File(String.format("%s%s.java", PathConsts.DYNAMICS_JAVA_CODE_PATH, name));
             if (!file.createNewFile()) {
-                System.out.println("Replace existing file \"" + name + ".java\".");
+                System.out.printf("Replace existing file \"%s.java\".%n", name);
             }
             FileWriter fileWriter = new FileWriter(file);
             fileWriter.write(content);
@@ -99,54 +98,52 @@ public final class ModelJsonParser extends StdDeserializer<Object> {
         }
     }
 
+    private String generateImports() {
+        return "import base.type.BaseEntity;\nimport base.type.primitive.*;\nimport base.type.collection.*;\n\n";
+    }
+
     private String generateFileHead(String name) {
-        return  "import base.type.BaseEntity;\n" +
-                "import base.type.primitive.*;\n" +
-                "import base.type.collection.*;\n\n" +
-                "public class " + name + " extends BaseEntity {\n";
+        return String.format("public class %s extends BaseEntity {\n", name);
     }
 
     private String generateFields(Map<String, String> fields2type) {
         StringBuilder content = new StringBuilder();
         for (Map.Entry<String, String> entry: fields2type.entrySet()) {
             content.append("    public ")
-                    .append(TypeManager.type2class(entry.getValue()))
-                    .append(" ")
-                    .append(entry.getKey())
-                    .append(";\n");
+                .append(TypeManager.type2class(entry.getValue()))
+                .append(' ')
+                .append(entry.getKey())
+                .append(";\n");
         }
-        return content.toString();
+        return content.append('\n').toString();
     }
 
     private String generateGetType(String name) {
-        return "\n    @Override\n" +
-                "    public String getType() { return \"" + name + "\"; }\n";
+        return String.format("    @Override\n    public String getType() {\n        return \"%s\";\n    }\n\n", name);
     }
 
     private String generateIsPrimitive() {
-        return "\n    @Override\n" +
-                "    public boolean isPrimitive() { return false; }\n";
+        return "    @Override\n    public boolean isPrimitive() {\n        return false;\n    }\n\n";
     }
 
     private String generateIsRequirement(boolean isRequirement) {
-        return "\n    @Override\n" +
-                "    public boolean isRequirement() { return " + isRequirement + "; }\n";
+        return String.format("    @Override\n    public boolean isRequirement() {\n        return %b;\n    }\n\n", isRequirement);
     }
 
     private String generateEquals(String name, Map<String, String> fields2type) {
         String result = fields2type.keySet().stream()
-                .map(f -> f + ".equal(that." + f + ").getValue()")
-                .collect(Collectors.joining(" &&\n                   "));
-        return  "\n    @Override\n" +
-                "    public BoolEntity equal(BaseEntity entity) {\n" +
-                "        if (! getType().equals(entity.getType())) {\n" +
-                "            return BoolEntity.FALSE;\n" +
-                "        }\n" +
-                "        " + name + " that = (" + name + ") entity;\n" +
-                "        return BoolEntity.valueOf(\n" +
-                "                   " + result + "\n" +
-                "        );\n" +
-                "    }\n";
+            .map(f -> String.format("%s.equal(that.%s)", f, f))
+            .collect(Collectors.joining(",\n            "));
+        return  "    @Override\n"
+            + "    public BoolEntity equal(BaseEntity entity) {\n"
+            + "        if (! getType().equals(entity.getType())) {\n"
+            + "            return BoolEntity.FALSE;\n"
+            + "        }\n"
+            + String.format("        %s that = (%s)entity;\n", name, name)
+            + "        return BoolEntity.and(\n"
+            + String.format("            %s\n", result)
+            + "        );\n"
+            + "    }\n";
     }
 
     private String generateFileEnd() {

@@ -2,6 +2,8 @@ package base.type.primitive;
 
 import base.type.BaseEntity;
 
+import java.util.Objects;
+
 /**
  * Class that store float data.
  *
@@ -31,11 +33,11 @@ public final class FloatEntity extends BasePrimitiveEntity {
 
     @Override
     public BoolEntity equal(BaseEntity entity) {
-        if (! getType().equals(entity.getType())) {
+        if (! Objects.equals(getType(), entity.getType())) {
             return BoolEntity.FALSE;
         }
         return BoolEntity.valueOf(
-                getValue() == ((FloatEntity) entity).getValue()
+            getValue() == ((FloatEntity) entity).getValue()
         );
     }
 

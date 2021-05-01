@@ -14,7 +14,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import util.Formats;
+import util.FormatsConsts;
 
 import java.io.IOException;
 import java.util.*;
@@ -30,15 +30,15 @@ import java.util.function.Predicate;
 public final class EntityParser extends StdDeserializer<Object> {
 
     private static class Inner {
-        static final Map<Predicate<JsonNode>, Function<JsonNode, BaseEntity>> CASES = Map.of(
-                (node) -> node.has(Formats.ENTITY_SIGNAL), Inner::parseEntity,
-                (node) -> node.has(Formats.SET_SIGNAL), Inner::parseSet,
-                (node) -> node.has(Formats.LIST_SIGNAL), Inner::parseList,
-                (node) -> node.has(Formats.MAP_SIGNAL), Inner::parseMap,
-                JsonNode::isTextual, Inner::parseString,
-                JsonNode::isInt, Inner::parseInt,
-                JsonNode::asBoolean, Inner::parseBool,
-                (node) -> (node.isFloat() || node.isDouble()), Inner::parseFloat
+        static final Map<Predicate<JsonNode>, Function<JsonNode, BaseEntity>> CASES = Map.ofEntries(
+            Map.entry((node) -> node.has(FormatsConsts.ENTITY_SIGNAL), Inner::parseEntity),
+            Map.entry((node) -> node.has(FormatsConsts.SET_SIGNAL), Inner::parseSet),
+            Map.entry((node) -> node.has(FormatsConsts.LIST_SIGNAL), Inner::parseList),
+            Map.entry((node) -> node.has(FormatsConsts.MAP_SIGNAL), Inner::parseMap),
+            Map.entry(JsonNode::isTextual, Inner::parseString),
+            Map.entry(JsonNode::isInt, Inner::parseInt),
+            Map.entry(JsonNode::asBoolean, Inner::parseBool),
+            Map.entry((node) -> (node.isFloat() || node.isDouble()), Inner::parseFloat)
         );
 
         static BaseEntity parseNode(JsonNode node) {
@@ -65,7 +65,7 @@ public final class EntityParser extends StdDeserializer<Object> {
             while (iterator.hasNext()) {
                 Map.Entry<String, JsonNode> entry = iterator.next();
                 String type = entry.getKey();
-                if (! Formats.ENTITY_SIGNAL.equals(type)) {
+                if (! FormatsConsts.ENTITY_SIGNAL.equals(type)) {
                     JsonNode fieldsNode = entry.getValue();
                     return generateEntity(type, fieldsNode);
                 }
@@ -75,7 +75,7 @@ public final class EntityParser extends StdDeserializer<Object> {
 
         static BaseEntity parseSet(JsonNode node) {
             SetEntity<BaseEntity> result = new SetEntity<>();
-            for (JsonNode n: node.get(Formats.SET_SIGNAL)) {
+            for (JsonNode n: node.get(FormatsConsts.SET_SIGNAL)) {
                 result.add(parseNode(n));
             }
             return result;
@@ -83,7 +83,7 @@ public final class EntityParser extends StdDeserializer<Object> {
 
         static BaseEntity parseList(JsonNode node) {
             ListEntity<BaseEntity> result = new ListEntity<>();
-            for (JsonNode n: node.get(Formats.LIST_SIGNAL)) {
+            for (JsonNode n: node.get(FormatsConsts.LIST_SIGNAL)) {
                 result.add(parseNode(n));
             }
             return result;
@@ -91,9 +91,9 @@ public final class EntityParser extends StdDeserializer<Object> {
 
         static BaseEntity parseMap(JsonNode node) {
             MapEntity<BaseEntity, BaseEntity> result = new MapEntity<>();
-            for (JsonNode n: node.get(Formats.MAP_SIGNAL)) {
-                BaseEntity key = parseNode(n.get(Formats.KEY_SIGNAL));
-                BaseEntity value = parseNode(n.get(Formats.VALUE_SIGNAL));
+            for (JsonNode n: node.get(FormatsConsts.MAP_SIGNAL)) {
+                BaseEntity key = parseNode(n.get(FormatsConsts.KEY_SIGNAL));
+                BaseEntity value = parseNode(n.get(FormatsConsts.VALUE_SIGNAL));
                 result.add(key, value);
             }
             return result;
@@ -127,7 +127,7 @@ public final class EntityParser extends StdDeserializer<Object> {
 
     @Override
     public List<BaseEntity> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
-            throws IOException {
+        throws IOException {
         List<BaseEntity> result = new ArrayList<>();
         JsonNode node = jsonParser.getCodec().readTree(jsonParser);
         for (JsonNode n: node) {
@@ -135,5 +135,4 @@ public final class EntityParser extends StdDeserializer<Object> {
         }
         return result;
     }
-
 }

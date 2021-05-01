@@ -3,7 +3,8 @@ package process.parser;
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
-import util.Formats;
+import util.FormatsConsts;
+import util.PathConsts;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -18,7 +19,7 @@ public final class ModelJsonGenerator {
 
     static void initialization() {
         try {
-            FileOutputStream file = new FileOutputStream(util.Configs.MODEL_JSON_FILE);
+            FileOutputStream file = new FileOutputStream(PathConsts.MODEL_JSON_FILE);
             jg = (new JsonFactory()).createGenerator(file, JsonEncoding.UTF8);
         } catch (IOException e) {
             e.printStackTrace();
@@ -35,8 +36,8 @@ public final class ModelJsonGenerator {
 
     static void generateEntity(String type, String name) throws IOException {
         jg.writeStartObject();
-        jg.writeStringField(Formats.MODEL_TYPE_FIELD, type);
-        jg.writeStringField(Formats.MODEL_NAME_FIELD, name);
+        jg.writeStringField(FormatsConsts.MODEL_TYPE_FIELD, type);
+        jg.writeStringField(FormatsConsts.MODEL_NAME_FIELD, name);
         ModelTextParser.parseFields();
         jg.writeEndObject();
     }

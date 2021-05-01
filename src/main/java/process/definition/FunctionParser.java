@@ -1,11 +1,10 @@
-package process.definition.rule;
+package process.definition;
 
 import base.dynamics.TypeManager;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.ArrayList;
 import java.util.function.Function;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -26,18 +25,17 @@ public final class FunctionParser {
     private static final int THREE_ARGUMENT = 3;
     private static final int FOUR_ARGUMENT = 4;
 
-    private static final Map<String, Function<List<String>, String>> WORDS = new HashMap<>();
-    static {
-        WORDS.put("and", FunctionParser::and);
-        WORDS.put("or", FunctionParser::or);
-        WORDS.put("equal", FunctionParser::equal);
-        WORDS.put("not equal", FunctionParser::notEqual);
-        WORDS.put("include", FunctionParser::include);
-        WORDS.put("size", FunctionParser::size);
-        WORDS.put("all", FunctionParser::all);
-        WORDS.put("any", FunctionParser::any);
-        WORDS.put("all argument", FunctionParser::allArgument);
-    }
+    private static final Map<String, Function<List<String>, String>> WORDS = Map.ofEntries(
+        Map.entry("and", FunctionParser::and),
+        Map.entry("or", FunctionParser::or),
+        Map.entry("equal", FunctionParser::equal),
+        Map.entry("not equal", FunctionParser::notEqual),
+        Map.entry("include", FunctionParser::include),
+        Map.entry("size", FunctionParser::size),
+        Map.entry("all", FunctionParser::all),
+        Map.entry("any", FunctionParser::any),
+        Map.entry("all argument", FunctionParser::allArgument)
+    );
 
     public static String parse(JsonNode node) {
         if (node.isTextual()) {

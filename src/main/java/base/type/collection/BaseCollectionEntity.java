@@ -2,7 +2,9 @@ package base.type.collection;
 
 import base.type.BaseEntity;
 import base.type.primitive.IntEntity;
-import exception.TypeInvalidException;
+import exceptions.TypeInvalidException;
+
+import java.util.Objects;
 
 /**
  * Abstract base class for all collection types, including list, set and map.<p>
@@ -14,6 +16,7 @@ import exception.TypeInvalidException;
 public abstract class BaseCollectionEntity extends BaseEntity {
 
     protected static final String TYPE_UNDEFINED = "_undefined_";
+    protected static final String DELIMITER = ", ";
 
     @Override
     public final boolean isPrimitive() {
@@ -42,7 +45,7 @@ public abstract class BaseCollectionEntity extends BaseEntity {
      * @throws TypeInvalidException if not matched.
      */
     protected void checkType(String real, String expectation) {
-        if (! expectation.equals(real)) {
+        if (! Objects.equals(real, expectation)) {
             throw new TypeInvalidException(real, expectation);
         }
     }

@@ -1,6 +1,6 @@
 package util;
 
-import exception.TokenInvalidException;
+import exceptions.TokenInvalidException;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -24,21 +24,20 @@ public final class TextReader {
     private static int charRead = END_OF_FILE;
     private static int previousRead = END_OF_FILE;
     private final static Set<Integer> MULTIPLE_CHARS_SIGNAL_HEAD =
-            Formats.MULTIPLE_CHARS_SIGNAL.stream()
-                    .map(s -> (int) s.charAt(0))
-                    .collect(Collectors.toCollection(HashSet::new));
+        FormatsConsts.MULTIPLE_CHARS_SIGNAL.stream()
+        .map(s -> (int) s.charAt(0))
+        .collect(Collectors.toCollection(HashSet::new));
 
     private static final Set<Integer> ENTITY_CHAR = Stream.of(
-            '$', '.', '_', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-            'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
-            'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'
-    ).map(character -> (int)character )
-            .collect(Collectors.toCollection(HashSet::new));
+        '$', '.', '_', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+        'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
+        'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'
+    ).map(character -> (int)character ).collect(Collectors.toCollection(HashSet::new));
+
     private static final Set<Integer> SYMBOL_CHAR = Stream.of(
-            '`', '!', '"', '#', '%', '&', '\'', '(', ')', '*', '+', ',', '-', '/', ':', ';',
-            '<', '=', '>', '?', '@', '[', '\\', ']', '^', '`', '{', '|', '}', '~'
-    ).map(character -> (int)character )
-            .collect(Collectors.toCollection(HashSet::new));
+        '`', '!', '"', '#', '%', '&', '\'', '(', ')', '*', '+', ',', '-', '/', ':', ';',
+        '<', '=', '>', '?', '@', '[', '\\', ']', '^', '`', '{', '|', '}', '~'
+    ).map(character -> (int)character ).collect(Collectors.toCollection(HashSet::new));
 
     /**
      * read the specific file
@@ -105,11 +104,10 @@ public final class TextReader {
         if (MULTIPLE_CHARS_SIGNAL_HEAD.contains(head)) {
             charRead = file.read();
             String temp = Character.toString((char) head) + (char) charRead;
-            if (Formats.MULTIPLE_CHARS_SIGNAL.contains(temp)) {
+            if (FormatsConsts.MULTIPLE_CHARS_SIGNAL.contains(temp)) {
                 previousRead = END_OF_FILE;
                 return temp;
-            }
-            else {
+            } else {
                 while (! SYMBOL_CHAR.contains(charRead) && ! ENTITY_CHAR.contains(charRead)) {
                     charRead = file.read();
                 }
@@ -129,7 +127,7 @@ public final class TextReader {
     }
 
     public static void main(String[] args) {
-        readFile(Configs.RULE_TEXT_FILE);
+        readFile(PathConsts.RULE_TEXT_FILE);
         String token = nextToken();
         while (! EMPTY_STRING.equals(token)) {
             System.out.print(token);

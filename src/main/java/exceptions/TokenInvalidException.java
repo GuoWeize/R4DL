@@ -1,4 +1,4 @@
-package exception;
+package exceptions;
 
 import java.io.IOException;
 
@@ -15,13 +15,13 @@ public final class TokenInvalidException extends IOException {
 
     public TokenInvalidException(String real, String expectation) {
         super("Token is not matched.");
-        System.out.println("Expect \"" + expectation + "\", but get \"" + real + "\".");
+        System.out.printf("Token gotten is :\"%s\", but requires %s.%n", real, expectation);
     }
 
     public TokenInvalidException(String real, Iterable<String> expectations) {
         super("Token is not matched");
         String exp = String.join("\" & \"", expectations);
-        System.out.println("Expect \"" + exp + "\", but get \"" + real + "\".");
+        System.out.printf("Token gotten is :\"%s\", but requires %s.%n", real, exp);
     }
 
 }

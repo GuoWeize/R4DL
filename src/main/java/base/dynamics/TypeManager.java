@@ -1,7 +1,7 @@
 package base.dynamics;
 
 import base.type.BaseEntity;
-import exception.TypeInvalidException;
+import exceptions.TypeInvalidException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -49,21 +49,19 @@ public final class TypeManager {
     public static void checkType(String type) {
         if (! TYPE_2_CLASS.containsKey(type)) {
             if (type.startsWith(LIST)) {
-                checkType(type.substring(5, type.length() -1));
-            }
-            else if (type.startsWith(SET)) {
-                checkType(type.substring(4, type.length() -1));
-            }
-            else if (type.startsWith(MAP)) {
+                checkType(type.substring(5, type.length() - 1));
+            } else if (type.startsWith(SET)) {
+                checkType(type.substring(4, type.length() - 1));
+            } else if (type.startsWith(MAP)) {
                 List<String> temp = Arrays.asList(type.split(", "));
                 if (temp.size() != MAP_PARA_NUM) {
-                    throw new TypeInvalidException("Map type requires 2 types in template, but got " + temp.size() + ".");
+                    throw new TypeInvalidException(
+                        String.format("Map type requires 2 types in template, but got %s.", temp.size()));
                 }
                 checkType(temp.get(0).substring(4));
-                checkType(temp.get(1).substring(0, temp.get(1).length() -1));
-            }
-            else {
-                throw new TypeInvalidException("Type \"" + type + "\" is not defined.");
+                checkType(temp.get(1).substring(0, temp.get(1).length() - 1));
+            } else {
+                throw new TypeInvalidException(String.format("Type \"%s\" is not defined.", type));
             }
         }
     }

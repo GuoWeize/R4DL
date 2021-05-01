@@ -1,7 +1,7 @@
-package process.definition.rule;
+package process.definition;
 
 import base.dynamics.TypeManager;
-import util.Configs;
+import util.PathConsts;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -13,7 +13,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import util.Formats;
+import util.FormatsConsts;
 
 /**
  * Parse recognition rules from file.
@@ -35,16 +35,21 @@ public final class RuleParser extends StdDeserializer<Object> {
     public Object deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
             throws IOException {
         JsonNode root = jsonParser.getCodec().readTree(jsonParser);
-        String contents = "import base.type.BaseEntity;\n" +
-                "import base.type.primitive.*;\n" +
-                "import base.type.collection.*;\n" +
-                "import java.util.stream.IntStream;\n\n" +
-                "public class Rule {\n\n" +
-                parseRoot(root.get(Formats.DEFINE_FUNCTION), false) +
-                parseRoot(root.get(Formats.DEFINE_RULE), true) +
-                "}\n";
+        String contents = generateJavadoc()
+            + GeneralJavaHeaderGenerator.generateJavadoc(PathConsts.RULE_JAVA_NAME, PathConsts.RULE_JSON_FILE)
+            + "public class Rule {\n\n"
+            + parseRoot(root.get(FormatsConsts.DEFINE_FUNCTION), false)
+            + parseRoot(root.get(FormatsConsts.DEFINE_RULE), true)
+            + "}\n";
         addToJavaFile(contents);
         return null;
+    }
+
+    private String generateJavadoc() {
+        return "import base.type.BaseEntity;\n"
+            + "import base.type.primitive.*;\n"
+            + "import base.type.collection.*;\n"
+            + "import java.util.stream.IntStream;\n\n";
     }
 
     private String parseRoot(JsonNode node, boolean isRule) {
@@ -52,9 +57,9 @@ public final class RuleParser extends StdDeserializer<Object> {
         node.fields().forEachRemaining(entry -> {
             String name = entry.getKey();
             JsonNode n = entry.getValue();
-            List<String> arguments = parseArgument(n.get(Formats.RULE_ARGUMENT_FIELD));
-            String returns = parseReturn(n.get(Formats.RULE_RETURN_FIELD));
-            String logic = FunctionParser.parse(n.get(Formats.RULE_LOGIC_FIELD));
+            List<String> arguments = parseArgument(n.get(FormatsConsts.RULE_ARGUMENT_FIELD));
+            String returns = parseReturn(n.get(FormatsConsts.RULE_RETURN_FIELD));
+            String logic = FunctionParser.parse(n.get(FormatsConsts.RULE_LOGIC_FIELD));
             for (String argument: arguments) {
                 contents.append(generateRuleFunction(name, argument, returns, logic, isRule));
             }
@@ -80,9 +85,9 @@ public final class RuleParser extends StdDeserializer<Object> {
 
     private void addToJavaFile(String contents){
         try {
-            File file = new File(Configs.RULE_JAVA_FILE);
+            File file = new File(PathConsts.RULE_JAVA_FILE);
             if (! file.createNewFile()) {
-                System.out.println("Replace \"" + Configs.RULE_JAVA_NAME + "\" before.");
+                System.out.println("Replace \"" + PathConsts.RULE_JAVA_NAME + "\" before.");
             }
             FileWriter fileWriter = new FileWriter(file);
             fileWriter.write(contents);
@@ -95,8 +100,8 @@ public final class RuleParser extends StdDeserializer<Object> {
 
     private String generateRuleFunction(String name, String argument, String returns, String logic, boolean isRule) {
         return "    " + (isRule ? "public": "private")
-                + " static " + returns + " " + name + "(" + argument + ") {\n"
-                + "        return " + logic + ";\n"
-                + "    }\n\n";
+            + " static " + returns + " " + name + "(" + argument + ") {\n"
+            + "        return " + logic + ";\n"
+            + "    }\n\n";
     }
 }

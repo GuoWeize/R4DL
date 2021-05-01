@@ -1,8 +1,8 @@
 package process.parser;
 
-import exception.TokenInvalidException;
-import util.Configs;
-import util.Formats;
+import exceptions.TokenInvalidException;
+import util.PathConsts;
+import util.FormatsConsts;
 import util.TextReader;
 
 import java.io.IOException;
@@ -21,7 +21,7 @@ public final class RuleTextParser {
      * entry of the function of parsing the rule text file.
      */
     public static void parseRuleFile() {
-        TextReader.readFile(Configs.RULE_TEXT_FILE);
+        TextReader.readFile(PathConsts.RULE_TEXT_FILE);
         RuleJsonGenerator.initialization();
         try {
             RuleJsonGenerator.generateRules();
@@ -36,64 +36,60 @@ public final class RuleTextParser {
             type = TextReader.nextToken();
             if (TextReader.EMPTY_STRING.equals(type)) {
                 break;
-            }
-            else if (! Formats.DEFINE_FUNCTION.equals(type) && ! Formats.DEFINE_RULE.equals(type) ) {
-                throw new TokenInvalidException(type, List.of(Formats.DEFINE_FUNCTION, Formats.DEFINE_RULE));
+            } else if (! FormatsConsts.DEFINE_FUNCTION.equals(type) && ! FormatsConsts.DEFINE_RULE.equals(type) ) {
+                throw new TokenInvalidException(type,
+                    List.of(FormatsConsts.DEFINE_FUNCTION, FormatsConsts.DEFINE_RULE));
             }
             name = TextReader.nextToken();
-            Formats.CUSTOMIZED_OPERATORS.add(name);
+            FormatsConsts.CUSTOMIZED_OPERATORS.add(name);
             RuleJsonGenerator.generateRule(name, type);
         }
     }
 
     static void parseArguments() throws IOException {
-        TextReader.nextTokenWithTest(Formats.OPEN_PAREN);
+        TextReader.nextTokenWithTest(FormatsConsts.OPEN_PAREN);
         List<List<String>> arguments = new ArrayList<>();
         while (true) {
             List<String> argument = new ArrayList<>();
             String next = TextReader.nextToken();
             argument.add(next);
             next = TextReader.nextToken();
-            while (Formats.COMMA.equals(next)) {
+            while (FormatsConsts.COMMA.equals(next)) {
                 argument.add(TextReader.nextToken());
                 next = TextReader.nextToken();
             }
             arguments.add(argument);
-            if (Formats.CLOSE_PAREN.equals(next)) {
+            if (FormatsConsts.CLOSE_PAREN.equals(next)) {
                 break;
-            }
-            else {
-                TextReader.nextTokenWithTest(Formats.SEPARATOR);
+            } else {
+                TextReader.nextTokenWithTest(FormatsConsts.SEPARATOR);
             }
         }
         RuleJsonGenerator.generateArguments(arguments);
     }
 
     static void parseReturn() throws IOException {
-        TextReader.nextTokenWithTest(Formats.ARROW);
+        TextReader.nextTokenWithTest(FormatsConsts.ARROW);
         RuleJsonGenerator.generateReturn(TextReader.nextToken());
     }
 
     static void parseLogic() throws IOException {
-        TextReader.nextTokenWithTest(Formats.OPEN_BRACE);
+        TextReader.nextTokenWithTest(FormatsConsts.OPEN_BRACE);
         parseTerm();
-        TextReader.nextTokenWithTest(Formats.CLOSE_BRACE);
+        TextReader.nextTokenWithTest(FormatsConsts.CLOSE_BRACE);
     }
 
     static String parseTerm() throws IOException {
         String nextToken = TextReader.nextToken();
-        if (Formats.OPEN_BRACE.equals(nextToken)) {
-            TextReader.nextTokenWithTest(Formats.CLOSE_BRACE);
+        if (FormatsConsts.OPEN_BRACE.equals(nextToken)) {
+            TextReader.nextTokenWithTest(FormatsConsts.CLOSE_BRACE);
             return parseUnitaryBinary();
-        }
-        else if (Formats.MULTIPLE_ARG_OPERATORS.contains(nextToken) ||
-                Formats.CUSTOMIZED_OPERATORS.contains(nextToken)) {
+        } else if (FormatsConsts.MULTIPLE_ARG_OPERATORS.contains(nextToken) ||
+                FormatsConsts.CUSTOMIZED_OPERATORS.contains(nextToken)) {
             return parseMultipleArg(nextToken);
-        }
-        else if (Formats.LOOP_SIGNAL.equals(nextToken)) {
+        } else if (FormatsConsts.LOOP_SIGNAL.equals(nextToken)) {
             return parseLoop();
-        }
-        else {
+        } else {
             return parseElement(nextToken);
         }
     }
@@ -104,14 +100,14 @@ public final class RuleTextParser {
      */
     static String parseUnitaryBinary() throws IOException {
         String firstToken = TextReader.nextToken();
-        if (Formats.UNITARY_OPERATORS.contains(firstToken)) {
+        if (FormatsConsts.UNITARY_OPERATORS.contains(firstToken)) {
             String object = parseTerm();
             return "{\"" + firstToken + "\": " + object + "}";
         }
         else {
             String object1 = parseTerm();
             String operator = TextReader.nextToken();
-            if (! Formats.BINARY_OPERATORS.contains(operator)) {
+            if (! FormatsConsts.BINARY_OPERATORS.contains(operator)) {
                 throw new TokenInvalidException("Binary operator \"" + operator + "\" is not defined.");
             }
             String object2 = parseTerm();
@@ -124,19 +120,19 @@ public final class RuleTextParser {
      * @return json format logic
      */
     static String parseMultipleArg(String operator) throws IOException {
-        TextReader.nextTokenWithTest(Formats.OPEN_PAREN);
+        TextReader.nextTokenWithTest(FormatsConsts.OPEN_PAREN);
         List<String> args = new ArrayList<>();
         while (true) {
             args.add(parseTerm());
             String nextToken = TextReader.nextToken();
-            if (Formats.CLOSE_PAREN.equals(nextToken)) {
+            if (FormatsConsts.CLOSE_PAREN.equals(nextToken)) {
                 break;
             }
-            else if (! Formats.COMMA.equals(nextToken)) {
-                throw new TokenInvalidException(nextToken, Formats.COMMA);
+            else if (! FormatsConsts.COMMA.equals(nextToken)) {
+                throw new TokenInvalidException(nextToken, FormatsConsts.COMMA);
             }
         }
-        return "{\"" + operator + "\": [" + String.join(Formats.COMMA, args) + "]}";
+        return "{\"" + operator + "\": [" + String.join(FormatsConsts.COMMA, args) + "]}";
     }
 
     /**
@@ -147,27 +143,27 @@ public final class RuleTextParser {
         // <loop statement> := for (all | any) <statement> <range> '(' <statement> ')'
         // <range> := in <statement> | from <statement> to <statement>
         String quantifier = TextReader.nextToken();
-        if (! Formats.ALL_SATISFY.equals(quantifier) && ! Formats.ANY_SATISFY.equals(quantifier)) {
-            throw new TokenInvalidException(quantifier, List.of(Formats.ALL_SATISFY, Formats.ANY_SATISFY));
+        if (! FormatsConsts.ALL_SATISFY.equals(quantifier) && ! FormatsConsts.ANY_SATISFY.equals(quantifier)) {
+            throw new TokenInvalidException(quantifier, List.of(FormatsConsts.ALL_SATISFY, FormatsConsts.ANY_SATISFY));
         }
         quantifier = "\"" + quantifier + "\"";
         String loopVariable = "\"" + parseElement(NONE_PRE_TOKEN) + "\"";
         String range;
         String nextToken = TextReader.nextToken();
-        if (Formats.RANGE_SIGNAL.equals(nextToken)) {
-            range = "\"" + Formats.RANGE_SIGNAL + TextReader.nextToken() + "\"";
+        if (FormatsConsts.RANGE_SIGNAL.equals(nextToken)) {
+            range = "\"" + FormatsConsts.RANGE_SIGNAL + TextReader.nextToken() + "\"";
         }
-        else if (Formats.RANGE_BEGIN_SIGNAL.equals(nextToken)) {
+        else if (FormatsConsts.RANGE_BEGIN_SIGNAL.equals(nextToken)) {
             range = TextReader.nextToken();
-            TextReader.nextTokenWithTest(Formats.RANGE_END_SIGNAL);
+            TextReader.nextTokenWithTest(FormatsConsts.RANGE_END_SIGNAL);
             range = "\"" + range + TextReader.nextToken() + "\"";
         }
         else {
-            throw new TokenInvalidException(nextToken, List.of(Formats.RANGE_SIGNAL, Formats.RANGE_BEGIN_SIGNAL));
+            throw new TokenInvalidException(nextToken, List.of(FormatsConsts.RANGE_SIGNAL, FormatsConsts.RANGE_BEGIN_SIGNAL));
         }
-        TextReader.nextTokenWithTest(Formats.OPEN_PAREN);
+        TextReader.nextTokenWithTest(FormatsConsts.OPEN_PAREN);
         String logicalBody = parseTerm();
-        TextReader.nextTokenWithTest(Formats.CLOSE_PAREN);
+        TextReader.nextTokenWithTest(FormatsConsts.CLOSE_PAREN);
         return "{" + quantifier + ": [" + loopVariable + "," + range + "," + logicalBody + "]}";
     }
 

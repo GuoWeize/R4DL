@@ -3,11 +3,12 @@ package base.type.collection;
 import base.type.BaseEntity;
 import base.type.primitive.BoolEntity;
 import base.type.primitive.IntEntity;
-import exception.TypeInvalidException;
+import exceptions.TypeInvalidException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -58,7 +59,7 @@ public final class ListEntity<E extends BaseEntity> extends BaseCollectionEntity
      * @throws TypeInvalidException if entity has illegal type.
      */
     public void add(E entity) {
-        if (TYPE_UNDEFINED.equals(type)) {
+        if (Objects.equals(type, TYPE_UNDEFINED)) {
             type = entity.getType();
         }
         checkType(entity.getType(), type);
@@ -121,7 +122,7 @@ public final class ListEntity<E extends BaseEntity> extends BaseCollectionEntity
 
     @Override
     public BoolEntity equal(BaseEntity entity) {
-        if (! entity.getType().equals(this.getType())) {
+        if (! Objects.equals(entity.getType(), this.getType())) {
             return BoolEntity.FALSE;
         }
         ListEntity<?> list = (ListEntity<?>) entity;
@@ -143,15 +144,11 @@ public final class ListEntity<E extends BaseEntity> extends BaseCollectionEntity
 
     @Override
     public String getType() {
-        return "list[" + getItemType() + "]";
+        return String.format("list[%s]", getItemType());
     }
 
     @Override
     public String toString() {
-        return "[" +
-                entities.stream()
-                        .map(Object::toString)
-                        .collect(Collectors.joining(", ")) +
-                "]";
+        return String.format("[%s]", entities.stream().map(Object::toString).collect(Collectors.joining(DELIMITER)));
     }
 }

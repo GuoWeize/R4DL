@@ -3,10 +3,11 @@ package base.type.collection;
 import base.type.BaseEntity;
 import base.type.primitive.BoolEntity;
 import base.type.primitive.IntEntity;
-import exception.TypeInvalidException;
+import exceptions.TypeInvalidException;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 
 /**
@@ -38,11 +39,10 @@ public final class MapEntity<K extends BaseEntity, V extends BaseEntity> extends
      * @throws TypeInvalidException if entity has illegal type.
      */
     public void add(K key, V value) {
-        if (TYPE_UNDEFINED.equals(keyType)) {
+        if (Objects.equals(keyType, TYPE_UNDEFINED)) {
             keyType = key.getType();
             valueType = value.getType();
-        }
-        else {
+        } else {
             checkType(key.getType(), keyType);
             checkType(value.getType(), valueType);
         }
@@ -152,7 +152,7 @@ public final class MapEntity<K extends BaseEntity, V extends BaseEntity> extends
 
     @Override
     public BoolEntity equal(BaseEntity entity) {
-        if (! entity.getType().equals(this.getType())) {
+        if (! Objects.equals(entity.getType(), this.getType())) {
             return BoolEntity.FALSE;
         }
         MapEntity<?, ?> map = (MapEntity<?, ?>) entity;
@@ -164,11 +164,11 @@ public final class MapEntity<K extends BaseEntity, V extends BaseEntity> extends
 
     @Override
     public String getItemType() {
-        return keyType + ", " + valueType;
+        return String.format("%s%s%s", keyType, DELIMITER, valueType);
     }
 
     @Override
     public String getType() {
-        return "map[" + getItemType() + "]";
+        return String.format("map[%s%s%s]", keyType, DELIMITER, valueType);
     }
 }
