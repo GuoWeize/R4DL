@@ -47,19 +47,8 @@ public final class RuleJsonGenerator {
         RuleTextParser.parseReturn();
         jg.writeFieldName(FormatsConsts.RULE_LOGIC_FIELD);
         jg.flush();
-
         String logic = RuleTextParser.parseLogic();
-        addLogic(logic);
-
         jg.writeEndObject();
-    }
-
-    static void addLogic(String logic) throws IOException {
-        Files.write(
-            Paths.get("demo.json"),
-            logic.getBytes(StandardCharsets.UTF_8),
-            StandardOpenOption.APPEND
-        );
     }
 
     static void generateArguments(List<List<String>> arguments) throws IOException {

@@ -10,12 +10,32 @@ function in_out_include
     )
 }
 
+function operation_contradict
+(operation, operation) -> boolean {
+    and (
+        {$1$.reaction == $2$.reaction},
+        {! $1$.isAble},
+        {! $2$.isAble},
+        {! {$1$.isNot == $2$.isNot}}
+    )
+}
+
 function base_contradict
 (functional, functional / functional, condition / condition, function / condition, condition) -> boolean {
     and (
         {$1$.agent == $2$.agent},
-        contradict($1$.operation, $2$.operation),
+        operation_contradict($1$.operation, $2$.operation),
         in_out_include($1$, $2$)
+    )
+}
+
+function operation_include
+(operation, operation) -> boolean {
+    or (
+        {$1$ == $2$},
+        and (
+            {$1$.reaction == $2$.reaction}, $2$.isAble, {! $1$.isAble}
+        )
     )
 }
 
@@ -37,15 +57,6 @@ function operation_event_condition
     }
 }
 
-function input_output_condition
-(functional, functional) -> boolean {
-    for any inEntity in $2$.input {
-        for any outEntity in $1$.output {
-            entity_include(outEntity, inEntity)
-        }
-    }
-}
-
 function entity_include
 (entity, entity) -> boolean {
     or (
@@ -56,24 +67,13 @@ function entity_include
     )
 }
 
-function operation_include
-(operation, operation) -> boolean {
-    or (
-        {$1$ == $2$},
-        and (
-            {$1$.reaction == $2$.reaction}, $2$.isAble, {! $1$.isAble}
-        )
-    )
-}
-
-function operation_contradict
-(operation, operation) -> boolean {
-    and (
-        {$1$.reaction == $2$.reaction},
-        {! $1$.isAble},
-        {! $2$.isAble},
-        {! {$1$.isNot == $2$.isNot}}
-    )
+function input_output_condition
+(functional, functional) -> boolean {
+    for any inEntity in $2$.input {
+        for any outEntity in $1$.output {
+            entity_include(outEntity, inEntity)
+        }
+    }
 }
 
 rule operation_inconsistency
@@ -125,20 +125,20 @@ rule event_inclusion
 }
 
 rule operation_event_interlock
-(list<functional>) -> boolean {
+(functional ...) -> boolean {
     and (
         operation_event_condition($1$[-1], $1$[0]),
-        for all index from {0} to {{size_of $1$} - 1} (
+        for all index from 0 to {{size_of $1$} - 1} (
             operation_event_condition($1$[index], $1$[{index + 1}])
         )
     )
 }
 
 rule input_output_interlock
-(list<functional>) -> boolean {
+(functional ...) -> boolean {
     and (
         input_output_condition($1$[-1], $1$[0]),
-        for all index from {0} to {{size_of $1$} - 1} (
+        for all index from 0 to {{size_of $1$} - 1} (
             input_output_condition($1$[index], $1$[{index + 1}])
         )
     )

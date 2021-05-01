@@ -7,10 +7,14 @@ import util.FormatsConsts;
 import util.TextReader;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author Guo Weize
@@ -18,6 +22,7 @@ import java.util.Set;
  */
 public final class RuleTextParser {
 
+    private static final List<String> RULES = new ArrayList<>();
     private static final String NONE_PRE_TOKEN = "";
     private static final Set<Character> nums = Set.of('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.');
 
@@ -26,31 +31,38 @@ public final class RuleTextParser {
      */
     public static void parseRuleFile() {
         TextReader.readFile(PathConsts.RULE_TEXT_FILE);
-        RuleJsonGenerator.initialization();
         try {
-            RuleJsonGenerator.generateRules();
+            String result = String.format("{%s}", parseRules());
+            Files.write(Paths.get("demo.json"), result.getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    static void parseRules() throws IOException {
-        String type, name;
-        while (true) {
-            type = TextReader.nextToken();
-            if (Objects.equals(type, TextReader.EMPTY_STRING)) {
-                break;
-            } else if (! Objects.equals(type, FormatsConsts.DEFINE_FUNCTION) && ! Objects.equals(type, FormatsConsts.DEFINE_RULE) ) {
-                throw new TokenInvalidException(type,
-                    List.of(FormatsConsts.DEFINE_FUNCTION, FormatsConsts.DEFINE_RULE));
-            }
-            name = TextReader.nextToken();
-            FormatsConsts.CUSTOMIZED_OPERATORS.add(name);
-            RuleJsonGenerator.generateRule(name, type);
+    static String parseRules() throws IOException {
+        String preRead = TextReader.nextToken();
+        while (! Objects.equals(preRead, TextReader.EMPTY_STRING)) {
+            parseRule(preRead);
+            preRead = TextReader.nextToken();
         }
+        return String.join(", ", RULES);
     }
 
-    static void parseArguments() throws IOException {
+    static void parseRule(String type) throws IOException {
+        if (! Objects.equals(type, FormatsConsts.DEFINE_FUNCTION) && ! Objects.equals(type, FormatsConsts.DEFINE_RULE) ) {
+            throw new TokenInvalidException(type, List.of(FormatsConsts.DEFINE_FUNCTION, FormatsConsts.DEFINE_RULE));
+        }
+        String name = TextReader.nextToken();
+        FormatsConsts.CUSTOMIZED_OPERATORS.add(name);
+        String head = String.format("\"%s\": {\"%s\": \"%s\", ", name, FormatsConsts.RULE_TYPE_FIELD, type);
+        String arguments = String.format("\"%s\": %s, ", FormatsConsts.RULE_ARGUMENT_FIELD, parseArguments());
+        String returnType = String.format("\"%s\": \"%s\", ", FormatsConsts.RULE_RETURN_FIELD, parseReturn());
+        String logic = String.format("\"%s\": %s", FormatsConsts.RULE_LOGIC_FIELD, parseLogic());
+        String tail = "}";
+        RULES.add(String.format("%s%s%s%s%s", head, arguments, returnType, logic, tail));
+    }
+
+    static String parseArguments() throws IOException {
         TextReader.nextTokenWithTest(FormatsConsts.OPEN_PAREN);
         List<List<String>> arguments = new ArrayList<>();
         while (true) {
@@ -69,12 +81,15 @@ public final class RuleTextParser {
                 throw new TypeInvalidException(next, List.of(FormatsConsts.SEPARATOR, FormatsConsts.CLOSE_PAREN));
             }
         }
-        RuleJsonGenerator.generateArguments(arguments);
+        List<String> temp = arguments.stream()
+            .map(l -> String.format("[\"%s\"]", String.join("\", \"", l)))
+            .collect(Collectors.toList());
+        return "[" + String.join(", ", temp) + "]";
     }
 
-    static void parseReturn() throws IOException {
+    static String parseReturn() throws IOException {
         TextReader.nextTokenWithTest(FormatsConsts.ARROW);
-        RuleJsonGenerator.generateReturn(TextReader.nextToken());
+        return TextReader.nextToken();
     }
 
     static String parseLogic() throws IOException {
@@ -154,7 +169,7 @@ public final class RuleTextParser {
         String range;
         String nextToken = TextReader.nextToken();
         if (Objects.equals(nextToken, FormatsConsts.RANGE_SIGNAL)) {
-            range = FormatsConsts.RANGE_SIGNAL + TextReader.nextToken();
+            range = FormatsConsts.RANGE_SIGNAL + " " + TextReader.nextToken();
         } else if (Objects.equals(nextToken, FormatsConsts.RANGE_BEGIN_SIGNAL)) {
             range = TextReader.nextToken();
             TextReader.nextTokenWithTest(FormatsConsts.RANGE_END_SIGNAL);
@@ -162,10 +177,10 @@ public final class RuleTextParser {
         } else {
             throw new TokenInvalidException(nextToken, List.of(FormatsConsts.RANGE_SIGNAL, FormatsConsts.RANGE_BEGIN_SIGNAL));
         }
-        TextReader.nextTokenWithTest(FormatsConsts.OPEN_PAREN);
+        TextReader.nextTokenWithTest(FormatsConsts.OPEN_BRACE);
         String logicalBody = parseTerm(NONE_PRE_TOKEN);
-        TextReader.nextTokenWithTest(FormatsConsts.CLOSE_PAREN);
-        return String.format("{\"%s\": [\"%s\", \"%s\", %s]}", quantifier, loopVariable, range, logicalBody);
+        TextReader.nextTokenWithTest(FormatsConsts.CLOSE_BRACE);
+        return String.format("{\"%s\": [%s, \"%s\", %s]}", quantifier, loopVariable, range, logicalBody);
     }
 
     /**
