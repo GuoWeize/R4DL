@@ -20,8 +20,8 @@ public final class TextReader {
     private static FileInputStream file;
     private static final int END_OF_FILE = -1;
     public static final String EMPTY_STRING = "";
-    public static final String SPACE_STRING = " ";
 
+    private static String rollBackToken = "";
     private static int charRead = END_OF_FILE;
     private static int previousRead = END_OF_FILE;
     private final static Set<Integer> MULTIPLE_CHARS_SIGNAL_HEAD =
@@ -54,12 +54,21 @@ public final class TextReader {
         }
     }
 
+    public static void rollBack(String token) {
+        rollBackToken = token;
+    }
+
     /**
      * read the next token in the file
      * @return the next token read
      */
     public static String nextToken() {
         try {
+            if (! Objects.equals(rollBackToken, EMPTY_STRING)) {
+                String token = rollBackToken;
+                rollBackToken = EMPTY_STRING;
+                return token;
+            }
             String result;
             if (previousRead != END_OF_FILE) {
                 result = readEntity(previousRead);

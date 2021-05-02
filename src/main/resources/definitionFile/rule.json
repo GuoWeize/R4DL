@@ -426,7 +426,7 @@
         "_return_": "boolean",
         "_logic_": {
             "all argument": [
-                "i",
+                "index",
                 "$1$",
                 "-1",
                 {
@@ -445,13 +445,35 @@
         "_return_": "boolean",
         "_logic_": {
             "all argument": [
-                "i",
-                "$1$",
-                "-1",
+                "index",
+                "0",
+                {
+                    "-": [
+                        {
+                            "size_of": "$1$"
+                        },
+                        "1"
+                    ]
+                },
                 {
                     "input_output_condition": [
-                        "@i@",
-                        "@i+1@"
+                        {
+                            "[]": [
+                                "$1$",
+                                "index"
+                            ]
+                        },
+                        {
+                            "[]": [
+                                "$1$",
+                                {
+                                    "+": [
+                                        "index",
+                                        "1"
+                                    ]
+                                }
+                            ]
+                        }
                     ]
                 }
             ]

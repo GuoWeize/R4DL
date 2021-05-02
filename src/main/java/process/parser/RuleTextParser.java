@@ -1,7 +1,6 @@
 package process.parser;
 
 import exceptions.TokenInvalidException;
-import exceptions.TypeInvalidException;
 import util.PathConsts;
 import util.FormatsConsts;
 import util.TextReader;
@@ -13,7 +12,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -24,7 +22,6 @@ public final class RuleTextParser {
 
     private static final List<String> RULES = new ArrayList<>();
     private static final String NONE_PRE_TOKEN = "";
-    private static final Set<Character> nums = Set.of('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.');
 
     /**
      * entry of the function of parsing the rule text file.
@@ -65,22 +62,26 @@ public final class RuleTextParser {
     static String parseArguments() throws IOException {
         TextReader.nextTokenWithTest(FormatsConsts.OPEN_PAREN);
         List<List<String>> arguments = new ArrayList<>();
-        while (true) {
+        String preToken;
+        do {
             List<String> argument = new ArrayList<>();
-            String next = TextReader.nextToken();
-            argument.add(next);
-            next = TextReader.nextToken();
-            while (Objects.equals(next, FormatsConsts.COMMA)) {
-                argument.add(TextReader.nextToken());
-                next = TextReader.nextToken();
-            }
+            do {
+                StringBuilder arg = new StringBuilder();
+                while (true) {
+                    preToken = TextReader.nextToken();
+                    if (Objects.equals(preToken, FormatsConsts.COMMA)
+                        || Objects.equals(preToken, FormatsConsts.SEPARATOR)
+                        || Objects.equals(preToken, FormatsConsts.CLOSE_PAREN)) {
+                        break;
+                    } else {
+                        arg.append(preToken);
+                    }
+                }
+                argument.add(arg.toString());
+            } while (!Objects.equals(preToken, FormatsConsts.SEPARATOR)
+                && !Objects.equals(preToken, FormatsConsts.CLOSE_PAREN));
             arguments.add(argument);
-            if (Objects.equals(next, FormatsConsts.CLOSE_PAREN)) {
-                break;
-            } else if (! Objects.equals(next, FormatsConsts.SEPARATOR)) {
-                throw new TypeInvalidException(next, List.of(FormatsConsts.SEPARATOR, FormatsConsts.CLOSE_PAREN));
-            }
-        }
+        } while (!Objects.equals(preToken, FormatsConsts.CLOSE_PAREN));
         List<String> temp = arguments.stream()
             .map(l -> String.format("[\"%s\"]", String.join("\", \"", l)))
             .collect(Collectors.toList());
@@ -166,21 +167,26 @@ public final class RuleTextParser {
             throw new TokenInvalidException(quantifier, List.of(FormatsConsts.ALL_SATISFY, FormatsConsts.ANY_SATISFY));
         }
         String loopVariable = parseElement(NONE_PRE_TOKEN);
-        String range;
         String nextToken = TextReader.nextToken();
         if (Objects.equals(nextToken, FormatsConsts.RANGE_SIGNAL)) {
-            range = FormatsConsts.RANGE_SIGNAL + " " + TextReader.nextToken();
+            String range = parseTerm(NONE_PRE_TOKEN);
+            TextReader.nextTokenWithTest(FormatsConsts.OPEN_PAREN);
+            String logicalBody = parseTerm(NONE_PRE_TOKEN);
+            TextReader.nextTokenWithTest(FormatsConsts.CLOSE_PAREN);
+            return String.format("{\"%s\": [%s, %s, %s]}", quantifier, loopVariable, range, logicalBody);
         } else if (Objects.equals(nextToken, FormatsConsts.RANGE_BEGIN_SIGNAL)) {
-            range = TextReader.nextToken();
+            String rangeBegin = parseTerm(NONE_PRE_TOKEN);
             TextReader.nextTokenWithTest(FormatsConsts.RANGE_END_SIGNAL);
-            range = range + TextReader.nextToken();
+            String rangeEnd = parseTerm(NONE_PRE_TOKEN);
+            TextReader.nextTokenWithTest(FormatsConsts.OPEN_PAREN);
+            String logicalBody = parseTerm(NONE_PRE_TOKEN);
+            TextReader.nextTokenWithTest(FormatsConsts.CLOSE_PAREN);
+            return String.format("{\"%s\": [%s, %s, %s, %s]}",
+                quantifier, loopVariable, rangeBegin, rangeEnd, logicalBody);
         } else {
             throw new TokenInvalidException(nextToken, List.of(FormatsConsts.RANGE_SIGNAL, FormatsConsts.RANGE_BEGIN_SIGNAL));
         }
-        TextReader.nextTokenWithTest(FormatsConsts.OPEN_BRACE);
-        String logicalBody = parseTerm(NONE_PRE_TOKEN);
-        TextReader.nextTokenWithTest(FormatsConsts.CLOSE_BRACE);
-        return String.format("{\"%s\": [%s, \"%s\", %s]}", quantifier, loopVariable, range, logicalBody);
+
     }
 
     /**
@@ -188,58 +194,23 @@ public final class RuleTextParser {
      * @param preReadToken if there is a token pre-read, {@value NONE_PRE_TOKEN} if not
      * @return json format element
      */
-    static String parseElement(String preReadToken) {
+    static String parseElement(String preReadToken) throws IOException {
         String element;
         if (! Objects.equals(preReadToken, NONE_PRE_TOKEN)) {
             element = preReadToken;
         } else {
             element = TextReader.nextToken();
         }
-        String ele;
-        while (true) {
-            ele = unfoldIndex(element);
-            if (Objects.equals(ele, "")) {
-                break;
-            } else {
-                element = ele;
-            }
+        String preToken = TextReader.nextToken();
+        if (Objects.equals(preToken, FormatsConsts.OPEN_BRACKET)) {
+            String collection = String.format("\"%s\"", element);
+            String index = parseTerm(NONE_PRE_TOKEN);
+            TextReader.nextTokenWithTest(FormatsConsts.CLOSE_BRACKET);
+            return String.format("{\"[]\": [%s, %s]}", collection, index);
+        } else {
+            TextReader.rollBack(preToken);
         }
         return String.format("\"%s\"", element);
-    }
-
-    private static String unfoldIndex(String s) {
-        int count = 0;
-        int begin = -1;
-        int end = -1;
-        for (int i = 0; i < s.length(); i++) {
-            if (s.charAt(i) == '[') {
-                if (begin < 0) {
-                    begin = i;
-                }
-                count++;
-            } else if (s.charAt(i) == ']') {
-                count--;
-                if (count == 0) {
-                    end = i;
-                }
-            }
-        }
-        if (begin >= 0) {
-            String collection = parseElement(s.substring(0, begin));
-            String index = parseElement(s.substring(begin + 1, end));
-            String tail = s.substring(end + 1);
-            return String.format("%s.get(%s)%s", collection, index, tail);
-        }
-        return "";
-    }
-
-    private static boolean isNumeric(String s) {
-        for (char c: s.toCharArray()) {
-            if (! nums.contains(c)) {
-                return false;
-            }
-        }
-        return true;
     }
 
     public static void main(String[] args) {

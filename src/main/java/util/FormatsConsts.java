@@ -122,7 +122,8 @@ public final class FormatsConsts {
 
     public static final Set<String> UNARY_OPERATORS = Set.of(
         LOGICAL_NOT,
-        COLLECTION_SIZE_OF
+        COLLECTION_SIZE_OF,
+        CALCULATE_SUBTRACTION
     );
     public static final Set<String> BINARY_OPERATORS = Set.of(
         CALCULATE_ADDITION,
