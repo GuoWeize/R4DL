@@ -1,11 +1,23 @@
 {
-    "inout_include": {
+    "in_out_include": {
         "_type_": "function",
         "_argument_": [
-            ["functional", "functional"],
-            ["functional", "condition"],
-            ["condition", "functional"],
-            ["condition", "condition"]
+            [
+                "functional",
+                "functional"
+            ],
+            [
+                "functional",
+                "condition"
+            ],
+            [
+                "condition",
+                "function"
+            ],
+            [
+                "condition",
+                "condition"
+            ]
         ],
         "_return_": "boolean",
         "_logic_": {
@@ -45,32 +57,77 @@
             ]
         }
     },
-
-    "base_contradict": {
+    "operation_contradict": {
         "_type_": "function",
         "_argument_": [
-            ["functional", "functional"],
-            ["functional", "condition"],
-            ["condition", "functional"],
-            ["condition", "condition"]
+            [
+                "operation",
+                "operation"
+            ]
         ],
         "_return_": "boolean",
         "_logic_": {
             "and": [
                 {
-                    "equal": [
+                    "==": [
+                        "$1$.reaction",
+                        "$2$.reaction"
+                    ]
+                },
+                {
+                    "!": "$1$.isAble"
+                },
+                {
+                    "!": "$2$.isAble"
+                },
+                {
+                    "!": {
+                        "==": [
+                            "$1$.isNot",
+                            "$2$.isNot"
+                        ]
+                    }
+                }
+            ]
+        }
+    },
+    "base_contradict": {
+        "_type_": "function",
+        "_argument_": [
+            [
+                "functional",
+                "functional"
+            ],
+            [
+                "functional",
+                "condition"
+            ],
+            [
+                "condition",
+                "function"
+            ],
+            [
+                "condition",
+                "condition"
+            ]
+        ],
+        "_return_": "boolean",
+        "_logic_": {
+            "and": [
+                {
+                    "==": [
                         "$1$.agent",
                         "$2$.agent"
                     ]
                 },
                 {
-                    "contradict": [
+                    "operation_contradict": [
                         "$1$.operation",
                         "$2$.operation"
                     ]
                 },
                 {
-                    "inout_include": [
+                    "in_out_include": [
                         "$1$",
                         "$2$"
                     ]
@@ -78,26 +135,71 @@
             ]
         }
     },
-
+    "operation_include": {
+        "_type_": "function",
+        "_argument_": [
+            [
+                "operation",
+                "operation"
+            ]
+        ],
+        "_return_": "boolean",
+        "_logic_": {
+            "or": [
+                {
+                    "==": [
+                        "$1$",
+                        "$2$"
+                    ]
+                },
+                {
+                    "and": [
+                        {
+                            "==": [
+                                "$1$.reaction",
+                                "$2$.reaction"
+                            ]
+                        },
+                        "$2$.isAble",
+                        {
+                            "!": "$1$.isAble"
+                        }
+                    ]
+                }
+            ]
+        }
+    },
     "base_include": {
         "_type_": "function",
         "_argument_": [
-            ["functional", "functional"],
-            ["functional", "condition"],
-            ["condition", "functional"],
-            ["condition", "condition"]
+            [
+                "functional",
+                "functional"
+            ],
+            [
+                "functional",
+                "condition"
+            ],
+            [
+                "condition",
+                "function"
+            ],
+            [
+                "condition",
+                "condition"
+            ]
         ],
         "_return_": "boolean",
         "_logic_": {
             "and": [
                 {
-                    "equal": [
+                    "==": [
                         "$1$.agent",
                         "$2$.agent"
                     ]
                 },
                 {
-                    "include": [
+                    "operation_include": [
                         "$1$.operation",
                         "$2$.operation"
                     ]
@@ -123,28 +225,72 @@
             ]
         }
     },
-
     "operation_event_condition": {
         "_type_": "function",
-        "_argument_": [["functional", "functional"]],
+        "_argument_": [
+            [
+                "functional",
+                "functional"
+            ]
+        ],
         "_return_": "boolean",
         "_logic_": {
             "all": [
                 "condition",
                 "$2$.event",
                 {
-                    "operation_include": [
-                        "$1$.operation",
+                    "base_include": [
+                        "$1$",
                         "condition"
                     ]
                 }
             ]
         }
     },
-
+    "entity_include": {
+        "_type_": "function",
+        "_argument_": [
+            [
+                "entity",
+                "entity"
+            ]
+        ],
+        "_return_": "boolean",
+        "_logic_": {
+            "or": [
+                {
+                    "==": [
+                        "$1$",
+                        "$2$.entirety"
+                    ]
+                },
+                {
+                    "and": [
+                        {
+                            "==": [
+                                "$1$.base",
+                                "$2$.base"
+                            ]
+                        },
+                        {
+                            "include": [
+                                "$2$.modifier",
+                                "$1$.modifier"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    },
     "input_output_condition": {
         "_type_": "function",
-        "_argument_": [["functional", "functional"]],
+        "_argument_": [
+            [
+                "functional",
+                "functional"
+            ]
+        ],
         "_return_": "boolean",
         "_logic_": {
             "any": [
@@ -165,115 +311,19 @@
             ]
         }
     },
-
-    "operation_include": {
-        "_type_": "function",
-        "_argument_": [["operation", "operation"]],
-        "_return_": "boolean",
-        "_logic_": {
-            "or": [
-                {
-                    "equal": [
-                        "$1$",
-                        "$2$"
-                    ]
-                },
-                {
-                    "and": [
-                        "$2$.isAble",
-                        {
-                            "equal": [
-                                "$1$.reaction",
-                                "$2$.reaction"
-                            ]
-                        },
-                        {
-                            "not": [
-                                "$1$.isAble"
-                            ]
-                        }
-                    ]
-                }
-            ]
-        }
-    },
-
-    "entity_include": {
-        "_type_": "function",
-        "_argument_": [["Entity", "Entity"]],
-        "_return_": "boolean",
-        "_logic_": {
-            "or": [
-                {
-                    "and": [
-                        {
-                            "equal": [
-                                "$1$.base",
-                                "$2$.base"
-                            ]
-                        },
-                        {
-                            "include": [
-                                "$1$.modifier",
-                                "$2$.modifier"
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "equal": [
-                        "$1$",
-                        "$2$.entirety"
-                    ]
-                }
-            ]
-        }
-    },
-
-    "operation_contradict": {
-        "_type_": "function",
-        "_argument_": [["operation", "operation"]],
-        "_return_": "boolean",
-        "_logic_": {
-            "and": [
-                {
-                    "equal": [
-                        "$1$.reaction",
-                        "$2$.reaction"
-                    ]
-                },
-                {
-                    "not": [
-                        "$1$.isAble"
-                    ]
-                },
-                {
-                    "not": [
-                        "$2$.isAble"
-                    ]
-                },
-                {
-                    "not": [
-                        {
-                            "equal": [
-                                "$1$.isNot",
-                                "$2$.isNot"
-                            ]
-                        }
-                    ]
-                }
-            ]
-        }
-    },
-
     "operation_inconsistency": {
         "_type_": "rule",
-        "_argument_": [["functional", "functional"]],
+        "_argument_": [
+            [
+                "functional",
+                "functional"
+            ]
+        ],
         "_return_": "boolean",
         "_logic_": {
             "and": [
                 {
-                    "equal": [
+                    "==": [
                         "$1$.event",
                         "$2$.event"
                     ]
@@ -287,50 +337,59 @@
             ]
         }
     },
-
     "restriction_inconsistency": {
         "_type_": "rule",
-        "_argument_": [["functional", "functional"]],
+        "_argument_": [
+            [
+                "functional",
+                "functional"
+            ]
+        ],
         "_return_": "boolean",
         "_logic_": {
             "and": [
                 {
-                    "equal": [
+                    "==": [
                         "$1$.event",
                         "$2$.event"
                     ]
                 },
                 {
-                    "equal": [
+                    "==": [
                         "$1$.agent",
                         "$2$.agent"
                     ]
                 },
                 {
-                    "equal": [
+                    "==": [
                         "$1$.operation",
                         "$2$.operation"
                     ]
                 },
                 {
-                    "inout_include": [
+                    "in_out_include": [
                         "$1$",
                         "$2$"
                     ]
                 },
                 {
-                    "not equal": [
-                        "$1$.restriction",
-                        "$2$.restriction"
-                    ]
+                    "!": {
+                        "==": [
+                            "$1$.restriction",
+                            "$2$.restriction"
+                        ]
+                    }
                 }
             ]
         }
     },
-
     "event_inconsistency": {
         "_type_": "rule",
-        "_argument_": [["functional"]],
+        "_argument_": [
+            [
+                "functional"
+            ]
+        ],
         "_return_": "boolean",
         "_logic_": {
             "all": [
@@ -351,15 +410,19 @@
             ]
         }
     },
-
     "operation_inclusion": {
         "_type_": "rule",
-        "_argument_": [["functional", "functional"]],
+        "_argument_": [
+            [
+                "functional",
+                "functional"
+            ]
+        ],
         "_return_": "boolean",
         "_logic_": {
             "and": [
                 {
-                    "equal": [
+                    "==": [
                         "$1$.event",
                         "$2$.event"
                     ]
@@ -373,10 +436,14 @@
             ]
         }
     },
-
     "event_inclusion": {
         "_type_": "rule",
-        "_argument_": [["functional", "functional"]],
+        "_argument_": [
+            [
+                "functional",
+                "functional"
+            ]
+        ],
         "_return_": "boolean",
         "_logic_": {
             "and": [
@@ -387,13 +454,13 @@
                     ]
                 },
                 {
-                    "equal": [
+                    "==": [
                         "$1$.agent",
                         "$2$.agent"
                     ]
                 },
                 {
-                    "equal": [
+                    "==": [
                         "$1$.operation",
                         "$2$.operation"
                     ]
@@ -411,7 +478,7 @@
                     ]
                 },
                 {
-                    "equal": [
+                    "==": [
                         "$1$.restriction",
                         "$2$.restriction"
                     ]
@@ -419,57 +486,129 @@
             ]
         }
     },
-
     "operation_event_interlock": {
         "_type_": "rule",
-        "_argument_": [["functional..."]],
+        "_argument_": [
+            [
+                "list<functional>"
+            ]
+        ],
         "_return_": "boolean",
         "_logic_": {
-            "all argument": [
-                "index",
-                "$1$",
-                "-1",
+            "and": [
                 {
                     "operation_event_condition": [
-                        "@i@",
-                        "@i+1@"
-                    ]
-                }
-            ]
-        }
-    },
-
-    "input_output_interlock": {
-        "_type_": "rule",
-        "_argument_": [["functional..."]],
-        "_return_": "boolean",
-        "_logic_": {
-            "all argument": [
-                "index",
-                "0",
-                {
-                    "-": [
-                        {
-                            "size_of": "$1$"
-                        },
-                        "1"
-                    ]
-                },
-                {
-                    "input_output_condition": [
                         {
                             "[]": [
                                 "$1$",
-                                "index"
+                                {
+                                    "-": "1"
+                                }
                             ]
                         },
                         {
                             "[]": [
                                 "$1$",
+                                "0"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "all": [
+                        "index",
+                        "0",
+                        {
+                            "-": [
                                 {
-                                    "+": [
-                                        "index",
-                                        "1"
+                                    "size_of": "$1$"
+                                },
+                                "1"
+                            ]
+                        },
+                        {
+                            "operation_event_condition": [
+                                {
+                                    "[]": [
+                                        "$1$",
+                                        "index"
+                                    ]
+                                },
+                                {
+                                    "[]": [
+                                        "$1$",
+                                        {
+                                            "+": [
+                                                "index",
+                                                "1"
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "input_output_interlock": {
+        "_type_": "rule",
+        "_argument_": [
+            [
+                "list<functional>"
+            ]
+        ],
+        "_return_": "boolean",
+        "_logic_": {
+            "and": [
+                {
+                    "input_output_condition": [
+                        {
+                            "[]": [
+                                "$1$",
+                                {
+                                    "-": "1"
+                                }
+                            ]
+                        },
+                        {
+                            "[]": [
+                                "$1$",
+                                "0"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "all": [
+                        "index",
+                        "0",
+                        {
+                            "-": [
+                                {
+                                    "size_of": "$1$"
+                                },
+                                "1"
+                            ]
+                        },
+                        {
+                            "input_output_condition": [
+                                {
+                                    "[]": [
+                                        "$1$",
+                                        "index"
+                                    ]
+                                },
+                                {
+                                    "[]": [
+                                        "$1$",
+                                        {
+                                            "+": [
+                                                "index",
+                                                "1"
+                                            ]
+                                        }
                                     ]
                                 }
                             ]

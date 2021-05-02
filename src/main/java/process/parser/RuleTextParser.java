@@ -30,7 +30,7 @@ public final class RuleTextParser {
         TextReader.readFile(PathConsts.RULE_TEXT_FILE);
         try {
             String result = String.format("{%s}", parseRules());
-            Files.write(Paths.get("demo.json"), result.getBytes(StandardCharsets.UTF_8));
+            Files.write(Paths.get(PathConsts.RULE_JSON_FILE), result.getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -95,13 +95,13 @@ public final class RuleTextParser {
 
     static String parseLogic() throws IOException {
         TextReader.nextTokenWithTest(FormatsConsts.OPEN_BRACE);
-        String result = parseTerm(NONE_PRE_TOKEN);
+        String result = parseTerm();
         TextReader.nextTokenWithTest(FormatsConsts.CLOSE_BRACE);
         return result;
     }
 
-    static String parseTerm(String preRead) throws IOException {
-        String nextToken = Objects.equals(preRead, NONE_PRE_TOKEN) ? TextReader.nextToken(): preRead;
+    static String parseTerm() throws IOException {
+        String nextToken = TextReader.nextToken();
         if (Objects.equals(nextToken, FormatsConsts.OPEN_BRACE)) {
             String result = parseUnitaryBinary();
             TextReader.nextTokenWithTest(FormatsConsts.CLOSE_BRACE);
@@ -123,15 +123,16 @@ public final class RuleTextParser {
     static String parseUnitaryBinary() throws IOException {
         String firstToken = TextReader.nextToken();
         if (FormatsConsts.UNARY_OPERATORS.contains(firstToken)) {
-            String object = parseTerm(NONE_PRE_TOKEN);
+            String object = parseTerm();
             return String.format("{\"%s\": %s}", firstToken, object);
         } else {
-            String object1 = parseTerm(firstToken);
+            TextReader.rollBack(firstToken);
+            String object1 = parseTerm();
             String operator = TextReader.nextToken();
             if (! FormatsConsts.BINARY_OPERATORS.contains(operator)) {
                 throw new TokenInvalidException(String.format("Binary operator \"%s\" is not defined.", operator));
             }
-            String object2 = parseTerm(NONE_PRE_TOKEN);
+            String object2 = parseTerm();
             return String.format("{\"%s\": [%s, %s]}", operator, object1, object2);
         }
     }
@@ -144,7 +145,7 @@ public final class RuleTextParser {
         TextReader.nextTokenWithTest(FormatsConsts.OPEN_PAREN);
         List<String> args = new ArrayList<>();
         while (true) {
-            args.add(parseTerm(NONE_PRE_TOKEN));
+            args.add(parseTerm());
             String nextToken = TextReader.nextToken();
             if (Objects.equals(nextToken, FormatsConsts.CLOSE_PAREN)) {
                 break;
@@ -169,17 +170,17 @@ public final class RuleTextParser {
         String loopVariable = parseElement(NONE_PRE_TOKEN);
         String nextToken = TextReader.nextToken();
         if (Objects.equals(nextToken, FormatsConsts.RANGE_SIGNAL)) {
-            String range = parseTerm(NONE_PRE_TOKEN);
+            String range = parseTerm();
             TextReader.nextTokenWithTest(FormatsConsts.OPEN_PAREN);
-            String logicalBody = parseTerm(NONE_PRE_TOKEN);
+            String logicalBody = parseTerm();
             TextReader.nextTokenWithTest(FormatsConsts.CLOSE_PAREN);
             return String.format("{\"%s\": [%s, %s, %s]}", quantifier, loopVariable, range, logicalBody);
         } else if (Objects.equals(nextToken, FormatsConsts.RANGE_BEGIN_SIGNAL)) {
-            String rangeBegin = parseTerm(NONE_PRE_TOKEN);
+            String rangeBegin = parseTerm();
             TextReader.nextTokenWithTest(FormatsConsts.RANGE_END_SIGNAL);
-            String rangeEnd = parseTerm(NONE_PRE_TOKEN);
+            String rangeEnd = parseTerm();
             TextReader.nextTokenWithTest(FormatsConsts.OPEN_PAREN);
-            String logicalBody = parseTerm(NONE_PRE_TOKEN);
+            String logicalBody = parseTerm();
             TextReader.nextTokenWithTest(FormatsConsts.CLOSE_PAREN);
             return String.format("{\"%s\": [%s, %s, %s, %s]}",
                 quantifier, loopVariable, rangeBegin, rangeEnd, logicalBody);
@@ -204,17 +205,13 @@ public final class RuleTextParser {
         String preToken = TextReader.nextToken();
         if (Objects.equals(preToken, FormatsConsts.OPEN_BRACKET)) {
             String collection = String.format("\"%s\"", element);
-            String index = parseTerm(NONE_PRE_TOKEN);
+            String index = parseTerm();
             TextReader.nextTokenWithTest(FormatsConsts.CLOSE_BRACKET);
-            return String.format("{\"[]\": [%s, %s]}", collection, index);
+            return String.format("{\"%s\": [%s, %s]}", FormatsConsts.COLLECTION_GET, collection, index);
         } else {
             TextReader.rollBack(preToken);
         }
         return String.format("\"%s\"", element);
-    }
-
-    public static void main(String[] args) {
-        parseRuleFile();
     }
 
 }

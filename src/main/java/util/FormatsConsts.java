@@ -110,6 +110,7 @@ public final class FormatsConsts {
     public static final String COLLECTION_INCLUDE = FORMATS.get("collection_include");
     public static final String COLLECTION_IN = FORMATS.get("collection_in");
     public static final String COLLECTION_MERGE = FORMATS.get("collection_merge");
+    public static final String COLLECTION_GET = FORMATS.get("collection_get");
 
     /* Loop operators */
 
