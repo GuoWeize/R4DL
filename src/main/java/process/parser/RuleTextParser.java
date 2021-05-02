@@ -124,7 +124,7 @@ public final class RuleTextParser {
         String firstToken = TextReader.nextToken();
         if (FormatsConsts.UNARY_OPERATORS.contains(firstToken)) {
             String object = parseTerm();
-            return String.format("{\"%s\": %s}", firstToken, object);
+            return String.format("{\"%s\": [%s]}", firstToken, object);
         } else {
             TextReader.rollBack(firstToken);
             String object1 = parseTerm();
@@ -212,6 +212,10 @@ public final class RuleTextParser {
             TextReader.rollBack(preToken);
         }
         return String.format("\"%s\"", element);
+    }
+
+    public static void main(String[] args) {
+        parseRuleFile();
     }
 
 }

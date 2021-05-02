@@ -16,7 +16,7 @@ function operation_contradict
         {$1$.reaction == $2$.reaction},
         {! $1$.isAble},
         {! $2$.isAble},
-        {! {$1$.isNot == $2$.isNot}}
+        {$1$.isNot != $2$.isNot}
     )
 }
 

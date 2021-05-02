@@ -42,5 +42,5 @@ public final class PathConsts {
     public static final String RULE_JSON_FILE = DEFINITION_PATH + CONFIGS.get("rule_json_file_name");
 
     public static final String RULE_JAVA_NAME = CONFIGS.get("rule_java_file_name");
-    public static final String RULE_JAVA_FILE = DYNAMICS_CLASS_PATH + RULE_JAVA_NAME;
+    public static final String RULE_JAVA_FILE = DYNAMICS_JAVA_CODE_PATH + RULE_JAVA_NAME;
 }

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import process.definition.RuleParser;
+import util.PathConsts;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,7 +17,7 @@ class RuleParserTest {
 
     @BeforeEach
     void setUp() {
-        String path = System.getProperty("user.dir") + "/src/main/resources/definitionFile/rule.json";
+        String path = PathConsts.RULE_JSON_FILE;
         File file = new File(path);
         long length = file.length();
         byte[] content = new byte[(int) length];

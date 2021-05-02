@@ -11,7 +11,7 @@ public final class GeneralJavaHeaderGenerator {
 
     static String generateJavadoc(String fileName, String referredFile) {
         Date date = new Date();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         return String.format("/**\n * Auto-generated Java file: %s\n *\n * @author %s\n * @date %s\n */\n",
             fileName, referredFile, formatter.format(date));
     }
