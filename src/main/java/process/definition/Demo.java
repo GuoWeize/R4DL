@@ -9,8 +9,11 @@ import java.util.stream.IntStream;
  */
 public class Demo {
 
+    private static void test(String $1$) {
+        System.out.println($1$);
+    }
+
     public static void main(String[] args) {
-        List<Integer> l = List.of(1, 2, 3, 4, 5, 6, 7);
-        System.out.println(IntStream.range(0, 5).anyMatch(i -> l.get(i) == 3));
+        test("hello, world");
     }
 }

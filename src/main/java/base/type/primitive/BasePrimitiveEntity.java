@@ -51,6 +51,16 @@ public abstract class BasePrimitiveEntity extends BaseEntity {
         return isFloat(num) ? ((FloatEntity)num).getValue() : ((IntEntity)num).getValue();
     }
 
+    public static BaseEntity negative(BaseEntity entity) {
+        if (isInteger(entity)) {
+            return IntEntity.valueOf(- ((IntEntity)entity).getValue());
+        }
+        if (isFloat(entity)) {
+            return FloatEntity.valueOf(- ((IntEntity)entity).getValue());
+        }
+        throw new TypeInvalidException(entity.getType(), List.of(INTEGER, FLOAT));
+    }
+
     public static BaseEntity calculate(BaseEntity entity1, BaseEntity entity2, String operator) {
         String type = calculateType(entity1, entity2);
         if (Objects.equals(type, INTEGER)) {

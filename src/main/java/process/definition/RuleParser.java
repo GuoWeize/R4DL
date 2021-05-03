@@ -80,10 +80,12 @@ public final class RuleParser extends StdDeserializer<Object> {
         boolean isRule = Objects.equals(FormatsConsts.DEFINE_RULE, ruleNode.get(FormatsConsts.RULE_TYPE_FIELD).asText());
         String returnType = TypeManager.type2class(ruleNode.get(FormatsConsts.RULE_RETURN_FIELD).asText());
         List<String> arguments = parseArgument(ruleNode.get(FormatsConsts.RULE_ARGUMENT_FIELD));
-        String logic = FunctionParser.parse(ruleNode.get(FormatsConsts.RULE_LOGIC_FIELD));
+        String logic = LogicParser.parse(ruleNode.get(FormatsConsts.RULE_LOGIC_FIELD));
+        rule.append(String.format("    /**\n     * %s\n     * @return %s\n     */\n", name, returnType));
         for (String args: arguments) {
             rule.append(generateRule(name, args, returnType, logic, isRule));
         }
+        rule.append('\n');
         return rule.toString();
     }
 
@@ -92,7 +94,7 @@ public final class RuleParser extends StdDeserializer<Object> {
         for (JsonNode arguments: node) {
             List<String> temp = new ArrayList<>();
             for (int i = 0; i < arguments.size(); i++) {
-                temp.add(String.format("%s _%d", TypeManager.type2class(arguments.get(i).asText()), i + 1));
+                temp.add(String.format("%s $%d$", TypeManager.type2class(arguments.get(i).asText()), i + 1));
             }
             result.add(String.join(", ", temp));
         }
@@ -100,7 +102,7 @@ public final class RuleParser extends StdDeserializer<Object> {
     }
 
     private String generateRule(String name, String argument, String returns, String logic, boolean isRule) {
-        return String.format("    %s static %s %s(%s) {\n        return %s;\n    }\n\n",
+        return String.format("    %s static %s %s(%s) {\n        return %s;\n    }\n",
             (isRule ? "public": "private"), returns, name, argument, logic);
     }
 }
