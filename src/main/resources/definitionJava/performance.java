@@ -2,6 +2,12 @@ import base.type.BaseEntity;
 import base.type.primitive.*;
 import base.type.collection.*;
 
+/**
+ * Auto-generated Java file: performance.java
+ *
+ * @author /Users/gwz/Desktop/Code/R4DL/src/main/resources/definitionFile/model.json
+ * @date 2021/05/03 21:51:53
+ */
 public class performance extends BaseEntity {
     public IntEntity comp;
     public StringEntity unit;
@@ -10,26 +16,32 @@ public class performance extends BaseEntity {
     public IntEntity statistics;
 
     @Override
-    public String getType() { return "performance"; }
+    public String getType() {
+        return "performance";
+    }
 
     @Override
-    public boolean isPrimitive() { return false; }
+    public boolean isPrimitive() {
+        return false;
+    }
 
     @Override
-    public boolean isRequirement() { return true; }
+    public boolean isRequirement() {
+        return true;
+    }
 
     @Override
     public BoolEntity equal(BaseEntity entity) {
         if (! getType().equals(entity.getType())) {
             return BoolEntity.FALSE;
         }
-        performance that = (performance) entity;
-        return BoolEntity.valueOf(
-                   comp.equal(that.comp).getValue() &&
-                   unit.equal(that.unit).getValue() &&
-                   metrics.equal(that.metrics).getValue() &&
-                   value.equal(that.value).getValue() &&
-                   statistics.equal(that.statistics).getValue()
+        performance that = (performance)entity;
+        return BoolEntity.and(
+            comp.equal(that.comp),
+            unit.equal(that.unit),
+            metrics.equal(that.metrics),
+            value.equal(that.value),
+            statistics.equal(that.statistics)
         );
     }
 }

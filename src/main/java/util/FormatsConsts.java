@@ -56,8 +56,6 @@ public final class FormatsConsts {
     public static final String NOT_LESS = ">=";
     public static final String NOT_GREATER = "<=";
     public static final String ARROW = "->";
-    public static final String PARAMETER_DELIMITER = FORMATS.get("parameter_delimiter");
-    public static final String VARIABLE_PARAMETERS = FORMATS.get("variable_parameters");
     static final Set<String> MULTIPLE_CHARS_SIGNAL = Set.of(
             EQUAL, NOT_EQUAL, NOT_LESS, NOT_GREATER, ARROW
     );
@@ -79,6 +77,7 @@ public final class FormatsConsts {
     public static final String SET_SIGNAL = FORMATS.get("set_signal");
     public static final String KEY_SIGNAL = FORMATS.get("key_signal");
     public static final String VALUE_SIGNAL = FORMATS.get("value_signal");
+    public static final String LINK_SIGNAL = FORMATS.get("link_signal");
 
     /* Calculations */
 

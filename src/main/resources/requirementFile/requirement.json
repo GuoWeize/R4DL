@@ -1,26 +1,128 @@
 [
     {
-        "_": true,
-        "Functional": {
+        "#": "ALL",
+        "entity": {
+            "base": "all",
+            "modifier": {
+                "-set-": []
+            },
+            "entirety": {},
+            "isAll": true
+        }
+    },
+    {
+        "#": "entity1",
+        "entity": {
+            "base": "base1",
+            "modifier": {
+                "-set-": []
+            },
+            "entirety": {
+                "-link-": {
+                    "entity": "ALL"
+                }
+            },
+            "isAll": false
+        }
+    },
+    {
+        "#": "entity2",
+        "entity": {
+            "base": "base2",
+            "modifier": {
+                "-set-": []
+            },
+            "entirety": {
+                "-link-": {
+                    "entity": "entity1"
+                }
+            },
+            "isAll": false
+        }
+    },
+    {
+        "#": "op1",
+        "operation": {
+            "reaction": "do demo",
+            "isAble": false,
+            "isNot": false
+        }
+    },
+    {
+        "#": "FR1",
+        "functional": {
             "event": {
-                "_set_": []
+                "-set-": []
             },
             "agent": {
-                "_": true,
-                "Entity": {}
+                "-link-": {
+                    "entity": "entity1"
+                }
             },
             "operation": {
-                "_": true,
-                "Operation": {}
+                "-link-": {
+                    "operation": "op1"
+                }
             },
             "input": {
-                "_set_": []
+                "-set-": [
+                    {
+                        "-link-": {
+                            "entity": "entity2"
+                        }
+                    }
+                ]
             },
             "output": {
-                "_set_": []
+                "-set-": [
+                    {
+                        "-link-": {
+                            "entity": "entity2"
+                        }
+                    }
+                ]
             },
             "restriction": {
-                "_set_": []
+                "-set-": []
+            }
+        }
+    },
+    {
+        "#": "FR2",
+        "functional": {
+            "event": {
+                "-set-": []
+            },
+            "agent": {
+                "-link-": {
+                    "entity": "entity2"
+                }
+            },
+            "operation": {
+                "-link-": {
+                    "operation": "op1"
+                }
+            },
+            "input": {
+                "-set-": [
+                    {
+                        "-link-": {
+                            "entity": "entity1"
+                        }
+                    }
+                ]
+            },
+            "output": {
+                "-set-": [
+                    {
+                        "-link-": {
+                            "entity": "entity1"
+                        }
+                    }
+                ]
+            },
+            "restriction": {
+                "-set-": []
             }
         }
     }

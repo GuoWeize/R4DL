@@ -5,8 +5,8 @@ import base.type.collection.*;
 /**
  * Auto-generated Java file: condition.java
  *
- * @author XXX file
- * @date 20XX/X/XX
+ * @author /Users/gwz/Desktop/Code/R4DL/src/main/resources/definitionFile/model.json
+ * @date 2021/05/03 21:51:53
  */
 public class condition extends BaseEntity {
     public SetEntity<entity> output;
@@ -37,11 +37,11 @@ public class condition extends BaseEntity {
         }
         condition that = (condition)entity;
         return BoolEntity.and(
-            agent.equal(that.agent),
-            operation.equal(that.operation),
-            input.equal(that.input),
             output.equal(that.output),
-            restriction.equal(that.restriction)
+            restriction.equal(that.restriction),
+            input.equal(that.input),
+            agent.equal(that.agent),
+            operation.equal(that.operation)
         );
     }
 }

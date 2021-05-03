@@ -1,4 +1,4 @@
-EBNF形式
+/* - - - - - - - - - - - - - 描述语言定义 - - - - - - - - - - - - - */
 
 <num> := 0 | ... | 9
 <number> := { <num> }
@@ -64,3 +64,20 @@ and, or, for, in, all, any, include, size_of, merge, from, to
 <customized operator> := <word>
 <loop statement> := for (all | any) <statement> <range> '(' <statement> ')'
 <range> := in <statement> | from <statement> to <statement>
+
+
+/* - - - - - - - - - - - - - 需求 JSON 形式定义 - - - - - - - - - - - - - */
+<requirement JSON file> := '[' <entity> {, <entity>} ']'
+<entity> := <boolean> | <integer> | <string> | <list> | <set> | <map> | <entity> | <link>
+<boolean> := true | false
+<integer> := 一个数字
+<string> := "一个字符串"
+<list> := '{' "-list-": '[' <entity> {, <entity>} ']' '}'
+<set> := '{' "-set-": '[' <entity> {, <entity>} ']' '}'
+<map> := '{' "-map-": '[' <key value pair> {, <key value pair>} ']' '}'
+<key value pair> := '{' "-key-": <entity>, "-value-": <entity> '}'
+<entity> := '{' "#": <entity ID>, <entity type>: '{' <field name>: <entity> {, <field name>: <entity>} '}' '}'
+<link> := '{' "-link-": '{' <entity type>: <entity ID> '}' '}'
+<entity ID> := <string>
+<entity type> := <string>
+<field name> := <string>
