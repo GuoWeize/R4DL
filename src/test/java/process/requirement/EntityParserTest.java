@@ -1,6 +1,5 @@
 package process.requirement;
 
-import base.dynamics.Builder;
 import base.dynamics.Compiler;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,25 +11,25 @@ import util.PathConsts;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 class EntityParserTest {
     private String json;
 
     @BeforeEach
     void setUp() {
-        List<String> l = new ArrayList<>();
-        l.add("condition");
-        l.add("entity");
-        l.add("operation");
-        l.add("functional");
-
+        List<String> l = List.of(
+            "condition",
+            "entity",
+            "operation",
+            "functional",
+            "_rule_"
+        );
         Compiler.compile(l);
-        Map<String, Class<?>> classes = Compiler.loadClass(l);
-        Builder.initialization(classes);
+    }
 
+    @Test
+    void deserialize() {
         String path = PathConsts.REQUIREMENT_FILE;
         File file = new File(path);
         long length = file.length();
@@ -42,11 +41,8 @@ class EntityParserTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        json = new String(content);
-    }
 
-    @Test
-    void deserialize() {
+        json = new String(content);
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
         module.addDeserializer(Object.class, new EntityParser());

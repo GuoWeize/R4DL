@@ -8,6 +8,7 @@ import java.net.URLClassLoader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import util.PathConsts;
@@ -17,7 +18,10 @@ import util.PathConsts;
  * @date 2021/2/1
  */
 public final class Compiler {
-    public static URLClassLoader loader;
+    public static final Map<String, Class<?>> ENTITY_CLASSES = new HashMap<>(16);
+    public static Class<?> ruleClass;
+
+    private static URLClassLoader loader;
     static {
         try {
             loader = new URLClassLoader(new URL[]{new URL("file://" + PathConsts.DYNAMICS_CLASS_PATH)});
@@ -27,27 +31,30 @@ public final class Compiler {
     }
 
     public static void compile(List<String> classNames) {
+        ENTITY_CLASSES.clear();
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-        classNames = classNames.stream()
+        List<String> paras = classNames.stream()
             .map( (name) -> PathConsts.DYNAMICS_JAVA_CODE_PATH + name + ".java" )
             .collect(Collectors.toList());
-        classNames.add(0, PathConsts.DYNAMICS_CLASS_PATH);
-        classNames.add(0, "-d");
-        String[] arguments = classNames.toArray(new String[0]);
+        paras.add(0, PathConsts.DYNAMICS_CLASS_PATH);
+        paras.add(0, "-d");
+        String[] arguments = paras.toArray(new String[0]);
         int result = compiler.run(null, null, null, arguments);
         System.out.println(result == 0 ? "Compile succeed.": "Compile failed.");
-    }
 
-    public static Map<String, Class<?>> loadClass(List<String> classNames) {
-        Map<String, Class<?>> result = new HashMap<>(classNames.size());
-        for (String className: classNames) {
-            try {
-                result.put(className, loader.loadClass(className));
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
+        try {
+            for (String className: classNames) {
+                if (Objects.equals(className, "_rule_")) {
+                    ruleClass = loader.loadClass(className);
+                } else {
+                    ENTITY_CLASSES.put(className, loader.loadClass(className));
+                }
             }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
-        return result;
+
+        Builder.initialization();
     }
 
 }

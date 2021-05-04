@@ -66,7 +66,7 @@ and, or, for, in, all, any, include, size_of, merge, from, to
 <range> := in <statement> | from <statement> to <statement>
 
 
-/* - - - - - - - - - - - - - 需求 JSON 形式定义 - - - - - - - - - - - - - */
+/* - - - - - - - - - - - - - 需求元组 JSON 格式 - - - - - - - - - - - - - */
 <requirement JSON file> := '[' <entity> {, <entity>} ']'
 <entity> := <boolean> | <integer> | <string> | <list> | <set> | <map> | <entity> | <link>
 <boolean> := true | false
@@ -81,3 +81,14 @@ and, or, for, in, all, any, include, size_of, merge, from, to
 <entity ID> := <string>
 <entity type> := <string>
 <field name> := <string>
+
+
+/* - - - - - - - - - - - - - Entity 定义 JSON 格式 - - - - - - - - - - - - - */
+<entity JSON file> := '[' <entity> {, <entity>} ']'
+<entity> := '{' "_type_": "<type>", "_name_": "<entity name>", <field define> {, <field define>} '}'
+<type> := entity / requirement
+<entity name> := <string>
+<field define> := "<field name>": "<field type>"
+<field name> := <string>
+<field type> := <string>
+

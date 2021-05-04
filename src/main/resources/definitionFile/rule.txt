@@ -1,5 +1,5 @@
 function in_out_include
-(functional, functional / functional, condition / condition, function / condition, condition) -> boolean {
+(functional, functional / functional, condition / condition, functional / condition, condition) -> boolean {
     or (
         and (
             {$1$.input include $2$.input}, {$1$.output include $2$.output}
@@ -21,7 +21,7 @@ function operation_contradict
 }
 
 function base_contradict
-(functional, functional / functional, condition / condition, function / condition, condition) -> boolean {
+(functional, functional / functional, condition / condition, functional / condition, condition) -> boolean {
     and (
         {$1$.agent == $2$.agent},
         operation_contradict($1$.operation, $2$.operation),
@@ -40,7 +40,7 @@ function operation_include
 }
 
 function base_include
-(functional, functional / functional, condition / condition, function / condition, condition) -> boolean {
+(functional, functional / functional, condition / condition, functional / condition, condition) -> boolean {
     and (
         {$1$.agent == $2$.agent},
         operation_include($1$.operation, $2$.operation),

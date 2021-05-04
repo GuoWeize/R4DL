@@ -12,6 +12,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -22,6 +23,9 @@ public final class RuleTextParser {
 
     private static final List<String> RULES = new ArrayList<>();
     private static final String NONE_PRE_TOKEN = "";
+    private static final Set<Character> NUMBERS = Set.of(
+        '.', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
+    );
 
     /**
      * entry of the function of parsing the rule text file.
@@ -211,7 +215,19 @@ public final class RuleTextParser {
         } else {
             TextReader.rollBack(preToken);
         }
+        if (isNumeric(element) || Objects.equals(element, "true") || Objects.equals(element, "false")) {
+            return element;
+        }
         return String.format("\"%s\"", element);
+    }
+
+    private static boolean isNumeric(String s) {
+        for (char c: s.toCharArray()) {
+            if (! NUMBERS.contains(c)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public static void main(String[] args) {

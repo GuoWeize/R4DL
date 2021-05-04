@@ -43,6 +43,12 @@ public final class LogicParser {
     public static String parse(JsonNode node) {
         if (node.isTextual()) {
             return node.asText();
+        } else if (node.isBoolean()) {
+            return String.format("BoolEntity.valueOf(%b)", node.asBoolean());
+        } else if (node.isInt()) {
+            return String.format("IntEntity.valueOf(%d)", node.asInt());
+        } else if (node.isFloat()) {
+            return String.format("FloatEntity.valueOf(%f)", node.asDouble());
         }
         List<String> list = new ArrayList<>();
         node.fieldNames().forEachRemaining(list::add);
@@ -164,7 +170,7 @@ public final class LogicParser {
         if (arguments.size() == 3) {
             return String.format("%s.allMatch(%s -> %s)", arguments.get(1), arguments.get(0), arguments.get(2));
         }
-        return String.format("BoolEntity.valueOf(IntStream.range(%s, %s).allMatch(%s -> %s))",
+        return String.format("BoolEntity.valueOf(IntEntity.range(%s, %s).allMatch(%s -> ((BoolEntity)%s).getValue()))",
             arguments.get(1), arguments.get(2), arguments.get(0), arguments.get(3));
     }
 
@@ -173,7 +179,7 @@ public final class LogicParser {
         if (arguments.size() == 3) {
             return String.format("%s.anyMatch(%s -> %s)", arguments.get(1), arguments.get(0), arguments.get(2));
         }
-        return String.format("BoolEntity.valueOf(IntStream.range(%s, %s).anyMatch(%s -> %s))",
+        return String.format("BoolEntity.valueOf(IntEntity.range(%s, %s).anyMatch(%s -> ((BoolEntity)%s).getValue()))",
             arguments.get(1), arguments.get(2), arguments.get(0), arguments.get(3));
     }
 

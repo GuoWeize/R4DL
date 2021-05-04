@@ -1,13 +1,14 @@
 package process.judge;
 
+import base.dynamics.Compiler;
 import base.type.BaseEntity;
 import base.type.primitive.BoolEntity;
+import com.google.common.collect.Sets;
+import process.requirement.EntityParser;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -18,39 +19,49 @@ import java.util.stream.Collectors;
  */
 public final class Processor {
     private static final Map<Method, List<String>> METHOD_2_ARGUMENTS = new HashMap<>();
+    private static final Set<String> BLACKLIST = Set.of(
+        "wait", "equals", "toString", "hashCode", "getClass", "notify", "notifyAll"
+    );
 
     public static void initialization() {
         METHOD_2_ARGUMENTS.clear();
-    }
-
-    public static void addRule(Method rule, List<String> arguments) {
-        METHOD_2_ARGUMENTS.put(rule, arguments);
-    }
-
-    public static String recognition(Map<String, List<BaseEntity>> requirements) {
-        String result = "";
-        for (Map.Entry<Method, List<String>> entry: METHOD_2_ARGUMENTS.entrySet()) {
-            Method rule = entry.getKey();
-            List<String> types = entry.getValue();
-            List<List<BaseEntity>> requirementsByTypes = types.stream().map(requirements::get).collect(Collectors.toList());
-
-
-        }
-        return result;
-    }
-
-    private static String process(Method rule, Object... arguments) {
-        try {
-            Object result = rule.invoke(null, arguments);
-            if (! (result instanceof BoolEntity)) {
-                throw new IllegalArgumentException();
+        for (Method rule: Compiler.ruleClass.getMethods()) {
+            if (! BLACKLIST.contains(rule.getName())) {
+                List<String> args = Arrays.stream(rule.getParameterTypes())
+                    .map(Class::getName)
+                    .collect(Collectors.toList());
+                METHOD_2_ARGUMENTS.put(rule, args);
             }
-            if (((BoolEntity) result).getValue()) {
-                return "Relationship " + rule.getName() + " between ";
+        }
+    }
+
+    public static void judgeRules() {
+        for (var entry: METHOD_2_ARGUMENTS.entrySet()) {
+            if (entry.getValue().contains("base.type.collection.ListEntity")) {
+                continue;
+            }
+            var args = getAllArgs(entry.getValue());
+            judgeRule(entry.getKey(), args);
+        }
+    }
+
+    private static Set<List<BaseEntity>> getAllArgs(List<String> argsTypes) {
+        List<Set<BaseEntity>> requirements = new ArrayList<>();
+        for (String type: argsTypes) {
+            requirements.add(EntityParser.ENTITIES.get(type));
+        }
+        return Sets.cartesianProduct(requirements);
+    }
+
+    private static void judgeRule(Method rule, Set<List<BaseEntity>> requirements) {
+        try {
+            for (List<BaseEntity> reqArgs: requirements) {
+                Object result = rule.invoke(null, reqArgs.toArray());
+                System.out.println(((BoolEntity) result).getValue());
             }
         } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
-        return "";
     }
+
 }

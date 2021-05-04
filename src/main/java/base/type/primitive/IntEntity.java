@@ -3,6 +3,8 @@ package base.type.primitive;
 import base.type.BaseEntity;
 
 import java.util.Objects;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * Class that store integer data.
@@ -24,6 +26,12 @@ public final class IntEntity extends BasePrimitiveEntity {
 
     public int getValue() {
         return value;
+    }
+
+    public static Stream<IntEntity> range(BaseEntity startInclusive, BaseEntity endExclusive) {
+        checkType(startInclusive.getType(), "integer");
+        checkType(endExclusive.getType(), "integer");
+        return IntStream.range(((IntEntity)startInclusive).value, ((IntEntity)endExclusive).value).mapToObj(IntEntity::new);
     }
 
     @Override

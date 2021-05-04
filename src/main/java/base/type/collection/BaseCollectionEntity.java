@@ -39,14 +39,4 @@ public abstract class BaseCollectionEntity extends BaseEntity {
      * @return An IntEntity containing the size of collection
      */
     public abstract IntEntity size();
-
-    /**
-     * Check whether the real type matched the expectation.
-     * @throws TypeInvalidException if not matched.
-     */
-    protected void checkType(String real, String expectation) {
-        if (! Objects.equals(real, expectation)) {
-            throw new TypeInvalidException(real, expectation);
-        }
-    }
 }

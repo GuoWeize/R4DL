@@ -1,12 +1,17 @@
 package base.dynamics;
 
-import base.type.BaseEntity;
-import base.type.primitive.StringEntity;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import process.judge.Processor;
+import process.requirement.EntityParser;
+import util.PathConsts;
 
-import java.util.ArrayList;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,29 +20,44 @@ class ProcessorTest {
 
     @BeforeEach
     void setUp() {
-        List<String> l = new ArrayList<>();
-        l.add("Rule");
-        l.add("Condition");
-        l.add("Entity");
-        l.add("Functional");
-        l.add("Operation");
-
+        List<String> l = List.of(
+            "condition",
+            "entity",
+            "operation",
+            "functional",
+            "_rule_"
+        );
         Compiler.compile(l);
-        var classes = Compiler.loadClass(l);
-        Builder.initialization(classes);
         Processor.initialization();
     }
 
     @Test
     void process() {
-        BaseEntity operation1 = Builder.newInstance("Operation");
-        BaseEntity operation2 = Builder.newInstance("Operation");
-        Builder.setField(operation1, "reaction", StringEntity.valueOf("test"));
-        Builder.setField(operation2, "reaction", StringEntity.valueOf("passed"));
+        String path = PathConsts.REQUIREMENT_FILE;
+        File file = new File(path);
+        long length = file.length();
+        byte[] content = new byte[(int) length];
+        try {
+            FileInputStream in = new FileInputStream(file);
+            in.read(content);
+            in.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        BaseEntity functional1 = Builder.newInstance("Functional");
-        BaseEntity functional2 = Builder.newInstance("Functional");
-        Builder.setField(functional1, "operation", operation1);
-        Builder.setField(functional2, "operation", operation2);
+        String json = new String(content);
+        ObjectMapper mapper = new ObjectMapper();
+        SimpleModule module = new SimpleModule();
+        module.addDeserializer(Object.class, new EntityParser());
+        mapper.registerModule(module);
+
+        try {
+            Object readValue = mapper.readValue(json, Object.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        Processor.judgeRules();
+
     }
 }

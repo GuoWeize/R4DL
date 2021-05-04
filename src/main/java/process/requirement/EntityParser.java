@@ -19,8 +19,10 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -32,7 +34,8 @@ import java.util.function.Predicate;
  */
 public final class EntityParser extends StdDeserializer<Object> {
 
-    public static final Map<String, Map<String, BaseEntity>> ENTITIES = new HashMap<>(16);
+    private static final Map<String, Map<String, BaseEntity>> ENTITIES_ID = new HashMap<>(16);
+    public static final Map<String, Set<BaseEntity>> ENTITIES = new HashMap<>(16);
 
     public EntityParser() {
         this(null);
@@ -45,6 +48,7 @@ public final class EntityParser extends StdDeserializer<Object> {
     @Override
     public List<BaseEntity> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
         throws IOException {
+        ENTITIES_ID.clear();
         ENTITIES.clear();
         List<BaseEntity> result = new ArrayList<>();
         JsonNode node = jsonParser.getCodec().readTree(jsonParser);
@@ -82,10 +86,12 @@ public final class EntityParser extends StdDeserializer<Object> {
             String type = entityNode.getKey();
             JsonNode fieldsNode = entityNode.getValue();
             BaseEntity entity = generateEntity(type, fieldsNode);
-            if (! ENTITIES.containsKey(type)) {
-                ENTITIES.put(type, new HashMap<>(32));
+            if (! ENTITIES_ID.containsKey(type)) {
+                ENTITIES_ID.put(type, new HashMap<>(32));
+                ENTITIES.put(type, new HashSet<>(32));
             }
-            ENTITIES.get(type).putIfAbsent(entityID, entity);
+            ENTITIES_ID.get(type).putIfAbsent(entityID, entity);
+            ENTITIES.get(type).add(entity);
             return entity;
         }
 
@@ -103,7 +109,7 @@ public final class EntityParser extends StdDeserializer<Object> {
             var pair = node.get(FormatsConsts.LINK_SIGNAL).fields().next();
             String entityType = pair.getKey();
             String entityID = pair.getValue().asText();
-            return EntityParser.ENTITIES.get(entityType).get(entityID);
+            return EntityParser.ENTITIES_ID.get(entityType).get(entityID);
         }
 
         static BaseEntity parseList(JsonNode node) {

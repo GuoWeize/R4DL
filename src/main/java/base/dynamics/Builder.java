@@ -18,12 +18,11 @@ public final class Builder {
 
     /**
      * initialization with all classes.
-     * @param allClasses a map that mapping class name to class.
      */
-    public static void initialization(Map<String, Class<?>> allClasses) {
+    public static void initialization() {
         NAME_2_CONSTRUCTOR.clear();
         try {
-            for (Map.Entry<String, Class<?>> entry: allClasses.entrySet()) {
+            for (Map.Entry<String, Class<?>> entry: Compiler.ENTITY_CLASSES.entrySet()) {
                 String className = entry.getKey();
                 Class<?> clazz = entry.getValue();
                 NAME_2_CONSTRUCTOR.put(className, clazz.getDeclaredConstructor());

@@ -1,6 +1,9 @@
 package base.type;
 
 import base.type.primitive.BoolEntity;
+import exceptions.TypeInvalidException;
+
+import java.util.Objects;
 
 /**
  * Abstract base class for all types.<p>
@@ -43,4 +46,24 @@ public abstract class BaseEntity {
      * @return A "true" BoolEntity if two entities are equal, "false" BoolEntity otherwise
      */
     public abstract BoolEntity equal(BaseEntity entity);
+
+    /**
+     * Check whether the real type matched the expectation.
+     * @throws TypeInvalidException if not matched.
+     */
+    protected static void checkType(String real, String expectation) {
+        if (! Objects.equals(real, expectation)) {
+            throw new TypeInvalidException(real, expectation);
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return (this.equal((BaseEntity)obj)).getValue();
+    }
 }

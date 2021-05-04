@@ -46,11 +46,9 @@ public final class ListEntity<E extends BaseEntity> extends BaseCollectionEntity
      * @return entity at the specified position in this list.
      * @throws IndexOutOfBoundsException if the index is out of range
      */
-    public E get(IntEntity index) {
-        return entities.get(index.getValue());
-    }
-    public E get(int index) {
-        return entities.get(index);
+    public E get(BaseEntity index) {
+        checkType(index.getType(), "integer");
+        return entities.get(((IntEntity)index).getValue());
     }
 
     /**

@@ -14,16 +14,14 @@ class BuilderTest {
 
     @BeforeEach
     void setUp() {
-        List<String> l = new ArrayList<>();
-        l.add("Rule");
-        l.add("Condition");
-        l.add("Entity");
-        l.add("Functional");
-        l.add("Operation");
-
+        List<String> l = List.of(
+            "condition",
+            "entity",
+            "operation",
+            "functional",
+            "_rule_"
+        );
         Compiler.compile(l);
-        var classes = Compiler.loadClass(l);
-        Builder.initialization(classes);
     }
 
     @Test
