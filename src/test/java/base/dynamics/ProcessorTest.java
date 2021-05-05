@@ -12,22 +12,13 @@ import util.PathConsts;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.Set;
 
 class ProcessorTest {
 
     @BeforeEach
     void setUp() {
-        List<String> l = List.of(
-            "condition",
-            "entity",
-            "operation",
-            "functional",
-            "_rule_"
-        );
-        Compiler.compile(l);
+        Compiler.compileLoad();
         Processor.initialization();
     }
 

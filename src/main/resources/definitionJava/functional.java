@@ -6,7 +6,7 @@ import base.type.collection.*;
  * Auto-generated Java file: functional.java
  *
  * @author /Users/gwz/Desktop/Code/R4DL/src/main/resources/definitionFile/model.json
- * @date 2021/05/03 21:51:53
+ * @date 2021/05/05 11:54:43
  */
 public class functional extends BaseEntity {
     public SetEntity<entity> output;

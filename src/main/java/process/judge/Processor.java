@@ -8,7 +8,12 @@ import process.requirement.EntityParser;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -22,6 +27,7 @@ public final class Processor {
     private static final Set<String> BLACKLIST = Set.of(
         "wait", "equals", "toString", "hashCode", "getClass", "notify", "notifyAll"
     );
+    private static final Map<String, List<List<BaseEntity>>> RELATIONSHIPS = new HashMap<>();
 
     public static void initialization() {
         METHOD_2_ARGUMENTS.clear();
@@ -54,10 +60,16 @@ public final class Processor {
     }
 
     private static void judgeRule(Method rule, Set<List<BaseEntity>> requirements) {
+        String relationshipName = rule.getName();
         try {
             for (List<BaseEntity> reqArgs: requirements) {
                 Object result = rule.invoke(null, reqArgs.toArray());
-                System.out.println(((BoolEntity) result).getValue());
+                if (((BoolEntity)result).getValue()) {
+                    if (! RELATIONSHIPS.containsKey(relationshipName)) {
+                        RELATIONSHIPS.put(relationshipName, new ArrayList<>());
+                    }
+                    RELATIONSHIPS.get(relationshipName).add(reqArgs);
+                }
             }
         } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();

@@ -20,13 +20,13 @@ import java.util.stream.Stream;
 public final class TypeManager {
 
     private static final Map<String, String> TYPE_2_CLASS = Stream.of(new String[][] {
-            {"list", "ListEntity"},
-            {"map", "MapEntity"},
-            {"set", "SetEntity"},
-            {"boolean", "BoolEntity"},
-            {"float", "FloatEntity"},
-            {"integer", "IntEntity"},
-            {"string", "StringEntity"}
+        {"list", "ListEntity"},
+        {"map", "MapEntity"},
+        {"set", "SetEntity"},
+        {"boolean", "BoolEntity"},
+        {"float", "FloatEntity"},
+        {"integer", "IntEntity"},
+        {"string", "StringEntity"}
     }).collect(Collectors.toMap(data -> data[0], data -> data[1]));
     private static final String LIST = "list";
     private static final String SET = "set";

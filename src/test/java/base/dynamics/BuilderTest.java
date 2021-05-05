@@ -5,8 +5,7 @@ import base.type.primitive.StringEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,14 +13,7 @@ class BuilderTest {
 
     @BeforeEach
     void setUp() {
-        List<String> l = List.of(
-            "condition",
-            "entity",
-            "operation",
-            "functional",
-            "_rule_"
-        );
-        Compiler.compile(l);
+        Compiler.compileLoad();
     }
 
     @Test

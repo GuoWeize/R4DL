@@ -38,7 +38,7 @@ public final class RuleParser extends StdDeserializer<Object> {
         JsonNode root = jsonParser.getCodec().readTree(jsonParser);
         String contents = generateImports()
             + GeneralJavaHeaderGenerator.generateJavadoc(PathConsts.RULE_JAVA_NAME, PathConsts.RULE_JSON_FILE)
-            + "public class _rule_ {\n\n"
+            + String.format("public class %s {\n\n", PathConsts.RULE_JAVA_CLASS)
             + parseRules(root)
             + "}\n";
         addToJavaFile(contents);

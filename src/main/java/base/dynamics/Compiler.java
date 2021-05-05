@@ -2,13 +2,11 @@ package base.dynamics;
 
 import javax.tools.JavaCompiler;
 import javax.tools.ToolProvider;
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import util.PathConsts;
@@ -18,6 +16,7 @@ import util.PathConsts;
  * @date 2021/2/1
  */
 public final class Compiler {
+
     public static final Map<String, Class<?>> ENTITY_CLASSES = new HashMap<>(16);
     public static Class<?> ruleClass;
 
@@ -30,11 +29,24 @@ public final class Compiler {
         }
     }
 
-    public static void compile(List<String> classNames) {
+    private static Set<String> getAllJavaFiles() {
+        Set<String> javaFileNames = new HashSet<>();
+        File file = new File(PathConsts.DYNAMICS_JAVA_CODE_PATH);
+        for (File f: Objects.requireNonNull(file.listFiles())) {
+            String fileName = f.getName();
+            if (f.isFile() && fileName.endsWith(".java")) {
+                javaFileNames.add(fileName.substring(0, fileName.length() - 5));
+            }
+        }
+        return javaFileNames;
+    }
+
+    public static void compileLoad() {
         ENTITY_CLASSES.clear();
+        Set<String> allFiles = getAllJavaFiles();
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-        List<String> paras = classNames.stream()
-            .map( (name) -> PathConsts.DYNAMICS_JAVA_CODE_PATH + name + ".java" )
+        List<String> paras = allFiles.stream()
+            .map( (name) -> PathConsts.DYNAMICS_JAVA_CODE_PATH + name + ".java")
             .collect(Collectors.toList());
         paras.add(0, PathConsts.DYNAMICS_CLASS_PATH);
         paras.add(0, "-d");
@@ -43,8 +55,8 @@ public final class Compiler {
         System.out.println(result == 0 ? "Compile succeed.": "Compile failed.");
 
         try {
-            for (String className: classNames) {
-                if (Objects.equals(className, "_rule_")) {
+            for (String className: allFiles) {
+                if (Objects.equals(className, PathConsts.RULE_JAVA_CLASS)) {
                     ruleClass = loader.loadClass(className);
                 } else {
                     ENTITY_CLASSES.put(className, loader.loadClass(className));

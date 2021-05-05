@@ -1,5 +1,6 @@
 package process.definition;
 
+import base.dynamics.Compiler;
 import base.dynamics.TypeManager;
 import util.PathConsts;
 import util.FormatsConsts;
