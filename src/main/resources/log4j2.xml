@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="debug">
+    <!-- 属性定义供下文使用 -->
+    <Properties>
+        <Property name="fileName">R4DL_system.log</Property>
+        <Property name="backupFilePatch">/Users/gwz/Desktop/Code/R4DL/src/main/resources/log/</Property>
+    </Properties>
+    <!-- 先定义所有的appender -->
+    <appenders>
+        <!-- 输出到控制台的配置 -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <!-- 控制台只输出 level 及以上级别(onMatch), 其他的直接拒绝(onMismatch) -->
+            <ThresholdFilter level="trace" onMatch="ACCEPT" onMismatch="DENY"/>
+            <!-- 输出日志的格式 -->
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %t [%p] %c (%F:%L) %msg%n"/>
+        </Console>
+        <!-- 这个会打印所有的信息，每次大小超过 size，会自动存入按年份-月份建立的目录中 -->
+        <RollingFile name="RollingFile" fileName="${backupFilePatch}${fileName}"
+                     filePattern="${backupFilePatch}$${date:yyyy-MM}$/app-%d{yyyyMMdd-HHmmssSSS}.log.gz">
+            <PatternLayout pattern="%d{yyyy.MM.dd 'at' HH:mm:ss.SSS z} %-5level %class{36} %L %M - %msg%xEx%n"/>
+            <!-- 日志文件大小限制 -->
+            <SizeBasedTriggeringPolicy size="20MB"/>
+            <!-- 最多保存的文件数 -->
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+    </appenders>
+    <!-- 定义 logger -->
+    <loggers>
+        <!-- 建立一个默认的 root 的 logger -->
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="RollingFile"/>
+        </Root>
+    </loggers>
+</configuration>
