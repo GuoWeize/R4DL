@@ -6,7 +6,12 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import util.PathConsts;
@@ -52,7 +57,7 @@ public final class Compiler {
         paras.add(0, "-d");
         String[] arguments = paras.toArray(new String[0]);
         int result = compiler.run(null, null, null, arguments);
-        System.out.println(result == 0 ? "Compile succeed.": "Compile failed.");
+        System.out.println("Dynamics Java files compile " + (result == 0 ? "succeed.\n": "failed.\n"));
 
         try {
             for (String className: allFiles) {

@@ -3,21 +3,21 @@ import base.type.primitive.*;
 import base.type.collection.*;
 
 /**
- * Auto-generated Java file: performance.java
+ * Auto-generated Java file: reliability.java
  *
  * @author /Users/gwz/Desktop/Code/R4DL/src/main/resources/definitionFile/model.json
- * @date 2021/05/05 11:54:43
+ * @date 2021/05/05 16:50:16
  */
-public class performance extends BaseEntity {
-    public IntEntity comp;
-    public StringEntity unit;
+public final class reliability extends BaseEntity {
     public StringEntity metrics;
-    public IntEntity value;
-    public IntEntity statistics;
+    public StringEntity time;
+    public IntEntity comp2;
+    public IntEntity comp1;
+    public IntEntity probability;
 
     @Override
     public String getType() {
-        return "performance";
+        return "reliability";
     }
 
     @Override
@@ -35,13 +35,13 @@ public class performance extends BaseEntity {
         if (! getType().equals(entity.getType())) {
             return BoolEntity.FALSE;
         }
-        performance that = (performance)entity;
+        reliability that = (reliability)entity;
         return BoolEntity.and(
-            comp.equal(that.comp),
-            unit.equal(that.unit),
             metrics.equal(that.metrics),
-            value.equal(that.value),
-            statistics.equal(that.statistics)
+            time.equal(that.time),
+            comp2.equal(that.comp2),
+            comp1.equal(that.comp1),
+            probability.equal(that.probability)
         );
     }
 }

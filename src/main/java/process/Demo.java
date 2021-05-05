@@ -17,7 +17,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Objects;
-import java.util.Set;
 
 /**
  * @author Guo Weize
@@ -58,11 +57,11 @@ public class Demo {
         module.addDeserializer(Object.class, parser);
         mapper.registerModule(module);
         try {
-            Object readValue = mapper.readValue(readFile(filePath), Object.class);
-            System.out.println(readValue);
+            mapper.readValue(readFile(filePath), Object.class);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+        System.out.println("Finish parse JSON file: " + filePath + "\n");
     }
 
     private static String readFile(String filePath) {

@@ -104,7 +104,7 @@ public final class ModelJsonParser extends StdDeserializer<Object> {
     }
 
     private String generateFileHead(String name) {
-        return String.format("public class %s extends BaseEntity {\n", name);
+        return String.format("public final class %s extends BaseEntity {\n", name);
     }
 
     private String generateFields(Map<String, String> fields2type) {

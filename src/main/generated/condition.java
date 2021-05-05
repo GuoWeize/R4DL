@@ -6,9 +6,9 @@ import base.type.collection.*;
  * Auto-generated Java file: condition.java
  *
  * @author /Users/gwz/Desktop/Code/R4DL/src/main/resources/definitionFile/model.json
- * @date 2021/05/05 11:54:43
+ * @date 2021/05/05 16:50:16
  */
-public class condition extends BaseEntity {
+public final class condition extends BaseEntity {
     public SetEntity<entity> output;
     public SetEntity<StringEntity> restriction;
     public SetEntity<entity> input;

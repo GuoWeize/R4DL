@@ -6,9 +6,9 @@ import base.type.collection.*;
  * Auto-generated Java file: operation.java
  *
  * @author /Users/gwz/Desktop/Code/R4DL/src/main/resources/definitionFile/model.json
- * @date 2021/05/05 11:54:43
+ * @date 2021/05/05 16:50:16
  */
-public class operation extends BaseEntity {
+public final class operation extends BaseEntity {
     public StringEntity reaction;
     public BoolEntity isAble;
     public BoolEntity isNot;

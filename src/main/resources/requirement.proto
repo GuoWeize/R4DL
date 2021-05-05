@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "grpc";
+
+message Value {
+    string value = 1;
+}
+
+service Requirement{
+    rpc getJSON(Value) returns (Value) {}
+}
+
