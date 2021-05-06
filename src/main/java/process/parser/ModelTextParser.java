@@ -1,5 +1,6 @@
 package process.parser;
 
+import lombok.extern.slf4j.Slf4j;
 import util.PathConsts;
 import util.FormatsConsts;
 import util.TextReader;
@@ -11,6 +12,7 @@ import java.util.Objects;
  * @author Guo Weize
  * @date 2021/2/25
  */
+@Slf4j
 public final class ModelTextParser {
 
     /**
@@ -22,8 +24,9 @@ public final class ModelTextParser {
         try {
             ModelJsonGenerator.generateModel();
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Can not write file: " + PathConsts.MODEL_JSON_FILE, e);
         }
+        log.info("Finish parse model definition file: " + PathConsts.MODEL_TEXT_FILE);
     }
 
     /**

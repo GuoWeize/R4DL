@@ -1,7 +1,8 @@
 package process.definition;
 
-import base.dynamics.Compiler;
 import base.dynamics.TypeManager;
+import exceptions.TokenInvalidException;
+import lombok.extern.slf4j.Slf4j;
 import util.PathConsts;
 import util.FormatsConsts;
 
@@ -11,6 +12,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -25,6 +27,7 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
  * @author Guo Weize
  * @date 2021/2/1
  */
+@Slf4j
 public final class ModelJsonParser extends StdDeserializer<Object> {
 
     protected ModelJsonParser(Class<?> vc) {
@@ -39,7 +42,6 @@ public final class ModelJsonParser extends StdDeserializer<Object> {
     public Object deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
             throws IOException {
         JsonNode root = jsonParser.getCodec().readTree(jsonParser);
-
         Set<String> allTypeName = new HashSet<>(16);
         root.forEach(typeNode -> allTypeName.add(typeNode.get(FormatsConsts.MODEL_NAME_FIELD).asText()));
         TypeManager.initialization(allTypeName);
@@ -48,16 +50,19 @@ public final class ModelJsonParser extends StdDeserializer<Object> {
             String name = typeNode.get(FormatsConsts.MODEL_NAME_FIELD).asText();
             String type = typeNode.get(FormatsConsts.MODEL_TYPE_FIELD).asText();
             Map<String, String> fields2type = parseFields(typeNode);
-            boolean kind;
-            if (type.equals(FormatsConsts.DEFINE_REQUIREMENT)) {
-                kind = true;
-            } else if (type.equals(FormatsConsts.DEFINE_ENTITY)) {
-                kind = false;
+            boolean isRequirement;
+            if (Objects.equals(type, FormatsConsts.DEFINE_REQUIREMENT)) {
+                isRequirement = true;
+            } else if (Objects.equals(type, FormatsConsts.DEFINE_ENTITY)) {
+                isRequirement = false;
             } else {
-                throw new IllegalArgumentException();
+                throw new TokenInvalidException(
+                    type, Set.of(FormatsConsts.DEFINE_REQUIREMENT, FormatsConsts.DEFINE_ENTITY)
+                );
             }
-            generateJavaFile(name, fields2type, kind);
+            generateJavaFile(name, fields2type, isRequirement);
         }
+        log.info("Finish parse model JSON file: " + PathConsts.MODEL_JSON_FILE);
         return null;
     }
 
@@ -84,18 +89,18 @@ public final class ModelJsonParser extends StdDeserializer<Object> {
             + generateIsRequirement(isRequirement)
             + generateEquals(name, fields2type)
             + generateFileEnd();
-
+        String path = PathConsts.DYNAMICS_JAVA_CODE_PATH + name + ".java";
         try {
-            File file = new File(String.format("%s%s.java", PathConsts.DYNAMICS_JAVA_CODE_PATH, name));
+            File file = new File(path);
             if (!file.createNewFile()) {
-                System.out.printf("Replace existing file \"%s.java\".%n", name);
+                log.warn(String.format("Replace existing file \"%s.java\".", name));
             }
             FileWriter fileWriter = new FileWriter(file);
             fileWriter.write(content);
             fileWriter.flush();
             fileWriter.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Can not write file: " + path, e);
         }
     }
 

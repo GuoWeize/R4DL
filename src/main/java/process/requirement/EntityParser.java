@@ -9,12 +9,14 @@ import base.type.primitive.BoolEntity;
 import base.type.primitive.FloatEntity;
 import base.type.primitive.IntEntity;
 import base.type.primitive.StringEntity;
+import lombok.extern.slf4j.Slf4j;
 import util.FormatsConsts;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import util.PathConsts;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,6 +34,7 @@ import java.util.function.Predicate;
  * @author Guo Weize
  * @date 2021/2/1
  */
+@Slf4j
 public final class EntityParser extends StdDeserializer<Object> {
 
     private static final Map<String, Map<String, BaseEntity>> ENTITIES_ID = new HashMap<>(16);
@@ -53,6 +56,7 @@ public final class EntityParser extends StdDeserializer<Object> {
         List<BaseEntity> result = new ArrayList<>();
         JsonNode node = jsonParser.getCodec().readTree(jsonParser);
         node.forEach(n -> result.add(Inner.parseNode(n)));
+        log.info("Finish parse requirement JSON file: " + PathConsts.REQUIREMENT_FILE);
         return result;
     }
 

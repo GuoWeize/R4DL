@@ -7,7 +7,7 @@ import java.util.stream.IntStream;
  * Auto-generated Java file: _rule_.java
  *
  * @author /Users/gwz/Desktop/Code/R4DL/src/main/resources/definitionFile/rule.json
- * @date 2021/05/05 16:50:16
+ * @date 2021/05/06 20:54:07
  */
 public final class _rule_ {
 

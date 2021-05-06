@@ -1,6 +1,7 @@
 package process.parser;
 
 import exceptions.TokenInvalidException;
+import lombok.extern.slf4j.Slf4j;
 import util.PathConsts;
 import util.FormatsConsts;
 import util.TextReader;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
  * @author Guo Weize
  * @date 2021/4/3
  */
+@Slf4j
 public final class RuleTextParser {
 
     private static final List<String> RULES = new ArrayList<>();
@@ -36,8 +38,9 @@ public final class RuleTextParser {
             String result = String.format("{%s}", parseRules());
             Files.write(Paths.get(PathConsts.RULE_JSON_FILE), result.getBytes(StandardCharsets.UTF_8));
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Can not write file: " + PathConsts.RULE_JSON_FILE, e);
         }
+        log.info("Finish parse rule definition file: " + PathConsts.RULE_TEXT_FILE);
     }
 
     static String parseRules() throws IOException {
@@ -229,9 +232,4 @@ public final class RuleTextParser {
         }
         return true;
     }
-
-    public static void main(String[] args) {
-        parseRuleFile();
-    }
-
 }

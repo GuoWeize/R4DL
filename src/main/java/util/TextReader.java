@@ -1,6 +1,7 @@
 package util;
 
 import exceptions.TokenInvalidException;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -15,6 +16,7 @@ import java.util.stream.Stream;
  * @author Guo Weize
  * @date 2021/2/25
  */
+@Slf4j
 public final class TextReader {
 
     private static FileInputStream file;
@@ -50,7 +52,7 @@ public final class TextReader {
             charRead = END_OF_FILE;
             previousRead = END_OF_FILE;
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            log.error("file: " + filePath + " not exists!", e);
         }
     }
 
@@ -90,7 +92,7 @@ public final class TextReader {
             }
             return readSymbol(charRead);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Can not read token from file.", e);
         }
         return EMPTY_STRING;
     }

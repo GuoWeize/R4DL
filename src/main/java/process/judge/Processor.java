@@ -4,6 +4,7 @@ import base.dynamics.Compiler;
 import base.type.BaseEntity;
 import base.type.primitive.BoolEntity;
 import com.google.common.collect.Sets;
+import lombok.extern.slf4j.Slf4j;
 import process.requirement.EntityParser;
 
 import java.lang.reflect.InvocationTargetException;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
  * @author Guo Weize
  * @date 2021/2/19
  */
+@Slf4j
 public final class Processor {
     private static final Map<Method, List<String>> METHOD_2_ARGUMENTS = new HashMap<>();
     private static final Set<String> BLACKLIST = Set.of(
@@ -42,6 +44,7 @@ public final class Processor {
     }
 
     public static void judgeRules() {
+        log.info("Judgement started.");
         for (var entry: METHOD_2_ARGUMENTS.entrySet()) {
             if (entry.getValue().contains("base.type.collection.ListEntity")) {
                 continue;
@@ -49,6 +52,7 @@ public final class Processor {
             var args = getAllArgs(entry.getValue());
             judgeRule(entry.getKey(), args);
         }
+        log.warn("Judgement finished.");
     }
 
     private static Set<List<BaseEntity>> getAllArgs(List<String> argsTypes) {
@@ -72,7 +76,7 @@ public final class Processor {
                 }
             }
         } catch (IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
+            log.error("Can not process judgement.", e);
         }
     }
 

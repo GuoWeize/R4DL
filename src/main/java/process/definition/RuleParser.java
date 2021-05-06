@@ -1,6 +1,7 @@
 package process.definition;
 
 import base.dynamics.TypeManager;
+import lombok.extern.slf4j.Slf4j;
 import util.PathConsts;
 
 import java.io.File;
@@ -22,6 +23,7 @@ import util.FormatsConsts;
  * @author Guo Weize
  * @date 2021/2/1
  */
+@Slf4j
 public final class RuleParser extends StdDeserializer<Object> {
 
     public RuleParser() {
@@ -42,6 +44,7 @@ public final class RuleParser extends StdDeserializer<Object> {
             + parseRules(root)
             + "}\n";
         addToJavaFile(contents);
+        log.info("Finish parse rule JSON file: " + PathConsts.RULE_JSON_FILE);
         return null;
     }
 
@@ -51,17 +54,18 @@ public final class RuleParser extends StdDeserializer<Object> {
     }
 
     private void addToJavaFile(String contents){
+        String path = PathConsts.RULE_JAVA_FILE;
         try {
             File file = new File(PathConsts.RULE_JAVA_FILE);
             if (! file.createNewFile()) {
-                System.out.printf("Replace \"%s\" before.%n", PathConsts.RULE_JAVA_NAME);
+                log.warn(String.format("Replace \"%s\" before.", PathConsts.RULE_JAVA_NAME));
             }
             FileWriter fileWriter = new FileWriter(file);
             fileWriter.write(contents);
             fileWriter.flush();
             fileWriter.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Can not write file: " + path, e);
         }
     }
 

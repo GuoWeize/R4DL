@@ -3,6 +3,7 @@ package process.parser;
 import com.fasterxml.jackson.core.JsonEncoding;
 import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonGenerator;
+import lombok.extern.slf4j.Slf4j;
 import util.FormatsConsts;
 import util.PathConsts;
 
@@ -13,6 +14,7 @@ import java.io.IOException;
  * @author Guo Weize
  * @date 2021/2/25
  */
+@Slf4j
 public final class ModelJsonGenerator {
 
     private static JsonGenerator jg;
@@ -22,7 +24,7 @@ public final class ModelJsonGenerator {
             FileOutputStream file = new FileOutputStream(PathConsts.MODEL_JSON_FILE);
             jg = (new JsonFactory()).createGenerator(file, JsonEncoding.UTF8);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("Can not read file: " + PathConsts.MODEL_JSON_FILE, e);
         }
     }
 

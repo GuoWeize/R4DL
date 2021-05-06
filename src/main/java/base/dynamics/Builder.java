@@ -1,6 +1,7 @@
 package base.dynamics;
 
 import base.type.BaseEntity;
+import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
@@ -13,6 +14,7 @@ import java.util.Map;
  * @author Guo Weize
  * @date 2021/2/1
  */
+@Slf4j
 public final class Builder {
     private static final Map<String, Constructor<?>> NAME_2_CONSTRUCTOR = new HashMap<>();
 
@@ -30,6 +32,8 @@ public final class Builder {
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
+        log.info("Initialization finished.");
+        log.debug("All customized types are: " + NAME_2_CONSTRUCTOR.keySet());
     }
 
     /**

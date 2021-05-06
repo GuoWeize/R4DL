@@ -14,12 +14,14 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import lombok.extern.slf4j.Slf4j;
 import util.PathConsts;
 
 /**
  * @author Guo Weize
  * @date 2021/2/1
  */
+@Slf4j
 public final class Compiler {
 
     public static final Map<String, Class<?>> ENTITY_CLASSES = new HashMap<>(16);
@@ -43,6 +45,7 @@ public final class Compiler {
                 javaFileNames.add(fileName.substring(0, fileName.length() - 5));
             }
         }
+        log.info("All Java files are: " + javaFileNames);
         return javaFileNames;
     }
 
@@ -57,7 +60,7 @@ public final class Compiler {
         paras.add(0, "-d");
         String[] arguments = paras.toArray(new String[0]);
         int result = compiler.run(null, null, null, arguments);
-        System.out.println("Dynamics Java files compile " + (result == 0 ? "succeed.\n": "failed.\n"));
+        log.info("Dynamics Java files compile " + (result == 0 ? "succeed.": "failed."));
 
         try {
             for (String className: allFiles) {

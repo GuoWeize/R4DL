@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import lombok.extern.slf4j.Slf4j;
 import process.definition.ModelJsonParser;
 import process.definition.RuleParser;
 import process.judge.Processor;
@@ -22,6 +23,7 @@ import java.util.Objects;
  * @author Guo Weize
  * @date 2021/2/22
  */
+@Slf4j
 public class Demo {
 
     public static void definitions2json() {
@@ -61,7 +63,6 @@ public class Demo {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        System.out.println("Finish parse JSON file: " + filePath + "\n");
     }
 
     private static String readFile(String filePath) {
