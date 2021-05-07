@@ -1,3 +1,6 @@
 # Project exclude paths
 /target/
+/.idea/
+
 /src/main/resources/log/R4DL_system.log
+/R4DL.iml

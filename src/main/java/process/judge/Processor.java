@@ -2,6 +2,7 @@ package process.judge;
 
 import base.dynamics.Compiler;
 import base.type.BaseEntity;
+import base.type.collection.ListEntity;
 import base.type.primitive.BoolEntity;
 import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -46,17 +48,30 @@ public final class Processor {
     public static void judgeRules() {
         log.info("Judgement started.");
         for (var entry: METHOD_2_ARGUMENTS.entrySet()) {
+            Set<List<BaseEntity>> args;
             if (entry.getValue().contains("base.type.collection.ListEntity")) {
-                continue;
+                args = getListArgs("functional");
+            } else {
+                args = getArgs(entry.getValue());
             }
-            var args = getAllArgs(entry.getValue());
             judgeRule(entry.getKey(), args);
         }
         log.warn("Judgement finished.");
         log.warn(RELATIONSHIPS.toString());
     }
 
-    private static Set<List<BaseEntity>> getAllArgs(List<String> argsTypes) {
+    private static Set<List<BaseEntity>> getListArgs(String argType) {
+        Set<BaseEntity> requirements = EntityParser.ENTITIES.get(argType);
+        List<Set<BaseEntity>> reqs = new ArrayList<>();
+        Set<List<BaseEntity>> result = new HashSet<>();
+        for (int i = 0; i < requirements.size(); i++) {
+            reqs.add(requirements);
+            result.addAll(Sets.cartesianProduct(reqs));
+        }
+        return result;
+    }
+
+    private static Set<List<BaseEntity>> getArgs(List<String> argsTypes) {
         List<Set<BaseEntity>> requirements = new ArrayList<>();
         for (String type: argsTypes) {
             requirements.add(EntityParser.ENTITIES.get(type));
@@ -68,7 +83,12 @@ public final class Processor {
         String relationshipName = rule.getName();
         try {
             for (List<BaseEntity> reqArgs: requirements) {
-                Object result = rule.invoke(null, reqArgs.toArray());
+                Object result;
+                if (rule.getParameterTypes()[0].getName().contains("base.type.collection.ListEntity")) {
+                    result = rule.invoke(null, new ListEntity<>(reqArgs.get(0).getType(), reqArgs));
+                } else {
+                    result = rule.invoke(null, reqArgs.toArray());
+                }
                 if (((BoolEntity)result).getValue()) {
                     if (! RELATIONSHIPS.containsKey(relationshipName)) {
                         RELATIONSHIPS.put(relationshipName, new ArrayList<>());
