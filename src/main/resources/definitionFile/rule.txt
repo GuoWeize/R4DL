@@ -127,6 +127,7 @@ rule event_inclusion
 rule operation_event_interlock
 (list<functional>) -> boolean {
     and (
+        {{size_of $1$} > 1},
         operation_event_condition($1$[{{size_of $1$} - 1}], $1$[0]),
         for all index from 0 to {{size_of $1$} - 2} (
             operation_event_condition($1$[index], $1$[{index + 1}])
@@ -137,6 +138,7 @@ rule operation_event_interlock
 rule input_output_interlock
 (list<functional>) -> boolean {
     and (
+        {{size_of $1$} > 1},
         input_output_condition($1$[{{size_of $1$} - 1}], $1$[0]),
         for all index from 0 to {{size_of $1$} - 2} (
             input_output_condition($1$[index], $1$[{index + 1}])

@@ -7,7 +7,7 @@ import java.util.stream.IntStream;
  * Auto-generated Java file: _rule_.java
  *
  * @author /Users/gwz/Desktop/Code/R4DL/src/main/resources/definitionFile/rule.json
- * @date 2021/05/07 16:38:23
+ * @date 2021/05/07 16:42:52
  */
 public final class _rule_ {
 
@@ -147,7 +147,7 @@ public final class _rule_ {
      * @return BoolEntity
      */
     public static BoolEntity operation_event_interlock(ListEntity<functional> $1$) {
-        return BoolEntity.and(operation_event_condition($1$.get(BasePrimitiveEntity.calculate($1$.size(), IntEntity.valueOf(1), "-")), $1$.get(IntEntity.valueOf(0))), BoolEntity.valueOf(IntEntity.range(IntEntity.valueOf(0), BasePrimitiveEntity.calculate($1$.size(), IntEntity.valueOf(2), "-")).allMatch(index -> ((BoolEntity)operation_event_condition($1$.get(index), $1$.get(BasePrimitiveEntity.calculate(index, IntEntity.valueOf(1), "+")))).getValue())));
+        return BoolEntity.and(BasePrimitiveEntity.compare($1$.size(), IntEntity.valueOf(1), ">"), operation_event_condition($1$.get(BasePrimitiveEntity.calculate($1$.size(), IntEntity.valueOf(1), "-")), $1$.get(IntEntity.valueOf(0))), BoolEntity.valueOf(IntEntity.range(IntEntity.valueOf(0), BasePrimitiveEntity.calculate($1$.size(), IntEntity.valueOf(2), "-")).allMatch(index -> ((BoolEntity)operation_event_condition($1$.get(index), $1$.get(BasePrimitiveEntity.calculate(index, IntEntity.valueOf(1), "+")))).getValue())));
     }
 
     /**
@@ -155,7 +155,7 @@ public final class _rule_ {
      * @return BoolEntity
      */
     public static BoolEntity input_output_interlock(ListEntity<functional> $1$) {
-        return BoolEntity.and(input_output_condition($1$.get(BasePrimitiveEntity.calculate($1$.size(), IntEntity.valueOf(1), "-")), $1$.get(IntEntity.valueOf(0))), BoolEntity.valueOf(IntEntity.range(IntEntity.valueOf(0), BasePrimitiveEntity.calculate($1$.size(), IntEntity.valueOf(2), "-")).allMatch(index -> ((BoolEntity)input_output_condition($1$.get(index), $1$.get(BasePrimitiveEntity.calculate(index, IntEntity.valueOf(1), "+")))).getValue())));
+        return BoolEntity.and(BasePrimitiveEntity.compare($1$.size(), IntEntity.valueOf(1), ">"), input_output_condition($1$.get(BasePrimitiveEntity.calculate($1$.size(), IntEntity.valueOf(1), "-")), $1$.get(IntEntity.valueOf(0))), BoolEntity.valueOf(IntEntity.range(IntEntity.valueOf(0), BasePrimitiveEntity.calculate($1$.size(), IntEntity.valueOf(2), "-")).allMatch(index -> ((BoolEntity)input_output_condition($1$.get(index), $1$.get(BasePrimitiveEntity.calculate(index, IntEntity.valueOf(1), "+")))).getValue())));
     }
 
 }

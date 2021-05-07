@@ -6,7 +6,7 @@ import base.type.collection.*;
  * Auto-generated Java file: performance.java
  *
  * @author /Users/gwz/Desktop/Code/R4DL/src/main/resources/definitionFile/model.json
- * @date 2021/05/07 16:38:23
+ * @date 2021/05/07 16:42:52
  */
 public final class performance extends BaseEntity {
     public IntEntity comp;
