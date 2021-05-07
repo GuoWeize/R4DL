@@ -68,13 +68,26 @@ public final class Processor {
         log.warn(RELATIONSHIPS.toString());
     }
 
+    private static Set<List<BaseEntity>> distinct(Set<List<BaseEntity>> arguments) {
+        Set<List<BaseEntity>> result = new HashSet<>();
+        for (List<BaseEntity> args: arguments) {
+            Set<BaseEntity> set = new HashSet<>(args);
+            if (set.size() != args.size()) {
+                continue;
+            }
+            result.add(args);
+        }
+        return result;
+    }
+
     private static Set<List<BaseEntity>> getListArgs(String argType) {
         Set<BaseEntity> requirements = EntityParser.ENTITIES.get(argType);
         List<Set<BaseEntity>> reqs = new ArrayList<>();
         Set<List<BaseEntity>> result = new HashSet<>();
         for (int i = 0; i < requirements.size(); i++) {
             reqs.add(requirements);
-            result.addAll(Sets.cartesianProduct(reqs));
+            Set<List<BaseEntity>> distinctive = distinct(Sets.cartesianProduct(reqs));
+            result.addAll(distinctive);
         }
         return result;
     }
@@ -84,7 +97,7 @@ public final class Processor {
         for (String type: argsTypes) {
             requirements.add(EntityParser.ENTITIES.get(type));
         }
-        return Sets.cartesianProduct(requirements);
+        return distinct(Sets.cartesianProduct(requirements));
     }
 
     private static void judgeRule(Method rule, Set<List<BaseEntity>> requirements) {
