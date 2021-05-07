@@ -6,7 +6,7 @@ import base.type.collection.*;
  * Auto-generated Java file: entity.java
  *
  * @author /Users/gwz/Desktop/Code/R4DL/src/main/resources/definitionFile/model.json
- * @date 2021/05/06 20:54:07
+ * @date 2021/05/07 09:45:01
  */
 public final class entity extends BaseEntity {
     public BoolEntity isAll;
@@ -36,10 +36,10 @@ public final class entity extends BaseEntity {
         }
         entity that = (entity)entity;
         return BoolEntity.and(
-            isAll.equal(that.isAll),
-            entirety.equal(that.entirety),
-            base.equal(that.base),
-            modifier.equal(that.modifier)
+            BaseEntity.equal(isAll, that.isAll),
+            BaseEntity.equal(entirety, that.entirety),
+            BaseEntity.equal(base, that.base),
+            BaseEntity.equal(modifier, that.modifier)
         );
     }
 }

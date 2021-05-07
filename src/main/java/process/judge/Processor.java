@@ -53,6 +53,7 @@ public final class Processor {
             judgeRule(entry.getKey(), args);
         }
         log.warn("Judgement finished.");
+        log.warn(RELATIONSHIPS.toString());
     }
 
     private static Set<List<BaseEntity>> getAllArgs(List<String> argsTypes) {

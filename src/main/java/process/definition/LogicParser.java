@@ -93,7 +93,7 @@ public final class LogicParser {
 
     private static String equal(List<String> arguments) {
         checkArgsNumberAmount(arguments, i -> i == 2);
-        return String.format("%s.equal(%s)", arguments.get(0), arguments.get(1));
+        return String.format("BaseEntity.equal(%s, %s)", arguments.get(0), arguments.get(1));
     }
 
     private static String notEqual(List<String> arguments) {

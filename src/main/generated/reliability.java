@@ -6,7 +6,7 @@ import base.type.collection.*;
  * Auto-generated Java file: reliability.java
  *
  * @author /Users/gwz/Desktop/Code/R4DL/src/main/resources/definitionFile/model.json
- * @date 2021/05/06 20:54:07
+ * @date 2021/05/07 09:45:01
  */
 public final class reliability extends BaseEntity {
     public StringEntity metrics;
@@ -37,11 +37,11 @@ public final class reliability extends BaseEntity {
         }
         reliability that = (reliability)entity;
         return BoolEntity.and(
-            metrics.equal(that.metrics),
-            time.equal(that.time),
-            comp2.equal(that.comp2),
-            comp1.equal(that.comp1),
-            probability.equal(that.probability)
+            BaseEntity.equal(metrics, that.metrics),
+            BaseEntity.equal(time, that.time),
+            BaseEntity.equal(comp2, that.comp2),
+            BaseEntity.equal(comp1, that.comp1),
+            BaseEntity.equal(probability, that.probability)
         );
     }
 }

@@ -66,4 +66,11 @@ public abstract class BaseEntity {
     public boolean equals(Object obj) {
         return (this.equal((BaseEntity)obj)).getValue();
     }
+
+    public static BoolEntity equal(BaseEntity entity1, BaseEntity entity2) {
+        if (entity1 == null || entity2 == null) {
+            return BoolEntity.FALSE;
+        }
+        return entity1.equal(entity2);
+    }
 }

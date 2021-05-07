@@ -7,7 +7,7 @@ import java.util.stream.IntStream;
  * Auto-generated Java file: _rule_.java
  *
  * @author /Users/gwz/Desktop/Code/R4DL/src/main/resources/definitionFile/rule.json
- * @date 2021/05/06 20:54:07
+ * @date 2021/05/07 09:45:01
  */
 public final class _rule_ {
 
@@ -33,7 +33,7 @@ public final class _rule_ {
      * @return BoolEntity
      */
     private static BoolEntity operation_contradict(operation $1$, operation $2$) {
-        return BoolEntity.and($1$.reaction.equal($2$.reaction), BoolEntity.not($1$.isAble), BoolEntity.not($2$.isAble), BoolEntity.not($1$.isNot.equal($2$.isNot)));
+        return BoolEntity.and(BaseEntity.equal($1$.reaction, $2$.reaction), BoolEntity.not($1$.isAble), BoolEntity.not($2$.isAble), BoolEntity.not($1$.isNot.equal($2$.isNot)));
     }
 
     /**
@@ -41,16 +41,16 @@ public final class _rule_ {
      * @return BoolEntity
      */
     private static BoolEntity base_contradict(functional $1$, functional $2$) {
-        return BoolEntity.and($1$.agent.equal($2$.agent), operation_contradict($1$.operation, $2$.operation), in_out_include($1$, $2$));
+        return BoolEntity.and(BaseEntity.equal($1$.agent, $2$.agent), operation_contradict($1$.operation, $2$.operation), in_out_include($1$, $2$));
     }
     private static BoolEntity base_contradict(functional $1$, condition $2$) {
-        return BoolEntity.and($1$.agent.equal($2$.agent), operation_contradict($1$.operation, $2$.operation), in_out_include($1$, $2$));
+        return BoolEntity.and(BaseEntity.equal($1$.agent, $2$.agent), operation_contradict($1$.operation, $2$.operation), in_out_include($1$, $2$));
     }
     private static BoolEntity base_contradict(condition $1$, functional $2$) {
-        return BoolEntity.and($1$.agent.equal($2$.agent), operation_contradict($1$.operation, $2$.operation), in_out_include($1$, $2$));
+        return BoolEntity.and(BaseEntity.equal($1$.agent, $2$.agent), operation_contradict($1$.operation, $2$.operation), in_out_include($1$, $2$));
     }
     private static BoolEntity base_contradict(condition $1$, condition $2$) {
-        return BoolEntity.and($1$.agent.equal($2$.agent), operation_contradict($1$.operation, $2$.operation), in_out_include($1$, $2$));
+        return BoolEntity.and(BaseEntity.equal($1$.agent, $2$.agent), operation_contradict($1$.operation, $2$.operation), in_out_include($1$, $2$));
     }
 
     /**
@@ -58,7 +58,7 @@ public final class _rule_ {
      * @return BoolEntity
      */
     private static BoolEntity operation_include(operation $1$, operation $2$) {
-        return BoolEntity.or($1$.equal($2$), BoolEntity.and($1$.reaction.equal($2$.reaction), $2$.isAble, BoolEntity.not($1$.isAble)));
+        return BoolEntity.or(BaseEntity.equal($1$, $2$), BoolEntity.and(BaseEntity.equal($1$.reaction, $2$.reaction), $2$.isAble, BoolEntity.not($1$.isAble)));
     }
 
     /**
@@ -66,16 +66,16 @@ public final class _rule_ {
      * @return BoolEntity
      */
     private static BoolEntity base_include(functional $1$, functional $2$) {
-        return BoolEntity.and($1$.agent.equal($2$.agent), operation_include($1$.operation, $2$.operation), $1$.input.include($2$.input), $1$.output.include($2$.output), $1$.restriction.include($2$.restriction));
+        return BoolEntity.and(BaseEntity.equal($1$.agent, $2$.agent), operation_include($1$.operation, $2$.operation), $1$.input.include($2$.input), $1$.output.include($2$.output), $1$.restriction.include($2$.restriction));
     }
     private static BoolEntity base_include(functional $1$, condition $2$) {
-        return BoolEntity.and($1$.agent.equal($2$.agent), operation_include($1$.operation, $2$.operation), $1$.input.include($2$.input), $1$.output.include($2$.output), $1$.restriction.include($2$.restriction));
+        return BoolEntity.and(BaseEntity.equal($1$.agent, $2$.agent), operation_include($1$.operation, $2$.operation), $1$.input.include($2$.input), $1$.output.include($2$.output), $1$.restriction.include($2$.restriction));
     }
     private static BoolEntity base_include(condition $1$, functional $2$) {
-        return BoolEntity.and($1$.agent.equal($2$.agent), operation_include($1$.operation, $2$.operation), $1$.input.include($2$.input), $1$.output.include($2$.output), $1$.restriction.include($2$.restriction));
+        return BoolEntity.and(BaseEntity.equal($1$.agent, $2$.agent), operation_include($1$.operation, $2$.operation), $1$.input.include($2$.input), $1$.output.include($2$.output), $1$.restriction.include($2$.restriction));
     }
     private static BoolEntity base_include(condition $1$, condition $2$) {
-        return BoolEntity.and($1$.agent.equal($2$.agent), operation_include($1$.operation, $2$.operation), $1$.input.include($2$.input), $1$.output.include($2$.output), $1$.restriction.include($2$.restriction));
+        return BoolEntity.and(BaseEntity.equal($1$.agent, $2$.agent), operation_include($1$.operation, $2$.operation), $1$.input.include($2$.input), $1$.output.include($2$.output), $1$.restriction.include($2$.restriction));
     }
 
     /**
@@ -91,7 +91,7 @@ public final class _rule_ {
      * @return BoolEntity
      */
     private static BoolEntity entity_include(entity $1$, entity $2$) {
-        return BoolEntity.or($1$.equal($2$.entirety), BoolEntity.and($1$.base.equal($2$.base), $2$.modifier.include($1$.modifier)));
+        return BoolEntity.or(BaseEntity.equal($1$, $2$.entirety), BoolEntity.and(BaseEntity.equal($1$.base, $2$.base), $2$.modifier.include($1$.modifier)));
     }
 
     /**
@@ -107,7 +107,7 @@ public final class _rule_ {
      * @return BoolEntity
      */
     public static BoolEntity operation_inconsistency(functional $1$, functional $2$) {
-        return BoolEntity.and($1$.event.equal($2$.event), base_contradict($1$, $2$));
+        return BoolEntity.and(BaseEntity.equal($1$.event, $2$.event), base_contradict($1$, $2$));
     }
 
     /**
@@ -115,7 +115,7 @@ public final class _rule_ {
      * @return BoolEntity
      */
     public static BoolEntity restriction_inconsistency(functional $1$, functional $2$) {
-        return BoolEntity.and($1$.event.equal($2$.event), $1$.agent.equal($2$.agent), $1$.operation.equal($2$.operation), in_out_include($1$, $2$), BoolEntity.not($1$.restriction.equal($2$.restriction)));
+        return BoolEntity.and(BaseEntity.equal($1$.event, $2$.event), BaseEntity.equal($1$.agent, $2$.agent), BaseEntity.equal($1$.operation, $2$.operation), in_out_include($1$, $2$), BoolEntity.not(BaseEntity.equal($1$.restriction, $2$.restriction)));
     }
 
     /**
@@ -131,7 +131,7 @@ public final class _rule_ {
      * @return BoolEntity
      */
     public static BoolEntity operation_inclusion(functional $1$, functional $2$) {
-        return BoolEntity.and($1$.event.equal($2$.event), base_include($1$, $2$));
+        return BoolEntity.and(BaseEntity.equal($1$.event, $2$.event), base_include($1$, $2$));
     }
 
     /**
@@ -139,7 +139,7 @@ public final class _rule_ {
      * @return BoolEntity
      */
     public static BoolEntity event_inclusion(functional $1$, functional $2$) {
-        return BoolEntity.and($1$.event.include($2$.event), $1$.agent.equal($2$.agent), $1$.operation.equal($2$.operation), $1$.input.include($2$.input), $1$.output.include($2$.output), $1$.restriction.equal($2$.restriction));
+        return BoolEntity.and($1$.event.include($2$.event), BaseEntity.equal($1$.agent, $2$.agent), BaseEntity.equal($1$.operation, $2$.operation), $1$.input.include($2$.input), $1$.output.include($2$.output), BaseEntity.equal($1$.restriction, $2$.restriction));
     }
 
     /**

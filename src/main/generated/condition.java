@@ -6,7 +6,7 @@ import base.type.collection.*;
  * Auto-generated Java file: condition.java
  *
  * @author /Users/gwz/Desktop/Code/R4DL/src/main/resources/definitionFile/model.json
- * @date 2021/05/06 20:54:07
+ * @date 2021/05/07 09:45:01
  */
 public final class condition extends BaseEntity {
     public SetEntity<entity> output;
@@ -37,11 +37,11 @@ public final class condition extends BaseEntity {
         }
         condition that = (condition)entity;
         return BoolEntity.and(
-            output.equal(that.output),
-            restriction.equal(that.restriction),
-            input.equal(that.input),
-            agent.equal(that.agent),
-            operation.equal(that.operation)
+            BaseEntity.equal(output, that.output),
+            BaseEntity.equal(restriction, that.restriction),
+            BaseEntity.equal(input, that.input),
+            BaseEntity.equal(agent, that.agent),
+            BaseEntity.equal(operation, that.operation)
         );
     }
 }

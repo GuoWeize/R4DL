@@ -6,7 +6,7 @@ import base.type.collection.*;
  * Auto-generated Java file: operation.java
  *
  * @author /Users/gwz/Desktop/Code/R4DL/src/main/resources/definitionFile/model.json
- * @date 2021/05/06 20:54:06
+ * @date 2021/05/07 09:45:01
  */
 public final class operation extends BaseEntity {
     public StringEntity reaction;
@@ -35,9 +35,9 @@ public final class operation extends BaseEntity {
         }
         operation that = (operation)entity;
         return BoolEntity.and(
-            reaction.equal(that.reaction),
-            isAble.equal(that.isAble),
-            isNot.equal(that.isNot)
+            BaseEntity.equal(reaction, that.reaction),
+            BaseEntity.equal(isAble, that.isAble),
+            BaseEntity.equal(isNot, that.isNot)
         );
     }
 }

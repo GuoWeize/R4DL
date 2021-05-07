@@ -138,7 +138,7 @@ public final class ModelJsonParser extends StdDeserializer<Object> {
 
     private String generateEquals(String name, Map<String, String> fields2type) {
         String result = fields2type.keySet().stream()
-            .map(f -> String.format("%s.equal(that.%s)", f, f))
+            .map(f -> String.format("BaseEntity.equal(%s, that.%s)", f, f))
             .collect(Collectors.joining(",\n            "));
         return  "    @Override\n"
             + "    public BoolEntity equal(BaseEntity entity) {\n"
