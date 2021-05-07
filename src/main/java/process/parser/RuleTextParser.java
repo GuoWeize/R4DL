@@ -2,6 +2,7 @@ package process.parser;
 
 import exceptions.TokenInvalidException;
 import lombok.extern.slf4j.Slf4j;
+import process.judge.Processor;
 import util.PathConsts;
 import util.FormatsConsts;
 import util.TextReader;
@@ -53,13 +54,20 @@ public final class RuleTextParser {
     }
 
     static void parseRule(String type) throws IOException {
-        if (! Objects.equals(type, FormatsConsts.DEFINE_FUNCTION) && ! Objects.equals(type, FormatsConsts.DEFINE_RULE) ) {
+        if (! Objects.equals(type, FormatsConsts.DEFINE_FUNCTION) && ! Objects.equals(type, FormatsConsts.DEFINE_RULE)) {
             throw new TokenInvalidException(type, List.of(FormatsConsts.DEFINE_FUNCTION, FormatsConsts.DEFINE_RULE));
         }
         String name = TextReader.nextToken();
         FormatsConsts.CUSTOMIZED_OPERATORS.add(name);
         String head = String.format("\"%s\": {\"%s\": \"%s\", ", name, FormatsConsts.RULE_TYPE_FIELD, type);
         String arguments = String.format("\"%s\": %s, ", FormatsConsts.RULE_ARGUMENT_FIELD, parseArguments());
+        if (Objects.equals(type, FormatsConsts.DEFINE_RULE)) {
+            int begin = arguments.indexOf("\"list<");
+            if (begin > 1) {
+                int end = arguments.indexOf(">", begin);
+                Processor.addListArg(name, arguments.substring(begin + 6, end));
+            }
+        }
         String returnType = String.format("\"%s\": \"%s\", ", FormatsConsts.RULE_RETURN_FIELD, parseReturn());
         String logic = String.format("\"%s\": %s", FormatsConsts.RULE_LOGIC_FIELD, parseLogic());
         String tail = "}";

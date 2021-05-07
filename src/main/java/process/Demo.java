@@ -25,6 +25,7 @@ import java.util.Objects;
 public class Demo {
 
     public static void definitions2json() {
+        Processor.initialization();
         ModelTextParser.parseModelFile();
         RuleTextParser.parseRuleFile();
     }
@@ -38,7 +39,6 @@ public class Demo {
     public static void judge() {
         Compiler.compileLoad();
         parseJsonFile(PathConsts.REQUIREMENT_FILE, new EntityParser());
-        Processor.initialization();
         Processor.judgeRules();
     }
 

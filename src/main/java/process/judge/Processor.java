@@ -27,6 +27,7 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 public final class Processor {
+    private static final Map<String, String> RULE_2_LISTARG = new HashMap<>();
     private static final Map<Method, List<String>> METHOD_2_ARGUMENTS = new HashMap<>();
     private static final Set<String> BLACKLIST = Set.of(
         "wait", "equals", "toString", "hashCode", "getClass", "notify", "notifyAll"
@@ -34,7 +35,15 @@ public final class Processor {
     private static final Map<String, List<List<BaseEntity>>> RELATIONSHIPS = new HashMap<>();
 
     public static void initialization() {
+        RULE_2_LISTARG.clear();
         METHOD_2_ARGUMENTS.clear();
+    }
+
+    public static void addListArg(String name, String argument) {
+        RULE_2_LISTARG.putIfAbsent(name, argument);
+    }
+
+    public static void judgeRules() {
         for (Method rule: Compiler.ruleClass.getMethods()) {
             if (! BLACKLIST.contains(rule.getName())) {
                 List<String> args = Arrays.stream(rule.getParameterTypes())
@@ -43,14 +52,13 @@ public final class Processor {
                 METHOD_2_ARGUMENTS.put(rule, args);
             }
         }
-    }
 
-    public static void judgeRules() {
         log.info("Judgement started.");
         for (var entry: METHOD_2_ARGUMENTS.entrySet()) {
             Set<List<BaseEntity>> args;
             if (entry.getValue().contains("base.type.collection.ListEntity")) {
-                args = getListArgs("functional");
+                String ruleName = entry.getKey().getName();
+                args = getListArgs(RULE_2_LISTARG.get(ruleName));
             } else {
                 args = getArgs(entry.getValue());
             }
