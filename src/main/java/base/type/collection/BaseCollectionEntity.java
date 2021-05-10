@@ -2,9 +2,6 @@ package base.type.collection;
 
 import base.type.BaseEntity;
 import base.type.primitive.IntEntity;
-import exceptions.TypeInvalidException;
-
-import java.util.Objects;
 
 /**
  * Abstract base class for all collection types, including list, set and map.<p>
@@ -15,18 +12,14 @@ import java.util.Objects;
  */
 public abstract class BaseCollectionEntity extends BaseEntity {
 
+    /**
+     * Annotate the item type that is not defined yet.
+     */
     protected static final String TYPE_UNDEFINED = "_undefined_";
+    /**
+     * delimiter of items in {@code toString} methods of collections
+     */
     protected static final String DELIMITER = ", ";
-
-    @Override
-    public final boolean isPrimitive() {
-        return false;
-    }
-
-    @Override
-    public final boolean isRequirement() {
-        return false;
-    }
 
     /**
      * Get the type of items in collection.
@@ -39,4 +32,14 @@ public abstract class BaseCollectionEntity extends BaseEntity {
      * @return An IntEntity containing the size of collection
      */
     public abstract IntEntity size();
+
+    @Override
+    public final boolean isPrimitive() {
+        return false;
+    }
+
+    @Override
+    public final boolean isRequirement() {
+        return false;
+    }
 }

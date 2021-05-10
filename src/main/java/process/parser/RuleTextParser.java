@@ -29,6 +29,8 @@ public final class RuleTextParser {
     private static final Set<Character> NUMBERS = Set.of(
         '.', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
     );
+    private static final String TRUE = "true";
+    private static final String FALSE = "false";
 
     /**
      * entry of the function of parsing the rule text file.
@@ -44,7 +46,7 @@ public final class RuleTextParser {
         log.info("Finish parse rule definition file: " + PathConsts.RULE_TEXT_FILE);
     }
 
-    static String parseRules() throws IOException {
+    private static String parseRules() throws IOException {
         String preRead = TextReader.nextToken();
         while (! Objects.equals(preRead, TextReader.EMPTY_STRING)) {
             parseRule(preRead);
@@ -53,7 +55,7 @@ public final class RuleTextParser {
         return String.join(", ", RULES);
     }
 
-    static void parseRule(String type) throws IOException {
+    private static void parseRule(String type) throws IOException {
         if (! Objects.equals(type, FormatsConsts.DEFINE_FUNCTION) && ! Objects.equals(type, FormatsConsts.DEFINE_RULE)) {
             throw new TokenInvalidException(type, List.of(FormatsConsts.DEFINE_FUNCTION, FormatsConsts.DEFINE_RULE));
         }
@@ -74,7 +76,7 @@ public final class RuleTextParser {
         RULES.add(String.format("%s%s%s%s%s", head, arguments, returnType, logic, tail));
     }
 
-    static String parseArguments() throws IOException {
+    private static String parseArguments() throws IOException {
         TextReader.nextTokenWithTest(FormatsConsts.OPEN_PAREN);
         List<List<String>> arguments = new ArrayList<>();
         String preToken;
@@ -103,19 +105,19 @@ public final class RuleTextParser {
         return "[" + String.join(", ", temp) + "]";
     }
 
-    static String parseReturn() throws IOException {
+    private static String parseReturn() throws IOException {
         TextReader.nextTokenWithTest(FormatsConsts.ARROW);
         return TextReader.nextToken();
     }
 
-    static String parseLogic() throws IOException {
+    private static String parseLogic() throws IOException {
         TextReader.nextTokenWithTest(FormatsConsts.OPEN_BRACE);
         String result = parseTerm();
         TextReader.nextTokenWithTest(FormatsConsts.CLOSE_BRACE);
         return result;
     }
 
-    static String parseTerm() throws IOException {
+    private static String parseTerm() throws IOException {
         String nextToken = TextReader.nextToken();
         if (Objects.equals(nextToken, FormatsConsts.OPEN_BRACE)) {
             String result = parseUnitaryBinary();
@@ -135,7 +137,7 @@ public final class RuleTextParser {
      * Parse unitary or binary operators.
      * @return json format logic
      */
-    static String parseUnitaryBinary() throws IOException {
+    private static String parseUnitaryBinary() throws IOException {
         String firstToken = TextReader.nextToken();
         if (FormatsConsts.UNARY_OPERATORS.contains(firstToken)) {
             String object = parseTerm();
@@ -156,7 +158,7 @@ public final class RuleTextParser {
      * Parse multiple arguments operators.
      * @return json format logic
      */
-    static String parseMultipleArg(String operator) throws IOException {
+    private static String parseMultipleArg(String operator) throws IOException {
         TextReader.nextTokenWithTest(FormatsConsts.OPEN_PAREN);
         List<String> args = new ArrayList<>();
         while (true) {
@@ -175,9 +177,7 @@ public final class RuleTextParser {
      * Parse loop operators.
      * @return json format logic
      */
-    static String parseLoop() throws IOException {
-        // <loop statement> := for (all | any) <statement> <range> '(' <statement> ')'
-        // <range> := in <statement> | from <statement> to <statement>
+    private static String parseLoop() throws IOException {
         String quantifier = TextReader.nextToken();
         if (! Objects.equals(quantifier, FormatsConsts.ALL_SATISFY) && ! Objects.equals(quantifier, FormatsConsts.ANY_SATISFY)) {
             throw new TokenInvalidException(quantifier, List.of(FormatsConsts.ALL_SATISFY, FormatsConsts.ANY_SATISFY));
@@ -202,7 +202,6 @@ public final class RuleTextParser {
         } else {
             throw new TokenInvalidException(nextToken, List.of(FormatsConsts.RANGE_SIGNAL, FormatsConsts.RANGE_BEGIN_SIGNAL));
         }
-
     }
 
     /**
@@ -210,7 +209,7 @@ public final class RuleTextParser {
      * @param preReadToken if there is a token pre-read, {@value NONE_PRE_TOKEN} if not
      * @return json format element
      */
-    static String parseElement(String preReadToken) throws IOException {
+    private static String parseElement(String preReadToken) throws IOException {
         String element;
         if (! Objects.equals(preReadToken, NONE_PRE_TOKEN)) {
             element = preReadToken;
@@ -226,7 +225,7 @@ public final class RuleTextParser {
         } else {
             TextReader.rollBack(preToken);
         }
-        if (isNumeric(element) || Objects.equals(element, "true") || Objects.equals(element, "false")) {
+        if (isNumeric(element) || Objects.equals(element, TRUE) || Objects.equals(element, FALSE)) {
             return element;
         }
         return String.format("\"%s\"", element);

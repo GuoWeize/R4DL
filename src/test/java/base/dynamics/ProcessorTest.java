@@ -12,13 +12,12 @@ import util.PathConsts;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Set;
 
 class ProcessorTest {
 
     @BeforeEach
     void setUp() {
-        Compiler.compileLoad();
+        Compiler.run();
         Processor.initialization();
     }
 
@@ -48,7 +47,7 @@ class ProcessorTest {
             e.printStackTrace();
         }
 
-        Processor.judgeRules();
+        Processor.run();
 
     }
 }

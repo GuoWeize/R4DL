@@ -1,13 +1,12 @@
 import base.type.BaseEntity;
 import base.type.primitive.*;
 import base.type.collection.*;
-import java.util.stream.IntStream;
 
 /**
  * Auto-generated Java file: _rule_.java
  *
  * @author /Users/gwz/Desktop/Code/R4DL/src/main/resources/definitionFile/rule.json
- * @date 2021/05/07 16:42:52
+ * @date 2021/05/10 20:10:34
  */
 public final class _rule_ {
 

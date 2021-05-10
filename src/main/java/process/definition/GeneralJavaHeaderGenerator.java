@@ -9,6 +9,16 @@ import java.util.Date;
  */
 public final class GeneralJavaHeaderGenerator {
 
+    /**
+     * Generate Java file imports.
+     */
+    static String generateImports() {
+        return "import base.type.BaseEntity;\nimport base.type.primitive.*;\nimport base.type.collection.*;\n\n";
+    }
+
+    /**
+     * Generate Java file Javadoc.
+     */
     static String generateJavadoc(String fileName, String referredFile) {
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");

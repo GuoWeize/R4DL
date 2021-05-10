@@ -6,7 +6,6 @@ import base.type.primitive.IntEntity;
 import exceptions.TypeInvalidException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
@@ -18,6 +17,7 @@ import java.util.stream.Collectors;
  * {@code allMatch}, {@code anyMatch}, {@code contains}, {@code include}, {@code add}, {@code get}.
  *
  * @author Guo Weize
+ * @date 2021/02/01
  */
 public final class ListEntity<E extends BaseEntity> extends BaseCollectionEntity {
 
@@ -27,18 +27,12 @@ public final class ListEntity<E extends BaseEntity> extends BaseCollectionEntity
     /** Storage data structure of ListEntity */
     private final List<E> entities = new ArrayList<>();
 
+    public ListEntity() {}
+
     public ListEntity(String type, List<E> entities){
         this.type = type;
         this.entities.addAll(entities);
     }
-
-    @SafeVarargs
-    public ListEntity(String type, E... entities) {
-        this.type = type;
-        this.entities.addAll(Arrays.asList(entities));
-    }
-
-    public ListEntity() {}
 
     /**
      * Get entity at the specific index
@@ -47,7 +41,7 @@ public final class ListEntity<E extends BaseEntity> extends BaseCollectionEntity
      * @throws IndexOutOfBoundsException if the index is out of range
      */
     public E get(BaseEntity index) {
-        checkType(index.getType(), "integer");
+        checkMatched(index.getType(), "integer");
         return entities.get(((IntEntity)index).getValue());
     }
 
@@ -60,7 +54,7 @@ public final class ListEntity<E extends BaseEntity> extends BaseCollectionEntity
         if (Objects.equals(type, TYPE_UNDEFINED)) {
             type = entity.getType();
         }
-        checkType(entity.getType(), type);
+        checkMatched(entity.getType(), type);
         entities.add(entity);
     }
 
@@ -99,7 +93,7 @@ public final class ListEntity<E extends BaseEntity> extends BaseCollectionEntity
      * @throws TypeInvalidException if entity has illegal type.
      */
     public BoolEntity contains(BaseEntity entity) {
-        checkType(entity.getType(), type);
+        checkMatched(entity.getType(), type);
         return anyMatch(entity::equal);
     }
 

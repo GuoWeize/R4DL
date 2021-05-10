@@ -5,15 +5,13 @@ import base.type.primitive.StringEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Set;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class BuilderTest {
 
     @BeforeEach
     void setUp() {
-        Compiler.compileLoad();
+        Compiler.run();
     }
 
     @Test

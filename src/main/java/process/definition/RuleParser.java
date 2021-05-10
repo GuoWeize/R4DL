@@ -38,7 +38,7 @@ public final class RuleParser extends StdDeserializer<Object> {
     public Object deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
             throws IOException {
         JsonNode root = jsonParser.getCodec().readTree(jsonParser);
-        String contents = generateImports()
+        String contents = GeneralJavaHeaderGenerator.generateImports()
             + GeneralJavaHeaderGenerator.generateJavadoc(PathConsts.RULE_JAVA_NAME, PathConsts.RULE_JSON_FILE)
             + String.format("public final class %s {\n\n", PathConsts.RULE_JAVA_CLASS)
             + parseRules(root)
@@ -46,11 +46,6 @@ public final class RuleParser extends StdDeserializer<Object> {
         addToJavaFile(contents);
         log.info("Finish parse rule JSON file: " + PathConsts.RULE_JSON_FILE);
         return null;
-    }
-
-    private String generateImports() {
-        return "import base.type.BaseEntity;\nimport base.type.primitive.*;\nimport base.type.collection.*;\n"
-            + "import java.util.stream.IntStream;\n\n";
     }
 
     private void addToJavaFile(String contents){

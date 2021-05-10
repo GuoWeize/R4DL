@@ -6,7 +6,7 @@ import base.type.collection.*;
  * Auto-generated Java file: entity.java
  *
  * @author /Users/gwz/Desktop/Code/R4DL/src/main/resources/definitionFile/model.json
- * @date 2021/05/07 16:42:52
+ * @date 2021/05/10 20:10:34
  */
 public final class entity extends BaseEntity {
     public BoolEntity isAll;

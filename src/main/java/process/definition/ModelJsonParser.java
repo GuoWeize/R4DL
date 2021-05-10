@@ -80,7 +80,7 @@ public final class ModelJsonParser extends StdDeserializer<Object> {
     }
 
     private void generateJavaFile(String name, Map<String, String> fields2type, boolean isRequirement) {
-        String content = generateImports()
+        String content = GeneralJavaHeaderGenerator.generateImports()
             + GeneralJavaHeaderGenerator.generateJavadoc(name + ".java", PathConsts.MODEL_JSON_FILE)
             + generateFileHead(name)
             + generateFields(fields2type)
@@ -102,10 +102,6 @@ public final class ModelJsonParser extends StdDeserializer<Object> {
         } catch (IOException e) {
             log.error("Can not write file: " + path, e);
         }
-    }
-
-    private String generateImports() {
-        return "import base.type.BaseEntity;\nimport base.type.primitive.*;\nimport base.type.collection.*;\n\n";
     }
 
     private String generateFileHead(String name) {
@@ -153,6 +149,6 @@ public final class ModelJsonParser extends StdDeserializer<Object> {
     }
 
     private String generateFileEnd() {
-        return "}";
+        return "}\n";
     }
 }

@@ -37,9 +37,9 @@ public class Demo {
     }
 
     public static void judge() {
-        Compiler.compileLoad();
+        Compiler.run();
         parseJsonFile(PathConsts.REQUIREMENT_FILE, new EntityParser());
-        Processor.judgeRules();
+        Processor.run();
     }
 
     private static void clearJavaFiles() {

@@ -22,55 +22,63 @@ public abstract class BaseEntity {
      *     <li> ListEntity<E>: list[E] </li>
      *     <li> SetEntity<E>: set[E] </li>
      *     <li> MapEntity<E>: map[K, V] </li>
-     *
      * @return a string of this entity's type
      */
     public abstract String getType();
 
     /**
      * Primitive types include: BoolEntity, FloatEntity, IntEntity, StringEntity.
-     * @return whether this entity is primitive type
+     * @return whether this entity is a primitive type
      */
     public abstract boolean isPrimitive();
 
     /**
      * Only entities of requirement types can be processed by next steps.
-     * @return whether this entity is requirement type
+     * @return whether this entity is a requirement type
      */
     public abstract boolean isRequirement();
 
     /**
-     * Whether this entity is equal to another entity.<p>
-     * That means all fields of two entities are equal.
+     * An Interface of no-static method of {@code equal}.
      * @param entity another entity
      * @return A "true" BoolEntity if two entities are equal, "false" BoolEntity otherwise
      */
     public abstract BoolEntity equal(BaseEntity entity);
 
     /**
+     * Check whether entity1 is equal to entity2, which means all fields of two entities are equal.<br>
+     * If there is null, return a "false" BoolEntity.
+     * @param entity1 an entity that extends {@link BaseEntity}
+     * @param entity2 another entity that extends {@link BaseEntity}
+     * @return A "true" BoolEntity if two entities are equal, "false" BoolEntity otherwise
+     */
+    public static BoolEntity equal(BaseEntity entity1, BaseEntity entity2) {
+        if (entity1 == null || entity2 == null) {
+            return BoolEntity.FALSE;
+        }
+        return entity1.equal(entity2);
+    }
+
+    /**
      * Check whether the real type matched the expectation.
      * @throws TypeInvalidException if not matched.
      */
-    protected static void checkType(String real, String expectation) {
+    protected static void checkMatched(String real, String expectation) {
         if (! Objects.equals(real, expectation)) {
             throw new TypeInvalidException(real, expectation);
         }
     }
 
     @Override
-    public int hashCode() {
+    public final int hashCode() {
         return super.hashCode();
     }
 
     @Override
-    public boolean equals(Object obj) {
-        return (this.equal((BaseEntity)obj)).getValue();
-    }
-
-    public static BoolEntity equal(BaseEntity entity1, BaseEntity entity2) {
-        if (entity1 == null || entity2 == null) {
-            return BoolEntity.FALSE;
+    public final boolean equals(Object obj) {
+        if (BaseEntity.class.isAssignableFrom(obj.getClass())) {
+            return (this.equal((BaseEntity)obj)).getValue();
         }
-        return entity1.equal(entity2);
+        return false;
     }
 }

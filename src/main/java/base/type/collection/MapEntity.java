@@ -17,6 +17,7 @@ import java.util.function.Function;
  * {@code include}, {@code add}, {@code get}.
  *
  * @author Guo Weize
+ * @date 2021/02/01
  */
 public final class MapEntity<K extends BaseEntity, V extends BaseEntity> extends BaseCollectionEntity {
 
@@ -43,8 +44,8 @@ public final class MapEntity<K extends BaseEntity, V extends BaseEntity> extends
             keyType = key.getType();
             valueType = value.getType();
         } else {
-            checkType(key.getType(), keyType);
-            checkType(value.getType(), valueType);
+            checkMatched(key.getType(), keyType);
+            checkMatched(value.getType(), valueType);
         }
         entities.put(key, value);
     }
@@ -99,7 +100,7 @@ public final class MapEntity<K extends BaseEntity, V extends BaseEntity> extends
      * @throws TypeInvalidException if key has illegal type.
      */
     public BoolEntity containsKey(BaseEntity key) {
-        checkType(key.getType(), keyType);
+        checkMatched(key.getType(), keyType);
         return anyMatch(key::equal);
     }
 
@@ -110,7 +111,7 @@ public final class MapEntity<K extends BaseEntity, V extends BaseEntity> extends
      * @throws TypeInvalidException if value has illegal type.
      */
     public BoolEntity containsValue(BaseEntity value) {
-        checkType(value.getType(), valueType);
+        checkMatched(value.getType(), valueType);
         for (V v: entities.values()) {
             if (v.equal(value).getValue()) {
                 return BoolEntity.TRUE;
@@ -127,8 +128,8 @@ public final class MapEntity<K extends BaseEntity, V extends BaseEntity> extends
      * @throws TypeInvalidException if key or value has illegal type.
      */
     public BoolEntity contains(BaseEntity key, BaseEntity value) {
-        checkType(key.getType(), keyType);
-        checkType(value.getType(), valueType);
+        checkMatched(key.getType(), keyType);
+        checkMatched(value.getType(), valueType);
         if (! containsKey(key).getValue()) {
             return BoolEntity.FALSE;
         }

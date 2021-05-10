@@ -11,14 +11,13 @@ import util.PathConsts;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Set;
 
 class EntityParserTest {
     private String json;
 
     @BeforeEach
     void setUp() {
-        Compiler.compileLoad();
+        Compiler.run();
     }
 
     @Test

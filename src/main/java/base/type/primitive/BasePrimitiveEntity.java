@@ -17,24 +17,29 @@ public abstract class BasePrimitiveEntity extends BaseEntity {
     protected static final String INTEGER = "integer";
     protected static final String FLOAT = "float";
 
-    @Override
-    public final boolean isPrimitive() {
-        return true;
-    }
-
-    @Override
-    public final boolean isRequirement() {
-        return false;
-    }
-
+    /**
+     * Check whether the entity is an IntEntity.
+     * @param entity to check
+     * @return a "true" BoolEntity if the entity is an IntEntity, otherwise "false" BoolEntity.
+     */
     protected static boolean isInteger(BaseEntity entity) {
         return Objects.equals(entity.getType(), INTEGER);
     }
 
+    /**
+     * Check whether the entity is a FloatEntity.
+     * @param entity to check
+     * @return a "true" BoolEntity if the entity is an FloatEntity, otherwise "false" BoolEntity.
+     */
     protected static boolean isFloat(BaseEntity entity) {
         return Objects.equals(entity.getType(), FLOAT);
     }
 
+    /**
+     * Get the number type after calculation.
+     * @param entities to get
+     * @return if there is a FloatEntity, the result is FloatEntity, otherwise IntEntity.
+     */
     private static String calculateType(BaseEntity... entities) {
         for (BaseEntity entity: entities) {
             if (isFloat(entity)) {
@@ -47,10 +52,20 @@ public abstract class BasePrimitiveEntity extends BaseEntity {
         return INTEGER;
     }
 
+    /**
+     * Get the value of given number.
+     * @param num to get
+     * @return the value in double.
+     */
     private static double getNumValue(BaseEntity num) {
         return isFloat(num) ? ((FloatEntity)num).getValue() : ((IntEntity)num).getValue();
     }
 
+    /**
+     * Calculate the negative number of given number.
+     * @param entity to calculate
+     * @return the negative number.
+     */
     public static BaseEntity negative(BaseEntity entity) {
         if (isInteger(entity)) {
             return IntEntity.valueOf(- ((IntEntity)entity).getValue());
@@ -61,6 +76,13 @@ public abstract class BasePrimitiveEntity extends BaseEntity {
         throw new TypeInvalidException(entity.getType(), List.of(INTEGER, FLOAT));
     }
 
+    /**
+     * Calculate basic operations of two numbers, including addition, subtraction, multiplication, division.
+     * @param entity1 an entity of IntEntity or FloatEntity
+     * @param entity2 an entity of IntEntity or FloatEntity
+     * @param operator to be executed: + - * /
+     * @return the result.
+     */
     public static BaseEntity calculate(BaseEntity entity1, BaseEntity entity2, String operator) {
         String type = calculateType(entity1, entity2);
         if (Objects.equals(type, INTEGER)) {
@@ -96,6 +118,11 @@ public abstract class BasePrimitiveEntity extends BaseEntity {
         }
     }
 
+    /**
+     * Summation of a string of entities.
+     * @param entities to be summed
+     * @return the result.
+     */
     public static BaseEntity summation(BaseEntity... entities) {
         String type = calculateType(entities);
         if (Objects.equals(type, INTEGER)) {
@@ -113,7 +140,12 @@ public abstract class BasePrimitiveEntity extends BaseEntity {
         }
     }
 
-    public static BaseEntity multiplication(BaseEntity... entities) {
+    /**
+     * Product of a string of entities.
+     * @param entities to be summed
+     * @return the result.
+     */
+    public static BaseEntity product(BaseEntity... entities) {
         String type = calculateType(entities);
         if (Objects.equals(type, INTEGER)) {
             int result = 1;
@@ -130,6 +162,13 @@ public abstract class BasePrimitiveEntity extends BaseEntity {
         }
     }
 
+    /**
+     * Compare two numbers, including greater, less, not less, not greater.
+     * @param entity1 an entity of IntEntity or FloatEntity
+     * @param entity2 an entity of IntEntity or FloatEntity
+     * @param operator to be executed: > < >= <=
+     * @return the result.
+     */
     public static BoolEntity compare(BaseEntity entity1, BaseEntity entity2, String operator) {
         calculateType(entity1, entity2);
         double number1 = getNumValue(entity1);
@@ -147,4 +186,15 @@ public abstract class BasePrimitiveEntity extends BaseEntity {
                 throw new IllegalArgumentException();
         }
     }
+
+    @Override
+    public final boolean isPrimitive() {
+        return true;
+    }
+
+    @Override
+    public final boolean isRequirement() {
+        return false;
+    }
+
 }

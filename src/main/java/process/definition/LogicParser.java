@@ -142,7 +142,7 @@ public final class LogicParser {
         if (arguments.size() == 2) {
             return String.format("BasePrimitiveEntity.calculate(%s, %s, \"*\")", arguments.get(0), arguments.get(1));
         }
-        return String.format("BasePrimitiveEntity.multiplication(%s)", String.join(ARGS_DELIMITER, arguments));
+        return String.format("BasePrimitiveEntity.product(%s)", String.join(ARGS_DELIMITER, arguments));
     }
 
     private static String divide(List<String> arguments) {

@@ -5,7 +5,6 @@ import base.type.primitive.BoolEntity;
 import base.type.primitive.IntEntity;
 import exceptions.TypeInvalidException;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -18,6 +17,7 @@ import java.util.stream.Collectors;
  * {@code allMatch}, {@code anyMatch}, {@code contains}, {@code include}, {@code add}.
  *
  * @author Guo Weize
+ * @date 2021/02/01
  */
 public final class SetEntity<E extends BaseEntity> extends BaseCollectionEntity {
 
@@ -34,12 +34,6 @@ public final class SetEntity<E extends BaseEntity> extends BaseCollectionEntity 
         this.entities.addAll(entities);
     }
 
-    @SafeVarargs
-    public SetEntity(String type, E... entities) {
-        this.type = type;
-        this.entities.addAll(Arrays.asList(entities));
-    }
-
     /**
      * Add an entity to this set, change inner stored data.
      * @param entity to be added to this set.
@@ -49,7 +43,7 @@ public final class SetEntity<E extends BaseEntity> extends BaseCollectionEntity 
         if (Objects.equals(type, TYPE_UNDEFINED)) {
             type = entity.getType();
         }
-        checkType(entity.getType(), type);
+        checkMatched(entity.getType(), type);
         entities.add(entity);
     }
 
@@ -88,7 +82,7 @@ public final class SetEntity<E extends BaseEntity> extends BaseCollectionEntity 
      * @throws TypeInvalidException if entity has illegal type.
      */
     public BoolEntity contains(BaseEntity entity) {
-        checkType(entity.getType(), type);
+        checkMatched(entity.getType(), type);
         return anyMatch(entity::equal);
     }
 

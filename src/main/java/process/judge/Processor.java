@@ -43,8 +43,14 @@ public final class Processor {
         RULE_2_LISTARG.putIfAbsent(name, argument);
     }
 
-    public static void judgeRules() {
-        for (Method rule: Compiler.ruleClass.getMethods()) {
+    public static void run() {
+        initialArgs();
+        judgeRules();
+        outputResult();
+    }
+
+    private static void initialArgs() {
+        for (Method rule: Compiler.getRuleClass().getMethods()) {
             if (! BLACKLIST.contains(rule.getName())) {
                 List<String> args = Arrays.stream(rule.getParameterTypes())
                     .map(Class::getName)
@@ -52,7 +58,9 @@ public final class Processor {
                 METHOD_2_ARGUMENTS.put(rule, args);
             }
         }
+    }
 
+    private static void judgeRules() {
         log.info("Judgement started.");
         for (var entry: METHOD_2_ARGUMENTS.entrySet()) {
             Set<List<BaseEntity>> args;
@@ -64,8 +72,30 @@ public final class Processor {
             }
             judgeRule(entry.getKey(), args);
         }
-        log.warn("Judgement finished.");
-        log.warn(RELATIONSHIPS.toString());
+        log.info("Judgement finished.");
+    }
+
+    private static void outputResult() {
+        int types = RELATIONSHIPS.size();
+        int num = 0;
+        for (var entry: RELATIONSHIPS.entrySet()) {
+            num += entry.getValue().size();
+        }
+        log.warn(String.format("%s relationships in %s types are detected.", num, types));
+        for (var entry: RELATIONSHIPS.entrySet()) {
+            String relationships = entry.getValue().stream()
+                .map(Processor::reqs2ID)
+                .collect(Collectors.joining(", "));
+            log.warn(String.format("%s: {%s}", entry.getKey(), relationships));
+        }
+    }
+
+    private static String reqs2ID(List<BaseEntity> reqs) {
+        return "["
+            + reqs.stream()
+            .map(req -> req.getType() + "@" + EntityParser.getID(req))
+            .collect(Collectors.joining(", "))
+            + "]";
     }
 
     private static Set<List<BaseEntity>> distinct(Set<List<BaseEntity>> arguments) {

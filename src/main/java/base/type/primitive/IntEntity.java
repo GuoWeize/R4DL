@@ -29,8 +29,8 @@ public final class IntEntity extends BasePrimitiveEntity {
     }
 
     public static Stream<IntEntity> range(BaseEntity startInclusive, BaseEntity endExclusive) {
-        checkType(startInclusive.getType(), "integer");
-        checkType(endExclusive.getType(), "integer");
+        checkMatched(startInclusive.getType(), "integer");
+        checkMatched(endExclusive.getType(), "integer");
         return IntStream.range(((IntEntity)startInclusive).value, ((IntEntity)endExclusive).value).mapToObj(IntEntity::new);
     }
 
