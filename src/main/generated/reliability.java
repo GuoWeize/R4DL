@@ -6,7 +6,7 @@ import base.type.collection.*;
  * Auto-generated Java file: reliability.java
  *
  * @author /Users/gwz/Desktop/Code/R4DL/src/main/resources/definitionFile/model.json
- * @date 2021/05/10 20:10:34
+ * @date 2021/05/11 19:35:27
  */
 public final class reliability extends BaseEntity {
     public StringEntity metrics;

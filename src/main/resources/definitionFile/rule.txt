@@ -76,7 +76,7 @@ function input_output_condition
     )
 }
 
-rule operation_inconsistency
+revrule operation_inconsistency
 (functional, functional) -> boolean {
     and (
         {$1$.event == $2$.event},
@@ -84,7 +84,7 @@ rule operation_inconsistency
     )
 }
 
-rule restriction_inconsistency
+revrule restriction_inconsistency
 (functional, functional) -> boolean {
     and (
         {$1$.event == $2$.event},

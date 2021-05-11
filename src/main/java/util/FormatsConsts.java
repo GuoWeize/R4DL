@@ -38,6 +38,7 @@ public final class FormatsConsts {
     public static final String DEFINE_ENTITY = FORMATS.get("define_entity");
     public static final String DEFINE_REQUIREMENT = FORMATS.get("define_requirement");
     public static final String DEFINE_FUNCTION = FORMATS.get("define_function");
+    public static final String DEFINE_REVERSIBLE = FORMATS.get("define_reversible");
     public static final String DEFINE_RULE = FORMATS.get("define_rule");
 
     /* Symbols */

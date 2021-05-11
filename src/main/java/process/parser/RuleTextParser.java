@@ -56,11 +56,17 @@ public final class RuleTextParser {
     }
 
     private static void parseRule(String type) throws IOException {
-        if (! Objects.equals(type, FormatsConsts.DEFINE_FUNCTION) && ! Objects.equals(type, FormatsConsts.DEFINE_RULE)) {
-            throw new TokenInvalidException(type, List.of(FormatsConsts.DEFINE_FUNCTION, FormatsConsts.DEFINE_RULE));
+        List<String> defSymbols = List.of(FormatsConsts.DEFINE_FUNCTION, FormatsConsts.DEFINE_RULE,
+            FormatsConsts.DEFINE_REVERSIBLE);
+        if (! defSymbols.contains(type)) {
+            throw new TokenInvalidException(type, defSymbols);
         }
         String name = TextReader.nextToken();
         FormatsConsts.CUSTOMIZED_OPERATORS.add(name);
+        if (Objects.equals(type, FormatsConsts.DEFINE_REVERSIBLE)) {
+            type = FormatsConsts.DEFINE_RULE;
+            Processor.addReversibleRule(name);
+        }
         String head = String.format("\"%s\": {\"%s\": \"%s\", ", name, FormatsConsts.RULE_TYPE_FIELD, type);
         String arguments = String.format("\"%s\": %s, ", FormatsConsts.RULE_ARGUMENT_FIELD, parseArguments());
         if (Objects.equals(type, FormatsConsts.DEFINE_RULE)) {

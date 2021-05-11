@@ -10,13 +10,7 @@ import process.requirement.EntityParser;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -27,7 +21,10 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 public final class Processor {
-    private static final Map<String, String> RULE_2_LISTARG = new HashMap<>();
+
+    private static final int REVERSIBLE = 2;
+    private static final Set<String> reversibleRules = new HashSet<>();
+    private static final Map<String, String> RULE_2_LIST_ARG = new HashMap<>();
     private static final Map<Method, List<String>> METHOD_2_ARGUMENTS = new HashMap<>();
     private static final Set<String> BLACKLIST = Set.of(
         "wait", "equals", "toString", "hashCode", "getClass", "notify", "notifyAll"
@@ -35,12 +32,17 @@ public final class Processor {
     private static final Map<String, List<List<BaseEntity>>> RELATIONSHIPS = new HashMap<>();
 
     public static void initialization() {
-        RULE_2_LISTARG.clear();
+        RULE_2_LIST_ARG.clear();
         METHOD_2_ARGUMENTS.clear();
+        reversibleRules.clear();
+    }
+
+    public static void addReversibleRule(String name) {
+        reversibleRules.add(name);
     }
 
     public static void addListArg(String name, String argument) {
-        RULE_2_LISTARG.putIfAbsent(name, argument);
+        RULE_2_LIST_ARG.putIfAbsent(name, argument);
     }
 
     public static void run() {
@@ -66,7 +68,9 @@ public final class Processor {
             Set<List<BaseEntity>> args;
             if (entry.getValue().contains("base.type.collection.ListEntity")) {
                 String ruleName = entry.getKey().getName();
-                args = getListArgs(RULE_2_LISTARG.get(ruleName));
+                args = getListArgs(RULE_2_LIST_ARG.get(ruleName));
+            } else if (reversibleRules.contains(entry.getKey().getName())) {
+                args = getReversibleArgs(entry.getValue());
             } else {
                 args = getArgs(entry.getValue());
             }
@@ -123,11 +127,33 @@ public final class Processor {
     }
 
     private static Set<List<BaseEntity>> getArgs(List<String> argsTypes) {
-        List<Set<BaseEntity>> requirements = new ArrayList<>();
+        List<Set<BaseEntity>> results = new ArrayList<>();
         for (String type: argsTypes) {
-            requirements.add(EntityParser.ENTITIES.get(type));
+            results.add(EntityParser.ENTITIES.get(type));
         }
-        return distinct(Sets.cartesianProduct(requirements));
+        return distinct(Sets.cartesianProduct(results));
+    }
+
+    private static Set<List<BaseEntity>> getReversibleArgs(List<String> argsTypes) {
+        Set<List<BaseEntity>> results = new HashSet<>();
+        if (argsTypes.size() != REVERSIBLE) {
+            log.error(String.format("Can not parse reversible arguments of %s.", argsTypes.size()));
+            throw new IllegalArgumentException();
+        }
+        if (! Objects.equals(argsTypes.get(0), argsTypes.get(1))) {
+            log.error("Can not parse reversible arguments of different types.");
+            throw new IllegalArgumentException();
+        }
+        List<BaseEntity> requirements = new ArrayList<>(EntityParser.ENTITIES.get(argsTypes.get(0)));
+        int size = requirements.size();
+        for (int i = 0; i < size - 1; i++) {
+            BaseEntity req1 = requirements.get(i);
+            for (int j = i + 1; j < size; j++) {
+                BaseEntity req2 = requirements.get(i);
+                results.add(List.of(req1, req2));
+            }
+        }
+        return results;
     }
 
     private static void judgeRule(Method rule, Set<List<BaseEntity>> requirements) {
