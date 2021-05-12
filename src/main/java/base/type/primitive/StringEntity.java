@@ -22,6 +22,10 @@ public final class StringEntity extends BasePrimitiveEntity {
         return new StringEntity(value);
     }
 
+    public IntEntity size() {
+        return IntEntity.valueOf(value.length());
+    }
+
     public BoolEntity include(StringEntity string) {
         return this.value.contains(string.value) ? BoolEntity.TRUE: BoolEntity.FALSE;
     }
