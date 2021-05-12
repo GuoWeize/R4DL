@@ -37,7 +37,9 @@ public final class LogicParser {
         Map.entry(FormatsConsts.COLLECTION_GET, LogicParser::get),
         Map.entry(FormatsConsts.COLLECTION_INCLUDE, LogicParser::include),
         Map.entry(FormatsConsts.ALL_SATISFY, LogicParser::all),
-        Map.entry(FormatsConsts.ANY_SATISFY, LogicParser::any)
+        Map.entry(FormatsConsts.ANY_SATISFY, LogicParser::any),
+        Map.entry(FormatsConsts.STRING_FIND, LogicParser::find),
+        Map.entry(FormatsConsts.STRING_SUBSTRING, LogicParser::substring)
     );
 
     public static String parse(JsonNode node) {
@@ -181,6 +183,16 @@ public final class LogicParser {
         }
         return String.format("BoolEntity.valueOf(IntEntity.range(%s, %s).anyMatch(%s -> ((BoolEntity)%s).getValue()))",
             arguments.get(1), arguments.get(2), arguments.get(0), arguments.get(3));
+    }
+
+    private static String find(List<String> arguments) {
+        checkArgsNumberAmount(arguments, i -> i == 3);
+        return String.format("%s.find(%s, %s)", arguments.get(0), arguments.get(2), arguments.get(1));
+    }
+
+    private static String substring(List<String> arguments) {
+        checkArgsNumberAmount(arguments, i -> i == 3);
+        return String.format("%s.substring(%s, %s)", arguments.get(0), arguments.get(1), arguments.get(2));
     }
 
 }

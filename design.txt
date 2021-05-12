@@ -30,6 +30,7 @@ and, or, for, in, all, any, include, size_of, merge, from, to
 规则定义:
 <function definition> := function <name> <parameter signatures> -> <return type> <function body>
 <rule definition> := rule <name> <parameter signatures> -> boolean <function body>
+<reversible rule definition> := revrule <name> '(' <simple signature> , <simple signature> ')' -> boolean <function body>
 <name> := <word>
 <parameter signatures> := '(' <compound signature> ')'
 <simple signature> := <type signature> {, <type signature>}
@@ -41,6 +42,8 @@ and, or, for, in, all, any, include, size_of, merge, from, to
              | <binary operator statement>
              | <multi-operator statement>
              | <loop statement>
+             | <substring statement>
+             | <find string statement>
              | <statement> '[' <statement> ']'
              | <statement>.<word>
              | '%' <statement> '%'
@@ -55,6 +58,7 @@ and, or, for, in, all, any, include, size_of, merge, from, to
                    | <comparison operator>
                    | include
                    | in
+                   | find
 <calculation binary operator> := + ｜ - ｜ * ｜ \
 <logic binary operator> := and | or
 <comparison operator> := < | > | <= | >= | == | !=
@@ -64,6 +68,9 @@ and, or, for, in, all, any, include, size_of, merge, from, to
 <customized operator> := <word>
 <loop statement> := for (all | any) <statement> <range> '(' <statement> ')'
 <range> := in <statement> | from <statement> to <statement>
+
+<substring statement> := substring '(' <S>, <begin>, <end> ')'
+<find string statement> := find '(' <S>, <from>, <s> ')'
 
 
 /* - - - - - - - - - - - - - 需求元组 JSON 格式 - - - - - - - - - - - - - */

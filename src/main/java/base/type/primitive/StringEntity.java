@@ -1,6 +1,7 @@
 package base.type.primitive;
 
 import base.type.BaseEntity;
+import base.type.collection.ListEntity;
 
 import java.util.Objects;
 
@@ -21,12 +22,16 @@ public final class StringEntity extends BasePrimitiveEntity {
         return new StringEntity(value);
     }
 
-    public static StringEntity append(StringEntity... arguments) {
-        StringBuilder sb = new StringBuilder();
-        for (StringEntity substring: arguments) {
-            sb.append(substring.value);
-        }
-        return StringEntity.valueOf(sb.toString());
+    public BoolEntity include(StringEntity string) {
+        return this.value.contains(string.value) ? BoolEntity.TRUE: BoolEntity.FALSE;
+    }
+
+    public IntEntity find(StringEntity string, IntEntity fromIndex) {
+        return IntEntity.valueOf(this.value.indexOf(string.value, fromIndex.getValue()));
+    }
+
+    public StringEntity substring(IntEntity beginIndex, IntEntity endIndex) {
+        return new StringEntity(this.value.substring(beginIndex.getValue(), endIndex.getValue()));
     }
 
     public String getValue() {
@@ -35,7 +40,7 @@ public final class StringEntity extends BasePrimitiveEntity {
 
     @Override
     public String getType() {
-        return "string";
+        return STRING;
     }
 
     @Override

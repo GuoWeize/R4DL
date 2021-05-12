@@ -121,6 +121,11 @@ public final class FormatsConsts {
     public static final String RANGE_BEGIN_SIGNAL = FORMATS.get("range_begin_signal");
     public static final String RANGE_END_SIGNAL = FORMATS.get("range_end_signal");
 
+    /* String operators */
+
+    public static final String STRING_FIND = FORMATS.get("string_find");
+    public static final String STRING_SUBSTRING = FORMATS.get("string_substring");
+
     public static final Set<String> UNARY_OPERATORS = Set.of(
         LOGICAL_NOT,
         COLLECTION_SIZE_OF,
@@ -147,7 +152,9 @@ public final class FormatsConsts {
         CALCULATE_MULTIPLICATION,
         LOGICAL_AND,
         LOGICAL_OR,
-        COLLECTION_MERGE
+        COLLECTION_MERGE,
+        STRING_FIND,
+        STRING_SUBSTRING
     );
     public static final Set<String> CUSTOMIZED_OPERATORS = new HashSet<>(32);
 
