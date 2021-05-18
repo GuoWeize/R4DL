@@ -1,4 +1,5 @@
-#RUReReAD - Rules-based User-defined Requirements' Relationships Automatic Detector
+RUReReAD - Rules-based User-defined Requirements' Relationships Automatic Detector
+--------------------------
 
 ### Author: Guo Weize
 
