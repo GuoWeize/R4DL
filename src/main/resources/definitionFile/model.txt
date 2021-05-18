@@ -43,3 +43,8 @@ requirement reliability {
     comp2 integer;
     probability integer;
 }
+
+requirement Interface {
+    caller functional;
+    callee functional;
+}

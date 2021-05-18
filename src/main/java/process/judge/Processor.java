@@ -129,7 +129,7 @@ public final class Processor {
     private static Set<List<BaseEntity>> getArgs(List<String> argsTypes) {
         List<Set<BaseEntity>> results = new ArrayList<>();
         for (String type: argsTypes) {
-            results.add(EntityParser.ENTITIES.get(type));
+            results.add(EntityParser.ENTITIES.getOrDefault(type, new HashSet<>()));
         }
         return distinct(Sets.cartesianProduct(results));
     }

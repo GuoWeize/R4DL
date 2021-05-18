@@ -6,7 +6,7 @@ import base.type.collection.*;
  * Auto-generated Java file: _rule_.java
  *
  * @author /Users/gwz/Desktop/Code/R4DL/src/main/resources/definitionFile/rule.json
- * @date 2021/05/11 19:35:27
+ * @date 2021/05/13 13:13:48
  */
 public final class _rule_ {
 
@@ -155,6 +155,14 @@ public final class _rule_ {
      */
     public static BoolEntity input_output_interlock(ListEntity<functional> $1$) {
         return BoolEntity.and(BasePrimitiveEntity.compare($1$.size(), IntEntity.valueOf(1), ">"), input_output_condition($1$.get(BasePrimitiveEntity.calculate($1$.size(), IntEntity.valueOf(1), "-")), $1$.get(IntEntity.valueOf(0))), BoolEntity.valueOf(IntEntity.range(IntEntity.valueOf(0), BasePrimitiveEntity.calculate($1$.size(), IntEntity.valueOf(2), "-")).allMatch(index -> ((BoolEntity)input_output_condition($1$.get(index), $1$.get(BasePrimitiveEntity.calculate(index, IntEntity.valueOf(1), "+")))).getValue())));
+    }
+
+    /**
+     * calling
+     * @return BoolEntity
+     */
+    public static BoolEntity calling(functional $1$, Interface $2$) {
+        return BaseEntity.equal($2$.caller, $1$);
     }
 
 }
