@@ -52,24 +52,25 @@ The `<element_type>` is a type signature, which has 3 conditions:
           ... ...
       }
       ```
-Notice: user-defined types should be defined before, then can be used.
+**Notice**: user-defined types should be defined before, then can be used.
 
-The EBNF formats are:<br>
-```text
-<requirement definitions> := { { <requirement definition> } { <type definition> } }
-<requirement definition> := requirement <definition>
-<type definition> := type <definition>
-<definition> := <identifier> '{' <element definition> '}'
-<element definition> := { <element name> <element type>; }
-<field name> := <identifier>
-<field type> := <base type> | <collection type> | <user-defined type>
-<base type> := boolean | integer | float | string
-<collection type> := <list type> | <set type> | <map type>
-<list type> := list '<' <type signature> '>'
-<set type> := set '<' <type signature> '>'
-<map type> := map '<' <type signature>, <type signature> '>'
-<user-defined type> := <identifier>
-```
+The EBNF formats are:
+
+| Nonterminal Character        | Definition |
+|:----------------------------:|:----------:|
+| `<requirements_definitions>` | **{ {** `<requirement_definition>` **} {** `<type_definition>` **} }**
+| `<requirement_definition>`   | **requirement** `<definition>`
+| `<type_definition>`          | **type** `<definition>`
+| `<definition>`               | `<identifier>` **'{'** `<element_definition>` **'}'**
+| `<element_definition>`       | **{** `<element_name>` `<element_type>` **; }**
+| `<element_name>`             | `<identifier>`
+| `<element_type>`             | `<base_type>` **&#124;** `<collection_type>` **&#124;** `<user-defined_type>`
+| `<base_type>`                | **boolean &#124; integer &#124; float &#124; string**
+| `<collection_type>`          | `<list_type>` **&#124;** `<set_type>` **&#124;** `<map_type>`
+| `<list_type>`                | **list '&lt;'** `<type>` **'>'**
+| `<set_type>`                 | **set '&lt;'** `<type>` **'>'**
+| `<map_type>`                 | **map '&lt;'** `<type>` **,** `<type>` **'>'**
+| `<user-defined_type>`        | `<identifier>`
 
 ## How to write relationships recognition rules
 
@@ -114,7 +115,7 @@ An `<element>` has many conditions:
 
 #### unary operator statement
 The format is: `{ <unary_symbol> <element> }`, for example: `{-2}`, `{! boolean_value}`.<br>
-Notice: `{` and `}` can not be omitted.<br>
+**Notice**: `{` and `}` can not be omitted.<br>
 All unary operators are:
 
 | Operator         | Symbol  | Parameter Type   | Return Type       | Meaning                      |
@@ -125,7 +126,7 @@ All unary operators are:
 
 #### binary operator statement
 The format is: `{ <element> <binary_symbol> <element> }`, for example: `{3 + 2}`, `{true or false}`.<br>
-Notice: `{` and `}` can not be omitted.<br>
+**Notice**: `{` and `}` can not be omitted.<br>
 All binary operators are:
 
 | Operator              | Symbol  | Parameters Type      | Return Type                           | Meaning           |
@@ -165,7 +166,7 @@ The format is: `<function_name> (<element>, <element>, ...)`, like multi-para op
 The number of `<element>` depends on the definition of function.
 For example, `function_1(para1, para2)`.
 `<function_name>` is identifiers.<br>
-Notice: functions should be defined before, then can be used.
+**Notice**: functions should be defined before, then can be used.
 
 #### loop statement
 The loop format is: `for <quantifier> <loop_variable> <range> '(' <loop_statement> ')'`.
