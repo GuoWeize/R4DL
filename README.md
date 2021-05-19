@@ -9,10 +9,11 @@ RUReReAD can traversal all requirements to detect relationships automatically wi
 
 ## To start using RUReReAD
 
-User should use it by three steps:
- * Input definitions of requirements' models in file [model.txt](src/main/resources/definitionFile/model.txt) in [src/main/resources/definitionFile](src/main/resources/definitionFile). Specific syntax rules are shown below.
- * Input definitions of relationships recognition rules in file [rule.txt](src/main/resources/definitionFile/rule.txt) in [src/main/resources/definitionFile](src/main/resources/definitionFile). Specific syntax rules are shown below.
- * Run main function in file [src/main/java/process/Demo.java](src/main/java/process/Demo.java).
+User should use it by 4 steps:
+ * Input definitions of requirements' models in file [model.txt](src/main/resources/definitionFile/model.txt). Specific syntax rules are shown below.
+ * Input definitions of relationships recognition rules in file [rule.txt](src/main/resources/definitionFile/rule.txt). Specific syntax rules are shown below.
+ * Input requirements to be detected in file [requirement.json](src/main/resources/requirementFile/requirement.json).
+ * Run main function in file [Demo.java](src/main/java/process/Demo.java).
 
 ## To start writing definitions
 The syntax of language is familiar to other programming language, there can be any number of space or newline between tokens.
@@ -185,3 +186,46 @@ The string format has 2 conditions:
  * `find '(' <range>, <from_index>, <target> ')'`: the index of `<target>` in `<range>` from index `<from_index>`,
    where <range> and <target> are string type, and <from_index> is integer type.
    If not exists, return -1 instead.
+
+## How to write requirements
+Requirements and entities are written in JSON format, which should satisfy the definitions of their models.
+The basic format is: `[ <entity>, <entity>, ... ]`, in where `<entity>`s are seperated by `,` and has 3 conditions:
+ * basic element:
+   - boolean: JSON boolean value, `true` / `false`
+   - integer or float: JSON number value, like `3` or `2.15`
+   - string: JSON string: like `'hello'`
+ * collection type:
+   - list: `"-list-": [ <entity>, <entity>, ... ]`
+   - set: `"-set-": [ <entity>, <entity>, ... ]`
+   - map: 
+     ```text
+     "-map-": [
+        {
+            "-key-": <entity>,
+            "-value-": <entity>
+        },
+        ...
+     ]
+     ```
+ * entity type: includes requirement and entity. Basic format is:
+   ```text
+   {
+       "#": <entity_ID>,
+       <field_name> : <field_entity>,
+       <field_name> : <field_entity>,
+       ...
+   }
+   ```
+   In this, `<entity_ID>` is a JSON string, represents the ID of entity, using in entity-link below.
+   It should be unique for each entity in every type.
+   `<field_name>` is the identifier of field, and `<field_entity>` is also an `<entity>`.
+ * entity-link: a way to refer other entity using its ID. Basic format is:
+   ```text
+   {
+       "-link-": {
+           <entity_type> : <entity_ID>
+       }
+   }
+   ```
+   In this, `<entity_type>` is the type of the linked entity, and `<entity_ID>` is its ID.
+
