@@ -1,7 +1,7 @@
 RUReReAD - Rules-based User-defined Requirements' Relationships Automatic Detector
 --------------------------
 
-### Author: Guo Weize
+### Author: 郭维泽 (Guo Weize)
 
 RUReReAD can automatically detect all relationships between requirements according to rules that user defined.
 RUReReAD provides an easy-learning formal language to enable user to write their definitions of various kinds of requirements, and their detection rules of relationships.
@@ -86,7 +86,10 @@ rule <rule_name> (<parameters_list>) -> boolean {
 ```
 `<rule_name>` is an identifier.<br>
 `<parameters_list>` is a list of parameter types, separated by `,`, like: `type1, type2, type3`.<br>
-`<logic_body>` is the main part of the rule, specific syntax will be introduced later.
+`<logic_body>` is the main part of the rule, specific syntax will be introduced later.<br>
+Besides, for a 2 parameters rule with the same requirement type, user can define it as a reversible rule to eliminate the duplicated judgement.
+For example, paras `(req1, req2)` and paras `(req2, req1)` are same to reversible rule.
+The definition format is to replace `rule` at beginning with `revrule`.
 
 ### How to define functions
 
