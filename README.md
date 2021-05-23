@@ -4,7 +4,7 @@ RUReReAD - Rules-based User-defined Requirements' Relationships Automatic Detect
 ### Author: 郭维泽 (Guo Weize)
 
 RUReReAD can automatically detect all relationships between requirements according to rules that user defined.
-RUReReAD provides an easy-learning formal language to enable user to write their definitions of various kinds of requirements, and their detection rules of relationships.
+RUReReAD provides an easy-learning formal language to enable user to write their own definitions of various kinds of requirements, and their detection rules of relationships.
 RUReReAD can traversal all requirements to detect relationships automatically with a nice performance.
 
 ## To start using RUReReAD
@@ -26,7 +26,7 @@ All identifiers should follow 3 rules below:
 
 ## How to write requirements' models
 
-A requirement model is consisted of all of semantic elements, including their names and types.
+A requirement model is consisted of all semantic elements, including their names and types.
 Users can define requirement models, like:
 ```text
 requirement <requirement_name> {
@@ -54,7 +54,7 @@ The `<element_type>` is a type signature, which has 3 conditions:
           ... ...
       }
       ```
-**Notice**: user-defined types should be defined before, then can be used.
+**Notice**: user-defined types should be defined before used.
 
 The EBNF formats are:
 
@@ -69,9 +69,9 @@ The EBNF formats are:
 | `<element_type>`             | `<base_type>` **&#124;** `<collection_type>` **&#124;** `<user-defined_type>`
 | `<base_type>`                | **boolean &#124; integer &#124; float &#124; string**
 | `<collection_type>`          | `<list_type>` **&#124;** `<set_type>` **&#124;** `<map_type>`
-| `<list_type>`                | **list '&lt;'** `<type>` **'>'**
-| `<set_type>`                 | **set '&lt;'** `<type>` **'>'**
-| `<map_type>`                 | **map '&lt;'** `<type>` **,** `<type>` **'>'**
+| `<list_type>`                | **list '&lt;'** `<element_type>` **'>'**
+| `<set_type>`                 | **set '&lt;'** `<element_type>` **'>'**
+| `<map_type>`                 | **map '&lt;'** `<element_type>` **,** `<element_type>` **'>'**
 | `<user-defined_type>`        | `<identifier>`
 
 ## How to write relationships recognition rules
@@ -120,7 +120,7 @@ An `<element>` has many conditions:
 
 #### unary operator statement
 The format is: `{ <unary_symbol> <element> }`, for example: `{-2}`, `{! boolean_value}`.<br>
-**Notice**: `{` and `}` can not be omitted.<br>
+**Notice**: '`{`' and '`}`' can not be omitted.<br>
 All unary operators are:
 
 | Operator         | Symbol  | Parameter Type   | Return Type       | Meaning                      |
@@ -131,7 +131,7 @@ All unary operators are:
 
 #### binary operator statement
 The format is: `{ <element> <binary_symbol> <element> }`, for example: `{3 + 2}`, `{true or false}`.<br>
-**Notice**: `{` and `}` can not be omitted.<br>
+**Notice**: '`{`' and '`}`' can not be omitted.<br>
 All binary operators are:
 
 | Operator              | Symbol  | Parameters Type      | Return Type                           | Meaning           |
@@ -187,8 +187,8 @@ The string format has 2 conditions:
  * `substring '(' <string>, <begin>, <end> ')'`: the substring of `<string>` of index of [`<begin>`, `<end>`),
    where `<string>` is the string to be cut, `<begin>` and `<end>` should be integer type, and `<begin>` should less than `<end>`.
  * `find '(' <range>, <from_index>, <target> ')'`: the index of `<target>` in `<range>` from index `<from_index>`,
-   where <range> and <target> are string type, and <from_index> is integer type.
-   If not exists, return -1 instead.
+   where `<range>` and `<target>` are string type, and `<from_index>` is integer type.
+   If not exists, return `-1` instead. For example, `find ("abab", 1, "ab")` return `2`.
 
 ## How to write requirements
 Requirements and entities are written in JSON format, which should satisfy the definitions of their models.
@@ -220,7 +220,7 @@ The basic format is: `[ <entity>, <entity>, ... ]`, in where `<entity>`s are sep
    }
    ```
    In this, `<entity_ID>` is a JSON string, represents the ID of entity, using in entity-link below.
-   It should be unique for each entity in every type.
+   It should be unique for each entity in a single type, yet can be duplicated in different types.
    `<field_name>` is the identifier of field, and `<field_entity>` is also an `<entity>`.
  * entity-link: a way to refer other entity using its ID. Basic format is:
    ```text
@@ -231,4 +231,3 @@ The basic format is: `[ <entity>, <entity>, ... ]`, in where `<entity>`s are sep
    }
    ```
    In this, `<entity_type>` is the type of the linked entity, and `<entity_ID>` is its ID.
-
