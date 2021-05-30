@@ -8,8 +8,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import process.definition.ModelJsonParser;
 import process.definition.RuleParser;
 import process.judge.Processor;
-import process.parser.ModelTextParser;
-import process.parser.RuleTextParser;
+import process.parser.BaseParser;
 import process.requirement.EntityParser;
 import util.PathConsts;
 
@@ -26,8 +25,7 @@ public class Demo {
 
     public static void definitions2json() {
         Processor.initialization();
-        ModelTextParser.parseModelFile();
-        RuleTextParser.parseRuleFile();
+        BaseParser.run();
     }
 
     public static void json2java() {

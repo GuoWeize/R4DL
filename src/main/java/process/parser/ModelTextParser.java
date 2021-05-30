@@ -1,11 +1,12 @@
 package process.parser;
 
 import lombok.extern.slf4j.Slf4j;
-import util.PathConsts;
 import util.FormatsConsts;
 import util.TextReader;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -15,39 +16,31 @@ import java.util.Objects;
 @Slf4j
 public final class ModelTextParser {
 
-    /**
-     * entry of the function of parsing the model text file.
-     */
-    public static void parseModelFile() {
-        TextReader.readFile(PathConsts.MODEL_TEXT_FILE);
-        ModelJsonGenerator.initialization();
-        try {
-            ModelJsonGenerator.generateModel();
-        } catch (IOException e) {
-            log.error("Can not write file: " + PathConsts.MODEL_JSON_FILE, e);
-        }
-        log.info("Finish parse model definition file: " + PathConsts.MODEL_TEXT_FILE);
-    }
+    private static final List<String> ENTITIES = new ArrayList<>();
 
     /**
+     * entry of the function of parsing the model text file.
      * parsing all entities in the model text file.
      * @throws IOException if there is a syntax error
      */
-    static void parseEntities() throws IOException {
-        String type = TextReader.nextToken();
-        while (! Objects.equals(type, TextReader.EMPTY_STRING)) {
+    protected static String parse() throws IOException {
+        String preRead = TextReader.nextToken();
+        while (! Objects.equals(preRead, TextReader.EMPTY_STRING)) {
             String name = TextReader.nextToken();
             TextReader.nextTokenWithTest(FormatsConsts.OPEN_BRACE);
-            ModelJsonGenerator.generateEntity(type, name);
-            type = TextReader.nextToken();
+            String typeFiled = String.format("\"%s\": \"%s\"", FormatsConsts.MODEL_TYPE_FIELD, preRead);
+            String nameFiled = String.format("\"%s\": \"%s\"", FormatsConsts.MODEL_NAME_FIELD, name);
+            ENTITIES.add(String.format("{%s, %s%s}", typeFiled, nameFiled, ModelTextParser.parseFields()));
+            preRead = TextReader.nextToken();
         }
+        return String.format("[%s]", String.join(BaseParser.DELIMITER, ENTITIES));
     }
 
     /**
      * parsing all fields in one entity.
-     * @throws IOException if there is a syntax error
      */
-    static void parseFields() throws IOException {
+    static String parseFields() {
+        StringBuilder result = new StringBuilder();
         String fieldName = TextReader.nextToken();
         while (! Objects.equals(fieldName, FormatsConsts.CLOSE_BRACE)) {
             StringBuilder fieldType = new StringBuilder();
@@ -56,9 +49,10 @@ public final class ModelTextParser {
                 fieldType.append(temp);
                 temp = TextReader.nextToken();
             }
-            ModelJsonGenerator.generateField(fieldName, fieldType.toString());
+            result.append(", \"").append(fieldName).append("\": \"").append(fieldType).append("\"");
             fieldName = TextReader.nextToken();
         }
+        return result.toString();
     }
 
 }

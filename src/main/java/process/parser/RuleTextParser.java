@@ -3,18 +3,13 @@ package process.parser;
 import exceptions.TokenInvalidException;
 import lombok.extern.slf4j.Slf4j;
 import process.judge.Processor;
-import util.PathConsts;
 import util.FormatsConsts;
 import util.TextReader;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -22,37 +17,21 @@ import java.util.stream.Collectors;
  * @date 2021/4/3
  */
 @Slf4j
-public final class RuleTextParser {
+public final class RuleTextParser extends BaseParser {
 
     private static final List<String> RULES = new ArrayList<>();
     private static final String NONE_PRE_TOKEN = "";
-    private static final Set<Character> NUMBERS = Set.of(
-        '.', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
-    );
-    private static final String TRUE = "true";
-    private static final String FALSE = "false";
 
     /**
      * entry of the function of parsing the rule text file.
      */
-    public static void parseRuleFile() {
-        TextReader.readFile(PathConsts.RULE_TEXT_FILE);
-        try {
-            String result = String.format("{%s}", parseRules());
-            Files.write(Paths.get(PathConsts.RULE_JSON_FILE), result.getBytes(StandardCharsets.UTF_8));
-        } catch (IOException e) {
-            log.error("Can not write file: " + PathConsts.RULE_JSON_FILE, e);
-        }
-        log.info("Finish parse rule definition file: " + PathConsts.RULE_TEXT_FILE);
-    }
-
-    private static String parseRules() throws IOException {
+    protected static String parse() throws IOException {
         String preRead = TextReader.nextToken();
         while (! Objects.equals(preRead, TextReader.EMPTY_STRING)) {
             parseRule(preRead);
             preRead = TextReader.nextToken();
         }
-        return String.join(", ", RULES);
+        return String.format("{%s}", String.join(BaseParser.DELIMITER, RULES));
     }
 
     private static void parseRule(String type) throws IOException {
@@ -231,18 +210,10 @@ public final class RuleTextParser {
         } else {
             TextReader.rollBack(preToken);
         }
-        if (isNumeric(element) || Objects.equals(element, TRUE) || Objects.equals(element, FALSE)) {
+        if (isNumeric(element) || isBoolean(element)) {
             return element;
         }
         return String.format("\"%s\"", element);
     }
 
-    private static boolean isNumeric(String s) {
-        for (char c: s.toCharArray()) {
-            if (! NUMBERS.contains(c)) {
-                return false;
-            }
-        }
-        return true;
-    }
 }
