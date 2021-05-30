@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.Set;
+import java.util.regex.Matcher;
 
 /**
  * @author Guo Weize
@@ -20,6 +21,9 @@ public abstract class BaseParser {
 
     private static final Set<Character> NUMBERS = Set.of(
         '.', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
+    );
+    private static final Set<String> KEYWORDS = Set.of(
+        "<", ">", ",", "boolean", "integer", "float", "string", "list", "set", "map"
     );
     private static final String TRUE = "true";
     private static final String FALSE = "false";
@@ -57,9 +61,18 @@ public abstract class BaseParser {
         return Objects.equals(s, TRUE) || Objects.equals(s, FALSE);
     }
 
-    protected static String nameConvert(String name) {
-        return "$" + name;
+    protected static String typeConvert(String type) {
+        return KEYWORDS.contains(type) ? type: "$" + type;
     }
 
+    protected static String identifierConvert(String identifier) {
+        identifier = identifier.replaceAll("\\$", "_RDS_CHAR_DOLLAR_");
+        identifier = identifier.replaceAll("\\.", "._RDS_CHAR_DOLLAR__RDS_CHAR_DOLLAR_");
+        identifier = identifier.replaceAll("_RDS_CHAR_DOLLAR_", "\\$");
+        if (! identifier.startsWith("$")) {
+            return "$$" + identifier;
+        }
+        return identifier;
+    }
 
 }

@@ -76,7 +76,7 @@ public final class RuleTextParser extends BaseParser {
                         || Objects.equals(preToken, FormatsConsts.CLOSE_PAREN)) {
                         break;
                     } else {
-                        arg.append(preToken);
+                        arg.append(typeConvert(preToken));
                     }
                 }
                 argument.add(arg.toString());
@@ -92,7 +92,7 @@ public final class RuleTextParser extends BaseParser {
 
     private static String parseReturn() throws IOException {
         TextReader.nextTokenWithTest(FormatsConsts.ARROW);
-        return TextReader.nextToken();
+        return typeConvert(TextReader.nextToken());
     }
 
     private static String parseLogic() throws IOException {
@@ -203,7 +203,7 @@ public final class RuleTextParser extends BaseParser {
         }
         String preToken = TextReader.nextToken();
         if (Objects.equals(preToken, FormatsConsts.OPEN_BRACKET)) {
-            String collection = String.format("\"%s\"", element);
+            String collection = String.format("\"%s\"", identifierConvert(element));
             String index = parseTerm();
             TextReader.nextTokenWithTest(FormatsConsts.CLOSE_BRACKET);
             return String.format("{\"%s\": [%s, %s]}", FormatsConsts.COLLECTION_GET, collection, index);
@@ -213,7 +213,7 @@ public final class RuleTextParser extends BaseParser {
         if (isNumeric(element) || isBoolean(element)) {
             return element;
         }
-        return String.format("\"%s\"", element);
+        return String.format("\"%s\"", identifierConvert(element));
     }
 
 }

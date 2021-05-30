@@ -19,10 +19,8 @@ User should use it by 4 steps:
 The syntax of language is familiar to other programming language, there can be any number of space or newline between tokens.
 However, there should be no space in an identifier.
 
-All identifiers should follow 3 rules below:
- * is consisted of 26 letters and `_`
- * can not use all Java reserved words
- * can not use words: integer, string, list, set, map, type, requirement, function, rule, and, or, all, any, include, size_of, merge, from, to, find, substring
+All identifiers should be consisted of 26 letters (both upper and lower) and `_`, and can not use these keywords:  
+integer, string, list, set, map, type, requirement, function, rule, and, or, all, any, include, size_of, merge, from, to, find, substring
 
 ## How to write requirements' models
 

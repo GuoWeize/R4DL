@@ -97,7 +97,7 @@ public final class EntityParser extends StdDeserializer<Object> {
             var signal = iterator.next();
             String entityID = signal.getValue().asText();
             var entityNode = iterator.next();
-            String type = entityNode.getKey();
+            String type = "$" + entityNode.getKey();
             JsonNode fieldsNode = entityNode.getValue();
             BaseEntity entity = generateEntity(type, fieldsNode);
             if (! ENTITIES_ID.containsKey(type)) {
@@ -115,7 +115,7 @@ public final class EntityParser extends StdDeserializer<Object> {
         private static BaseEntity generateEntity(String type, JsonNode fieldsNode) {
             BaseEntity result = Builder.newInstance(type);
             fieldsNode.fields().forEachRemaining(entry -> {
-                String fieldName = entry.getKey();
+                String fieldName = "$$" + entry.getKey();
                 BaseEntity fieldValue = parseNode(entry.getValue());
                 Builder.setField(result, fieldName, fieldValue);
             });
@@ -124,7 +124,7 @@ public final class EntityParser extends StdDeserializer<Object> {
 
         private static BaseEntity parseLink(JsonNode node) {
             var pair = node.get(FormatsConsts.LINK_SIGNAL).fields().next();
-            String entityType = pair.getKey();
+            String entityType = "$" + pair.getKey();
             String entityID = pair.getValue().asText();
             return EntityParser.ENTITIES_ID.get(entityType).get(entityID);
         }

@@ -146,6 +146,6 @@ rule input_output_interlock
     )
 }
 
-rule calling (functional, Interface) -> boolean {
+rule calling (functional, interface) -> boolean {
     {$2$.caller == $1$}
 }

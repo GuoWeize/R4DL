@@ -44,7 +44,7 @@ requirement reliability {
     probability integer;
 }
 
-requirement Interface {
+requirement interface {
     caller functional;
     callee functional;
 }
