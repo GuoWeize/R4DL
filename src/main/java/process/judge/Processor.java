@@ -97,7 +97,7 @@ public final class Processor {
     private static String reqs2ID(List<BaseEntity> reqs) {
         return "["
             + reqs.stream()
-            .map(req -> req.getType() + "@" + EntityParser.getID(req))
+            .map(req -> req.getType().substring(1) + "@" + EntityParser.getID(req))
             .collect(Collectors.joining(", "))
             + "]";
     }

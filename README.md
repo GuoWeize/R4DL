@@ -28,19 +28,21 @@ A requirement model is consisted of all semantic elements, including their names
 Users can define requirement models, like:
 ```text
 requirement <requirement_name> {
-    <element_name_1> <element_type_1> ;
-    <element_name_2> <element_type_2> ;
-    ... ...
+    <element_name_1> <element_type_1> [= <default_value>] ;
+    <element_name_2> <element_type_2> [= <default_value>] ;
+    ...
 }
 ```
-The `<requirement_name>` and `<element_name>` are identifiers.
+The `<requirement_name>` and `<element_name>` are identifiers.<br>
+The `<default_value>` is a value of type `<element_type>`, which represent the default value of this field.
+It only has basic types, however, you can define default value of a type later during defining requirements.<br>
 The `<element_type>` is a type signature, which has 3 conditions:
  * basic types:
-   - `boolean`: `true` or `false`
-   - `integer`: range from -2147483648 to 2147483647
-   - `float`: double float value
-   - `string`: any string like Java String
- * collection types: `list` `set` `map`
+   - `boolean`: `true` or `false`, the default is `false`
+   - `integer`: range from -2147483648 to 2147483647, the default is 0
+   - `float`: double float value, the default is 0.0
+   - `string`: any string like Java String, the default is empty string
+ * collection types: `list` `set` `map`, the default is empty
    - `list`: an array of elements in a same type with a specific order, for example `list<string>`
    - `set`: a set of elements in a same type without any order, for example `set<integer>`
    - `map`: a reflection relationship from one type to another, also without any order, for example `map<integer, string>`
@@ -49,9 +51,10 @@ The `<element_type>` is a type signature, which has 3 conditions:
       type <type_name> {
           <field_name_1> <field_type_1> ;
           <field_name_2> <field_type_2> ;
-          ... ...
+          ...
       }
       ```
+   The default is `null`.<br>
 **Notice**: user-defined types should be defined before used.
 
 The EBNF formats are:
@@ -65,7 +68,8 @@ The EBNF formats are:
 | `<element_definition>`       | **{** `<element_name>` `<element_type>` **; }**
 | `<element_name>`             | `<identifier>`
 | `<element_type>`             | `<base_type>` **&#124;** `<collection_type>` **&#124;** `<user-defined_type>`
-| `<base_type>`                | **boolean &#124; integer &#124; float &#124; string**
+| `<default_value>`            | `<boolean>` **&#124;** `<integer>` **&#124;** `<float>` **&#124;** `<string>`
+| `<basic_type>`                | **boolean &#124; integer &#124; float &#124; string**
 | `<collection_type>`          | `<list_type>` **&#124;** `<set_type>` **&#124;** `<map_type>`
 | `<list_type>`                | **list '&lt;'** `<element_type>` **'>'**
 | `<set_type>`                 | **set '&lt;'** `<element_type>` **'>'**
@@ -76,7 +80,7 @@ The EBNF formats are:
 
 ### How to define recognition rules
 
-A requirement relationship recognition rule is defined like:
+A recognition rule of requirement relationship is defined like:
 ```text
 rule <rule_name> (<parameters_list>) -> boolean {
     <logic_body>
@@ -94,11 +98,23 @@ The definition format is to replace `rule` at beginning with `revrule`.
 Users can also define some functions to simplify rules, like:
 ```text
 function <function_name> (<parameters_list>) -> <return_type> {
-    <logic_body>
+    <field_name_1> : {
+        <logic_body_2>
+    };
+    <field_name_2> : {
+        <logic_body_2>
+    };
+    ...
 }
 ```
 `<function_name>` is identifier.<br>
-`<return_type>` is the type of return value.<br>
+`<return_type>` is the type of return value, which only be basic types and user-defined types.<br>
+If `<return_type>` is a basic type, definition can be written like rule's as:
+```text
+function <function_name> (<parameters_list>) -> <basic_return_type> {
+    <logic_body>
+}
+```
 But there is a difference of `<parameters_list>`: user can define different types of one parameter, like: `type1, type2 / type3, type4`.
 It means the two parameters can be `type1` and `type2`, or `type3` and `type4`.
 
@@ -126,6 +142,7 @@ All unary operators are:
 | logical not      | !       | boolean          | boolean           | calculate `not` logic
 | opposite number  | -       | integer / float  | same as parameter | calculate the opposite number
 | collection size  | size_of | list / set / map | integer           | count the size of collection
+| check nullable   | is_null | any user-defined type | boolean      | whether the entity is `null`
 
 #### binary operator statement
 The format is: `{ <element> <binary_symbol> <element> }`, for example: `{3 + 2}`, `{true or false}`.<br>
@@ -148,6 +165,8 @@ All binary operators are:
 | not greater relation  | &lt;=   | both integer / float | boolean                               | whether the former is not greater than the latter
 | collection include    | include | same type of list / set / map | boolean                      | whether all elements of the latter are in the former
 | collection in         | in      | element_type + collection_type | boolean                     | whether the element is in the collection (keys of map)
+| synonyms word         | syn     | both string          | boolean                               | whether the two strings are synonyms
+| antonyms word         | ant     | both string          | boolean                               | whether the two strings are antonyms
 
 #### multi-para operator statement
 The format is: `<symbol> ( <element>, <element>, ... )`, in which `<element>`s are separated by `,`.
@@ -160,6 +179,8 @@ All multi-para operators are:
 |:---------------------:|:-------:|:--------------------:|:-------------------------------------:|:-----------------:|
 | summation of numbers  | +       | all integer / float  | float if has float, otherwise integer | calculate the summation of all numbers
 | product of numbers    | *       | all integer / float  | float if has float, otherwise integer | calculate the product of all numbers
+| maximum               | max     | all integer / float  | float if has float, otherwise integer | maximum of all numbers
+| minimum               | min     | all integer / float  | float if has float, otherwise integer | minimum of all numbers
 | logical and           | and     | all boolean          | boolean                               | calculate `and` of all boolean values
 | logical or            | or      | all boolean          | boolean                               | calculate `or` of all boolean values
 | collection merge      | merge   | same type of list / set / map | same as parameters           | merge all collections into one
@@ -190,7 +211,7 @@ The string format has 2 conditions:
 
 ## How to write requirements
 Requirements and entities are written in JSON format, which should satisfy the definitions of their models.
-The basic format is: `[ <entity>, <entity>, ... ]`, in where `<entity>`s are seperated by `,` and has 3 conditions:
+The basic format is: `[ <entity>, <entity>, ... ]`, in where `<entity>`s are seperated by `,` and has 4 conditions:
  * basic element:
    - boolean: JSON boolean value, `true` / `false`
    - integer or float: JSON number value, like `3` or `2.15`
@@ -220,6 +241,7 @@ The basic format is: `[ <entity>, <entity>, ... ]`, in where `<entity>`s are sep
    In this, `<entity_ID>` is a JSON string, represents the ID of entity, using in entity-link below.
    It should be unique for each entity in a single type, yet can be duplicated in different types.
    `<field_name>` is the identifier of field, and `<field_entity>` is also an `<entity>`.
+   Any field has no assignment in this way should be initialized with default value.
  * entity-link: a way to refer other entity using its ID. Basic format is:
    ```text
    {
