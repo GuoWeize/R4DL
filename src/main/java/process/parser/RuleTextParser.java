@@ -4,6 +4,7 @@ import exceptions.TokenInvalidException;
 import lombok.extern.slf4j.Slf4j;
 import process.judge.Processor;
 import util.FormatsConsts;
+import util.OperatorConsts;
 import util.TextReader;
 
 import java.io.IOException;
@@ -41,7 +42,7 @@ public final class RuleTextParser extends BaseParser {
             throw new TokenInvalidException(type, defSymbols);
         }
         String name = TextReader.nextToken();
-        FormatsConsts.CUSTOMIZED_OPERATORS.add(name);
+        OperatorConsts.CUSTOMIZED_OPERATORS.add(name);
         if (Objects.equals(type, FormatsConsts.DEFINE_REVERSIBLE)) {
             type = FormatsConsts.DEFINE_RULE;
             Processor.addReversibleRule(name);
@@ -108,10 +109,10 @@ public final class RuleTextParser extends BaseParser {
             String result = parseUnitaryBinary();
             TextReader.nextTokenWithTest(FormatsConsts.CLOSE_BRACE);
             return result;
-        } else if (FormatsConsts.MULTIPLE_ARG_OPERATORS.contains(nextToken) ||
-                FormatsConsts.CUSTOMIZED_OPERATORS.contains(nextToken)) {
+        } else if (OperatorConsts.MULTIPLE_ARG_OPERATORS.contains(nextToken) ||
+                OperatorConsts.CUSTOMIZED_OPERATORS.contains(nextToken)) {
             return parseMultipleArg(nextToken);
-        } else if (Objects.equals(nextToken, FormatsConsts.LOOP_SIGNAL)) {
+        } else if (Objects.equals(nextToken, OperatorConsts.LOOP_SIGNAL)) {
             return parseLoop();
         } else {
             return parseElement(nextToken);
@@ -124,14 +125,14 @@ public final class RuleTextParser extends BaseParser {
      */
     private static String parseUnitaryBinary() throws IOException {
         String firstToken = TextReader.nextToken();
-        if (FormatsConsts.UNARY_OPERATORS.contains(firstToken)) {
+        if (OperatorConsts.UNARY_OPERATORS.contains(firstToken)) {
             String object = parseTerm();
             return String.format("{\"%s\": [%s]}", firstToken, object);
         } else {
             TextReader.rollBack(firstToken);
             String object1 = parseTerm();
             String operator = TextReader.nextToken();
-            if (! FormatsConsts.BINARY_OPERATORS.contains(operator)) {
+            if (! OperatorConsts.BINARY_OPERATORS.contains(operator)) {
                 throw new TokenInvalidException(String.format("Binary operator \"%s\" is not defined.", operator));
             }
             String object2 = parseTerm();
@@ -164,20 +165,20 @@ public final class RuleTextParser extends BaseParser {
      */
     private static String parseLoop() throws IOException {
         String quantifier = TextReader.nextToken();
-        if (! Objects.equals(quantifier, FormatsConsts.ALL_SATISFY) && ! Objects.equals(quantifier, FormatsConsts.ANY_SATISFY)) {
-            throw new TokenInvalidException(quantifier, List.of(FormatsConsts.ALL_SATISFY, FormatsConsts.ANY_SATISFY));
+        if (! Objects.equals(quantifier, OperatorConsts.ALL_SATISFY) && ! Objects.equals(quantifier, OperatorConsts.ANY_SATISFY)) {
+            throw new TokenInvalidException(quantifier, List.of(OperatorConsts.ALL_SATISFY, OperatorConsts.ANY_SATISFY));
         }
         String loopVariable = parseElement(NONE_PRE_TOKEN);
         String nextToken = TextReader.nextToken();
-        if (Objects.equals(nextToken, FormatsConsts.RANGE_SIGNAL)) {
+        if (Objects.equals(nextToken, OperatorConsts.RANGE_SIGNAL)) {
             String range = parseTerm();
             TextReader.nextTokenWithTest(FormatsConsts.OPEN_PAREN);
             String logicalBody = parseTerm();
             TextReader.nextTokenWithTest(FormatsConsts.CLOSE_PAREN);
             return String.format("{\"%s\": [%s, %s, %s]}", quantifier, loopVariable, range, logicalBody);
-        } else if (Objects.equals(nextToken, FormatsConsts.RANGE_BEGIN_SIGNAL)) {
+        } else if (Objects.equals(nextToken, OperatorConsts.RANGE_BEGIN_SIGNAL)) {
             String rangeBegin = parseTerm();
-            TextReader.nextTokenWithTest(FormatsConsts.RANGE_END_SIGNAL);
+            TextReader.nextTokenWithTest(OperatorConsts.RANGE_END_SIGNAL);
             String rangeEnd = parseTerm();
             TextReader.nextTokenWithTest(FormatsConsts.OPEN_PAREN);
             String logicalBody = parseTerm();
@@ -185,7 +186,7 @@ public final class RuleTextParser extends BaseParser {
             return String.format("{\"%s\": [%s, %s, %s, %s]}",
                 quantifier, loopVariable, rangeBegin, rangeEnd, logicalBody);
         } else {
-            throw new TokenInvalidException(nextToken, List.of(FormatsConsts.RANGE_SIGNAL, FormatsConsts.RANGE_BEGIN_SIGNAL));
+            throw new TokenInvalidException(nextToken, List.of(OperatorConsts.RANGE_SIGNAL, OperatorConsts.RANGE_BEGIN_SIGNAL));
         }
     }
 
@@ -206,7 +207,7 @@ public final class RuleTextParser extends BaseParser {
             String collection = String.format("\"%s\"", identifierConvert(element));
             String index = parseTerm();
             TextReader.nextTokenWithTest(FormatsConsts.CLOSE_BRACKET);
-            return String.format("{\"%s\": [%s, %s]}", FormatsConsts.COLLECTION_GET, collection, index);
+            return String.format("{\"%s\": [%s, %s]}", OperatorConsts.COLLECTION_GET, collection, index);
         } else {
             TextReader.rollBack(preToken);
         }

@@ -4,7 +4,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -79,83 +78,5 @@ public final class FormatsConsts {
     public static final String KEY_SIGNAL = FORMATS.get("key_signal");
     public static final String VALUE_SIGNAL = FORMATS.get("value_signal");
     public static final String LINK_SIGNAL = FORMATS.get("link_signal");
-
-    /* Calculations */
-
-    public static final String CALCULATE_ADDITION = FORMATS.get("calculate_addition");
-    public static final String CALCULATE_SUBTRACTION = FORMATS.get("calculate_subtraction");
-    public static final String CALCULATE_MULTIPLE = FORMATS.get("calculate_multiple");
-    public static final String CALCULATE_DIVISION = FORMATS.get("calculate_division");
-    public static final String CALCULATE_SUMMATION = FORMATS.get("calculate_summation");
-    public static final String CALCULATE_MULTIPLICATION = FORMATS.get("calculate_multiplication");
-
-    /* Comparisons */
-
-    public static final String COMPARE_EQUAL = FORMATS.get("compare_equal");
-    public static final String COMPARE_NOT_EQUAL = FORMATS.get("compare_not_equal");
-    public static final String COMPARE_GREATER = FORMATS.get("compare_greater");
-    public static final String COMPARE_LESS = FORMATS.get("compare_less");
-    public static final String COMPARE_NOT_GREATER = FORMATS.get("compare_not_greater");
-    public static final String COMPARE_NOT_LESS = FORMATS.get("compare_not_less");
-
-    /* Logical operators */
-
-    public static final String LOGICAL_NOT = FORMATS.get("logical_not");
-    public static final String LOGICAL_AND = FORMATS.get("logical_and");
-    public static final String LOGICAL_OR = FORMATS.get("logical_or");
-
-    /* Collection operators */
-
-    public static final String COLLECTION_SIZE_OF = FORMATS.get("collection_size_of");
-    public static final String COLLECTION_INCLUDE = FORMATS.get("collection_include");
-    public static final String COLLECTION_IN = FORMATS.get("collection_in");
-    public static final String COLLECTION_MERGE = FORMATS.get("collection_merge");
-    public static final String COLLECTION_GET = FORMATS.get("collection_get");
-
-    /* Loop operators */
-
-    public static final String LOOP_SIGNAL = FORMATS.get("loop_signal");
-    public static final String ALL_SATISFY = FORMATS.get("all_satisfy");
-    public static final String ANY_SATISFY = FORMATS.get("any_satisfy");
-    public static final String RANGE_SIGNAL = FORMATS.get("range_signal");
-    public static final String RANGE_BEGIN_SIGNAL = FORMATS.get("range_begin_signal");
-    public static final String RANGE_END_SIGNAL = FORMATS.get("range_end_signal");
-
-    /* String operators */
-
-    public static final String STRING_FIND = FORMATS.get("string_find");
-    public static final String STRING_SUBSTRING = FORMATS.get("string_substring");
-
-    public static final Set<String> UNARY_OPERATORS = Set.of(
-        LOGICAL_NOT,
-        COLLECTION_SIZE_OF,
-        CALCULATE_SUBTRACTION
-    );
-    public static final Set<String> BINARY_OPERATORS = Set.of(
-        CALCULATE_ADDITION,
-        CALCULATE_SUBTRACTION,
-        CALCULATE_MULTIPLE,
-        CALCULATE_DIVISION,
-        LOGICAL_AND,
-        LOGICAL_OR,
-        COMPARE_EQUAL,
-        COMPARE_NOT_EQUAL,
-        COMPARE_GREATER,
-        COMPARE_LESS,
-        COMPARE_NOT_GREATER,
-        COMPARE_NOT_LESS,
-        COLLECTION_INCLUDE,
-        COLLECTION_IN
-    );
-    public static final Set<String> MULTIPLE_ARG_OPERATORS = Set.of(
-        CALCULATE_SUMMATION,
-        CALCULATE_MULTIPLICATION,
-        LOGICAL_AND,
-        LOGICAL_OR,
-        COLLECTION_MERGE,
-        STRING_FIND,
-        STRING_SUBSTRING
-    );
-    public static final Set<String> CUSTOMIZED_OPERATORS = new HashSet<>(32);
 
 }

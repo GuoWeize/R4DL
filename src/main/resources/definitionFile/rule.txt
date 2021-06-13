@@ -146,7 +146,11 @@ rule input_output_interlock
     )
 }
 
-rule calling
-(functional, interface) -> boolean {
-    {$2$.caller == $1$}
+function demo
+(functional) -> integer {
+    max (
+        1,
+        2,
+        3
+    )
 }

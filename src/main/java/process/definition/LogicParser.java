@@ -1,7 +1,7 @@
 package process.definition;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import util.FormatsConsts;
+import util.OperatorConsts;
 
 import java.util.ArrayList;
 import java.util.function.Function;
@@ -20,26 +20,28 @@ public final class LogicParser {
     private static final String ARGS_DELIMITER = ", ";
 
     private static final Map<String, Function<List<String>, String>> OPERATORS = Map.ofEntries(
-        Map.entry(FormatsConsts.LOGICAL_NOT, LogicParser::not),
-        Map.entry(FormatsConsts.LOGICAL_AND, LogicParser::and),
-        Map.entry(FormatsConsts.LOGICAL_OR, LogicParser::or),
-        Map.entry(FormatsConsts.COMPARE_EQUAL, LogicParser::equal),
-        Map.entry(FormatsConsts.COMPARE_NOT_EQUAL, LogicParser::notEqual),
-        Map.entry(FormatsConsts.COMPARE_GREATER, LogicParser::greater),
-        Map.entry(FormatsConsts.COMPARE_LESS, LogicParser::less),
-        Map.entry(FormatsConsts.COMPARE_NOT_LESS, LogicParser::notLess),
-        Map.entry(FormatsConsts.COMPARE_NOT_GREATER, LogicParser::notGreater),
-        Map.entry(FormatsConsts.CALCULATE_ADDITION, LogicParser::add),
-        Map.entry(FormatsConsts.CALCULATE_SUBTRACTION, LogicParser::sub),
-        Map.entry(FormatsConsts.CALCULATE_MULTIPLE, LogicParser::multiple),
-        Map.entry(FormatsConsts.CALCULATE_DIVISION, LogicParser::divide),
-        Map.entry(FormatsConsts.COLLECTION_SIZE_OF, LogicParser::size),
-        Map.entry(FormatsConsts.COLLECTION_GET, LogicParser::get),
-        Map.entry(FormatsConsts.COLLECTION_INCLUDE, LogicParser::include),
-        Map.entry(FormatsConsts.ALL_SATISFY, LogicParser::all),
-        Map.entry(FormatsConsts.ANY_SATISFY, LogicParser::any),
-        Map.entry(FormatsConsts.STRING_FIND, LogicParser::find),
-        Map.entry(FormatsConsts.STRING_SUBSTRING, LogicParser::substring)
+        Map.entry(OperatorConsts.LOGICAL_NOT, LogicParser::not),
+        Map.entry(OperatorConsts.LOGICAL_AND, LogicParser::and),
+        Map.entry(OperatorConsts.LOGICAL_OR, LogicParser::or),
+        Map.entry(OperatorConsts.COMPARE_EQUAL, LogicParser::equal),
+        Map.entry(OperatorConsts.COMPARE_NOT_EQUAL, LogicParser::notEqual),
+        Map.entry(OperatorConsts.COMPARE_GREATER, LogicParser::greater),
+        Map.entry(OperatorConsts.COMPARE_LESS, LogicParser::less),
+        Map.entry(OperatorConsts.COMPARE_NOT_LESS, LogicParser::notLess),
+        Map.entry(OperatorConsts.COMPARE_NOT_GREATER, LogicParser::notGreater),
+        Map.entry(OperatorConsts.MAXIMUM_NUMBER, LogicParser::maximum),
+        Map.entry(OperatorConsts.MINIMUM_NUMBER, LogicParser::minimum),
+        Map.entry(OperatorConsts.CALCULATE_ADDITION, LogicParser::add),
+        Map.entry(OperatorConsts.CALCULATE_SUBTRACTION, LogicParser::sub),
+        Map.entry(OperatorConsts.CALCULATE_MULTIPLE, LogicParser::multiple),
+        Map.entry(OperatorConsts.CALCULATE_DIVISION, LogicParser::divide),
+        Map.entry(OperatorConsts.COLLECTION_SIZE_OF, LogicParser::size),
+        Map.entry(OperatorConsts.COLLECTION_GET, LogicParser::get),
+        Map.entry(OperatorConsts.COLLECTION_INCLUDE, LogicParser::include),
+        Map.entry(OperatorConsts.ALL_SATISFY, LogicParser::all),
+        Map.entry(OperatorConsts.ANY_SATISFY, LogicParser::any),
+        Map.entry(OperatorConsts.STRING_FIND, LogicParser::find),
+        Map.entry(OperatorConsts.STRING_SUBSTRING, LogicParser::substring)
     );
 
     public static String parse(JsonNode node) {
@@ -121,6 +123,16 @@ public final class LogicParser {
     private static String notGreater(List<String> arguments) {
         checkArgsNumberAmount(arguments, i -> i == 2);
         return String.format("BasePrimitiveEntity.compare(%s, %s, \"<=\")", arguments.get(0), arguments.get(1));
+    }
+
+    private static String maximum(List<String> arguments) {
+        checkArgsNumberAmount(arguments, i -> i > 1);
+        return String.format("BasePrimitiveEntity.max(%s)", String.join(ARGS_DELIMITER, arguments));
+    }
+
+    private static String minimum(List<String> arguments) {
+        checkArgsNumberAmount(arguments, i -> i > 1);
+        return String.format("BasePrimitiveEntity.min(%s)", String.join(ARGS_DELIMITER, arguments));
     }
 
     private static String add(List<String> arguments) {

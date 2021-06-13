@@ -20,7 +20,8 @@ The syntax of language is familiar to other programming language, there can be a
 However, there should be no space in an identifier.
 
 All identifiers should be consisted of 26 letters (both upper and lower) and `_`, and can not use these keywords:  
-integer, string, list, set, map, type, requirement, function, rule, and, or, all, any, include, size_of, merge, from, to, find, substring
+boolean, integer, float, string, list, set, map, type, requirement, rule, function,
+size_of, is_null, and, or, not, all, any, max, min, synonym, antonym, include, merge, from, to, find, substring
 
 ## How to write requirements' models
 
@@ -115,7 +116,7 @@ function <function_name> (<parameters_list>) -> <basic_return_type> {
     <logic_body>
 }
 ```
-But there is a difference of `<parameters_list>`: user can define different types of one parameter, like: `type1, type2 / type3, type4`.
+However, there is a difference of `<parameters_list>`: user can define different types of one parameter, like: `type1, type2 / type3, type4`.
 It means the two parameters can be `type1` and `type2`, or `type3` and `type4`.
 
 ### How to write logic body
@@ -165,8 +166,8 @@ All binary operators are:
 | not greater relation  | &lt;=   | both integer / float | boolean                               | whether the former is not greater than the latter
 | collection include    | include | same type of list / set / map | boolean                      | whether all elements of the latter are in the former
 | collection in         | in      | element_type + collection_type | boolean                     | whether the element is in the collection (keys of map)
-| synonyms word         | syn     | both string          | boolean                               | whether the two strings are synonyms
-| antonyms word         | ant     | both string          | boolean                               | whether the two strings are antonyms
+| synonyms word         | synonym | both string          | boolean                               | whether the two strings are synonyms
+| antonyms word         | antonym | both string          | boolean                               | whether the two strings are antonyms
 
 #### multi-para operator statement
 The format is: `<symbol> ( <element>, <element>, ... )`, in which `<element>`s are separated by `,`.
