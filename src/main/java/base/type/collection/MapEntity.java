@@ -163,7 +163,7 @@ public final class MapEntity<K extends BaseEntity, V extends BaseEntity> extends
         return include(map);
     }
 
-    public static MapEntity newInstance() {
+    public static MapEntity<? extends BaseEntity, ? extends BaseEntity> newInstance() {
         return new MapEntity<>();
     }
 

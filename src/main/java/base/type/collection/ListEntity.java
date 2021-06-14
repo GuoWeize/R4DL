@@ -129,7 +129,7 @@ public final class ListEntity<E extends BaseEntity> extends BaseCollectionEntity
         return BoolEntity.TRUE;
     }
 
-    public static ListEntity newInstance() {
+    public static ListEntity<? extends BaseEntity> newInstance() {
         return new ListEntity<>();
     }
 

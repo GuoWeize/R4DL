@@ -113,7 +113,7 @@ public final class SetEntity<E extends BaseEntity> extends BaseCollectionEntity 
         return include(set);
     }
 
-    public static SetEntity newInstance() {
+    public static SetEntity<? extends BaseEntity> newInstance() {
         return new SetEntity<>();
     }
 

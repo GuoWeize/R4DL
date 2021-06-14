@@ -113,26 +113,14 @@ public final class ModelJsonParser extends StdDeserializer<Object> {
             return " = null";
         }
         if (defaultValue == null) {
-            if (type.startsWith("set<")) {
-                return " = SetEntity.newInstance()";
+            if (type.startsWith("SetEntity<")) {
+                return String.format(" = (%s) SetEntity.newInstance()", type);
             }
-            if (type.startsWith("list<")) {
-                return " = ListEntity.newInstance()";
+            if (type.startsWith("ListEntity<")) {
+                return String.format(" = (%s) ListEntity.newInstance()", type);
             }
-            if (type.startsWith("map<")) {
-                return " = MapEntity.newInstance()";
-            }
-            if (Objects.equals(type, "boolean")) {
-                return " = BoolEntity.newInstance()";
-            }
-            if (Objects.equals(type, "integer")) {
-                return " = IntEntity.newInstance()";
-            }
-            if (Objects.equals(type, "float")) {
-                return " = FloatEntity.newInstance()";
-            }
-            if (Objects.equals(type, "string")) {
-                return " = StringEntity.newInstance()";
+            if (type.startsWith("MapEntity<")) {
+                return String.format(" = (%s) MapEntity.newInstance()", type);
             }
             return String.format(" = %s.newInstance()", type);
         }
@@ -145,17 +133,17 @@ public final class ModelJsonParser extends StdDeserializer<Object> {
     private String generateFields(String name, Map<String, String> fields2type) {
         StringBuilder content = new StringBuilder();
         for (Map.Entry<String, String> entry: fields2type.entrySet()) {
-            String type = entry.getValue();
+            String type = TypeManager.type2class(entry.getValue());
             String filedName = entry.getKey();
             boolean isRequired = true;
             if (Objects.equals(name, type)) {
                 isRequired = false;
             }
             content.append("    public ")
-                .append(TypeManager.type2class(type))
+                .append(type)
                 .append(' ')
                 .append(filedName)
-                .append(defaultValue(entry.getValue(), isRequired, null))
+                .append(defaultValue(type, isRequired, null))
                 .append(";\n");
         }
         return content.append('\n').toString();
