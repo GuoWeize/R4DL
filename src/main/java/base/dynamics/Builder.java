@@ -3,7 +3,7 @@ package base.dynamics;
 import base.type.BaseEntity;
 import lombok.extern.slf4j.Slf4j;
 
-import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,7 +18,7 @@ import java.util.Map;
 public final class Builder {
 
     /** Customized entity type name -> its constructor */
-    private static final Map<String, Constructor<?>> TYPE_NAME2CONSTRUCTOR = new HashMap<>();
+    private static final Map<String, Method> TYPE_NAME2CONSTRUCTOR = new HashMap<>();
 
     /**
      * Initialization with all customized classes according to {@link Compiler}.
@@ -29,7 +29,7 @@ public final class Builder {
             for (Map.Entry<String, Class<?>> entry: Compiler.getEntitiesClasses().entrySet()) {
                 String className = entry.getKey();
                 Class<?> clazz = entry.getValue();
-                TYPE_NAME2CONSTRUCTOR.put(className, clazz.getDeclaredConstructor());
+                TYPE_NAME2CONSTRUCTOR.put(className, clazz.getMethod("newInstance", (Class<?>[]) null));
             }
         } catch (NoSuchMethodException e) {
             log.error("Can not find method.", e);
@@ -74,7 +74,7 @@ public final class Builder {
      */
     public static BaseEntity newInstance(String className) {
         try {
-            return (BaseEntity)TYPE_NAME2CONSTRUCTOR.get(className).newInstance();
+            return (BaseEntity) TYPE_NAME2CONSTRUCTOR.get(className).invoke(null);
         } catch (Exception e) {
             log.error("can not new an instance of class \"" + className + "\".", e);
             return null;

@@ -13,7 +13,7 @@ import java.util.Set;
  * @author Guo Weize
  * @date 2021/6/13
  */
-public class OperatorConsts {
+public final class OperatorConsts {
 
     private static final Map<String, String> OPS = new HashMap<>(128);
     static {
@@ -32,6 +32,8 @@ public class OperatorConsts {
             e.printStackTrace();
         }
     }
+
+    public static final String CHECK_NULL = OPS.get("check_null");
 
     /* Calculations */
 
@@ -86,7 +88,8 @@ public class OperatorConsts {
     public static final Set<String> UNARY_OPERATORS = Set.of(
         LOGICAL_NOT,
         COLLECTION_SIZE_OF,
-        CALCULATE_SUBTRACTION
+        CALCULATE_SUBTRACTION,
+        CHECK_NULL
     );
     public static final Set<String> BINARY_OPERATORS = Set.of(
         CALCULATE_ADDITION,

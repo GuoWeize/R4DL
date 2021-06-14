@@ -182,11 +182,6 @@ public abstract class BasePrimitiveEntity extends BaseEntity {
     }
 
     @Override
-    public final boolean isPrimitive() {
-        return true;
-    }
-
-    @Override
     public final boolean isRequirement() {
         return false;
     }

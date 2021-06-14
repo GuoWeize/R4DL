@@ -14,7 +14,7 @@ import java.util.Set;
  * @author Guo Weize
  * @date 2021/6/13
  */
-public class ThesaurusReader {
+public final class ThesaurusReader {
 
     private static final Map<String, Set<String>> SYNONYMS = new HashMap<>(2048);
     private static final Map<String, Set<String>> ANTONYMS = new HashMap<>(2048);

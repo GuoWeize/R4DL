@@ -163,6 +163,10 @@ public final class MapEntity<K extends BaseEntity, V extends BaseEntity> extends
         return include(map);
     }
 
+    public static MapEntity newInstance() {
+        return new MapEntity<>();
+    }
+
     @Override
     public String getItemType() {
         return String.format("%s%s%s", keyType, DELIMITER, valueType);

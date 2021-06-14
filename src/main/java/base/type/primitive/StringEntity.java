@@ -63,6 +63,10 @@ public final class StringEntity extends BasePrimitiveEntity {
         return BoolEntity.valueOf(Objects.equals(getValue(), ((StringEntity)entity).getValue()));
     }
 
+    public static StringEntity newInstance() {
+        return StringEntity.valueOf("");
+    }
+
     @Override
     public String toString() {
         return String.format("\"%s\"", value);

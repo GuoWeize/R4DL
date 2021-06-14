@@ -49,6 +49,10 @@ public final class IntEntity extends BasePrimitiveEntity {
         );
     }
 
+    public static IntEntity newInstance() {
+        return IntEntity.valueOf(0);
+    }
+
     @Override
     public String toString() {
         return Integer.toString(value);

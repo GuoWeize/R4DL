@@ -41,6 +41,10 @@ public final class FloatEntity extends BasePrimitiveEntity {
         );
     }
 
+    public static FloatEntity newInstance() {
+        return FloatEntity.valueOf(0.0);
+    }
+
     @Override
     public String toString() {
         return Double.toString(value);

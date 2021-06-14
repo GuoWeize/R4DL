@@ -129,6 +129,10 @@ public final class ListEntity<E extends BaseEntity> extends BaseCollectionEntity
         return BoolEntity.TRUE;
     }
 
+    public static ListEntity newInstance() {
+        return new ListEntity<>();
+    }
+
     @Override
     public String getItemType() {
         return type;

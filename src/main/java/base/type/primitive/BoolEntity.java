@@ -54,6 +54,10 @@ public final class BoolEntity extends BasePrimitiveEntity {
         return getValue() == ((BoolEntity) entity).getValue() ? TRUE: FALSE;
     }
 
+    public static BoolEntity newInstance() {
+        return FALSE;
+    }
+
     @Override
     public String toString() {
         return value ? "true": "false";

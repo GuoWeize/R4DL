@@ -113,6 +113,10 @@ public final class SetEntity<E extends BaseEntity> extends BaseCollectionEntity 
         return include(set);
     }
 
+    public static SetEntity newInstance() {
+        return new SetEntity<>();
+    }
+
     @Override
     public String getItemType() {
         return type;

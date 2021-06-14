@@ -83,11 +83,11 @@ public final class ModelJsonParser extends StdDeserializer<Object> {
         String content = GeneralJavaHeaderGenerator.generateImports()
             + GeneralJavaHeaderGenerator.generateJavadoc(name + ".java", PathConsts.MODEL_JSON_FILE)
             + generateFileHead(name)
-            + generateFields(fields2type)
+            + generateFields(name, fields2type)
             + generateGetType(name)
-            + generateIsPrimitive()
             + generateIsRequirement(isRequirement)
             + generateEquals(name, fields2type)
+            + generateNewInstance(name)
             + generateFileEnd();
         String path = PathConsts.DYNAMICS_JAVA_CODE_PATH + name + ".java";
         try {
@@ -108,13 +108,54 @@ public final class ModelJsonParser extends StdDeserializer<Object> {
         return String.format("public final class %s extends BaseEntity {\n", name);
     }
 
-    private String generateFields(Map<String, String> fields2type) {
+    private String defaultValue(String type, boolean isRequired, String defaultValue) {
+        if (! isRequired) {
+            return " = null";
+        }
+        if (defaultValue == null) {
+            if (type.startsWith("set<")) {
+                return " = SetEntity.newInstance()";
+            }
+            if (type.startsWith("list<")) {
+                return " = ListEntity.newInstance()";
+            }
+            if (type.startsWith("map<")) {
+                return " = MapEntity.newInstance()";
+            }
+            if (Objects.equals(type, "boolean")) {
+                return " = BoolEntity.newInstance()";
+            }
+            if (Objects.equals(type, "integer")) {
+                return " = IntEntity.newInstance()";
+            }
+            if (Objects.equals(type, "float")) {
+                return " = FloatEntity.newInstance()";
+            }
+            if (Objects.equals(type, "string")) {
+                return " = StringEntity.newInstance()";
+            }
+            return String.format(" = %s.newInstance()", type);
+        }
+        else {
+            // TODO
+            return "";
+        }
+    }
+
+    private String generateFields(String name, Map<String, String> fields2type) {
         StringBuilder content = new StringBuilder();
         for (Map.Entry<String, String> entry: fields2type.entrySet()) {
+            String type = entry.getValue();
+            String filedName = entry.getKey();
+            boolean isRequired = true;
+            if (Objects.equals(name, type)) {
+                isRequired = false;
+            }
             content.append("    public ")
-                .append(TypeManager.type2class(entry.getValue()))
+                .append(TypeManager.type2class(type))
                 .append(' ')
-                .append(entry.getKey())
+                .append(filedName)
+                .append(defaultValue(entry.getValue(), isRequired, null))
                 .append(";\n");
         }
         return content.append('\n').toString();
@@ -122,10 +163,6 @@ public final class ModelJsonParser extends StdDeserializer<Object> {
 
     private String generateGetType(String name) {
         return String.format("    @Override\n    public String getType() {\n        return \"%s\";\n    }\n\n", name);
-    }
-
-    private String generateIsPrimitive() {
-        return "    @Override\n    public boolean isPrimitive() {\n        return false;\n    }\n\n";
     }
 
     private String generateIsRequirement(boolean isRequirement) {
@@ -146,6 +183,10 @@ public final class ModelJsonParser extends StdDeserializer<Object> {
             + String.format("            %s\n", result)
             + "        );\n"
             + "    }\n";
+    }
+
+    private String generateNewInstance(String name) {
+        return String.format("    public static %s newInstance() {\n        return new %s();\n    }\n\n", name, name);
     }
 
     private String generateFileEnd() {

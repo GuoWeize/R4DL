@@ -27,12 +27,6 @@ public abstract class BaseEntity {
     public abstract String getType();
 
     /**
-     * Primitive types include: BoolEntity, FloatEntity, IntEntity, StringEntity.
-     * @return whether this entity is a primitive type
-     */
-    public abstract boolean isPrimitive();
-
-    /**
      * Only entities of requirement types can be processed by next steps.
      * @return whether this entity is a requirement type
      */
@@ -80,5 +74,9 @@ public abstract class BaseEntity {
             return (this.equal((BaseEntity)obj)).getValue();
         }
         return false;
+    }
+
+    public final BoolEntity isNull(Object entity) {
+        return BoolEntity.valueOf(entity == null);
     }
 }

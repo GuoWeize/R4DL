@@ -20,6 +20,7 @@ public final class LogicParser {
     private static final String ARGS_DELIMITER = ", ";
 
     private static final Map<String, Function<List<String>, String>> OPERATORS = Map.ofEntries(
+        Map.entry(OperatorConsts.CHECK_NULL, LogicParser::isNull),
         Map.entry(OperatorConsts.LOGICAL_NOT, LogicParser::not),
         Map.entry(OperatorConsts.LOGICAL_AND, LogicParser::and),
         Map.entry(OperatorConsts.LOGICAL_OR, LogicParser::or),
@@ -84,6 +85,11 @@ public final class LogicParser {
     private static String customizedFunction(String name, List<String> arguments) {
         checkArgsNumberAmount(arguments, i -> i > 0);
         return String.format("%s(%s)", name, String.join(ARGS_DELIMITER, arguments));
+    }
+
+    private static String isNull(List<String> arguments) {
+        checkArgsNumberAmount(arguments, i -> i == 1);
+        return String.format("BaseEntity.isNull(%s)", arguments.get(0));
     }
 
     private static String not(List<String> arguments) {

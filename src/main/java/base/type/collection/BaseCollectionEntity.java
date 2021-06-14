@@ -34,11 +34,6 @@ public abstract class BaseCollectionEntity extends BaseEntity {
     public abstract IntEntity size();
 
     @Override
-    public final boolean isPrimitive() {
-        return false;
-    }
-
-    @Override
     public final boolean isRequirement() {
         return false;
     }
