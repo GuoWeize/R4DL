@@ -1,0 +1,2 @@
+create: destroy
+destroy: create, make

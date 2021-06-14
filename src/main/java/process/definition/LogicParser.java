@@ -41,12 +41,18 @@ public final class LogicParser {
         Map.entry(OperatorConsts.ALL_SATISFY, LogicParser::all),
         Map.entry(OperatorConsts.ANY_SATISFY, LogicParser::any),
         Map.entry(OperatorConsts.STRING_FIND, LogicParser::find),
-        Map.entry(OperatorConsts.STRING_SUBSTRING, LogicParser::substring)
+        Map.entry(OperatorConsts.STRING_SUBSTRING, LogicParser::substring),
+        Map.entry(OperatorConsts.SYNONYMS_WORD, LogicParser::synonym),
+        Map.entry(OperatorConsts.ANTONYM_WORDS, LogicParser::antonym)
     );
 
     public static String parse(JsonNode node) {
         if (node.isTextual()) {
-            return node.asText();
+            String value = node.asText();
+            if (value.startsWith("\"") && value.endsWith("\"")) {
+                return String.format("StringEntity.valueOf(%s)", value);
+            }
+            return value;
         } else if (node.isBoolean()) {
             return String.format("BoolEntity.valueOf(%b)", node.asBoolean());
         } else if (node.isInt()) {
@@ -207,4 +213,13 @@ public final class LogicParser {
         return String.format("%s.substring(%s, %s)", arguments.get(0), arguments.get(1), arguments.get(2));
     }
 
+    private static String synonym(List<String> arguments) {
+        checkArgsNumberAmount(arguments, i -> i == 2);
+        return String.format("StringEntity.synonym(%s, %s)", arguments.get(0), arguments.get(1));
+    }
+
+    private static String antonym(List<String> arguments) {
+        checkArgsNumberAmount(arguments, i -> i == 2);
+        return String.format("StringEntity.antonym(%s, %s)", arguments.get(0), arguments.get(1));
+    }
 }

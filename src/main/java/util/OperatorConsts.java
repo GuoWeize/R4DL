@@ -80,6 +80,8 @@ public class OperatorConsts {
 
     public static final String STRING_FIND = OPS.get("string_find");
     public static final String STRING_SUBSTRING = OPS.get("string_substring");
+    public static final String SYNONYMS_WORD = OPS.get("synonyms_word");
+    public static final String ANTONYM_WORDS = OPS.get("antonym_words");
 
     public static final Set<String> UNARY_OPERATORS = Set.of(
         LOGICAL_NOT,
@@ -100,7 +102,9 @@ public class OperatorConsts {
         COMPARE_NOT_GREATER,
         COMPARE_NOT_LESS,
         COLLECTION_INCLUDE,
-        COLLECTION_IN
+        COLLECTION_IN,
+        SYNONYMS_WORD,
+        ANTONYM_WORDS
     );
     public static final Set<String> MULTIPLE_ARG_OPERATORS = Set.of(
         MAXIMUM_NUMBER,

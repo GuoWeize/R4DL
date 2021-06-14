@@ -211,7 +211,12 @@ public final class RuleTextParser extends BaseParser {
         } else {
             TextReader.rollBack(preToken);
         }
-        if (isNumeric(element) || isBoolean(element)) {
+        if (Objects.equals(element, "\"")) {
+            element = TextReader.nextToken();
+            TextReader.nextTokenWithTest("\"");
+            return String.format("\"\\\"%s\\\"\"", element);
+        }
+        else if (isNumeric(element) || isBoolean(element)) {
             return element;
         }
         return String.format("\"%s\"", identifierConvert(element));

@@ -128,6 +128,7 @@ An `<element>` has many conditions:
  * user-define function statement: statement of calling function defined by users
 
 #### single element
+ * literal type: such as: `true`, `666`, `0.1`, `"hello"`
  * parameter: `% <parameter_order_number> %`, for example, `%2%` means the 2nd parameter
  * variable: use the identifier defined before
  * field of entity: `<entity>.<field_name>`, for example, `ele.f` means field `f` in `ele`
@@ -166,8 +167,8 @@ All binary operators are:
 | not greater relation  | &lt;=   | both integer / float | boolean                               | whether the former is not greater than the latter
 | collection include    | include | same type of list / set / map | boolean                      | whether all elements of the latter are in the former
 | collection in         | in      | element_type + collection_type | boolean                     | whether the element is in the collection (keys of map)
-| synonyms word         | synonym | both string          | boolean                               | whether the two strings are synonyms
-| antonyms word         | antonym | both string          | boolean                               | whether the two strings are antonyms
+| synonym words         | synonym | both string          | boolean                               | whether the two strings are synonyms
+| antonym words         | antonym | both string          | boolean                               | whether the two strings are antonyms
 
 #### multi-para operator statement
 The format is: `<symbol> ( <element>, <element>, ... )`, in which `<element>`s are separated by `,`.
@@ -216,7 +217,7 @@ The basic format is: `[ <entity>, <entity>, ... ]`, in where `<entity>`s are sep
  * basic element:
    - boolean: JSON boolean value, `true` / `false`
    - integer or float: JSON number value, like `3` or `2.15`
-   - string: JSON string: like `'hello'`
+   - string: JSON string: like `"hello"`
  * collection type:
    - list: `"-list-": [ <entity>, <entity>, ... ]`
    - set: `"-set-": [ <entity>, <entity>, ... ]`

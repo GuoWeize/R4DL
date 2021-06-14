@@ -1,7 +1,7 @@
 package base.type.primitive;
 
 import base.type.BaseEntity;
-import base.type.collection.ListEntity;
+import util.ThesaurusReader;
 
 import java.util.Objects;
 
@@ -36,6 +36,14 @@ public final class StringEntity extends BasePrimitiveEntity {
 
     public StringEntity substring(IntEntity beginIndex, IntEntity endIndex) {
         return new StringEntity(this.value.substring(beginIndex.getValue(), endIndex.getValue()));
+    }
+
+    public static BoolEntity synonym(StringEntity string1, StringEntity string2) {
+        return BoolEntity.valueOf(ThesaurusReader.isSynonym(string1.getValue(), string2.getValue()));
+    }
+
+    public static BoolEntity antonym(StringEntity string1, StringEntity string2) {
+        return BoolEntity.valueOf(ThesaurusReader.isAntonym(string1.getValue(), string2.getValue()));
     }
 
     public String getValue() {

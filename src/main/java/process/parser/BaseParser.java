@@ -43,7 +43,7 @@ public abstract class BaseParser {
             Files.write(Paths.get(outputFilePath), result.getBytes(StandardCharsets.UTF_8));
         }
         catch (IOException e) {
-            log.error("Can not write file: " + filePath, e);
+            log.error("Can not read file: " + filePath, e);
         }
         log.info("Finish parse rule definition file: " + filePath);
     }

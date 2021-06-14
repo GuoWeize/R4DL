@@ -7,6 +7,7 @@ import base.type.primitive.BoolEntity;
 import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
 import process.requirement.EntityParser;
+import util.ThesaurusReader;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -46,6 +47,7 @@ public final class Processor {
     }
 
     public static void run() {
+        ThesaurusReader.initialization();
         initialArgs();
         judgeRules();
         outputResult();

@@ -146,11 +146,12 @@ rule input_output_interlock
     )
 }
 
-function demo
-(functional) -> integer {
-    max (
-        1,
-        2,
-        3
-    )
+rule demo
+(functional) -> boolean {
+    {"create" synonym "make"}
+}
+
+rule demo2
+(functional) -> boolean {
+    {max( 1, 2, 3) == 3}
 }

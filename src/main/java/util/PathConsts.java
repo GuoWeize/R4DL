@@ -35,6 +35,7 @@ public final class PathConsts {
     public static final String DEFINITION_PATH = PROJECT_PATH + CONFIGS.get("definition_path");
     public static final String DYNAMICS_JAVA_CODE_PATH = PROJECT_PATH + CONFIGS.get("dynamics_java_code_path");
     public static final String DYNAMICS_CLASS_PATH = PROJECT_PATH + CONFIGS.get("dynamics_class_path");
+    public static final String THESAURUS_PATH = PROJECT_PATH + CONFIGS.get("thesaurus_path");
 
     public static final String MODEL_TEXT_FILE = DEFINITION_PATH + CONFIGS.get("model_text_file_name");
     public static final String MODEL_JSON_FILE = DEFINITION_PATH + CONFIGS.get("model_json_file_name");
@@ -46,4 +47,7 @@ public final class PathConsts {
     public static final String RULE_JAVA_FILE = DYNAMICS_JAVA_CODE_PATH + RULE_JAVA_NAME;
 
     public static final String REQUIREMENT_FILE = REQUIREMENT_PATH + CONFIGS.get("requirement_file_name");
+
+    public static final String SYNONYM_FILE_NAME = THESAURUS_PATH + CONFIGS.get("synonym_file_name");
+    public static final String ANTONYM_FILE_NAME = THESAURUS_PATH + CONFIGS.get("antonym_file_name");
 }
