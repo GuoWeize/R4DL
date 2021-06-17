@@ -26,7 +26,7 @@ public final class ThesaurusReader {
         while ((str = bufferedReader.readLine()) != null) {
             String[] keyword2list = str.split(": ");
             String keyword = keyword2list[0];
-            String[] words = keyword2list[1].split(", ");
+            String[] words = keyword2list[1].split(" ");
             dict.put(keyword, Set.of(words));
         }
         inputStream.close();
@@ -44,15 +44,15 @@ public final class ThesaurusReader {
     }
 
     public static boolean isSynonym(String string1, String string2) {
-        String str1 = string1.toLowerCase(Locale.US);
-        String str2 = string2.toLowerCase(Locale.US);
+        String str1 = string1.toLowerCase(Locale.US).replaceAll(" ", "_");
+        String str2 = string2.toLowerCase(Locale.US).replaceAll(" ", "_");
         return SYNONYMS.getOrDefault(str1, new HashSet<>()).contains(str2)
             || SYNONYMS.getOrDefault(str2, new HashSet<>()).contains(str1);
     }
 
     public static boolean isAntonym(String string1, String string2) {
-        String str1 = string1.toLowerCase(Locale.US);
-        String str2 = string2.toLowerCase(Locale.US);
+        String str1 = string1.toLowerCase(Locale.US).replaceAll(" ", "_");
+        String str2 = string2.toLowerCase(Locale.US).replaceAll(" ", "_");
         return ANTONYMS.getOrDefault(str1, new HashSet<>()).contains(str2)
             || ANTONYMS.getOrDefault(str2, new HashSet<>()).contains(str1);
     }

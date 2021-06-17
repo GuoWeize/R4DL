@@ -148,7 +148,7 @@ rule input_output_interlock
 
 rule demo
 (functional) -> boolean {
-    {"create" synonym "make"}
+    {"at_least" synonym "at_most"}
 }
 
 rule demo2
