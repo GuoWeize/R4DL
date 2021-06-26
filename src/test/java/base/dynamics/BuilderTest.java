@@ -1,7 +1,9 @@
 package base.dynamics;
 
-import base.type.BaseEntity;
-import base.type.primitive.StringEntity;
+import basicTypes.BaseEntity;
+import basicTypes.primitive.StringEntity;
+import dynamics.Builder;
+import dynamics.Compiler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

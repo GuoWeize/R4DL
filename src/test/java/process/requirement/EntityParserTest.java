@@ -1,12 +1,16 @@
 package process.requirement;
 
-import base.dynamics.Compiler;
+import api.Main;
+import dynamics.Compiler;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import reqParser.EntityParser;
+import util.ModeEnum;
 import util.PathConsts;
+import util.TypeEnum;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,7 +26,7 @@ class EntityParserTest {
 
     @Test
     void deserialize() {
-        String path = PathConsts.REQUIREMENT_FILE;
+        String path = PathConsts.file(ModeEnum.REQUIREMENT, TypeEnum.JSON);
         File file = new File(path);
         long length = file.length();
         byte[] content = new byte[(int) length];

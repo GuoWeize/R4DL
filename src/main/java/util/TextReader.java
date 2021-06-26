@@ -138,14 +138,4 @@ public final class TextReader {
         }
     }
 
-    public static void main(String[] args) {
-        readFile(PathConsts.RULE_TEXT_FILE);
-        String token = nextToken();
-        while (! Objects.equals(token, EMPTY_STRING)) {
-            System.out.print(token);
-            System.out.print(" ");
-            token = nextToken();
-        }
-    }
-
 }

@@ -5,8 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import process.definition.RuleParser;
+import codeGenerator.RuleParser;
+import util.ModeEnum;
 import util.PathConsts;
+import util.TypeEnum;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,8 +19,7 @@ class RuleParserTest {
 
     @BeforeEach
     void setUp() {
-        String path = PathConsts.RULE_JSON_FILE;
-        File file = new File(path);
+        File file = new File(PathConsts.file(ModeEnum.RULE, TypeEnum.JSON));
         long length = file.length();
         byte[] content = new byte[(int) length];
         try {

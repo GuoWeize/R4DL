@@ -10,10 +10,10 @@ RUReReAD can traversal all requirements to detect relationships automatically wi
 ## To start using RUReReAD
 
 User should use it by 4 steps:
- * Input definitions of requirements' models in file [model.txt](src/main/resources/definitionFile/model.txt). Specific syntax rules are shown below.
+ * Input definitions of requirements' models in file [model.txt](src/main/resources/models/model.txt). Specific syntax rules are shown below.
  * Input definitions of relationships recognition rules in file [rule.txt](src/main/resources/definitionFile/rule.txt). Specific syntax rules are shown below.
  * Input requirements to be detected in file [requirement.json](src/main/resources/requirementFile/requirement.json).
- * Run main function in file [Demo.java](src/main/java/process/Demo.java).
+ * Run main function in file [api.Main.java](src/main/java/process/Demo.java).
 
 ## To start writing definitions
 The syntax of language is familiar to other programming language, there can be any number of space or newline between tokens.

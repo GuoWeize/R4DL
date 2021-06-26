@@ -1,12 +1,15 @@
 package process.definition.model;
 
+import api.Main;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import process.definition.ModelJsonParser;
+import codeGenerator.ModelJsonParser;
+import util.ModeEnum;
 import util.PathConsts;
+import util.TypeEnum;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,7 +20,7 @@ class ModelParserTest {
 
     @BeforeEach
     void setUp() {
-        File file = new File(PathConsts.MODEL_JSON_FILE);
+        File file = new File(PathConsts.file(ModeEnum.MODEL, TypeEnum.JSON));
         long length = file.length();
         byte[] content = new byte[(int) length];
         try {

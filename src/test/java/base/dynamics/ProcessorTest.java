@@ -3,11 +3,14 @@ package base.dynamics;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import dynamics.Compiler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import process.judge.Processor;
-import process.requirement.EntityParser;
+import judge.Processor;
+import reqParser.EntityParser;
+import util.ModeEnum;
 import util.PathConsts;
+import util.TypeEnum;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -23,7 +26,7 @@ class ProcessorTest {
 
     @Test
     void process() {
-        String path = PathConsts.REQUIREMENT_FILE;
+        String path = PathConsts.file(ModeEnum.REQUIREMENT, TypeEnum.JSON);
         File file = new File(path);
         long length = file.length();
         byte[] content = new byte[(int) length];
