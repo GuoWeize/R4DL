@@ -21,19 +21,16 @@ public final class gRPCServer {
             .build()
             .start();
         System.out.println("Server started, listening on " + port);
-        Runtime.getRuntime().addShutdownHook(new Thread() {
-            @Override
-            public void run() {
-                // Use stderr here since the logger may have been reset by its JVM shutdown hook.
-                System.err.println("*** shutting down gRPC server since JVM is shutting down");
-                try {
-                    gRPCServer.this.stop();
-                } catch (InterruptedException e) {
-                    e.printStackTrace(System.err);
-                }
-                System.err.println("*** server shut down");
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            // Use stderr here since the logger may have been reset by its JVM shutdown hook.
+            System.err.println("*** shutting down gRPC server since JVM is shutting down");
+            try {
+                gRPCServer.this.stop();
+            } catch (InterruptedException e) {
+                e.printStackTrace(System.err);
             }
-        });
+            System.err.println("*** server shut down");
+        }));
     }
 
     private void stop() throws InterruptedException {
@@ -57,8 +54,8 @@ public final class gRPCServer {
     private static class HelloIml extends RequirementGrpc.RequirementImplBase{
         @Override
         public void getJSON(Value request, StreamObserver<Value> responseObserver) {
-            // Value helloResponse=Value.newBuilder().setMessage("Hello "+request.getValue()+", I'm Java grpc Server").build();
-            Value helloResponse=Value.newBuilder().setValue("Hello "+request.getValue()+", I'm Java grpc Server").build();
+            String response = "Hello " + request.getValue() + ", I'm Java grpc Server";
+            Value helloResponse = Value.newBuilder().setValue(response).build();
 
             responseObserver.onNext(helloResponse);
             responseObserver.onCompleted();
