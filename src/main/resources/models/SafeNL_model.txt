@@ -1,0 +1,62 @@
+type event {
+    name string;
+}
+
+type time {
+    clock integer;
+}
+
+type state {
+    object string;
+    name string;
+    and_states set<state>;
+    or_states set<state>;
+}
+
+requirement imply {
+    state_1 state;
+    state_2 state;
+}
+
+requirement exclude {
+    state_1 state;
+    state_2 state;
+}
+
+requirement permit {
+    state_1 state;
+    event_2 event;
+}
+
+requirement disallow {
+    state_1 state;
+    event_2 event;
+}
+
+requirement within_forbid {
+    event_1 event;
+    event_2 event;
+    time_3 time;
+}
+
+requirement trigger {
+    state_1 state;
+    event_2 event;
+    time_3 time;
+}
+
+requirement terminate {
+    state_1 state;
+    event_2 event;
+    time_3 time;
+}
+
+requirement forbid {
+    event_1 event;
+    event_2 event;
+}
+
+requirement coincide {
+    event_1 event;
+    event_2 event;
+}

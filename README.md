@@ -62,11 +62,11 @@ The EBNF formats are:
 
 | Nonterminal Character        | Definition |
 |:----------------------------:|:----------:|
-| `<requirements_definitions>` | **{ {** `<requirement_definition>` **} {** `<type_definition>` **} }**
+| `<requirements_definitions>` | **{ {** `<requirement_definition>` **}<sup>+</sup> {** `<type_definition>` **} }**
 | `<requirement_definition>`   | **requirement** `<definition>`
 | `<type_definition>`          | **type** `<definition>`
 | `<definition>`               | `<identifier>` **'{'** `<element_definition>` **'}'**
-| `<element_definition>`       | **{** `<element_name>` `<element_type>` **; }**
+| `<element_definition>`       | **{** `<element_name>` `<element_type>` **; }<sup>+</sup>**
 | `<element_name>`             | `<identifier>`
 | `<element_type>`             | `<base_type>` **&#124;** `<collection_type>` **&#124;** `<user-defined_type>`
 | `<default_value>`            | `<boolean>` **&#124;** `<integer>` **&#124;** `<float>` **&#124;** `<string>`
@@ -167,6 +167,8 @@ All binary operators are:
 | not greater relation  | &lt;=   | both integer / float | boolean                               | whether the former is not greater than the latter
 | collection include    | include | same type of list / set / map | boolean                      | whether all elements of the latter are in the former
 | collection in         | in      | element_type + collection_type | boolean                     | whether the element is in the collection (keys of map)
+| set intersection      | inter   | same type of set     | set                                   | calculate the intersection of the two sets
+| set union             | union   | same type of set     | set                                   | calculate the union of the two sets
 | synonym words         | synonym | both string          | boolean                               | whether the two strings are synonyms
 | antonym words         | antonym | both string          | boolean                               | whether the two strings are antonyms
 

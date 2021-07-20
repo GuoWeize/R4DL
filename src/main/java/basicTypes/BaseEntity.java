@@ -37,7 +37,7 @@ public abstract class BaseEntity {
      * @param entity another entity
      * @return A "true" BoolEntity if two entities are equal, "false" BoolEntity otherwise
      */
-    public abstract BoolEntity equal(BaseEntity entity);
+    public abstract BoolEntity equal(final BaseEntity entity);
 
     /**
      * Check whether entity1 is equal to entity2, which means all fields of two entities are equal.<br>
@@ -46,7 +46,7 @@ public abstract class BaseEntity {
      * @param entity2 another entity that extends {@link BaseEntity}
      * @return A "true" BoolEntity if two entities are equal, "false" BoolEntity otherwise
      */
-    public static BoolEntity equal(BaseEntity entity1, BaseEntity entity2) {
+    public static BoolEntity equal(final BaseEntity entity1, final BaseEntity entity2) {
         if (entity1 == null || entity2 == null) {
             return BoolEntity.FALSE;
         }

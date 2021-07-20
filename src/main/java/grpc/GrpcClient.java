@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
  * @date 2021/6/26
  */
 @Slf4j
-public class GrpcClient {
+public final class GrpcClient {
 
     private static final int AWAIT_TERMINATION_TIME = 3;
     private final List<ManagedChannel> channels = new ArrayList<>();

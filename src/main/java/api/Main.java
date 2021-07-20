@@ -10,6 +10,7 @@ import codeGenerator.RuleParser;
 import judge.Processor;
 import languageParser.BaseParser;
 import reqParser.EntityParser;
+import reqParser.RequirementParser;
 import util.ModeEnum;
 import util.PathConsts;
 import util.TypeEnum;
@@ -32,7 +33,7 @@ public class Main {
         Map.entry(ModeEnum.REQUIREMENT, new EntityParser())
     );
 
-    public static void run(String model, String rule, String requirement) {
+    public static void run(final String model, final String rule, final String requirement) {
         PathConsts.initialization(model, rule, requirement);
         definitions2json();
         json2java();
@@ -65,7 +66,7 @@ public class Main {
         }
     }
 
-    private static void parseJsonFile(ModeEnum mode) {
+    private static void parseJsonFile(final ModeEnum mode) {
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
         module.addDeserializer(Object.class, PARSERS.get(mode));
@@ -77,7 +78,7 @@ public class Main {
         }
     }
 
-    private static String readFile(String filePath) {
+    private static String readFile(final String filePath) {
         File file = new File(filePath);
         long length = file.length();
         byte[] content = new byte[(int) length];
@@ -92,6 +93,6 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        run(null, null, null);
+        run("SafeNL_model", "SafeNL_rule", "SafeNL_reqs");
     }
 }

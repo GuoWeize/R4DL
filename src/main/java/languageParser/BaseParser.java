@@ -35,7 +35,7 @@ public abstract class BaseParser {
         parseTextFile(ModeEnum.RULE);
     }
 
-    public static void parseTextFile(ModeEnum mode) {
+    public static void parseTextFile(final ModeEnum mode) {
         String filePath = PathConsts.file(mode, TypeEnum.LANGUAGE);
         TextReader.readFile(filePath);
         try {
