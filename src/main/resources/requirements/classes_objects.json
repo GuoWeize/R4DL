@@ -1,0 +1,215 @@
+[
+    {
+        "#": "class",
+        "*": "entity",
+        "base": "class"
+    },
+    {
+        "#": "dependency class",
+        "*": "entity",
+        "base": "dependency class"
+    },
+    {
+        "#": "human resource assignment class",
+        "*": "entity",
+        "base": "human resource assignment class"
+    },
+    {
+        "#": "assignments collection class",
+        "*": "entity",
+        "base": "assignments collection class"
+    },
+    {
+        "#": "object of assignments collection class",
+        "*": "entity",
+        "base": "object",
+        "entirety": {"entity": "assignments collection class"}
+    },
+    {
+        "#": "human resource class",
+        "*": "entity",
+        "base": "human resource class"
+    },
+    {
+        "#": "GUI class",
+        "*": "entity",
+        "base": "GUI class"
+    },
+    {
+        "#": "resource tree table model class",
+        "*": "entity",
+        "base": "resource tree table model class"
+    },
+    {
+        "#": "object of resource tree table model class",
+        "*": "entity",
+        "base": "object",
+        "entirety": {"entity": "resource tree table model class"}
+    },
+    {
+        "#": "load distribution class",
+        "*": "entity",
+        "base": "load distribution class"
+    },
+    {
+        "#": "objects of a load distribution class",
+        "*": "entity",
+        "base": "object",
+        "entirety": {"entity": "load distribution class"},
+        "isAll": true
+    },
+    {
+        "#": "load distribution class",
+        "*": "entity",
+        "base": "load distribution class"
+    },
+    {
+        "#": "objects of dependency classes",
+        "*": "entity",
+        "base": "object",
+        "entirety": {"entity": "dependency class"},
+        "isAll": true
+    },
+    {
+        "#": "object of the dependency collection",
+        "*": "entity",
+        "base": "object",
+        "entirety": {"entity": "dependency collection"}
+    },
+    {
+        "#": "object of task manager",
+        "*": "entity",
+        "base": "object",
+        "entirety": {"entity": "task manager"}
+    },
+    {
+        "#": "task manager class",
+        "*": "entity",
+        "base": "task manager class"
+    },
+    {
+        "#": "dependency collection class",
+        "*": "entity",
+        "base": "dependency collection class"
+    },
+    {
+        "#": "object of dependency collection class",
+        "*": "entity",
+        "base": "object",
+        "entirety": {"entity": "dependency collection class"}
+    },
+    {
+        "#": "recalculating task schedule algorithm class",
+        "*": "entity",
+        "base": "recalculating task schedule algorithm class"
+    },
+    {
+        "#": "object of the recalculating task schedule algorithm class",
+        "*": "entity",
+        "base": "object",
+        "entirety": {"entity": "recalculating task schedule algorithm class"}
+    },
+    {
+        "#": "algorithm class",
+        "*": "entity",
+        "base": "algorithm class"
+    },
+    {
+        "#": "object of dependency class",
+        "*": "entity",
+        "base": "object",
+        "entirety": {"entity": "dependency class"}
+    },
+    {
+        "#": "holiday class",
+        "*": "entity",
+        "base": "holiday class"
+    },
+    {
+        "#": "taskManager class",
+        "*": "entity",
+        "base": "taskManager class"
+    },
+    {
+        "#": "object of taskManager class",
+        "*": "entity",
+        "base": "object",
+        "entirety": {"entity": "taskManager class"}
+    },
+    {
+        "#": "ResourceAssignmentCollection class",
+        "*": "entity",
+        "base": "ResourceAssignmentCollection class"
+    },
+    {
+        "#": "task class",
+        "*": "entity",
+        "base": "task class"
+    },
+    {
+        "#": "GanttCalendar class",
+        "*": "entity",
+        "base": "GanttCalendar class"
+    },
+    {
+        "#": "object of GanttCalendar class",
+        "*": "entity",
+        "base": "object",
+        "entirety": {"entity": "GanttCalendar class"}
+    },
+    {
+        "#": "TaskLength class",
+        "*": "entity",
+        "base": "TaskLength class"
+    },
+    {
+        "#": "object of TaskLength class",
+        "*": "entity",
+        "base": "object",
+        "entirety": {"entity": "TaskLength class"}
+    },
+    {
+        "#": "GanttProject class",
+        "*": "entity",
+        "base": "GanttProject class"
+    },
+    {
+        "#": "GanttTree2 class",
+        "*": "entity",
+        "base": "GanttTree2 class"
+    },
+    {
+        "#": "object of a class",
+        "*": "entity",
+        "base": "object",
+        "entirety": {"entity": "class"}
+    },
+    {
+        "#": "resource assignments collection class",
+        "*": "entity",
+        "base": "resource assignments collection class"
+    },
+    {
+        "#": "object of the resource assignments collection class",
+        "*": "entity",
+        "base": "object",
+        "entirety": {"entity": "resource assignments collection class"}
+    },
+    {
+        "#": "objects of the human resource class",
+        "*": "entity",
+        "base": "object",
+        "entirety": {"entity": "human resource class"},
+        "isAll": true
+    },
+    {
+        "#": "multiple objects of the human resource assignment class",
+        "*": "entity",
+        "base": "object",
+        "modifier": {
+            "-set-": ["multiple"]
+        },
+        "entirety": {"entity": "human resource assignment class"},
+        "isAll": true
+    }
+]

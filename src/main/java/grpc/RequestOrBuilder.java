@@ -3,31 +3,34 @@
 
 package grpc;
 
+import com.google.protobuf.ByteString;
+
+/**
+ * @author protocol buffer compiler
+ */
 public interface RequestOrBuilder extends
     // @@protoc_insertion_point(interface_extends:Request)
     com.google.protobuf.MessageOrBuilder {
 
-  /**
-   * <code>string type = 1;</code>
-   * @return The type.
-   */
-  java.lang.String getType();
-  /**
-   * <code>string type = 1;</code>
-   * @return The bytes for type.
-   */
-  com.google.protobuf.ByteString
-      getTypeBytes();
+    /**
+    * <code>string type = 1;</code>
+    * @return The type.
+    */
+    String getType();
+    /**
+    * <code>string type = 1;</code>
+    * @return The bytes for type.
+    */
+    ByteString getTypeBytes();
 
-  /**
-   * <code>string description = 2;</code>
-   * @return The description.
-   */
-  java.lang.String getDescription();
-  /**
-   * <code>string description = 2;</code>
-   * @return The bytes for description.
-   */
-  com.google.protobuf.ByteString
-      getDescriptionBytes();
+    /**
+    * <code>string description = 2;</code>
+    * @return The description.
+    */
+    String getDescription();
+    /**
+    * <code>string description = 2;</code>
+    * @return The bytes for description.
+    */
+    ByteString getDescriptionBytes();
 }

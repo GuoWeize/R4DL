@@ -1,0 +1,298 @@
+[
+    {
+        "#": "task",
+        "*": "entity",
+        "base": "task"
+    },
+    {
+        "#": "human resource",
+        "*": "entity",
+        "base": "human resource"
+    },
+    {
+        "#": "human resource assignment",
+        "*": "entity",
+        "base": "human resource assignment"
+    },
+    {
+        "#": "task property",
+        "*": "entity",
+        "base": "task property"
+    },
+    {
+        "#": "resource tree",
+        "*": "entity",
+        "base": "resource tree"
+    },
+    {
+        "#": "resource tree table model",
+        "*": "entity",
+        "base": "resource tree table model"
+    },
+    {
+        "#": "task manager",
+        "*": "entity",
+        "base": "task manager"
+    },
+    {
+        "#": "distribution",
+        "*": "entity",
+        "base": "distribution"
+    },
+    {
+        "#": "GUI",
+        "*": "entity",
+        "base": "GUI"
+    },
+    {
+        "#": "user",
+        "*": "entity",
+        "base": "user"
+    },
+    {
+        "#": "date picker control",
+        "*": "entity",
+        "base": "date picker control"
+    },
+    {
+        "#": "constraint",
+        "*": "entity",
+        "base": "constraint"
+    },
+    {
+        "#": "dependency",
+        "*": "entity",
+        "base": "dependency"
+    },
+    {
+        "#": "dependency collection",
+        "*": "entity",
+        "base": "dependency collection"
+    },
+    {
+        "#": "graphic area",
+        "*": "entity",
+        "base": "graphic area"
+    },
+    {
+        "#": "start/end date",
+        "*": "entity",
+        "base": "start/end date"
+    },
+    {
+        "#": "application",
+        "*": "entity",
+        "base": "application"
+    },
+    {
+        "#": "subtask",
+        "*": "entity",
+        "base": "subtask"
+    },
+    {
+        "#": "loop",
+        "*": "entity",
+        "base": "loop"
+    },
+    {
+        "#": "exception",
+        "*": "entity",
+        "base": "exception"
+    },
+    {
+        "#": "system",
+        "*": "entity",
+        "base": "system"
+    },
+    {
+        "#": "holiday",
+        "*": "entity",
+        "base": "holiday"
+    },
+    {
+        "#": "person",
+        "*": "entity",
+        "base": "person"
+    },
+    {
+        "#": "people",
+        "*": "entity",
+        "base": "people"
+    },
+    {
+        "#": "class constructor",
+        "*": "entity",
+        "base": "class constructor"
+    },
+    {
+        "#": "delete method",
+        "*": "entity",
+        "base": "delete method"
+    },
+    {
+        "#": "TaskId parameter",
+        "*": "entity",
+        "base": "TaskId parameter"
+    },
+    {
+        "#": "DefaultMutableTreeNode",
+        "*": "entity",
+        "base": "DefaultMutableTreeNode"
+    },
+    {
+        "#": "GanttTreeTableNode",
+        "*": "entity",
+        "base": "GanttTreeTableNode"
+    },
+    {
+        "#": "TaskNode",
+        "*": "entity",
+        "base": "TaskNode"
+    },
+    {
+        "#": "AdjustTaskBoundsAlgorithm",
+        "*": "entity",
+        "base": "AdjustTaskBoundsAlgorithm"
+    },
+    {
+        "#": "task name",
+        "*": "entity",
+        "base": "task name"
+    },
+    {
+        "#": "progress",
+        "*": "entity",
+        "base": "progress"
+    },
+    {
+        "#": "task node",
+        "*": "entity",
+        "base": "task node"
+    },
+    {
+        "#": "task tree model",
+        "*": "entity",
+        "base": "task tree model"
+    },
+    {
+        "#": "occurrence",
+        "*": "entity",
+        "base": "occurrence"
+    },
+    {
+        "#": "user interface",
+        "*": "entity",
+        "base": "user interface"
+    },
+    {
+        "#": "milestone",
+        "*": "entity",
+        "base": "milestone"
+    },
+    {
+        "#": "name",
+        "*": "entity",
+        "base": "name"
+    },
+    {
+        "#": "phone",
+        "*": "entity",
+        "base": "phone"
+    },
+    {
+        "#": "email",
+        "*": "entity",
+        "base": "email"
+    },
+    {
+        "#": "project",
+        "*": "entity",
+        "base": "project"
+    },
+    {
+        "#": "relationship",
+        "*": "entity",
+        "base": "relationship"
+    },
+    {
+        "#": "resource",
+        "*": "entity",
+        "base": "resource"
+    },
+    {
+        "#": "chart",
+        "*": "entity",
+        "base": "chart"
+    },
+    {
+        "#": "TaskManager",
+        "*": "entity",
+        "base": "TaskManager"
+    },
+    {
+        "#": "resource assignments",
+        "*": "entity",
+        "base": "resource assignment",
+        "isAll": true
+    },
+    {
+        "#": "human resource assignments",
+        "*": "entity",
+        "base": "human resource assignment",
+        "isAll": true
+    },
+    {
+        "#": "dependencies",
+        "*": "entity",
+        "base": "dependency",
+        "isAll": true
+    },
+    {
+        "#": "human resources",
+        "*": "entity",
+        "base": "human resource",
+        "isAll": true
+    },
+    {
+        "#": "tasks",
+        "*": "entity",
+        "base": "task",
+        "isAll": true
+    },
+    {
+        "#": "dependency changes",
+        "*": "entity",
+        "base": "dependency change",
+        "isAll": true
+    },
+    {
+        "#": "constraints",
+        "*": "entity",
+        "base": "constraint",
+        "isAll": true
+    },
+    {
+        "#": "holidays",
+        "*": "entity",
+        "base": "holiday",
+        "isAll": true
+    },
+    {
+        "#": "subtasks",
+        "*": "entity",
+        "base": "subtask",
+        "isAll": true
+    },
+    {
+        "#": "milestones",
+        "*": "entity",
+        "base": "milestone",
+        "isAll": true
+    },
+    {
+        "#": "resources",
+        "*": "entity",
+        "base": "resource",
+        "isAll": true
+    }
+]

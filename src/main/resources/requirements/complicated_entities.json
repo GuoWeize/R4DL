@@ -1,0 +1,602 @@
+[
+    {
+        "#": "dependency between one task and one human resource",
+        "*": "entity",
+        "base": "dependency",
+        "modifier": {
+            "-set-" : ["between one task and one human resource"]
+        }
+    },
+    {
+        "#": "collection of resource assignments",
+        "*": "entity",
+        "base": "collection",
+        "entirety": {"entity": "resource assignments"}
+    },
+    {
+        "#": "multiple human resources",
+        "*": "entity",
+        "base": "human resource",
+        "modifier": {
+            "-set-": ["multiple"]
+        },
+        "isAll": true
+    },
+    {
+        "#": "relationships between multiple human resources and a task",
+        "*": "entity",
+        "base": "relationships",
+        "modifier": {
+            "-set-": ["between multiple human resources and a task"]
+        }
+    },
+    {
+        "#": "class of task",
+        "*": "entity",
+        "base": "class",
+        "entirety": {"entity": "task"}
+    },
+    {
+        "#": "assignments of class of task",
+        "*": "entity",
+        "base": "assignment",
+        "entirety": {"entity": "class of task"},
+        "isAll": true
+    },
+    {
+        "#": "resource assignments which assigns this resource to tasks",
+        "*": "entity",
+        "base": "resource assignment",
+        "modifier": {
+            "-set-": ["which assigns this resource to tasks"]
+        },
+        "isAll": true
+    },
+    {
+        "#": "multiple objects of resource assignments which assigns this resource to tasks",
+        "*": "entity",
+        "base": "object",
+        "modifier": {
+            "-set-": ["multiple"]
+        },
+        "entirety": {"entity": "resource assignments which assigns this resource to tasks"},
+        "isAll": true
+    },
+    {
+        "#": "objects of resource assignments which assigns this resource to tasks",
+        "*": "entity",
+        "base": "object",
+        "entirety": {"entity": "resource assignments which assigns this resource to tasks"},
+        "isAll": true
+    },
+    {
+        "#": "list of objects of resource assignments which assigns this resource to tasks",
+        "*": "entity",
+        "base": "list",
+        "entirety": {"entity": "objects of resource assignments which assigns this resource to tasks"}
+    },
+    {
+        "#": "GUI class of task property",
+        "*": "entity",
+        "base": "GUI class",
+        "entirety": {"entity": "task property"}
+    },
+    {
+        "#": "subtrees of resource tree",
+        "*": "entity",
+        "base": "subtree",
+        "entirety": {"entity": "resource tree"},
+        "isAll": true
+    },
+    {
+        "#": "GUI class of human resource load distribution",
+        "*": "entity",
+        "base": "GUI class",
+        "entirety": {"entity": "human resource load distribution"}
+    },
+    {
+        "#": "hours each person is supposed to work",
+        "*": "entity",
+        "base": "hour",
+        "modifier": {
+            "-set-": ["each person is supposed to work"]
+        },
+        "isAll": true
+    },
+    {
+        "#": "length of a task",
+        "*": "entity",
+        "base": "length",
+        "entirety": {"entity": "task"}
+    },
+    {
+        "#": "bar on the GUI",
+        "*": "entity",
+        "base": "bar",
+        "modifier": {
+            "-set-": ["on the GUI"]
+        }
+    },
+    {
+        "#": "constraint of the dependency",
+        "*": "entity",
+        "base": "constraint",
+        "entirety": {"entity": "dependency"}
+    },
+    {
+        "#": "start date of the dependee task",
+        "*": "entity",
+        "base": "start date",
+        "entirety": {"entity": "dependee task"}
+    },
+    {
+        "#": "end date of the dependent task",
+        "*": "entity",
+        "base": "end date",
+        "entirety": {"entity": "dependent task"}
+    },
+    {
+        "#": "collection of dependency class",
+        "*": "entity",
+        "base": "collection",
+        "entirety": {"entity": "dependency class"}
+    },
+    {
+        "#": "GUI class of graphic area",
+        "*": "entity",
+        "base": "GUI class",
+        "entirety": {"entity": "graphic area"}
+    },
+    {
+        "#": "start/end date of the tasks",
+        "*": "entity",
+        "base": "start/end date",
+        "entirety": {"entity": "tasks"}
+    },
+    {
+        "#": "subtasks in a task",
+        "*": "entity",
+        "base": "subtask",
+        "modifier": {
+            "-set-": ["in a task"]
+        },
+        "isAll": true
+    },
+    {
+        "#": "start/end date of a subtask",
+        "*": "entity",
+        "base": "start/end date",
+        "entirety": {"entity": "subtask"}
+    },
+    {
+        "#": "start/end time of the parent task",
+        "*": "entity",
+        "base": "start/end time",
+        "entirety": {"entity": "parent task"}
+    },
+    {
+        "#": "one or more subtasks",
+        "*": "entity",
+        "base": "subtask",
+        "modifier": {
+            "-set-": ["one or more"]
+        }
+    },
+    {
+        "#": "start/end time of one or more subtasks",
+        "*": "entity",
+        "base": "start/end time",
+        "entirety": {"entity": "one or more subtasks"}
+    },
+    {
+        "#": "new dependency",
+        "*": "entity",
+        "base": "dependency",
+        "modifier": {
+            "-set-": ["new"]
+        }
+    },
+    {
+        "#": "changes affecting critical path",
+        "*": "entity",
+        "base": "critical path",
+        "modifier": {
+            "-set-": ["changes affecting"]
+        }
+    },
+    {
+        "#": "critical path in a project",
+        "*": "entity",
+        "base": "critical path",
+        "modifier": {
+            "-set-": ["in a project"]
+        }
+    },
+    {
+        "#": "variable holidays",
+        "*": "entity",
+        "base": "holiday",
+        "modifier": {
+            "-set-": ["variable"]
+        },
+        "isAll": true
+    },
+    {
+        "#": "multiple holiday",
+        "*": "entity",
+        "base": "holidays",
+        "modifier": {
+            "-set-": ["multiple"]
+        },
+        "isAll": true
+    },
+    {
+        "#": "begin/end date of the holiday",
+        "*": "entity",
+        "base": "begin/end date",
+        "entirety": {"entity": "holiday"}
+    },
+    {
+        "#": "duration of the holiday",
+        "*": "entity",
+        "base": "duration",
+        "entirety": {"entity": "holiday"}
+    },
+    {
+        "#": "availability of the person",
+        "*": "entity",
+        "base": "availability",
+        "entirety": {"entity": "person"}
+    },
+    {
+        "#": "utilization of a person",
+        "*": "entity",
+        "base": "utilization",
+        "entirety": {"entity": "person"}
+    },
+    {
+        "#": "underutilized person",
+        "*": "entity",
+        "base": "person",
+        "modifier": {
+            "-set-": ["underutilized"]
+        }
+    },
+    {
+        "#": "overbooked person",
+        "*": "entity",
+        "base": "person",
+        "modifier": {
+            "-set-": ["overbooked"]
+        }
+    },
+    {
+        "#": "new task",
+        "*": "entity",
+        "base": "task",
+        "modifier": {
+            "-set-": ["new"]
+        }
+    },
+    {
+        "#": "resource allocation using ResourceAssignmentCollection class",
+        "*": "entity",
+        "base": "resource",
+        "modifier": {
+            "-set-": ["allocation using ResourceAssignmentCollection class"]
+        }
+    },
+    {
+        "#": "start date of the task",
+        "*": "entity",
+        "base": "start date",
+        "entirety": {"entity": "task"}
+    },
+    {
+        "#": "end date of the task",
+        "*": "entity",
+        "base": "end date",
+        "entirety": {"entity": "task"}
+    },
+    {
+        "#": "duration of the task",
+        "*": "entity",
+        "base": "duration",
+        "entirety": {"entity": "task"}
+    },
+    {
+        "#": "adjustment of allocated resources and links to other tasks takes",
+        "*": "entity",
+        "base": "adjustment",
+        "modifier": {
+            "-set-": ["of allocated resources and links to other tasks takes"]
+        }
+    },
+    {
+        "#": "deleted task",
+        "*": "entity",
+        "base": "task",
+        "modifier": {
+            "-set-": ["deleted"]
+        }
+    },
+    {
+        "#": "parent of the deleted task",
+        "*": "entity",
+        "base": "parent",
+        "entirety": {"entity": "deleted task"}
+    },
+    {
+        "#": "handling and releasing resources associated with the deleted task",
+        "*": "entity",
+        "base": "resource",
+        "modifier": {
+            "-set-": ["handling", "releasing", "associated with the deleted task"]
+        },
+        "isAll": true
+    },
+    {
+        "#": "start/end date of a task",
+        "*": "entity",
+        "base": "start/end date",
+        "entirety": {"entity": "task"}
+    },
+    {
+        "#": "start/end dates of the subtasks",
+        "*": "entity",
+        "base": "start/end date",
+        "entirety": {"entity": "subtasks"},
+        "isAll": true
+    },
+    {
+        "#": "selected task nodes in GUI",
+        "*": "entity",
+        "base": "task node",
+        "modifier": {
+            "-set-": ["selected", "in GUI"]
+        },
+        "isAll": true
+    },
+    {
+        "#": "method which indent the selected task nodes in GUI and change them to be subtasks",
+        "*": "entity",
+        "base": "method",
+        "modifier": {
+            "-set-": ["which indent the selected task nodes in GUI and change them to be subtasks"]
+        }
+    },
+    {
+        "#": "manager of task hierarchy",
+        "*": "entity",
+        "base": "manager",
+        "entirety": {"entity": "task hierarchy"}
+    },
+    {
+        "#": "relationship between tasks",
+        "*": "entity",
+        "base": "relationship",
+        "modifier": {
+            "-set-": ["between tasks"]
+        }
+    },
+    {
+        "#": "method which dedent selected task nodes in GUI",
+        "*": "entity",
+        "base": "method",
+        "modifier": {
+            "-set-": ["which dedent selected task nodes in GUI"]
+        }
+    },
+    {
+        "#": "selected tasks",
+        "*": "entity",
+        "base": "task",
+        "modifier": {
+            "-set-": ["selected"]
+        },
+        "isAll": true
+    },
+    {
+        "#": "original parents of selected tasks",
+        "*": "entity",
+        "base": "parent",
+        "entirety": {"entity": "selected tasks"},
+        "modifier": {
+            "-set-": ["original"]
+        },
+        "isAll": true
+    },
+    {
+        "#": "new parents of selected tasks",
+        "*": "entity",
+        "base": "parent",
+        "entirety": {"entity": "selected tasks"},
+        "modifier": {
+            "-set-": ["new"]
+        },
+        "isAll": true
+    },
+    {
+        "#": "relationship between selected tasks and their original parents",
+        "*": "entity",
+        "base": "relationship",
+        "modifier": {
+            "-set-": ["between selected tasks and their original parents"]
+        }
+    },
+    {
+        "#": "relationship between selected tasks and their new parents",
+        "*": "entity",
+        "base": "relationship",
+        "modifier": {
+            "-set-": ["between selected tasks and their new parents"]
+        }
+    },
+    {
+        "#": "time point of occurrence",
+        "*": "entity",
+        "base": "time point",
+        "entirety": {"entity": "occurrence"}
+    },
+    {
+        "#": "regular tasks",
+        "*": "entity",
+        "base": "task",
+        "modifier": {
+            "-set-": ["regular"]
+        },
+        "isAll": true
+    },
+    {
+        "#": "GUI of task property",
+        "*": "entity",
+        "base": "GUI",
+        "entirety": {"entity": "task property"}
+    },
+    {
+        "#": "special date",
+        "*": "entity",
+        "base": "date",
+        "modifier": {
+            "-set-": ["special"]
+        }
+    },
+    {
+        "#": "relationship between one task and one human resource",
+        "*": "entity",
+        "base": "relationship",
+        "modifier": {
+            "-set-": ["between one task and one human resource"]
+        }
+    },
+    {
+        "#": "resource to a task",
+        "*": "entity",
+        "base": "resource",
+        "modifier": {
+            "-set-": ["to a task"]
+        }
+    },
+    {
+        "#": "assignment of a resource to a task",
+        "*": "entity",
+        "base": "assignment",
+        "entirety": {"entity": "resource to a task"}
+    },
+    {
+        "#": "all the tasks where the resource is assigned",
+        "*": "entity",
+        "base": "task",
+        "isAll": true,
+        "modifier": {
+            "-set-": ["where the resource is assigned"]
+        }
+    },
+    {
+        "#": "properties of objects of the human resource class",
+        "*": "entity",
+        "base": "property",
+        "entirety": {"entity": "objects of the human resource class"},
+        "isAll": true
+    },
+    {
+        "#": "tasks in a project",
+        "*": "entity",
+        "base": "task",
+        "modifier": {
+            "-set-": ["in a project"]
+        },
+        "isAll": true
+    },
+    {
+        "#": "linking of one task to another",
+        "*": "entity",
+        "base": "linking",
+        "modifier": {
+            "-set-": ["one task to another"]
+        }
+    },
+    {
+        "#": "dependency between two tasks",
+        "*": "entity",
+        "base": "dependency",
+        "modifier": {
+            "-set-": ["between two tasks"]
+        }
+    },
+    {
+        "#": "two or more tasks",
+        "*": "entity",
+        "base": "task",
+        "modifier": {
+            "-set-": ["two or more"]
+        },
+        "isAll": true
+    },
+    {
+        "#": "potential collisions on the chart",
+        "*": "entity",
+        "base": "collision",
+        "modifier": {
+            "-set-": ["potential", "on the chart"]
+        },
+        "isAll": true
+    },
+    {
+        "#": "start/end dates for the graph",
+        "*": "entity",
+        "base": "start/end date",
+        "modifier": {
+            "-set-": ["for the graph"]
+        },
+        "isAll": true
+    },
+    {
+        "#": "critical path",
+        "*": "entity",
+        "base": "path",
+        "modifier": {
+            "-set-": ["critical"]
+        }
+    },
+    {
+        "#": "human resource load distribution",
+        "*": "entity",
+        "base": "load distribution",
+        "modifier": {
+            "-set-": ["human resource"]
+        }
+    },
+    {
+        "#": "dependant task",
+        "*": "entity",
+        "base": "task",
+        "modifier": {
+            "-set-": ["dependant"]
+        }
+    },
+    {
+        "#": "dependee task",
+        "*": "entity",
+        "base": "dependee task",
+        "modifier": {
+            "-set-": ["dependee"]
+        }
+    },
+    {
+        "#": "parent task",
+        "*": "entity",
+        "base": "task",
+        "modifier": {
+            "-set-": ["parent"]
+        }
+    },
+    {
+        "#": "specific task",
+        "*": "entity",
+        "base": "task",
+        "modifier": {
+            "-set-": ["specific"]
+        }
+    }
+]

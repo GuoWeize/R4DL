@@ -39,10 +39,10 @@ The `<default_value>` is a value of type `<element_type>`, which represent the d
 It only has basic types, however, you can define default value of a type later during defining requirements.<br>
 The `<element_type>` is a type signature, which has 3 conditions:
  * basic types:
-   - `boolean`: `true` or `false`, the default is `false`
-   - `integer`: range from -2147483648 to 2147483647, the default is 0
-   - `float`: double float value, the default is 0.0
-   - `string`: any string like Java String, the default is empty string
+   - `boolean`: `true` or `false`, the default is `false`;
+   - `integer`: range from -2147483648 to 2147483647, the default is 0;
+   - `float`: double float value, the default is 0.0;
+   - `string`: any string like Java String, the default is empty string `""`;
  * collection types: `list` `set` `map`, the default is empty
    - `list`: an array of elements in a same type with a specific order, for example `list<string>`
    - `set`: a set of elements in a same type without any order, for example `set<integer>`
@@ -237,9 +237,11 @@ The basic format is: `[ <entity>, <entity>, ... ]`, in where `<entity>`s are sep
    ```text
    {
        "#": <entity_ID>,
-       <field_name> : <field_entity>,
-       <field_name> : <field_entity>,
-       ...
+       <entity_type> : {
+           <field_name> : <field_entity>,
+           <field_name> : <field_entity>,
+           ...
+       }
    }
    ```
    In this, `<entity_ID>` is a JSON string, represents the ID of entity, using in entity-link below.
@@ -255,3 +257,5 @@ The basic format is: `[ <entity>, <entity>, ... ]`, in where `<entity>`s are sep
    }
    ```
    In this, `<entity_type>` is the type of the linked entity, and `<entity_ID>` is its ID.
+
+If a field of entity is not specified, it should be the default, see [`this`](#how-to-write-requirements-models).

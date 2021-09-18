@@ -3,31 +3,35 @@
 
 package grpc;
 
+import com.google.protobuf.ByteString;
+
+/**
+ * Response message interface.
+ * @author protocol buffer compiler
+ */
 public interface ResponseOrBuilder extends
     // @@protoc_insertion_point(interface_extends:Response)
     com.google.protobuf.MessageOrBuilder {
 
-  /**
-   * <code>string type = 1;</code>
-   * @return The type.
-   */
-  java.lang.String getType();
-  /**
-   * <code>string type = 1;</code>
-   * @return The bytes for type.
-   */
-  com.google.protobuf.ByteString
-      getTypeBytes();
+    /**
+     * <code>string type = 1;</code>
+     * @return The type.
+     */
+    String getType();
+    /**
+     * <code>string type = 1;</code>
+     * @return The bytes for type.
+     */
+    ByteString getTypeBytes();
 
-  /**
-   * <code>string reqJson = 2;</code>
-   * @return The reqJson.
-   */
-  java.lang.String getReqJson();
-  /**
-   * <code>string reqJson = 2;</code>
-   * @return The bytes for reqJson.
-   */
-  com.google.protobuf.ByteString
-      getReqJsonBytes();
+    /**
+     * <code>string reqJson = 2;</code>
+     * @return The reqJson.
+     */
+    String getReqJson();
+    /**
+     * <code>string reqJson = 2;</code>
+     * @return The bytes for reqJson.
+     */
+    ByteString getReqJsonBytes();
 }

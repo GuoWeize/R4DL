@@ -29,7 +29,6 @@ public final class GrpcClient {
         stubs.put(type, blockingStub);
     }
 
-    /** Say hello to server. */
     public void structure(String type, String description) {
         Request request = Request.newBuilder().setType(type).setDescription(description).build();
         Response response;
@@ -70,7 +69,7 @@ public final class GrpcClient {
             Map.entry("functional", "localhost:50051")
         );
         GrpcClient client = GrpcClient.start(ports);
-        client.structure("functional", "blablabla...");
+        client.structure("functional", "bla bla bla...");
         client.shutdown();
     }
 
