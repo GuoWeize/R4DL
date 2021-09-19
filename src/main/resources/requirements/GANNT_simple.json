@@ -1,5 +1,10 @@
 [
     {
+        "#": "object",
+        "*": "entity",
+        "base": "object"
+    },
+    {
         "#": "task",
         "*": "entity",
         "base": "task"
@@ -8,6 +13,11 @@
         "#": "human resource",
         "*": "entity",
         "base": "human resource"
+    },
+    {
+        "#": "assignment",
+        "*": "entity",
+        "base": "assignment"
     },
     {
         "#": "human resource assignment",
@@ -75,9 +85,29 @@
         "base": "graphic area"
     },
     {
+        "#": "start date",
+        "*": "entity",
+        "base": "start date"
+    },
+    {
+        "#": "end date",
+        "*": "entity",
+        "base": "start date"
+    },
+    {
+        "#": "start/end time",
+        "*": "entity",
+        "base": "start/end time"
+    },
+    {
         "#": "start/end date",
         "*": "entity",
         "base": "start/end date"
+    },
+    {
+        "#": "parent",
+        "*": "entity",
+        "base": "parent"
     },
     {
         "#": "application",
@@ -230,6 +260,52 @@
         "base": "TaskManager"
     },
     {
+        "#": "length",
+        "*": "entity",
+        "base": "length"
+    },
+    {
+        "#": "duration",
+        "*": "entity",
+        "base": "duration"
+    },
+    {
+        "#": "availability",
+        "*": "entity",
+        "base": "availability"
+    },
+    {
+        "#": "utilization",
+        "*": "entity",
+        "base": "utilization"
+    },
+    {
+        "#": "resource allocation",
+        "*": "entity",
+        "base": "resource allocation"
+    },
+    {
+        "#": "manager",
+        "*": "entity",
+        "base": "manager"
+    },
+    {
+        "#": "time point",
+        "*": "entity",
+        "base": "time point"
+    },
+    {
+        "#": "one task to another",
+        "*": "entity",
+        "base": "one task to another"
+    },
+    {
+        "#": "objects",
+        "*": "entity",
+        "base": "object",
+        "isAll": true
+    },
+    {
         "#": "resource assignments",
         "*": "entity",
         "base": "resource assignment",
@@ -293,6 +369,24 @@
         "#": "resources",
         "*": "entity",
         "base": "resource",
+        "isAll": true
+    },
+    {
+        "#": "subtrees",
+        "*": "entity",
+        "base": "subtree",
+        "isAll": true
+    },
+    {
+        "#": "properties",
+        "*": "entity",
+        "base": "property",
+        "isAll": true
+    },
+    {
+        "#": "start/end dates",
+        "*": "entity",
+        "base": "start/end date",
         "isAll": true
     }
 ]

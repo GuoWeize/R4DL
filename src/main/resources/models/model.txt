@@ -6,9 +6,11 @@ type operation {
 
 type entity {
     base string;
-    modifier set<string>;
-    entirety entity;
     isAll boolean;
+    owner entity;
+    content entity;
+    property entity;
+    constraints set<string>;
 }
 
 type condition {

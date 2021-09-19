@@ -1,0 +1,208 @@
+[
+    {
+        "#": "represent",
+        "*": "operation",
+        "reaction": "represent"
+    },
+    {
+        "#": "get",
+        "*": "operation",
+        "reaction": "get"
+    },
+    {
+        "#": "manage",
+        "*": "operation",
+        "reaction": "manage"
+    },
+    {
+        "#": "contain",
+        "*": "operation",
+        "reaction": "contain"
+    },
+    {
+        "#": "add",
+        "*": "operation",
+        "reaction": "add"
+    },
+    {
+        "#": "remove",
+        "*": "operation",
+        "reaction": "remove"
+    },
+    {
+        "#": "can have",
+        "*": "operation",
+        "reaction": "have",
+        "isAble": true
+    },
+    {
+        "#": "display",
+        "*": "operation",
+        "reaction": "display"
+    },
+    {
+        "#": "build",
+        "*": "operation",
+        "reaction": "build"
+    },
+    {
+        "#": "capture",
+        "*": "operation",
+        "reaction": "capture"
+    },
+    {
+        "#": "calculate",
+        "*": "operation",
+        "reaction": "calculate"
+    },
+    {
+        "#": "change",
+        "*": "operation",
+        "reaction": "change"
+    },
+    {
+        "#": "can change",
+        "*": "operation",
+        "reaction": "change",
+        "isAble": true
+    },
+    {
+        "#": "show",
+        "*": "operation",
+        "reaction": "show"
+    },
+    {
+        "#": "create",
+        "*": "operation",
+        "reaction": "create"
+    },
+    {
+        "#": "can create",
+        "*": "operation",
+        "reaction": "create",
+        "isAble": true
+    },
+    {
+        "#": "delete",
+        "*": "operation",
+        "reaction": "delete"
+    },
+    {
+        "#": "draw",
+        "*": "operation",
+        "reaction": "draw"
+    },
+    {
+        "#": "fulfill",
+        "*": "operation",
+        "reaction": "fulfill"
+    },
+    {
+        "#": "modify",
+        "*": "operation",
+        "reaction": "modify"
+    },
+    {
+        "#": "keep track of",
+        "*": "operation",
+        "reaction": "keep track of"
+    },
+    {
+        "#": "check",
+        "*": "operation",
+        "reaction": "check"
+    },
+    {
+        "#": "there be",
+        "*": "operation",
+        "reaction": "there be"
+    },
+    {
+        "#": "return",
+        "*": "operation",
+        "reaction": "return"
+    },
+    {
+        "#": "update",
+        "*": "operation",
+        "reaction": "update"
+    },
+    {
+        "#": "can evaluate",
+        "*": "operation",
+        "reaction": "evaluate",
+        "isAble": true
+    },
+    {
+        "#": "set",
+        "*": "operation",
+        "reaction": "set"
+    },
+    {
+        "#": "can set",
+        "*": "operation",
+        "reaction": "set",
+        "isAble": true
+    },
+    {
+        "#": "assign",
+        "*": "operation",
+        "reaction": "assign"
+    },
+    {
+        "#": "pass",
+        "*": "operation",
+        "reaction": "pass"
+    },
+    {
+        "#": "take care of",
+        "*": "operation",
+        "reaction": "take care of"
+    },
+    {
+        "#": "specify",
+        "*": "operation",
+        "reaction": "specify"
+    },
+    {
+        "#": "can specify",
+        "*": "operation",
+        "reaction": "specify",
+        "isAble": true
+    },
+    {
+        "#": "call",
+        "*": "operation",
+        "reaction": "call"
+    },
+    {
+        "#": "take place",
+        "*": "operation",
+        "reaction": "take place"
+    },
+    {
+        "#": "identify",
+        "*": "operation",
+        "reaction": "identify"
+    },
+    {
+        "#": "move",
+        "*": "operation",
+        "reaction": "move"
+    },
+    {
+        "#": "edit",
+        "*": "operation",
+        "reaction": "edit"
+    },
+    {
+        "#": "link",
+        "*": "operation",
+        "reaction": "link"
+    },
+    {
+        "#": "be either flexible or rigid",
+        "*": "operation",
+        "reaction": "be either flexible or rigid"
+    }
+]

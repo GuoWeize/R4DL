@@ -15,15 +15,10 @@
         "base": "human resource assignment class"
     },
     {
-        "#": "assignments collection class",
+        "#": "object of the assignments collection class",
         "*": "entity",
-        "base": "assignments collection class"
-    },
-    {
-        "#": "object of assignments collection class",
-        "*": "entity",
-        "base": "object",
-        "entirety": {"entity": "assignments collection class"}
+        "base": "assignments collection class",
+        "property": {"entity": "object"}
     },
     {
         "#": "human resource class",
@@ -36,15 +31,10 @@
         "base": "GUI class"
     },
     {
-        "#": "resource tree table model class",
-        "*": "entity",
-        "base": "resource tree table model class"
-    },
-    {
         "#": "object of resource tree table model class",
         "*": "entity",
-        "base": "object",
-        "entirety": {"entity": "resource tree table model class"}
+        "base": "resource tree table model class",
+        "property": {"entity": "object"}
     },
     {
         "#": "load distribution class",
@@ -54,33 +44,26 @@
     {
         "#": "objects of a load distribution class",
         "*": "entity",
-        "base": "object",
-        "entirety": {"entity": "load distribution class"},
-        "isAll": true
-    },
-    {
-        "#": "load distribution class",
-        "*": "entity",
-        "base": "load distribution class"
+        "base": "load distribution class",
+        "property": {"entity": "objects"}
     },
     {
         "#": "objects of dependency classes",
         "*": "entity",
-        "base": "object",
-        "entirety": {"entity": "dependency class"},
-        "isAll": true
+        "base": "dependency class",
+        "property": {"entity": "objects"}
     },
     {
         "#": "object of the dependency collection",
         "*": "entity",
-        "base": "object",
-        "entirety": {"entity": "dependency collection"}
+        "base": "dependency collection",
+        "property": {"entity": "object"}
     },
     {
         "#": "object of task manager",
         "*": "entity",
-        "base": "object",
-        "entirety": {"entity": "task manager"}
+        "base": "task manager",
+        "property": {"entity": "object"}
     },
     {
         "#": "task manager class",
@@ -95,19 +78,14 @@
     {
         "#": "object of dependency collection class",
         "*": "entity",
-        "base": "object",
-        "entirety": {"entity": "dependency collection class"}
-    },
-    {
-        "#": "recalculating task schedule algorithm class",
-        "*": "entity",
-        "base": "recalculating task schedule algorithm class"
+        "base": "dependency collection class",
+        "property": {"entity": "object"}
     },
     {
         "#": "object of the recalculating task schedule algorithm class",
         "*": "entity",
-        "base": "object",
-        "entirety": {"entity": "recalculating task schedule algorithm class"}
+        "base": "recalculating task schedule algorithm class",
+        "property": {"entity": "object"}
     },
     {
         "#": "algorithm class",
@@ -117,8 +95,8 @@
     {
         "#": "object of dependency class",
         "*": "entity",
-        "base": "object",
-        "entirety": {"entity": "dependency class"}
+        "base": "dependency class",
+        "property": {"entity": "object"}
     },
     {
         "#": "holiday class",
@@ -126,15 +104,10 @@
         "base": "holiday class"
     },
     {
-        "#": "taskManager class",
-        "*": "entity",
-        "base": "taskManager class"
-    },
-    {
         "#": "object of taskManager class",
         "*": "entity",
-        "base": "object",
-        "entirety": {"entity": "taskManager class"}
+        "base": "taskManager class",
+        "property": {"entity": "object"}
     },
     {
         "#": "ResourceAssignmentCollection class",
@@ -147,26 +120,16 @@
         "base": "task class"
     },
     {
-        "#": "GanttCalendar class",
-        "*": "entity",
-        "base": "GanttCalendar class"
-    },
-    {
         "#": "object of GanttCalendar class",
         "*": "entity",
-        "base": "object",
-        "entirety": {"entity": "GanttCalendar class"}
-    },
-    {
-        "#": "TaskLength class",
-        "*": "entity",
-        "base": "TaskLength class"
+        "base": "GanttCalendar class",
+        "property": {"entity": "object"}
     },
     {
         "#": "object of TaskLength class",
         "*": "entity",
-        "base": "object",
-        "entirety": {"entity": "TaskLength class"}
+        "base": "TaskLength class",
+        "property": {"entity": "object"}
     },
     {
         "#": "GanttProject class",
@@ -181,35 +144,43 @@
     {
         "#": "object of a class",
         "*": "entity",
-        "base": "object",
-        "entirety": {"entity": "class"}
-    },
-    {
-        "#": "resource assignments collection class",
-        "*": "entity",
-        "base": "resource assignments collection class"
+        "base": "class",
+        "property": {"entity": "object"}
     },
     {
         "#": "object of the resource assignments collection class",
         "*": "entity",
-        "base": "object",
-        "entirety": {"entity": "resource assignments collection class"}
+        "base": "resource assignments collection class",
+        "property": {"entity": "object"}
     },
     {
-        "#": "objects of the human resource class",
+        "#": "multiple objects",
         "*": "entity",
         "base": "object",
-        "entirety": {"entity": "human resource class"},
-        "isAll": true
+        "isAll": true,
+        "constraints": {
+            "-set-" : ["multiple"]
+        }
     },
     {
         "#": "multiple objects of the human resource assignment class",
         "*": "entity",
-        "base": "object",
-        "modifier": {
-            "-set-": ["multiple"]
-        },
-        "entirety": {"entity": "human resource assignment class"},
-        "isAll": true
+        "base": "human resource assignment class",
+        "property": {"entity": "multiple objects"}
+    },
+    {
+        "#": "task property GUI class",
+        "*": "entity",
+        "base": "task property GUI class"
+    },
+    {
+        "#": "human resource load distribution GUI class",
+        "*": "entity",
+        "base": "human resource load distribution GUI class"
+    },
+    {
+        "#": "graphic area GUI class",
+        "*": "entity",
+        "base": "graphic area GUI class"
     }
 ]
