@@ -10,7 +10,6 @@ import codeGenerator.RuleParser;
 import judge.Processor;
 import languageParser.BaseParser;
 import reqParser.EntityParser;
-import reqParser.RequirementParser;
 import util.ModeEnum;
 import util.PathConsts;
 import util.TypeEnum;
@@ -93,6 +92,6 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        run("SafeNL_model", "SafeNL_rule", "SafeNL_reqs");
+        run("model", "GANNT_entities", "rule");
     }
 }

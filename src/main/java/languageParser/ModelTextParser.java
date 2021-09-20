@@ -16,6 +16,7 @@ import java.util.Objects;
 @Slf4j
 public final class ModelTextParser extends BaseParser {
 
+    /** types of customized entities (including requirements) */
     private static final List<String> ENTITIES = new ArrayList<>();
 
     /**
@@ -23,7 +24,7 @@ public final class ModelTextParser extends BaseParser {
      * parsing all entities in the model text file.
      * @throws IOException if there is a syntax error
      */
-    protected static String parse() throws IOException {
+    static String parse() throws IOException {
         String type = TextReader.nextToken();
         while (! Objects.equals(type, TextReader.EMPTY_STRING)) {
             String name = TextReader.nextToken();

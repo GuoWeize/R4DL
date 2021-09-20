@@ -1,0 +1,1030 @@
+[
+    {
+        "#": "object",
+        "*": "entity",
+        "base": "object"
+    },
+    {
+        "#": "task",
+        "*": "entity",
+        "base": "task"
+    },
+    {
+        "#": "human resource",
+        "*": "entity",
+        "base": "human resource"
+    },
+    {
+        "#": "assignment",
+        "*": "entity",
+        "base": "assignment"
+    },
+    {
+        "#": "human resource assignment",
+        "*": "entity",
+        "base": "human resource assignment"
+    },
+    {
+        "#": "task property",
+        "*": "entity",
+        "base": "task property"
+    },
+    {
+        "#": "resource tree",
+        "*": "entity",
+        "base": "resource tree"
+    },
+    {
+        "#": "resource tree table model",
+        "*": "entity",
+        "base": "resource tree table model"
+    },
+    {
+        "#": "task manager",
+        "*": "entity",
+        "base": "task manager"
+    },
+    {
+        "#": "distribution",
+        "*": "entity",
+        "base": "distribution"
+    },
+    {
+        "#": "GUI",
+        "*": "entity",
+        "base": "GUI"
+    },
+    {
+        "#": "user",
+        "*": "entity",
+        "base": "user"
+    },
+    {
+        "#": "date picker control",
+        "*": "entity",
+        "base": "date picker control"
+    },
+    {
+        "#": "constraint",
+        "*": "entity",
+        "base": "constraint"
+    },
+    {
+        "#": "dependency",
+        "*": "entity",
+        "base": "dependency"
+    },
+    {
+        "#": "dependency collection",
+        "*": "entity",
+        "base": "dependency collection"
+    },
+    {
+        "#": "graphic area",
+        "*": "entity",
+        "base": "graphic area"
+    },
+    {
+        "#": "start date",
+        "*": "entity",
+        "base": "start date"
+    },
+    {
+        "#": "end date",
+        "*": "entity",
+        "base": "start date"
+    },
+    {
+        "#": "start/end time",
+        "*": "entity",
+        "base": "start/end time"
+    },
+    {
+        "#": "start/end date",
+        "*": "entity",
+        "base": "start/end date"
+    },
+    {
+        "#": "parent",
+        "*": "entity",
+        "base": "parent"
+    },
+    {
+        "#": "application",
+        "*": "entity",
+        "base": "application"
+    },
+    {
+        "#": "subtask",
+        "*": "entity",
+        "base": "subtask"
+    },
+    {
+        "#": "loop",
+        "*": "entity",
+        "base": "loop"
+    },
+    {
+        "#": "exception",
+        "*": "entity",
+        "base": "exception"
+    },
+    {
+        "#": "system",
+        "*": "entity",
+        "base": "system"
+    },
+    {
+        "#": "holiday",
+        "*": "entity",
+        "base": "holiday"
+    },
+    {
+        "#": "person",
+        "*": "entity",
+        "base": "person"
+    },
+    {
+        "#": "people",
+        "*": "entity",
+        "base": "people"
+    },
+    {
+        "#": "class constructor",
+        "*": "entity",
+        "base": "class constructor"
+    },
+    {
+        "#": "delete method",
+        "*": "entity",
+        "base": "delete method"
+    },
+    {
+        "#": "TaskId parameter",
+        "*": "entity",
+        "base": "TaskId parameter"
+    },
+    {
+        "#": "DefaultMutableTreeNode",
+        "*": "entity",
+        "base": "DefaultMutableTreeNode"
+    },
+    {
+        "#": "GanttTreeTableNode",
+        "*": "entity",
+        "base": "GanttTreeTableNode"
+    },
+    {
+        "#": "TaskNode",
+        "*": "entity",
+        "base": "TaskNode"
+    },
+    {
+        "#": "AdjustTaskBoundsAlgorithm",
+        "*": "entity",
+        "base": "AdjustTaskBoundsAlgorithm"
+    },
+    {
+        "#": "task name",
+        "*": "entity",
+        "base": "task name"
+    },
+    {
+        "#": "progress",
+        "*": "entity",
+        "base": "progress"
+    },
+    {
+        "#": "task node",
+        "*": "entity",
+        "base": "task node"
+    },
+    {
+        "#": "task tree model",
+        "*": "entity",
+        "base": "task tree model"
+    },
+    {
+        "#": "occurrence",
+        "*": "entity",
+        "base": "occurrence"
+    },
+    {
+        "#": "user interface",
+        "*": "entity",
+        "base": "user interface"
+    },
+    {
+        "#": "milestone",
+        "*": "entity",
+        "base": "milestone"
+    },
+    {
+        "#": "name",
+        "*": "entity",
+        "base": "name"
+    },
+    {
+        "#": "phone",
+        "*": "entity",
+        "base": "phone"
+    },
+    {
+        "#": "email",
+        "*": "entity",
+        "base": "email"
+    },
+    {
+        "#": "project",
+        "*": "entity",
+        "base": "project"
+    },
+    {
+        "#": "relationship",
+        "*": "entity",
+        "base": "relationship"
+    },
+    {
+        "#": "resource",
+        "*": "entity",
+        "base": "resource"
+    },
+    {
+        "#": "chart",
+        "*": "entity",
+        "base": "chart"
+    },
+    {
+        "#": "TaskManager",
+        "*": "entity",
+        "base": "TaskManager"
+    },
+    {
+        "#": "length",
+        "*": "entity",
+        "base": "length"
+    },
+    {
+        "#": "duration",
+        "*": "entity",
+        "base": "duration"
+    },
+    {
+        "#": "availability",
+        "*": "entity",
+        "base": "availability"
+    },
+    {
+        "#": "utilization",
+        "*": "entity",
+        "base": "utilization"
+    },
+    {
+        "#": "resource allocation",
+        "*": "entity",
+        "base": "resource allocation"
+    },
+    {
+        "#": "manager",
+        "*": "entity",
+        "base": "manager"
+    },
+    {
+        "#": "time point",
+        "*": "entity",
+        "base": "time point"
+    },
+    {
+        "#": "one task to another",
+        "*": "entity",
+        "base": "one task to another"
+    },
+    {
+        "#": "objects",
+        "*": "entity",
+        "base": "object",
+        "isAll": true
+    },
+    {
+        "#": "resource assignments",
+        "*": "entity",
+        "base": "resource assignment",
+        "isAll": true
+    },
+    {
+        "#": "human resource assignments",
+        "*": "entity",
+        "base": "human resource assignment",
+        "isAll": true
+    },
+    {
+        "#": "dependencies",
+        "*": "entity",
+        "base": "dependency",
+        "isAll": true
+    },
+    {
+        "#": "human resources",
+        "*": "entity",
+        "base": "human resource",
+        "isAll": true
+    },
+    {
+        "#": "tasks",
+        "*": "entity",
+        "base": "task",
+        "isAll": true
+    },
+    {
+        "#": "dependency changes",
+        "*": "entity",
+        "base": "dependency change",
+        "isAll": true
+    },
+    {
+        "#": "constraints",
+        "*": "entity",
+        "base": "constraint",
+        "isAll": true
+    },
+    {
+        "#": "holidays",
+        "*": "entity",
+        "base": "holiday",
+        "isAll": true
+    },
+    {
+        "#": "subtasks",
+        "*": "entity",
+        "base": "subtask",
+        "isAll": true
+    },
+    {
+        "#": "milestones",
+        "*": "entity",
+        "base": "milestone",
+        "isAll": true
+    },
+    {
+        "#": "resources",
+        "*": "entity",
+        "base": "resource",
+        "isAll": true
+    },
+    {
+        "#": "subtrees",
+        "*": "entity",
+        "base": "subtree",
+        "isAll": true
+    },
+    {
+        "#": "properties",
+        "*": "entity",
+        "base": "property",
+        "isAll": true
+    },
+    {
+        "#": "start/end dates",
+        "*": "entity",
+        "base": "start/end date",
+        "isAll": true
+    },
+    {
+        "#": "class",
+        "*": "entity",
+        "base": "class"
+    },
+    {
+        "#": "dependency class",
+        "*": "entity",
+        "base": "dependency class"
+    },
+    {
+        "#": "human resource assignment class",
+        "*": "entity",
+        "base": "human resource assignment class"
+    },
+    {
+        "#": "object of the assignments collection class",
+        "*": "entity",
+        "base": "assignments collection class",
+        "property": {"entity": "object"}
+    },
+    {
+        "#": "human resource class",
+        "*": "entity",
+        "base": "human resource class"
+    },
+    {
+        "#": "GUI class",
+        "*": "entity",
+        "base": "GUI class"
+    },
+    {
+        "#": "object of resource tree table model class",
+        "*": "entity",
+        "base": "resource tree table model class",
+        "property": {"entity": "object"}
+    },
+    {
+        "#": "load distribution class",
+        "*": "entity",
+        "base": "load distribution class"
+    },
+    {
+        "#": "objects of a load distribution class",
+        "*": "entity",
+        "base": "load distribution class",
+        "property": {"entity": "objects"}
+    },
+    {
+        "#": "objects of dependency classes",
+        "*": "entity",
+        "base": "dependency class",
+        "property": {"entity": "objects"}
+    },
+    {
+        "#": "object of the dependency collection",
+        "*": "entity",
+        "base": "dependency collection",
+        "property": {"entity": "object"}
+    },
+    {
+        "#": "object of task manager",
+        "*": "entity",
+        "base": "task manager",
+        "property": {"entity": "object"}
+    },
+    {
+        "#": "task manager class",
+        "*": "entity",
+        "base": "task manager class"
+    },
+    {
+        "#": "dependency collection class",
+        "*": "entity",
+        "base": "dependency collection class"
+    },
+    {
+        "#": "object of dependency collection class",
+        "*": "entity",
+        "base": "dependency collection class",
+        "property": {"entity": "object"}
+    },
+    {
+        "#": "object of the recalculating task schedule algorithm class",
+        "*": "entity",
+        "base": "recalculating task schedule algorithm class",
+        "property": {"entity": "object"}
+    },
+    {
+        "#": "algorithm class",
+        "*": "entity",
+        "base": "algorithm class"
+    },
+    {
+        "#": "object of dependency class",
+        "*": "entity",
+        "base": "dependency class",
+        "property": {"entity": "object"}
+    },
+    {
+        "#": "holiday class",
+        "*": "entity",
+        "base": "holiday class"
+    },
+    {
+        "#": "object of taskManager class",
+        "*": "entity",
+        "base": "taskManager class",
+        "property": {"entity": "object"}
+    },
+    {
+        "#": "ResourceAssignmentCollection class",
+        "*": "entity",
+        "base": "ResourceAssignmentCollection class"
+    },
+    {
+        "#": "task class",
+        "*": "entity",
+        "base": "task class"
+    },
+    {
+        "#": "object of GanttCalendar class",
+        "*": "entity",
+        "base": "GanttCalendar class",
+        "property": {"entity": "object"}
+    },
+    {
+        "#": "object of TaskLength class",
+        "*": "entity",
+        "base": "TaskLength class",
+        "property": {"entity": "object"}
+    },
+    {
+        "#": "GanttProject class",
+        "*": "entity",
+        "base": "GanttProject class"
+    },
+    {
+        "#": "GanttTree2 class",
+        "*": "entity",
+        "base": "GanttTree2 class"
+    },
+    {
+        "#": "object of a class",
+        "*": "entity",
+        "base": "class",
+        "property": {"entity": "object"}
+    },
+    {
+        "#": "object of the resource assignments collection class",
+        "*": "entity",
+        "base": "resource assignments collection class",
+        "property": {"entity": "object"}
+    },
+    {
+        "#": "multiple objects",
+        "*": "entity",
+        "base": "object",
+        "isAll": true,
+        "constraints": {
+            "()" : ["multiple"]
+        }
+    },
+    {
+        "#": "multiple objects of the human resource assignment class",
+        "*": "entity",
+        "base": "human resource assignment class",
+        "property": {"entity": "multiple objects"}
+    },
+    {
+        "#": "task property GUI class",
+        "*": "entity",
+        "base": "task property GUI class"
+    },
+    {
+        "#": "human resource load distribution GUI class",
+        "*": "entity",
+        "base": "human resource load distribution GUI class"
+    },
+    {
+        "#": "graphic area GUI class",
+        "*": "entity",
+        "base": "graphic area GUI class"
+    },
+
+    {
+        "#": "critical path",
+        "*": "entity",
+        "base": "path",
+        "constraints": {"()": ["critical"]}
+    },
+    {
+        "#": "dependant task",
+        "*": "entity",
+        "base": "task",
+        "constraints": {"()": ["dependant"]}
+    },
+    {
+        "#": "dependee task",
+        "*": "entity",
+        "base": "dependee task",
+        "constraints": {"()": ["dependee"]}
+    },
+    {
+        "#": "specific task",
+        "*": "entity",
+        "base": "task",
+        "constraints": {"()": ["specific"]}
+    },
+    {
+        "#": "dependency between one task and one human resource",
+        "*": "entity",
+        "base": "dependency",
+        "constraints": {"()" : ["between one task and one human resource"]}
+    },
+    {
+        "#": "collection of resource assignments",
+        "*": "entity",
+        "base": "collection",
+        "content": {"entity": "resource assignments"}
+    },
+    {
+        "#": "multiple human resources",
+        "*": "entity",
+        "base": "human resource",
+        "isAll": true,
+        "constraints": {"()": ["multiple"]}
+    },
+    {
+        "#": "relationships between multiple human resources and a task",
+        "*": "entity",
+        "base": "relationships",
+        "constraints": {"()": ["between multiple human resources and a task"]}
+    },
+    {
+        "#": "assignments of task class",
+        "*": "entity",
+        "base": "assignment",
+        "isAll": true,
+        "content": {"entity": "task class"}
+    },
+    {
+        "#": "multiple objects of resource assignments which assigns this resource to tasks",
+        "*": "entity",
+        "base": "resource assignment",
+        "isAll": true,
+        "property": {"entity": "multiple objects"},
+        "constraints": {"()": ["which assigns this resource to tasks"]}
+    },
+    {
+        "#": "objects of resource assignments which assigns this resource to tasks",
+        "*": "entity",
+        "base": "resource assignment",
+        "isAll": true,
+        "property": {"entity": "object"},
+        "constraints": {"()": ["which assigns this resource to tasks"]}
+    },
+    {
+        "#": "list of objects of resource assignments which assigns this resource to tasks",
+        "*": "entity",
+        "base": "list",
+        "content": {"entity": "objects of resource assignments which assigns this resource to tasks"}
+    },
+    {
+        "#": "subtrees of resource tree",
+        "*": "entity",
+        "base": "resource tree",
+        "property": {"entity": "subtrees"}
+    },
+    {
+        "#": "hours each person is supposed to work",
+        "*": "entity",
+        "base": "hour",
+        "isAll": true,
+        "constraints": {"()": ["each person is supposed to work"]}
+    },
+    {
+        "#": "length of a task",
+        "*": "entity",
+        "base": "task",
+        "property": {"entity": "length"}
+    },
+    {
+        "#": "bar on the GUI",
+        "*": "entity",
+        "base": "bar",
+        "constraints": {"()": ["on the GUI"]}
+    },
+    {
+        "#": "constraint of the dependency",
+        "*": "entity",
+        "base": "dependency",
+        "property": {"entity": "constraint"}
+    },
+    {
+        "#": "start date of the dependee task",
+        "*": "entity",
+        "base": "dependee task",
+        "property": {"entity": "start date"}
+    },
+    {
+        "#": "end date of the dependent task",
+        "*": "entity",
+        "base": "dependent task",
+        "property": {"entity": "end date"}
+    },
+    {
+        "#": "collection of dependency class",
+        "*": "entity",
+        "base": "collection",
+        "content": {"entity": "dependency class"}
+    },
+    {
+        "#": "subtasks in a task",
+        "*": "entity",
+        "base": "subtask",
+        "isAll": true,
+        "constraints": {"()": ["in a task"]}
+    },
+    {
+        "#": "parent task",
+        "*": "entity",
+        "base": "task",
+        "constraints": {"()": ["parent"]}
+    },
+    {
+        "#": "start/end time of the parent task",
+        "*": "entity",
+        "base": "parent task",
+        "property": {"entity": "start/end time"}
+    },
+    {
+        "#": "start/end time of one or more subtasks",
+        "*": "entity",
+        "base": "subtask",
+        "property": {"entity": "start/end time"},
+        "constraints": {"()": ["one or more"]}
+    },
+    {
+        "#": "new dependency",
+        "*": "entity",
+        "base": "dependency",
+        "constraints": {"()": ["new"]}
+    },
+    {
+        "#": "changes affecting critical path",
+        "*": "entity",
+        "base": "change",
+        "isAll": true,
+        "constraints": {"()": ["affecting changes affecting"]}
+    },
+    {
+        "#": "critical path in a project",
+        "*": "entity",
+        "base": "critical path",
+        "constraints": {"()": ["in a project"]}
+    },
+    {
+        "#": "variable holidays",
+        "*": "entity",
+        "base": "holiday",
+        "isAll": true,
+        "constraints": {"()": ["variable"]}
+    },
+    {
+        "#": "multiple holidays",
+        "*": "entity",
+        "base": "holiday",
+        "isAll": true,
+        "constraints": {"()": ["multiple"]}
+    },
+    {
+        "#": "start/end date of the holiday",
+        "*": "entity",
+        "base": "holiday",
+        "property": {"entity": "start/end date"}
+    },
+    {
+        "#": "duration of the holiday",
+        "*": "entity",
+        "base": "holiday",
+        "property": {"entity": "duration"}
+    },
+    {
+        "#": "availability of the person",
+        "*": "entity",
+        "base": "person",
+        "property": {"entity": "availability"}
+    },
+    {
+        "#": "utilization of a person",
+        "*": "entity",
+        "base": "person",
+        "property": {"entity": "utilization"}
+    },
+    {
+        "#": "underutilized person",
+        "*": "entity",
+        "base": "person",
+        "constraints": {"()": ["underutilized"]}
+    },
+    {
+        "#": "overbooked person",
+        "*": "entity",
+        "base": "person",
+        "constraints": {"()": ["overbooked"]}
+    },
+    {
+        "#": "new task",
+        "*": "entity",
+        "base": "task",
+        "constraints": {"()": ["new"]}
+    },
+    {
+        "#": "start date of the task",
+        "*": "entity",
+        "base": "task",
+        "property": {"entity": "start date"}
+    },
+    {
+        "#": "end date of the task",
+        "*": "entity",
+        "base": "task",
+        "property": {"entity": "end date"}
+    },
+    {
+        "#": "duration of the task",
+        "*": "entity",
+        "base": "task",
+        "property": {"entity": "duration"}
+    },
+    {
+        "#": "adjustment of allocated resources and links to other tasks takes",
+        "*": "entity",
+        "base": "adjustment",
+        "constraints": {"()": ["of allocated resources and links to other tasks takes"]}
+    },
+    {
+        "#": "parent of the deleted task",
+        "*": "entity",
+        "base": "deleted task",
+        "property": {"entity": "parent"}
+    },
+    {
+        "#": "handling and releasing resources associated with the deleted task",
+        "*": "entity",
+        "base": "resource",
+        "isAll": true,
+        "constraints": {"()": ["handling", "releasing", "associated with the deleted task"]}
+    },
+    {
+        "#": "start/end date of a task",
+        "*": "entity",
+        "base": "task",
+        "property": {"entity": "start/end date"}
+    },
+    {
+        "#": "start/end dates of the subtasks",
+        "*": "entity",
+        "base": "subtask",
+        "isAll": true,
+        "property": {"entity": "start/end date"}
+    },
+    {
+        "#": "selected task nodes in GUI",
+        "*": "entity",
+        "base": "task node",
+        "isAll": true,
+        "constraints": {"()": ["selected", "in GUI"]}
+    },
+    {
+        "#": "method which indent the selected task nodes in GUI and change them to be subtasks",
+        "*": "entity",
+        "base": "method",
+        "constraints": {"()": ["which indent the selected task nodes in GUI and change them to be subtasks"]}
+    },
+    {
+        "#": "manager of task hierarchy",
+        "*": "entity",
+        "base": "task hierarchy",
+        "property": {"entity": "manager"}
+    },
+    {
+        "#": "relationship between tasks",
+        "*": "entity",
+        "base": "relationship",
+        "constraints": {"()": ["between tasks"]}
+    },
+    {
+        "#": "method which dedent selected task nodes in GUI",
+        "*": "entity",
+        "base": "method",
+        "constraints": {"()": ["which dedent selected task nodes in GUI"]}
+    },
+    {
+        "#": "selected tasks",
+        "*": "entity",
+        "base": "task",
+        "isAll": true,
+        "constraints": {"()": ["selected"]}
+    },
+    {
+        "#": "original parents",
+        "*": "entity",
+        "base": "parent",
+        "isAll": true,
+        "constraints": {"()": ["original"]}
+    },
+    {
+        "#": "original parents of selected tasks",
+        "*": "entity",
+        "base": "task",
+        "isAll": true,
+        "constraints": {"()": ["selected"]},
+        "property": {"entity": "original parents"}
+    },
+    {
+        "#": "new parents",
+        "*": "entity",
+        "base": "parent",
+        "isAll": true,
+        "constraints": {"()": ["new"]}
+    },
+    {
+        "#": "new parents of selected tasks",
+        "*": "entity",
+        "base": "task",
+        "isAll": true,
+        "constraints": {"()": ["selected"]},
+        "property": {"entity": "new parents"}
+    },
+    {
+        "#": "relationship between selected tasks and their original parents",
+        "*": "entity",
+        "base": "relationship",
+        "constraints": {"()": ["between selected tasks and their original parents"]}
+    },
+    {
+        "#": "relationship between selected tasks and their new parents",
+        "*": "entity",
+        "base": "relationship",
+        "constraints": {"()": ["between selected tasks and their new parents"]}
+    },
+    {
+        "#": "time point of occurrence",
+        "*": "entity",
+        "base": "occurrence",
+        "property": {"entity": "time point"}
+    },
+    {
+        "#": "regular tasks",
+        "*": "entity",
+        "base": "task",
+        "isAll": true,
+        "constraints": {"()": ["regular"]}
+    },
+    {
+        "#": "GUI of task property",
+        "*": "entity",
+        "base": "task property",
+        "property": {"entity": "GUI"}
+    },
+    {
+        "#": "special date",
+        "*": "entity",
+        "base": "date",
+        "constraints": {"()": ["special"]}
+    },
+    {
+        "#": "relationship between one task and one human resource",
+        "*": "entity",
+        "base": "relationship",
+        "constraints": {"()": ["between one task and one human resource"]}
+    },
+    {
+        "#": "assignment of a resource to a task",
+        "*": "entity",
+        "base": "resource to a task",
+        "property": {"entity": "assignment"}
+    },
+    {
+        "#": "all the tasks where the resource is assigned",
+        "*": "entity",
+        "base": "task",
+        "isAll": true,
+        "constraints": {"()": ["where the resource is assigned"]}
+    },
+    {
+        "#": "properties of objects",
+        "*": "entity",
+        "base": "object",
+        "isAll": true,
+        "property": {"entity": "properties"}
+    },
+    {
+        "#": "properties of objects of the human resource class",
+        "*": "entity",
+        "base": "human resource class",
+        "property": {"entity": "properties of objects"}
+    },
+    {
+        "#": "tasks in a project",
+        "*": "entity",
+        "base": "task",
+        "isAll": true,
+        "constraints": {"()": ["in a project"]}
+    },
+    {
+        "#": "linking of one task to another",
+        "*": "entity",
+        "base": "linking",
+        "content": {"entity": "one task to another"}
+    },
+    {
+        "#": "dependency between two tasks",
+        "*": "entity",
+        "base": "dependency",
+        "constraints": {"()": ["between two tasks"]}
+    },
+    {
+        "#": "two or more tasks",
+        "*": "entity",
+        "base": "task",
+        "constraints": {"()": ["two or more"]}
+    },
+    {
+        "#": "potential collisions on the chart",
+        "*": "entity",
+        "base": "collision",
+        "isAll": true,
+        "constraints": {"()": ["potential", "on the chart"]}
+    },
+    {
+        "#": "start/end dates for the graph",
+        "*": "entity",
+        "base": "graph",
+        "property": {"entity": "start/end dates"}
+    }
+]

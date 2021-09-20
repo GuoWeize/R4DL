@@ -36,7 +36,8 @@ requirement <requirement_name> {
 ```
 The `<requirement_name>` and `<element_name>` are identifiers.<br>
 The `<default_value>` is a value of type `<element_type>`, which represent the default value of this field.
-It only has basic types, however, you can define default value of a type later during defining requirements.<br>
+For basic types, it fit [`this format`](#how-to-write-requirements).
+For customized types, it should be the ID of the entity. <br>
 The `<element_type>` is a type signature, which has 3 conditions:
  * basic types:
    - `boolean`: `true` or `false`, the default is `false`;
@@ -221,41 +222,75 @@ The basic format is: `[ <entity>, <entity>, ... ]`, in where `<entity>`s are sep
    - integer or float: JSON number value, like `3` or `2.15`
    - string: JSON string: like `"hello"`
  * collection type:
-   - list: `"-list-": [ <entity>, <entity>, ... ]`
-   - set: `"-set-": [ <entity>, <entity>, ... ]`
+   - list: `{ "[]": [ <entity>, <entity>, ... ] }`
+   - set:  `{ "()": [ <entity>, <entity>, ... ] }`
    - map: 
      ```text
-     "-map-": [
-        {
-            "-key-": <entity>,
-            "-value-": <entity>
-        },
-        ...
-     ]
+     {
+         "{}": [
+             {"K": <entity>,
+              "V": <entity>},
+             ...
+         ]
+     }
      ```
  * entity type: includes requirement and entity. Basic format is:
    ```text
    {
-       "#": <entity_ID>,
-       <entity_type> : {
-           <field_name> : <field_entity>,
-           <field_name> : <field_entity>,
-           ...
-       }
+       "#": <string of entity ID>,
+       "*": <entity type>,
+       ":": <string for comment>,
+       <field_name> : <field_entity>,
+       <field_name> : <field_entity>,
+       ...
    }
    ```
    In this, `<entity_ID>` is a JSON string, represents the ID of entity, using in entity-link below.
-   It should be unique for each entity in a single type, yet can be duplicated in different types.
-   `<field_name>` is the identifier of field, and `<field_entity>` is also an `<entity>`.
-   Any field has no assignment in this way should be initialized with default value.
- * entity-link: a way to refer other entity using its ID. Basic format is:
-   ```text
-   {
-       "-link-": {
-           <entity_type> : <entity_ID>
-       }
-   }
-   ```
+   It should be unique for each entity in a single type, yet can be duplicated in different types.  
+   `<field_name>` is the identifier of field, and `<field_entity>` is also an `<entity>`.  
+   Any field has no assignment in this way is initialized with default value.
+ * entity-link: a way to refer other entity using its ID. Basic format is: `{ <entity_type> : <entity_ID> }`.
    In this, `<entity_type>` is the type of the linked entity, and `<entity_ID>` is its ID.
 
 If a field of entity is not specified, it should be the default, see [`this`](#how-to-write-requirements-models).
+
+## Structure of Source Directory
+```
+├── main
+│   ├── generated: auto-generated classes, including classes of customized types and class of rule.
+│   │   ├── <requirement dataset1 name>
+│   │   │   ├── $<type 1>.java
+│   │   │   ├── $<type 2>.java
+│   │   │   ├── ...
+│   │   │   └── $rule$.java
+│   │   ├── <requirement dataset2 name>
+│   │   │   ├── $<type 1>.java
+│   │   │   ├── $<type 2>.java
+│   │   │   ├── ...
+│   │   │   └── $rule$.java
+│   │   └── ... ...
+│   ├── java
+│   │   ├── api
+│   │   ├── basicTypes
+│   │   ├── codeGenerator
+│   │   ├── dynamics
+│   │   ├── exceptions
+│   │   ├── grpc
+│   │   ├── judge
+│   │   ├── languageParser
+│   │   ├── reqParser
+│   │   └── util
+│   ├── proto: Protobuf files
+│   │   └── requirement.proto: define natrual language requirement request and structuralization response.
+│   └── resources
+│   │   ├── log
+│   │   ├── models
+│   │   ├── requirments
+│   │   ├── rules
+│   │   ├── thesaurus
+│   │   ├── config.properties
+│   │   ├── formats.properties
+│   │   ├── operators.properties
+│   │   └── log4j2.xml
+└── test: testing module
+```

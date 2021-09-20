@@ -1,53 +1,19 @@
 [
     {
         "#": "s1",
-        "state": {
-            "object": "route",
-            "name": "route.allocated",
-            "and_states": {"-set-": []},
-            "or_states": {"-set-": []}
-        }
+        "*": "state",
+        "object": "route",
+        "name": "route.allocated"
     },
     {
         "#": "e1",
-        "event": {
-            "name": "tTrain.OnRoute.s"
-        }
+        "*": "event",
+        "name": "tTrain.OnRoute.s"
     },
     {
         "#": "permit1",
-        "permit": {
-            "state_1": {
-                "-link-": {
-                    "state": "s1"
-                }
-            },
-            "event_2": {
-                "-link-": {
-                    "event": "e1"
-                }
-            }
-        }
-    },
-    {
-        "#": "",
-        "trigger": {
-            "state_1": {
-                "-link-": {
-                    "state": "s1"
-                }
-            },
-            "event_2": {
-                "-link-": {
-                    "event": "e1"
-                }
-            },
-            "time_3": {
-                "#": "t1",
-                "time": {
-                    "clock": 1
-                }
-            }
-        }
+        "*": "permit",
+        "state_1": {"state": "s1"},
+        "event_2": {"event": "e1"}
     }
 ]

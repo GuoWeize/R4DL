@@ -32,7 +32,11 @@ import util.TypeEnum;
 @Slf4j
 public final class ModelJsonParser extends StdDeserializer<Object> {
 
-    protected ModelJsonParser(Class<?> vc) {
+    private final static Set<String> PRIMITIVE_TYPES = Set.of(
+        "BoolEntity", "IntEntity", "FloatEntity", "StringEntity"
+    );
+
+    private ModelJsonParser(Class<?> vc) {
         super(vc);
     }
 
@@ -82,15 +86,16 @@ public final class ModelJsonParser extends StdDeserializer<Object> {
     }
 
     private void generateJavaFile(String name, Map<String, String> fields2type, boolean isRequirement) {
-        String content = GeneralJavaHeaderGenerator.generateImports()
-            + GeneralJavaHeaderGenerator.generateJavadoc(name + ".java", PathConsts.file(ModeEnum.MODEL, TypeEnum.JSON))
-            + generateFileHead(name)
-            + generateFields(name, fields2type)
-            + generateGetType(name)
-            + generateIsRequirement(isRequirement)
-            + generateEquals(name, fields2type)
-            + generateNewInstance(name)
-            + generateFileEnd();
+        StringBuilder content = new StringBuilder()
+            .append(GeneralJavaHeaderGenerator.generateImports())
+            .append(GeneralJavaHeaderGenerator.generateJavadoc(name + ".java", PathConsts.file(ModeEnum.MODEL, TypeEnum.JSON)))
+            .append(generateFileHead(name))
+            .append(generateFields(name, fields2type))
+            .append(generateGetType(name))
+            .append(generateIsRequirement(isRequirement))
+            .append(generateEquals(name, fields2type))
+            .append(generateNewInstance(name))
+            .append(generateFileEnd());
         String path = PathConsts.DYNAMICS_JAVA_CODE_DIR + name + ".java";
         try {
             File file = new File(path);
@@ -98,7 +103,7 @@ public final class ModelJsonParser extends StdDeserializer<Object> {
                 log.warn(String.format("Replace existing file \"%s.java\".", name));
             }
             FileWriter fileWriter = new FileWriter(file);
-            fileWriter.write(content);
+            fileWriter.write(content.toString());
             fileWriter.flush();
             fileWriter.close();
         } catch (IOException e) {
@@ -110,25 +115,27 @@ public final class ModelJsonParser extends StdDeserializer<Object> {
         return String.format("public final class %s extends BaseEntity {\n", name);
     }
 
-    private String defaultValue(String type, boolean isRequired, String defaultValue) {
-        if (! isRequired) {
-            return " = null";
-        }
+    private String setDefaultValue(String type, String defaultValue) {
         if (defaultValue == null) {
             if (type.startsWith("SetEntity<")) {
-                return String.format(" = (%s) SetEntity.newInstance()", type);
+                return String.format("(%s) SetEntity.newInstance()", type);
             }
             if (type.startsWith("ListEntity<")) {
-                return String.format(" = (%s) ListEntity.newInstance()", type);
+                return String.format("(%s) ListEntity.newInstance()", type);
             }
             if (type.startsWith("MapEntity<")) {
-                return String.format(" = (%s) MapEntity.newInstance()", type);
+                return String.format("(%s) MapEntity.newInstance()", type);
             }
-            return String.format(" = %s.newInstance()", type);
+            if (PRIMITIVE_TYPES.contains(type)) {
+                return String.format("%s.newInstance()", type);
+            }
+            return "null";
         }
         else {
-            // TODO
-            return "";
+            if (PRIMITIVE_TYPES.contains(type)) {
+                return String.format("%s.valueOf(%s)", type, defaultValue);
+            }
+            return "null";
         }
     }
 
@@ -137,15 +144,12 @@ public final class ModelJsonParser extends StdDeserializer<Object> {
         for (Map.Entry<String, String> entry: fields2type.entrySet()) {
             String type = TypeManager.type2class(entry.getValue());
             String filedName = entry.getKey();
-            boolean isRequired = true;
-            if (Objects.equals(name, type)) {
-                isRequired = false;
-            }
             content.append("    public ")
                 .append(type)
                 .append(' ')
                 .append(filedName)
-                .append(defaultValue(type, isRequired, null))
+                .append(" = ")
+                .append(setDefaultValue(type, null))
                 .append(";\n");
         }
         return content.append('\n').toString();
@@ -161,22 +165,25 @@ public final class ModelJsonParser extends StdDeserializer<Object> {
 
     private String generateEquals(String name, Map<String, String> fields2type) {
         String result = fields2type.keySet().stream()
-            .map(f -> String.format("BaseEntity.equal(%s, that.%s)", f, f))
+            .map(field -> String.format("BaseEntity.equal(%s, that.%s)", field, field))
             .collect(Collectors.joining(",\n            "));
-        return  "    @Override\n"
-            + "    public BoolEntity equal(BaseEntity entity) {\n"
-            + "        if (! getType().equals(entity.getType())) {\n"
-            + "            return BoolEntity.FALSE;\n"
-            + "        }\n"
-            + String.format("        %s that = (%s)entity;\n", name, name)
-            + "        return BoolEntity.and(\n"
-            + String.format("            %s\n", result)
-            + "        );\n"
-            + "    }\n";
+        return new StringBuilder("    @Override\n")
+            .append("    public BoolEntity equal(BaseEntity entity) {\n")
+            .append("        if (! getType().equals(entity.getType())) {\n")
+            .append("            return BoolEntity.FALSE;\n")
+            .append("        }\n")
+            .append(String.format("        %s that = (%s)entity;\n", name, name))
+            .append("        return BoolEntity.and(\n")
+            .append(String.format("            %s\n", result))
+            .append("        );\n")
+            .append("    }\n")
+            .toString();
     }
 
     private String generateNewInstance(String name) {
-        return String.format("    public static %s newInstance() {\n        return new %s();\n    }\n\n", name, name);
+        return String.format(
+            "    public static %s newInstance() {\n        return new %s();\n    }\n\n",
+            name, name);
     }
 
     private String generateFileEnd() {

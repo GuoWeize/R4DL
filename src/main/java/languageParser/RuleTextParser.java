@@ -26,7 +26,7 @@ public final class RuleTextParser extends BaseParser {
     /**
      * entry of the function of parsing the rule text file.
      */
-    protected static String parse() throws IOException {
+    static String parse() throws IOException {
         String preRead = TextReader.nextToken();
         while (! Objects.equals(preRead, TextReader.EMPTY_STRING)) {
             parseRule(preRead);

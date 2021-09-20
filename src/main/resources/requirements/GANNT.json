@@ -1,43 +1,41 @@
 [
     {
-        "#": "1",
+        "#": "FR-1",
         "*": "functional",
         ":": "A class is used to represent the dependency between one task and one human resource.",
         "agent": {"entity": "class"},
         "operation": {"operation": "represent"},
         "input": {
-            "-set-": [
+            "()": [
                 {"entity": "task"},
                 {"entity": "human resource"}
             ]
         },
         "output": {
-            "-set-": [
-                {"entity": "dependency between one task and one human resource"}
-            ]
+            "()": [{"entity": "dependency between one task and one human resource"}]
         }
     },
     {
-        "#": "2",
+        "#": "FR-2",
         "*": "functional",
         ":": "The dependency class provides functions to get the task and the human resource.",
         "agent": {"entity": "dependency class"},
         "operation": {"operation": "get"},
         "output": {
-            "-set-": [
+            "()": [
                 {"entity": "task"},
                 {"entity": "human resource"}
             ]
         }
     },
     {
-        "#": "4",
+        "#": "FR-3",
         "*": "functional",
         ":": "A collection of resource assignments is used to manage the relationships between multiple human resources and a task.",
         "agent": {"entity": "collection of resource assignments"},
         "operation": {"operation": "manage"},
         "input": {
-            "-set-": [
+            "()": [
                 {"entity": "relationships between multiple human resources and a task"},
                 {"entity": "multiple human resources"},
                 {"entity": "task"}
@@ -45,646 +43,544 @@
         }
     },
     {
-        "#": "5",
+        "#": "FR-4",
         "*": "functional",
         ":": "A collection of resource assignments contains multiple objects of the human resource assignment class.",
         "agent": {"entity": "collection of resource assignments"},
         "operation": {"operation": "contain"},
         "input": {
-            "-set-": [
-                {"entity": "multiple objects of the human resource assignment class"}
-            ]
+            "()": [{"entity": "multiple objects of the human resource assignment class"}]
         }
     },
     {
-        "#": "6-1",
+        "#": "FR-5-1",
         "*": "functional",
         ":": "A collection of resource assignments provides functions to add and remove human resource assignments.",
         "agent": {"entity": "collection of resource assignments"},
         "operation": {"operation": "add"},
         "input": {
-            "-set-": [
-                {"entity": "human resource assignment"}
-            ]
+            "()": [{"entity": "human resource assignment"}]
         },
         "output": {
-            "-set-": [
-                {"entity": "human resource assignment"}
-            ]
+            "()": [{"entity": "human resource assignment"}]
         }
     },
     {
-        "#": "6-2",
+        "#": "FR-5-2",
         "*": "functional",
         ":": "A collection of resource assignments provides functions to add and remove human resource assignments.",
         "agent": {"entity": "collection of resource assignments"},
         "operation": {"operation": "remove"},
         "input": {
-            "-set-": [
-                {"entity": "human resource assignment"}
-            ]
+            "()": [{"entity": "human resource assignment"}]
         },
         "output": {
-            "-set-": [
-                {"entity": "human resource assignment"}
-            ]
+            "()": [{"entity": "human resource assignment"}]
         }
     },
     {
-        "#": "8",
+        "#": "FR-6",
         "*": "functional",
         ":": "The task class uses an object of the assignments collection class to manage its assignments.",
         "agent": {"entity": "task class"},
         "operation": {"operation": "manage"},
         "input": {
-            "-set-": [
+            "()": [
                 {"entity": "object of the assignments collection class"},
                 {"entity": "assignments of task class"}
             ]
         }
     },
     {
-        "#": "10",
+        "#": "FR-7",
         "*": "functional",
         ":": "The human resource class can have objects of resource assignments which assigns this resource to tasks.",
         "agent": {"entity": "human resource class"},
         "operation": {"operation": "can have"},
         "input": {
-            "-set-": [
+            "()": [
                 {"entity": "multiple objects of resource assignments which assigns this resource to tasks"},
                 {"entity": "tasks"}
             ]
         }
     },
     {
-        "#": "11",
+        "#": "FR-8",
         "*": "functional",
         ":": "The human resource class provides function to get the list of objects of resource assignments which assigns this resource to tasks.",
         "agent": {"entity": "human resource class"},
         "operation": {"operation": "get"},
         "output": {
-            "-set-": [
-                {"entity": "list of objects of resource assignments which assigns this resource to tasks"}
-            ]
+            "()": [{"entity": "list of objects of resource assignments which assigns this resource to tasks"}]
         }
     },
     {
-        "#": "13-1",
+        "#": "FR-9-1",
         "*": "functional",
         ":": "Task property GUI class provides interface and functions to add and remove human resource assignments.",
         "agent": {"entity": "task property GUI class"},
         "operation": {"operation": "add"},
         "input": {
-            "-set-": [
-                {"entity": "human resource assignments"}
-            ]
+            "()": [{"entity": "human resource assignments"}]
         },
         "output": {
-            "-set-": [
-                {"entity": "human resource assignment"}
-            ]
+            "()": [{"entity": "human resource assignment"}]
         }
     },
     {
-        "#": "13-2",
+        "#": "FR-9-2",
         "*": "functional",
-        ":": "A task property GUI class provides interface and functions to add and remove human resource assignments.",
+        ":": "Task property GUI class provides interface and functions to add and remove human resource assignments.",
         "agent": {"entity": "task property GUI class"},
         "operation": {"operation": "remove"},
         "input": {
-            "-set-": [
-                {"entity": "human resource assignments"}
-            ]
+            "()": [{"entity": "human resource assignments"}]
         },
         "output": {
-            "-set-": [
-                {"entity": "human resource assignment"}
-            ]
+            "()": [{"entity": "human resource assignment"}]
         }
     },
     {
-        "#": "15",
+        "#": "FR-10",
         "*": "functional",
         ":": "A GUI class uses an object of resource tree table model class to display the resource tree.",
         "agent": {"entity": "GUI class"},
         "operation": {"operation": "display"},
         "input": {
-            "-set-": [
-                {"entity": "object of resource tree table model class"}
-            ]
+            "()": [{"entity": "object of resource tree table model class"}]
         },
         "output": {
-            "-set-": [
-                {"entity": "resource tree"}
-            ]
+            "()": [{"entity": "resource tree"}]
         }
     },
     {
-        "#": "16",
+        "#": "FR-11",
         "*": "functional",
         ":": "The resource tree table model provides functions to build subtrees based on dependencies.",
         "agent": {"entity": "resource tree table model"},
         "operation": {"operation": "build"},
         "input": {
-            "-set-": [
-                {"entity": "dependencies"}
-            ]
+            "()": [{"entity": "dependencies"}]
         },
         "output": {
-            "-set-": [
-                {"entity": "subtrees of resource tree"}
-            ]
+            "()": [{"entity": "subtrees of resource tree"}]
         }
     },
     {
-        "#": "18",
+        "#": "FR-12",
         "*": "functional",
         ":": "A GUI class of human resource load distribution uses objects of a load distribution class to capture the hours each person is supposed to work.",
         "agent": {"entity": "human resource load distribution GUI class"},
         "operation": {"operation": "capture"},
         "input": {
-            "-set-": [
-                {"entity": "objects of a load distribution class"}
-            ]
+            "()": [{"entity": "objects of a load distribution class"}]
         },
         "output": {
-            "-set-": [
-                {"entity": "hours each person is supposed to work"}
-            ]
+            "()": [{"entity": "hours each person is supposed to work"}]
         }
     },
     {
-        "#": "20",
+        "#": "FR-13",
         "*": "functional",
         ":": "The load distribution class provides functions to calculate the distribution based on tasks and human resources using task manager.",
         "agent": {"entity": "load distribution class"},
         "operation": {"operation": "calculate"},
         "input": {
-            "-set-": [
+            "()": [
                 {"entity": "tasks"},
                 {"entity": "human resources"},
                 {"entity": "task manager"}
             ]
         },
         "output": {
-            "-set-": [
-                {"entity": "distribution"}
-            ]
+            "()": [{"entity": "distribution"}]
         }
     },
     {
-        "#": "23",
+        "#": "FR-14",
         "*": "functional",
         ":": "GUI needs to provide ability to change length of a task.",
         "agent": {"entity": "GUI"},
         "operation": {"operation": "change"},
         "input": {
-            "-set-": [
-                {"entity": "length of a task"}
-            ]
+            "()": [{"entity": "length of a task"}]
         },
         "output": {
-            "-set-": [
-                {"entity": "length of a task"}
-            ]
+            "()": [{"entity": "length of a task"}]
         }
     },
     {
-        "#": "25",
+        "#": "FR-15",
         "*": "functional",
         ":": "User should be able to change the length of a task by dragging-and-dropping the bar on the GUI.",
         "agent": {"entity": "user"},
         "operation": {"operation": "can change"},
         "input": {
-            "-set-": [
+            "()": [
                 {"entity": "length of a task"},
                 {"entity": "bar on the GUI"}
             ]
         },
         "output": {
-            "-set-": [
-                {"entity": "length of a task"}
-            ]
+            "()": [{"entity": "length of a task"}]
         },
         "restriction": {
-            "-set-": ["by dragging-and-dropping the bar on the GUI"]
+            "()": ["by dragging-and-dropping the bar on the GUI"]
         }
     },
     {
-        "#": "27",
+        "#": "FR-16",
         "*": "functional",
         ":": "User should be able to change the length of a task via date picker control.",
         "agent": {"entity": "user"},
         "operation": {"operation": "can change"},
         "input": {
-            "-set-": [
+            "()": [
                 {"entity": "length of a task"},
                 {"entity": "date picker control"}
             ]
         },
         "output": {
-            "-set-": [
-                {"entity": "length of a task"}
-            ]
+            "()": [{"entity": "length of a task"}]
         },
         "restriction": {
-            "-set-": ["via date picker control"]
+            "()": ["via date picker control"]
         }
     },
     {
-        "#": "29",
+        "#": "FR-17",
         "*": "functional",
         ":": "A dependency class contains a dependant task and a dependee task.",
         "agent": {"entity": "dependency class"},
         "operation": {"operation": "contain"},
         "input": {
-            "-set-": [
+            "()": [
                 {"entity": "dependant task"},
                 {"entity": "dependee task"}
             ]
         }
     },
     {
-        "#": "30",
+        "#": "FR-18",
         "*": "functional",
         ":": "A dependency class provides functions to get the dependant task and the dependee task.",
         "agent": {"entity": "dependency class"},
         "operation": {"operation": "get"},
         "output": {
-            "-set-": [
+            "()": [
                 {"entity": "dependant task"},
                 {"entity": "dependee task"}
             ]
         }
     },
     {
-        "#": "31",
+        "#": "FR-19",
         "*": "functional",
         ":": "The dependency class also contains constraint to show the start date of the dependee task.",
         "agent": {"entity": "dependency class"},
         "operation": {"operation": "show"},
         "input": {
-            "-set-": [
-                {"entity": "constraint"}
-            ]
+            "()": [{"entity": "constraint"}]
         },
         "output": {
-            "-set-": [
-                {"entity": "constraint of the dependency"}
-            ]
+            "()": [{"entity": "constraint of the dependency"}]
         }
     },
     {
-        "#": "33",
+        "#": "FR-20",
         "*": "functional",
         ":": "A class is used to represent the constraint that the start date of the dependee task should not be earlier than the end date of the dependent task.",
         "agent": {"entity": "class"},
         "operation": {"operation": "represent"},
         "input": {
-            "-set-": [
+            "()": [
                 {"entity": "start date of the dependee task"},
                 {"entity": "end date of the dependent task"}
             ]
         },
         "output": {
-            "-set-": [
-                {"entity": "constraint"}
-            ]
+            "()": [{"entity": "constraint"}]
         }
     },
     {
-        "#": "35",
+        "#": "FR-21",
         "*": "functional",
         ":": "A collection of dependency class is used to manage dependencies.",
         "agent": {"entity": "collection of dependency class"},
         "operation": {"operation": "manage"},
         "input": {
-            "-set-": [
-                {"entity": "dependencies"}
-            ]
+            "()": [{"entity": "dependencies"}]
         }
     },
     {
-        "#": "36-1",
+        "#": "FR-22",
         "*": "functional",
         ":": "A collection of dependency class contains objects of dependency classes.",
         "agent": {"entity": "collection of dependency class"},
         "operation": {"operation": "contain"},
         "input": {
-            "-set-": [
-                {"entity": "objects of dependency classes"}
-            ]
+            "()": [{"entity": "objects of dependency classes"}]
         }
     },
     {
-        "#": "36-2",
+        "#": "FR-23",
         "*": "functional",
         ":": "A collection of dependency class provides functions to create, delete, and get dependencies.",
         "agent": {"entity": "collection of dependency class"},
         "operation": {"operation": "create"},
         "output": {
-            "-set-": [
-                {"entity": "dependencies"}
-            ]
+            "()": [{"entity": "dependencies"}]
         }
     },
     {
-        "#": "36-3",
+        "#": "FR-24",
         "*": "functional",
         ":": "A collection of dependency class provides functions to create, delete, and get dependencies.",
         "agent": {"entity": "collection of dependency class"},
         "operation": {"operation": "delete"},
         "output": {
-            "-set-": [
-                {"entity": "dependencies"}
-            ]
+            "()": [{"entity": "dependencies"}]
         }
     },
     {
-        "#": "36-4",
+        "#": "FR-25",
         "*": "functional",
         ":": "A collection of dependency class provides functions to create, delete, and get dependencies.",
         "agent": {"entity": "collection of dependency class"},
         "operation": {"operation": "get"},
         "output": {
-            "-set-": [
-                {"entity": "dependencies"}
-            ]
+            "()": [{"entity": "dependencies"}]
         }
     },
     {
-        "#": "38-1",
+        "#": "FR-26",
         "*": "functional",
         ":": "Task property GUI class provides interface and functions to add and remove dependencies by using an object of the dependency collection.",
         "agent": {"entity": "task property GUI class"},
         "operation": {"operation": "add"},
         "input": {
-            "-set-": [
+            "()": [
                 {"entity": "dependencies"},
                 {"entity": "object of the dependency collection"}
             ]
         },
         "output": {
-            "-set-": [
-                {"entity": "dependencies"}
-            ]
+            "()": [{"entity": "dependencies"}]
         },
         "restriction": {
-            "-set-": ["by using an object of the dependency collection"]
+            "()": ["by using an object of the dependency collection"]
         }
     },
     {
-        "#": "38-2",
+        "#": "FR-27",
         "*": "functional",
         ":": "A task property GUI class provides interface and functions to add and remove dependencies by using an object of the dependency collection.",
         "agent": {"entity": "task property GUI class"},
         "operation": {"operation": "remove"},
         "input": {
-            "-set-": [
+            "()": [
                 {"entity": "dependencies"},
                 {"entity": "object of the dependency collection"}
             ]
         },
         "output": {
-            "-set-": [
-                {"entity": "dependencies"}
-            ]
+            "()": [{"entity": "dependencies"}]
         },
         "restriction": {
-            "-set-": ["by using an object of the dependency collection"]
+            "()": ["by using an object of the dependency collection"]
         }
     },
     {
-        "#": "40",
+        "#": "FR-28",
         "*": "functional",
         ":": "A graphic area GUI class provides function to draw dependency.",
         "agent": {"entity": "graphic area GUI class"},
         "operation": {"operation": "draw"},
         "output": {
-            "-set-": [
-                {"entity": "dependency"}
-            ]
+            "()": [{"entity": "dependency"}]
         }
     },
     {
-        "#": "41",
+        "#": "FR-29",
         "*": "functional",
         ":": "A graphic area GUI class uses an object of task manager to add dependencies.",
         "agent": {"entity": "graphic area GUI class"},
         "operation": {"operation": "add"},
         "input": {
-            "-set-": [
+            "()": [
                 {"entity": "object of task manager"},
                 {"entity": "dependencies"}
             ]
         },
         "output": {
-            "-set-": [
-                {"entity": "dependencies"}
-            ]
+            "()": [{"entity": "dependencies"}]
         }
     },
     {
-        "#": "43",
+        "#": "FR-30",
         "*": "functional",
         ":": "The task manager class uses an object of dependency collection class to manage dependencies.",
         "agent": {"entity": "task manager class"},
         "operation": {"operation": "manage"},
         "input": {
-            "-set-": [
+            "()": [
                 {"entity": "object of dependency collection class"},
                 {"entity": "dependencies"}
             ]
         }
     },
     {
-        "#": "45",
+        "#": "FR-31",
         "*": "functional",
         ":": "An object of the recalculating task schedule algorithm class is used to change the start/end date based on dependency changes.",
         "agent": {"entity": "object of the recalculating task schedule algorithm class"},
         "operation": {"operation": "change"},
         "input": {
-            "-set-": [
-                {"entity": "dependency changes"}
-            ]
+            "()": [{"entity": "dependency changes"}]
         },
         "output": {
-            "-set-": [
-                {"entity": "start/end date"}
-            ]
+            "()": [{"entity": "start/end date"}]
         }
     },
     {
-        "#": "46-1",
+        "#": "FR-32",
         "*": "functional",
-        ":": "The algorithm class provides functions to fulfill the constraints and to modify the start or end date of the tasks.",
+        ":": "The algorithm class provides functions to fulfill the constraints.",
         "agent": {"entity": "algorithm class"},
         "operation": {"operation": "fulfill"},
         "input": {
-            "-set-": [
-                {"entity": "constraints"}
-            ]
+            "()": [{"entity": "constraints"}]
         }
     },
     {
-        "#": "46-2",
+        "#": "FR-33",
         "*": "functional",
-        ":": "The algorithm class provides functions to fulfill the constraints and to modify the start or end date of the tasks.",
+        ":": "The algorithm class provides functions to modify the start or end date of the tasks.",
         "agent": {"entity": "algorithm class"},
         "operation": {"operation": "modify"},
         "output": {
-            "-set-": [
-                {"entity": "start or end date of the tasks"}
-            ]
+            "()": [{"entity": "start or end date of the tasks"}]
         }
     },
     {
-        "#": "48",
+        "#": "FR-34",
         "*": "functional",
         ":": "Application needs to keep track of the start and end times of the tasks.",
         "agent": {"entity": "application"},
         "operation": {"operation": "keep track of"},
         "output": {
-            "-set-": [
-                {"entity": "start/end times of the tasks"}
-            ]
+            "()": [{"entity": "start/end times of the tasks"}]
         }
     },
     {
-        "#": "50",
+        "#": "FR-35",
         "*": "functional",
         ":": "Application needs to keep track of subtasks in a task.",
         "agent": {"entity": "application"},
         "operation": {"operation": "keep track of"},
         "input": {
-            "-set-": [
-                {"entity": "subtasks in a task"}
-            ]
+            "()": [{"entity": "subtasks in a task"}]
         }
     },
     {
-        "#": "52",
+        "#": "FR-36",
         "*": "functional",
         ":": "Every time Start/End time of a subtask changes, the start/end time of the parent task need to change accordingly.",
         "event": {
-            "-set-": [{
+            "()": [{
                 "#": "52-condition",
                 "*": "condition",
                 "operation": {"operation": "change"},
                 "input": {
-                    "-set-": [
-                        {"entity": "start/end time of a subtask"}
-                    ]
+                    "()": [{"entity": "start/end time of a subtask"}]
                 },
                 "output": {
-                    "-set-": [
-                        {"entity": "start/end time of a subtask"}
-                    ]
+                    "()": [{"entity": "start/end time of a subtask"}]
                 }
             }]
         },
         "operation": {"operation": "change"},
         "input": {
-            "-set-": [
-                {"entity": "start/end time of the parent task"}
-            ]
+            "()": [{"entity": "start/end time of the parent task"}]
         },
         "output": {
-            "-set-": [
-                {"entity": "start/end time of the parent task"}
-            ]
+            "()": [{"entity": "start/end time of the parent task"}]
         },
         "restriction": {
-            "-set-": ["accordingly"]
+            "()": ["accordingly"]
         }
     },
     {
-        "#": "54",
+        "#": "FR-37",
         "*": "functional",
         ":": "Every time Start/End time for a task changes, the start/end time of one or more its subtasks need to change as well.",
         "event": {
-            "-set-": [{
+            "()": [{
                 "#": "54-condition",
                 "*": "condition",
                 "operation": {"operation": "change"},
                 "input": {
-                    "-set-": [
-                        {"entity": "start/end time of a task"}
-                    ]
+                    "()": [{"entity": "start/end time of a task"}]
                 },
                 "output": {
-                    "-set-": [
-                        {"entity": "start/end time of a task"}
-                    ]
+                    "()": [{"entity": "start/end time of a task"}]
                 }
             }]
         },
         "operation": {"operation": "change"},
         "input": {
-            "-set-": [
-                {"entity": "start/end time of one or more subtasks"}
-            ]
+            "()": [{"entity": "start/end time of one or more subtasks"}]
         },
         "output": {
-            "-set-": [
-                {"entity": "start/end time of one or more subtasks"}
-            ]
+            "()": [{"entity": "start/end time of one or more subtasks"}]
         }
     },
     {
-        "#": "56",
+        "#": "FR-38",
         "*": "functional",
         ":": "A graphic area GUI class provides a function to draw dependency.",
         "agent": {"entity": "graphic area GUI class"},
         "operation": {"operation": "draw"},
         "input": {
-            "-set-": [
-                {"entity": "dependency"}
-            ]
+            "()": [{"entity": "dependency"}]
         }
     },
     {
-        "#": "57",
+        "#": "FR-39",
         "*": "functional",
         ":": "A graphic area GUI class uses an object of the task manager to add dependencies",
         "agent": {"entity": "graphic area GUI class"},
         "operation": {"operation": "add"},
         "input": {
-            "-set-": [
-                {"entity": "dependency"}
-            ]
+            "()": [{"entity": "dependency"}]
         }
     },
     {
-        "#": "61",
+        "#": "FR-40",
         "*": "functional",
         ":": "The class of dependency collection provides a function to check if the new dependency will cause a loop, each time a object of dependency class is created.",
         "event": {
-            "-set-": [{
+            "()": [{
                 "#": "each time a object of dependency class is created",
                 "*": "condition",
                 "operation": {"operation": "create"},
                 "output": {
-                    "-set-": [
-                        {"entity": "object of dependency class"}
-                    ]
+                    "()": [{"entity": "object of dependency class"}]
                 }
             }]
         },
         "agent": {"entity": "dependency collection class"},
         "operation": {"operation": "check"},
         "input": {
-            "-set-": [
-                {"entity": "new dependency"}
-            ]
+            "()": [{"entity": "new dependency"}]
         }
     },
     {
-        "#": "62",
+        "#": "FR-41",
         "*": "functional",
         ":": "The class of dependency collection returns an exception if there is a loop.",
         "event": {
-            "-set-": [{
+            "()": [{
                 "agent": {"entity": "loop"},
                 "operation": {"operation": "there be"}
             }]
@@ -692,313 +588,261 @@
         "agent": {"entity": "dependency collection class"},
         "operation": {"operation": "return"},
         "output": {
-            "-set-": [
-                {"entity": "exception"}
-            ]
+            "()": [{"entity": "exception"}]
         }
     },
     {
-        "#": "64-1",
+        "#": "FR-42",
         "*": "functional",
-        ":": "GUI needs to provide ability to display critical path and make the changes affecting critical path updated.",
+        ":": "GUI needs to provide ability to display critical path.",
         "agent": {"entity": "GUI"},
         "operation": {"operation": "display"},
         "input": {
-            "-set-": [
-                {"entity": "critical path"}
-            ]
+            "()": [{"entity": "critical path"}]
         }
     },
     {
-        "#": "64-2",
+        "#": "FR-43",
         "*": "functional",
-        ":": "GUI needs to provide ability to display critical path and make the changes affecting critical path updated.",
+        ":": "GUI needs to provide ability to make the changes affecting critical path updated.",
         "agent": {"entity": "GUI"},
         "operation": {"operation": "update"},
         "input": {
-            "-set-": [
-                {"entity": "changes affecting critical path"}
-            ]
+            "()": [{"entity": "changes affecting critical path"}]
         },
         "output": {
-            "-set-": [
-                {"entity": "changes affecting critical path"}
-            ]
+            "()": [{"entity": "changes affecting critical path"}]
         }
     },
     {
-        "#": "66",
+        "#": "FR-44",
         "*": "functional",
         ":": "The system should be able to evaluate critical path in a project.",
         "agent": {"entity": "system"},
         "operation": {"operation": "can evaluate"},
         "input": {
-            "-set-": [
-                {"entity": "critical path in a project"}
-            ]
+            "()": [{"entity": "critical path in a project"}]
         }
     },
     {
-        "#": "68",
+        "#": "FR-45",
         "*": "functional",
         ":": "The human resource class contains the variable holidays.",
         "agent": {"entity": "human resource class"},
         "operation": {"operation": "contain"},
         "input": {
-            "-set-": [
-                {"entity": "variable holidays"}
-            ]
+            "()": [{"entity": "variable holidays"}]
         }
     },
     {
-        "#": "69-1",
+        "#": "FR-46-1",
         "*": "functional",
         ":": "The human resource class provides functions to change and to get holidays.",
         "agent": {"entity": "human resource class"},
         "operation": {"operation": "change"},
         "input": {
-            "-set-": [
-                {"entity": "holidays"}
-            ]
+            "()": [{"entity": "holidays"}]
         },
         "output": {
-            "-set-": [
-                {"entity": "holidays"}
-            ]
+            "()": [{"entity": "holidays"}]
         }
     },
     {
-        "#": "69-2",
+        "#": "FR-46-2",
         "*": "functional",
         ":": "The human resource class provides functions to change and to get holidays.",
         "agent": {"entity": "human resource class"},
         "operation": {"operation": "get"},
         "output": {
-            "-set-": [
-                {"entity": "holidays"}
-            ]
+            "()": [{"entity": "holidays"}]
         }
     },
     {
-        "#": "70",
+        "#": "FR-47",
         "*": "functional",
         ":": "There can be multiple holidays.",
         "agent": {"entity": "multiple holidays"},
         "operation": {"operation": "there be"}
     },
     {
-        "#": "72-1",
+        "#": "FR-48",
         "*": "functional",
-        ":": "The holiday class provides functions to set the start/end date of the holiday and to get the duration of the holiday.",
+        ":": "The holiday class provides functions to set the start/end date of the holiday.",
         "agent": {"entity": "holiday class"},
         "operation": {"operation": "set"},
         "output": {
-            "-set-": [
-                {"entity": "start/end date of the holiday"}
-            ]
+            "()": [{"entity": "start/end date of the holiday"}]
         }
     },
     {
-        "#": "72-2",
+        "#": "FR-49",
         "*": "functional",
-        ":": "The holiday class provides functions to set the start/end date of the holiday and to get the duration of the holiday.",
+        ":": "The holiday class provides functions to get the duration of the holiday.",
         "agent": {"entity": "holiday class"},
         "operation": {"operation": "get"},
         "output": {
-            "-set-": [
-                {"entity": "duration of the holiday"}
-            ]
+            "()": [{"entity": "duration of the holiday"}]
         }
     },
     {
-        "#": "74",
+        "#": "FR-50",
         "*": "functional",
         ":": "The human resource class provides a function to change the availability of the person based on holidays.",
         "agent": {"entity": "human resource class"},
         "operation": {"operation": "change"},
         "input": {
-            "-set-": [
+            "()": [
                 {"entity": "availability of the person"},
                 {"entity": "holidays"}
             ]
         },
         "output": {
-            "-set-": [
-                {"entity": "availability of the person"}
-            ]
+            "()": [{"entity": "availability of the person"}]
         }
     },
     {
-        "#": "76",
+        "#": "FR-51",
         "*": "functional",
         ":": "GUI needs to provide ability to assign tasks to people.",
         "agent": {"entity": "GUI"},
         "operation": {"operation": "assign"},
         "input": {
-            "-set-": [
-                {"entity": "people"}
-            ]
+            "()": [{"entity": "people"}]
         },
         "output": {
-            "-set-": [
-                {"entity": "tasks"}
-            ]
+            "()": [{"entity": "tasks"}]
         }
     },
     {
-        "#": "78",
+        "#": "FR-52",
         "*": "functional",
         ":": "GUI needs to provide ability to assign people to tasks.",
         "agent": {"entity": "GUI"},
         "operation": {"operation": "assign"},
         "input": {
-            "-set-": [
-                {"entity": "tasks"}
-            ]
+            "()": [{"entity": "tasks"}]
         },
         "output": {
-            "-set-": [
-                {"entity": "people"}
-            ]
+            "()": [{"entity": "people"}]
         }
     },
     {
-        "#": "80",
+        "#": "FR-53",
         "*": "functional",
         ":": "GUI needs to provide ability to show utilization of a person.",
         "agent": {"entity": "GUI"},
         "operation": {"operation": "show"},
         "output": {
-            "-set-": [
-                {"entity": "utilization of a person"}
-            ]
+            "()": [{"entity": "utilization of a person"}]
         }
     },
     {
-        "#": "82",
+        "#": "FR-54",
         "*": "functional",
         ":": "GUI needs to provide ability to show whether a person is underutilized and overbooked.",
         "agent": {"entity": "GUI"},
         "operation": {"operation": "show"},
         "output": {
-            "-set-": [
+            "()": [
                 {"entity": "underutilized person"},
                 {"entity": "overbooked person"}
             ]
         }
     },
     {
-        "#": "84",
+        "#": "FR-55",
         "*": "functional",
         ":": "To create a new task, an object of TaskManager class is passed to the class constructor.",
         "operation": {"operation": "pass"},
         "input": {
-            "-set-": [
+            "()": [
                 {"entity": "object of TaskManager class"},
                 {"entity": "class constructor"}
             ]
         },
         "output": {
-            "-set-": [
-                {"entity": "new task"}
-            ]
+            "()": [{"entity": "new task"}]
         }
     },
     {
-        "#": "85",
+        "#": "FR-56",
         "*": "functional",
         ":": "The TaskManager takes care of a resource allocation using ResourceAssignmentCollection class.",
         "agent": {"entity": "TaskManager"},
         "operation": {"operation": "take care of"},
         "input": {
-            "-set-": [
+            "()": [
                 {"entity": "ResourceAssignmentCollection class"},
                 {"entity": "resource allocation"}
             ]
         },
         "output": {
-            "-set-": [
-                {"entity": "resource allocation"}
-            ]
+            "()": [{"entity": "resource allocation"}]
         }
     },
     {
-        "#": "87",
+        "#": "FR-57",
         "*": "functional",
         ":": "The task class provides a public method SetStart() which allows to specify starting date for the task. As input argument the method takes an object of GanttCalendar class.",
         "agent": {"entity": "task class"},
         "operation": {"operation": "specify"},
         "input": {
-            "-set-": [
-                {"entity": "object of GanttCalendar class"}
-            ]
+            "()": [{"entity": "object of GanttCalendar class"}]
         },
         "output": {
-            "-set-": [
-                {"entity": "start date of the task"}
-            ]
+            "()": [{"entity": "start date of the task"}]
         }
     },
     {
-        "#": "90",
+        "#": "FR-58",
         "*": "functional",
         ":": "The task class provides a public method SetEnd() which allows to specify ending date for the task. As input argument the method takes an object of GanttCalendar class.",
         "agent": {"entity": "task class"},
         "operation": {"operation": "specify"},
         "input": {
-            "-set-": [
-                {"entity": "object of GanttCalendar class"}
-            ]
+            "()": [{"entity": "object of GanttCalendar class"}]
         },
         "output": {
-            "-set-": [
-                {"entity": "end date of the task"}
-            ]
+            "()": [{"entity": "end date of the task"}]
         }
     },
     {
-        "#": "93",
+        "#": "FR-59",
         "*": "functional",
         ":": "The Task class provides a public method SetDuration() which allows to specify the duration of the task. As input argument the method takes an object of TaskLength class.",
         "agent": {"entity": "task class"},
         "operation": {"operation": "specify"},
         "input": {
-            "-set-": [
-                {"entity": "object of TaskLength class"}
-            ]
+            "()": [{"entity": "object of TaskLength class"}]
         },
         "output": {
-            "-set-": [
-                {"entity": "duration of the task"}
-            ]
+            "()": [{"entity": "duration of the task"}]
         }
     },
     {
-        "#": "96",
+        "#": "FR-60",
         "*": "functional",
         ":": "To delete a task from the Calendar, the GanttProject class call delete method and supplied TaskId parameter.",
         "agent": {"entity": "GanttProject class"},
         "operation": {"operation": "call"},
         "input": {
-            "-set-": [
+            "()": [
                 {"entity": "task"},
                 {"entity": "delete method"}
             ]
         },
         "output": {
-            "-set-": [
-                {"entity": "TaskId parameter"}
-            ]
+            "()": [{"entity": "TaskId parameter"}]
         }
     },
     {
-        "#": "97",
+        "#": "FR-61",
         "*": "functional",
         ":": "The adjustment of allocated resources and links to other tasks takes place through interfacing with the following classes DefaultMutableTreeNode, GanttTreeTableNode, TaskNode, and AdjustTaskBoundsAlgorithm.",
         "agent": {"entity": "adjustment of allocated resources and links to other tasks takes"},
         "operation": {"operation": "take place"},
         "input": {
-            "-set-": [
+            "()": [
                 {"entity": "DefaultMutableTreeNode"},
                 {"entity": "GanttTreeTableNode"},
                 {"entity": "TaskNode"},
@@ -1007,203 +851,165 @@
         }
     },
     {
-        "#": "99",
+        "#": "FR-62",
         "*": "functional",
         ":": "When deleting a task, the GanttProject class calls GanttTreeTableNode and DefaultMutableTreeNode classes to identify the parent of the deleted task.",
         "event": {
-            "-set-": [{
+            "()": [{
                 "#": "When deleting a task",
                 "*": "condition",
                 "agent": {"entity": "GanttProject class"},
                 "operation": {"operation": "delete"},
                 "output": {
-                    "-set-": [
-                        {"entity": "task"}
-                    ]
+                    "()": [{"entity": "task"}]
                 }
             }]
         },
         "agent": {"entity": "GanttProject class"},
         "operation": {"operation": "identify"},
         "input": {
-            "-set-": [
+            "()": [
                 {"entity": "DefaultMutableTreeNode"},
                 {"entity": "GanttTreeTableNode"}
             ]
         },
         "output": {
-            "-set-": [
-                {"entity": "parent of the deleted task"}
-            ]
+            "()": [{"entity": "parent of the deleted task"}]
         }
     },
     {
-        "#": "101-1",
+        "#": "FR-63-1",
         "*": "functional",
         ":": "When deleting a task, the GanttProject class calls AdjustTaskBoundsAlgorithm and passes the parent of the deleted task as a parameter.",
         "event": {
-            "-set-": [{
+            "()": [{
                 "#": "When deleting a task",
                 "*": "condition",
                 "agent": {"entity": "GanttProject class"},
                 "operation": {"operation": "delete"},
                 "output": {
-                    "-set-": [
-                        {"entity": "task"}
-                    ]
+                    "()": [{"entity": "task"}]
                 }
             }]
         },
         "agent": {"entity": "GanttProject class"},
         "operation": {"operation": "call"},
         "input": {
-            "-set-": [
-                {"entity": "AdjustTaskBoundsAlgorithm"}
-            ]
+            "()": [{"entity": "AdjustTaskBoundsAlgorithm"}]
         }
     },
     {
-        "#": "101-2",
+        "#": "FR-63-2",
         "*": "functional",
         ":": "When deleting a task, the GanttProject class calls AdjustTaskBoundsAlgorithm and passes the parent of the deleted task as a parameter.",
         "event": {
-            "-set-": [{
+            "()": [{
                 "#": "When deleting a task",
                 "*": "condition",
                 "agent": {"entity": "GanttProject class"},
                 "operation": {"operation": "delete"},
                 "output": {
-                    "-set-": [
-                        {"entity": "task"}
-                    ]
+                    "()": [{"entity": "task"}]
                 }
             }]
         },
         "agent": {"entity": "GanttProject class"},
         "operation": {"operation": "pass"},
         "output": {
-            "-set-": [
-                {"entity": "parent of the deleted task"}
-            ]
+            "()": [{"entity": "parent of the deleted task"}]
         },
-        "restriction": {
-            "-set-": ["as a parameter"]
-        }
+        "restriction": {"()": ["as a parameter"]}
     },
     {
-        "#": "102",
+        "#": "FR-64",
         "*": "functional",
         ":": "The AdjustTaskBoundsAlgorithm takes care of handling and releasing resources associated with the deleted task.",
         "agent": {"entity": "AdjustTaskBoundsAlgorithm"},
         "operation": {"operation": "take care of"},
         "input": {
-            "-set-": [
-                {"entity": "handling and releasing resources associated with the deleted task"}
-            ]
+            "()": [{"entity": "handling and releasing resources associated with the deleted task"}]
         },
         "output": {
-            "-set-": [
-                {"entity": "handling and releasing resources associated with the deleted task"}
-            ]
+            "()": [{"entity": "handling and releasing resources associated with the deleted task"}]
         }
     },
     {
-        "#": "104",
+        "#": "FR-65",
         "*": "functional",
         ":": "GUI should able to provide ability to change task name.",
         "agent": {"entity": "GUI"},
         "operation": {"operation": "change"},
         "input": {
-            "-set-": [
-                {"entity": "task name"}
-            ]
+            "()": [{"entity": "task name"}]
         },
         "output": {
-            "-set-": [
-                {"entity": "task name"}
-            ]
+            "()": [{"entity": "task name"}]
         }
     },
     {
-        "#": "106",
+        "#": "FR-66",
         "*": "functional",
         ":": "GUI should able to provide ability to change start/end date of a task.",
         "agent": {"entity": "GUI"},
         "operation": {"operation": "can change"},
         "input": {
-            "-set-": [
-                {"entity": "start/end date of a task"}
-            ]
+            "()": [{"entity": "start/end date of a task"}]
         },
         "output": {
-            "-set-": [
-                {"entity": "start/end date of a task"}
-            ]
+            "()": [{"entity": "start/end date of a task"}]
         }
     },
     {
-        "#": "108",
+        "#": "FR-67",
         "*": "functional",
         ":": "GUI should able to provide ability to set progress on a task.",
         "agent": {"entity": "GUI"},
         "operation": {"operation": "can set"},
         "input": {
-            "-set-": [
-                {"entity": "progress"}
-            ]
+            "()": [{"entity": "progress"}]
         },
         "output": {
-            "-set-": [
-                {"entity": "progress"}
-            ]
+            "()": [{"entity": "progress"}]
         },
         "restriction": {
-            "-set-": ["on a task"]
+            "()": ["on a task"]
         }
     },
     {
-        "#": "110",
+        "#": "FR-68",
         "*": "functional",
         ":": "When the start/end date of a task are changed, the start/end dates of the subtasks need to change accordingly.",
         "event": {
-            "-set-": [{
+            "()": [{
                 "#": "When the start/end date of a task are changed",
                 "*": "condition",
                 "operation": {"operation": "change"},
                 "input": {
-                    "-set-": [
-                        {"entity": "start/end date of a task"}
-                    ]
+                    "()": [{"entity": "start/end date of a task"}]
                 },
                 "output": {
-                    "-set-": [
-                        {"entity": "start/end date of a task"}
-                    ]
+                    "()": [{"entity": "start/end date of a task"}]
                 }
             }]
         },
         "operation": {"operation": "change"},
         "input": {
-            "-set-": [
-                {"entity": "start/end dates of the subtasks"}
-            ]
+            "()": [{"entity": "start/end dates of the subtasks"}]
         },
         "output": {
-            "-set-": [
-                {"entity": "start/end dates of the subtasks"}
-            ]
+            "()": [{"entity": "start/end dates of the subtasks"}]
         },
         "restriction": {
-            "-set-": ["accordingly"]
+            "()": ["accordingly"]
         }
     },
     {
-        "#": "112",
+        "#": "FR-69",
         "*": "functional",
         ":": "To add tasks as subtasks a method which indent the selected task nodes in GUI and change them to be subtasks is used.",
         "operation": {"operation": "add"},
         "input": {
-            "-set-": [
+            "()": [
                 {"entity": "tasks"},
                 {"entity": "subtasks"},
                 {"entity": "method which indent the selected task nodes in GUI and change them to be subtasks"},
@@ -1212,259 +1018,229 @@
         }
     },
     {
-        "#": "113",
+        "#": "FR-70",
         "*": "functional",
         ":": "A manager of task hierarchy provides functions to update the relationship between tasks.",
         "agent": {"entity": "manager of task hierarchy"},
         "operation": {"operation": "update"},
         "input": {
-            "-set-": [
-                {"entity": "relationship between tasks"}
-            ]
+            "()": [{"entity": "relationship between tasks"}]
         },
         "output": {
-            "-set-": [
-                {"entity": "relationship between tasks"}
-            ]
+            "()": [{"entity": "relationship between tasks"}]
         }
     },
     {
-        "#": "115",
+        "#": "FR-71",
         "*": "functional",
         ":": "The manager of task hierarchy provides a method to move a task node to a specific position.",
         "agent": {"entity": "manager of task hierarchy"},
         "operation": {"operation": "move"},
         "input": {
-            "-set-": [
-                {"entity": "task node"}
-            ]
+            "()": [{"entity": "task node"}]
         },
         "output": {
-            "-set-": [
-                {"entity": "task node"}
-            ]
+            "()": [{"entity": "task node"}]
         },
         "restriction": {
-            "-set-": ["to a specific position"]
+            "()": ["to a specific position"]
         }
     },
     {
-        "#": "117",
+        "#": "FR-72",
         "*": "functional",
         ":": "To remove tasks as subtasks GanttTree2 class calls a method which dedent selected task nodes in GUI.",
         "agent": {"entity": "GanttTree2 class"},
         "operation": {"operation": "remove"},
         "input": {
-            "-set-": [
+            "()": [
                 {"entity": "tasks"},
                 {"entity": "subtasks"},
                 {"entity": "method which dedent selected task nodes in GUI"}
             ]
         },
         "output": {
-            "-set-": [
-                {"entity": "tasks"}
-            ]
+            "()": [{"entity": "tasks"}]
         }
     },
     {
-        "#": "118-1",
+        "#": "FR-73",
         "*": "functional",
         ":": "An object of a class is used to remove relationship between selected tasks and their original parents.",
         "agent": {"entity": "object of a class"},
         "operation": {"operation": "remove"},
         "input": {
-            "-set-": [
+            "()": [
                 {"entity": "selected tasks"},
                 {"entity": "original parents of selected tasks"},
                 {"entity": "relationship between selected tasks and their original parents"}
             ]
         },
         "output": {
-            "-set-": [
-                {"entity": "relationship between selected tasks and their original parents"}
-            ]
+            "()": [{"entity": "relationship between selected tasks and their original parents"}]
         }
     },
     {
-        "#": "118-2",
+        "#": "FR-74",
         "*": "functional",
         ":": "An object of a class is used to add relationship between selected tasks and their new parents.",
         "agent": {"entity": "object of a class"},
         "operation": {"operation": "add"},
         "input": {
-            "-set-": [
+            "()": [
                 {"entity": "selected tasks"},
                 {"entity": "new parents of selected tasks"},
                 {"entity": "relationship between selected tasks and their new parents"}
             ]
         },
         "output": {
-            "-set-": [
-                {"entity": "relationship between selected tasks and their new parents"}
-            ]
+            "()": [{"entity": "relationship between selected tasks and their new parents"}]
         }
     },
     {
-        "#": "120",
+        "#": "FR-75",
         "*": "functional",
         ":": "To remove tasks as subtasks a method which dedent selected task nodes in GUI is used.",
         "operation": {"operation": "remove"},
         "input": {
-            "-set-": [
+            "()": [
                 {"entity": "tasks"},
                 {"entity": "subtasks"},
                 {"entity": "relationship between selected tasks and their new parents"}
             ]
         },
         "output": {
-            "-set-": [
-                {"entity": "tasks"}
-            ]
+            "()": [{"entity": "tasks"}]
         }
     },
     {
-        "#": "121-1",
+        "#": "FR-76",
         "*": "functional",
         ":": "The task tree model provides methods to remove relationship between selected tasks and their original parents.",
         "agent": {"entity": "task tree model"},
         "operation": {"operation": "remove"},
         "input": {
-            "-set-": [
+            "()": [
                 {"entity": "selected tasks"},
                 {"entity": "original parents of selected tasks"},
                 {"entity": "relationship between selected tasks and their original parents"}
             ]
         },
         "output": {
-            "-set-": [
-                {"entity": "relationship between selected tasks and their original parents"}
-            ]
+            "()": [{"entity": "relationship between selected tasks and their original parents"}]
         }
     },
     {
-        "#": "121-2",
+        "#": "FR-77",
         "*": "functional",
         ":": "The task tree model provides methods to add relationship between selected tasks and their new parents.",
         "agent": {"entity": "task tree model"},
         "operation": {"operation": "add"},
         "input": {
-            "-set-": [
+            "()": [
                 {"entity": "selected tasks"},
                 {"entity": "original parents of selected tasks"},
                 {"entity": "relationship between selected tasks and their original parents"}
             ]
         },
         "output": {
-            "-set-": [
-                {"entity": "relationship between selected tasks and their original parents"}
-            ]
+            "()": [{"entity": "relationship between selected tasks and their original parents"}]
         }
     },
     {
-        "#": "123",
+        "#": "FR-78",
         "*": "functional",
         ":": "Milestone has only time point of occurrence.",
         "agent": {"entity": "Milestone"},
         "operation": {"operation": "have"},
         "input": {
-            "-set-": [
-                {"entity": "time point of occurrence"}
-            ]
+            "()": [{"entity": "time point of occurrence"}]
         },
         "restriction": {
-            "-set-": ["only"]
+            "()": ["only"]
         }
     },
     {
-        "#": "126",
+        "#": "FR-79",
         "*": "functional",
         ":": "User should be able to create milestones.",
         "agent": {"entity": "user"},
         "operation": {"operation": "can create"},
         "output": {
-            "-set-": [
-                {"entity": "milestones"}
-            ]
+            "()": [{"entity": "milestones"}]
         }
     },
     {
-        "#": "128",
+        "#": "FR-80",
         "*": "functional",
         ":": "User interface should be able to provide an ability to specify whether a specific task in a milestone.",
         "agent": {"entity": "user interface"},
         "operation": {"operation": "can specify"},
         "input": {
-            "-set-": [
+            "()": [
                 {"entity": "specific task"},
                 {"entity": "milestone"}
             ]
         }
     },
     {
-        "#": "130",
+        "#": "FR-81",
         "*": "functional",
         ":": "Milestone should be displayed visually differently from regular tasks.",
         "operation": {"operation": "display"},
         "input": {
-            "-set-": [
-                {"entity": "regular tasks"}
-            ]
+            "()": [{"entity": "regular tasks"}]
         },
         "output": {
-            "-set-": [
-                {"entity": "milestone"}
-            ]
+            "()": [{"entity": "milestone"}]
         },
         "restriction": {
-            "-set-": ["visually", "differently"]
+            "()": ["visually", "differently"]
         }
     },
     {
-        "#": "132-1",
+        "#": "FR-82-1",
         "*": "functional",
         ":": "A GUI of task property provides interface and functions to add and remove human resource assignments by using an object of the resource assignments collection class.",
         "agent": {"entity": "GUI of task property"},
         "operation": {"operation": "add"},
         "input": {
-            "-set-": [
+            "()": [
                 {"entity": "human resource assignments"},
                 {"entity": "object of the resource assignments collection class"}
             ]
         },
         "restriction": {
-            "-set-": ["by using an object of the resource assignments collection class"]
+            "()": ["by using an object of the resource assignments collection class"]
         }
     },
     {
-        "#": "132-2",
+        "#": "FR-82-2",
         "*": "functional",
         ":": "A GUI of task property provides interface and functions to add and remove human resource assignments by using an object of the resource assignments collection class.",
         "agent": {"entity": "GUI of task property"},
         "operation": {"operation": "remove"},
         "input": {
-            "-set-": [
+            "()": [
                 {"entity": "human resource assignments"},
                 {"entity": "object of the resource assignments collection class"}
             ]
         },
         "output": {
-            "-set-": [
-                {"entity": "human resource assignments"}
-            ]
+            "()": [{"entity": "human resource assignments"}]
         },
         "restriction": {
-            "-set-": ["by using an object of the resource assignments collection class"]
+            "()": ["by using an object of the resource assignments collection class"]
         }
     },
     {
-        "#": "134",
+        "#": "FR-83",
         "*": "functional",
         ":": "The human resource class contains name, phone, email, and holidays.",
         "agent": {"entity": "human resource class"},
         "operation": {"operation": "contain"},
         "input": {
-            "-set-": [
+            "()": [
                 {"entity": "name"},
                 {"entity": "phone"},
                 {"entity": "email"},
@@ -1473,13 +1249,13 @@
         }
     },
     {
-        "#": "135-1",
+        "#": "FR-84-1",
         "*": "functional",
         ":": "The human resource class provides functions to set and get name, phone, email, and holidays.",
         "agent": {"entity": "human resource class"},
         "operation": {"operation": "set"},
         "input": {
-            "-set-": [
+            "()": [
                 {"entity": "name"},
                 {"entity": "phone"},
                 {"entity": "email"},
@@ -1488,13 +1264,13 @@
         }
     },
     {
-        "#": "135-2",
+        "#": "FR-84-2",
         "*": "functional",
         ":": "The human resource class provides functions to set and get name, phone, email, and holidays.",
         "agent": {"entity": "human resource class"},
         "operation": {"operation": "get"},
         "output": {
-            "-set-": [
+            "()": [
                 {"entity": "name"},
                 {"entity": "phone"},
                 {"entity": "email"},
@@ -1503,57 +1279,53 @@
         }
     },
     {
-        "#": "136",
+        "#": "FR-85",
         "*": "functional",
         ":": "A class is used to represent the holidays.",
         "agent": {"entity": "class"},
         "operation": {"operation": "represent"},
         "input": {
-            "-set-": [
-                {"entity": "holidays"}
-            ]
+            "()": [{"entity": "holidays"}]
         }
     },
     {
-        "#": "137",
+        "#": "FR-86",
         "*": "functional",
         ":": "There can be multiple holidays.",
         "agent": {"entity": "multiple holidays"},
         "operation": {"operation": "there be"}
     },
     {
-        "#": "139",
+        "#": "FR-87",
         "*": "functional",
         ":": "The class for holidays provides functions to get the start/end date.",
         "agent": {"entity": "holiday class"},
         "operation": {"operation": "get"},
         "output": {
-            "-set-": [
-                {"entity": "holidays"}
-            ]
+            "()": [{"entity": "holidays"}]
         }
     },
     {
-        "#": "140",
+        "#": "FR-88",
         "*": "functional",
         ":": "The class for holidays also provides a function to check if a special date is in holiday.",
         "agent": {"entity": "holiday class"},
         "operation": {"operation": "check"},
         "input": {
-            "-set-": [
+            "()": [
                 {"entity": "special date"},
                 {"entity": "holiday"}
             ]
         }
     },
     {
-        "#": "142",
+        "#": "FR-89",
         "*": "functional",
         ":": "A human resource assignment class is used to represent the relationship between one task and one human resource.",
         "agent": {"entity": "human resource assignment class"},
         "operation": {"operation": "represent"},
         "input": {
-            "-set-": [
+            "()": [
                 {"entity": "relationship between one task and one human resource"},
                 {"entity": "task"},
                 {"entity": "human resource"}
@@ -1561,151 +1333,129 @@
         }
     },
     {
-        "#": "143",
+        "#": "FR-90",
         "*": "functional",
         ":": "The human resource assignment class provides functions to get the task and the human resource.",
         "agent": {"entity": "human resource assignment class"},
         "operation": {"operation": "get"},
         "input": {
-            "-set-": [
+            "()": [
                 {"entity": "task"},
                 {"entity": "human resource"}
             ]
         }
     },
     {
-        "#": "145",
+        "#": "FR-91",
         "*": "functional",
         ":": "GUI needs to provide ability to delete resources from a project.",
         "agent": {"entity": "GUI"},
         "operation": {"operation": "delete"},
         "input": {
-            "-set-": [
+            "()": [
                 {"entity": "resources"},
                 {"entity": "project"}
             ]
         },
         "output": {
-            "-set-": [
-                {"entity": "resources"}
-            ]
+            "()": [{"entity": "resources"}]
         }
     },
     {
-        "#": "147",
+        "#": "FR-92",
         "*": "functional",
         ":": "An assignment of a resource to a task is captured as a relationship.",
         "operation": {"operation": "capture"},
         "input": {
-            "-set-": [
+            "()": [
                 {"entity": "assignment of a resource to a task"}
             ]
         },
         "output": {
-            "-set-": [
-                {"entity": "relationship"}
-            ]
+            "()": [{"entity": "relationship"}]
         }
     },
     {
-        "#": "149",
+        "#": "FR-93",
         "*": "functional",
         ":": "When a resource is removed, all the tasks where the resource is assigned need to be updated.",
         "event": {
-            "-set-": [{
+            "()": [{
                 "#": "When a resource is removed",
                 "*": "condition",
                 "operation": {"operation": "remove"},
                 "input": {
-                    "-set-": [
-                        {"entity": "resource"}
-                    ]
+                    "()": [{"entity": "resource"}]
                 }
             }]
         },
         "operation": {"operation": "update"},
         "input": {
-            "-set-": [
-                {"entity": "all the tasks where the resource is assigned"}
-            ]
+            "()": [{"entity": "all the tasks where the resource is assigned"}]
         },
         "output": {
-            "-set-": [
-                {"entity": "all the tasks where the resource is assigned"}
-            ]
+            "()": [{"entity": "all the tasks where the resource is assigned"}]
         }
     },
     {
-        "#": "151",
+        "#": "FR-94",
         "*": "functional",
         ":": "A GUI provides interface and functions to edit the properties of objects of the human resource class.",
         "agent": {"entity": "GUI"},
         "operation": {"operation": "edit"},
         "input": {
-            "-set-": [
-                {"entity": "properties of objects of the human resource class"}
-            ]
+            "()": [{"entity": "properties of objects of the human resource class"}]
         },
         "output": {
-            "-set-": [
-                {"entity": "properties of objects of the human resource class"}
-            ]
+            "()": [{"entity": "properties of objects of the human resource class"}]
         }
     },
     {
-        "#": "153",
+        "#": "FR-95",
         "*": "functional",
         ":": "GUI needs to provide ability to link tasks in a project.",
         "agent": {"entity": "GUI"},
         "operation": {"operation": "link"},
         "input": {
-            "-set-": [
-                {"entity": "tasks in a project"}
-            ]
+            "()": [{"entity": "tasks in a project"}]
         }
     },
     {
-        "#": "155",
+        "#": "FR-96",
         "*": "functional",
         ":": "The fact of linking of one task to another should be captured as dependency between two tasks.",
         "operation": {"operation": "capture"},
         "output": {
-            "-set-": [
+            "()": [
                 {"entity": "linking of one task to another"},
                 {"entity": "dependency between two tasks"}
             ]
         }
     },
     {
-        "#": "157",
+        "#": "FR-97",
         "*": "functional",
         ":": "When a two or more tasks are link, there should be check conducted for potential collisions on the chart.",
         "event": {
-            "-set-": [{
+            "()": [{
                 "#": "When a resource is removed",
                 "*": "condition",
                 "operation": {"operation": "link"},
                 "input": {
-                    "-set-": [
-                        {"entity": "two or more tasks"}
-                    ]
+                    "()": [{"entity": "two or more tasks"}]
                 }
             }]
         },
         "operation": {"operation": "check"},
         "input": {
-            "-set-": [
-                {"entity": "chart"}
-            ]
+            "()": [{"entity": "chart"}]
         },
         "output": {
-            "-set-": [
-                {"entity": "potential collisions on the chart"}
-            ]
+            "()": [{"entity": "potential collisions on the chart"}]
         }
     },
     {
-        "#": "159",
+        "#": "FR-98",
         "*": "functional",
         ":": "The start/end dates for the graph can be either flexible or rigid.",
         "agent": {"entity": "start/end dates for the graph"},

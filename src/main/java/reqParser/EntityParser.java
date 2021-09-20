@@ -59,12 +59,12 @@ public final class EntityParser extends StdDeserializer<Object> {
         ENTITIES.clear();
         List<BaseEntity> result = new ArrayList<>();
         JsonNode node = jsonParser.getCodec().readTree(jsonParser);
-        node.forEach(n -> result.add(Inner.parseNode(n)));
+        node.forEach(n -> result.add(Parser.parseNode(n)));
         log.info("Finish parse requirement JSON file: " + PathConsts.file(ModeEnum.REQUIREMENT, TypeEnum.JSON));
         return result;
     }
 
-    public static String getID(BaseEntity entity) {
+    public static String getId(BaseEntity entity) {
         if (! REQS2ID.containsKey(entity)) {
             log.error("Can not find entity: " + entity.toString());
             return "entity ID not found!";
@@ -72,17 +72,16 @@ public final class EntityParser extends StdDeserializer<Object> {
         return REQS2ID.get(entity);
     }
 
-    private static class Inner {
+    private static class Parser {
         private static final Map<Predicate<JsonNode>, Function<JsonNode, BaseEntity>> CASES = Map.ofEntries(
-            Map.entry((node) -> node.has(FormatsConsts.ENTITY_SIGNAL), Inner::parseEntity),
-            Map.entry((node) -> node.has(FormatsConsts.LINK_SIGNAL), Inner::parseLink),
-            Map.entry((node) -> node.has(FormatsConsts.SET_SIGNAL), Inner::parseSet),
-            Map.entry((node) -> node.has(FormatsConsts.LIST_SIGNAL), Inner::parseList),
-            Map.entry((node) -> node.has(FormatsConsts.MAP_SIGNAL), Inner::parseMap),
-            Map.entry(JsonNode::isTextual, Inner::parseString),
-            Map.entry(JsonNode::isInt, Inner::parseInt),
-            Map.entry(JsonNode::isBoolean, Inner::parseBool),
-            Map.entry((node) -> (node.isFloat() || node.isDouble()), Inner::parseFloat)
+            Map.entry((node) -> node.has(FormatsConsts.ENTITY_TYPE), Parser::parseEntity),
+            Map.entry((node) -> node.has(FormatsConsts.SET_SIGNAL), Parser::parseSet),
+            Map.entry((node) -> node.has(FormatsConsts.LIST_SIGNAL), Parser::parseList),
+            Map.entry((node) -> node.has(FormatsConsts.MAP_SIGNAL), Parser::parseMap),
+            Map.entry(JsonNode::isTextual, Parser::parseString),
+            Map.entry(JsonNode::isInt, Parser::parseInt),
+            Map.entry(JsonNode::isBoolean, Parser::parseBool),
+            Map.entry((node) -> (node.isFloat() || node.isDouble()), Parser::parseFloat)
         );
 
         private static BaseEntity parseNode(JsonNode node) {
@@ -91,13 +90,13 @@ public final class EntityParser extends StdDeserializer<Object> {
                     return entry.getValue().apply(node);
                 }
             }
-            return null;
+            return Parser.parseLink(node);
         }
 
         private static BaseEntity parseEntity(JsonNode node) {
             var iterator = node.fields();
             var signal = iterator.next();
-            String entityID = signal.getValue().asText();
+            String entityId = signal.getValue().asText();
             var entityNode = iterator.next();
             String type = "$" + entityNode.getKey();
             JsonNode fieldsNode = entityNode.getValue();
@@ -106,9 +105,9 @@ public final class EntityParser extends StdDeserializer<Object> {
                 ENTITIES_ID.put(type, new HashMap<>(32));
                 ENTITIES.put(type, new HashSet<>(32));
             }
-            ENTITIES_ID.get(type).putIfAbsent(entityID, entity);
+            ENTITIES_ID.get(type).putIfAbsent(entityId, entity);
             if (entity.isRequirement()) {
-                REQS2ID.put(entity, entityID);
+                REQS2ID.put(entity, entityId);
             }
             ENTITIES.get(type).add(entity);
             return entity;
@@ -125,35 +124,35 @@ public final class EntityParser extends StdDeserializer<Object> {
         }
 
         private static BaseEntity parseLink(JsonNode node) {
-            var pair = node.get(FormatsConsts.LINK_SIGNAL).fields().next();
+            // var pair = node.get(FormatsConsts.LINK_SIGNAL).fields().next();
+            var pair = node.fields().next();
             String entityType = "$" + pair.getKey();
-            String entityID = pair.getValue().asText();
-            return EntityParser.ENTITIES_ID.get(entityType).get(entityID);
+            String entityId = pair.getValue().asText();
+            return EntityParser.ENTITIES_ID.get(entityType).get(entityId);
         }
 
         private static BaseEntity parseList(JsonNode node) {
             ListEntity<BaseEntity> result = new ListEntity<>();
-            node.get(FormatsConsts.LIST_SIGNAL).forEach(n ->
-                result.add(parseNode(n))
-            );
+            node.get(FormatsConsts.LIST_SIGNAL)
+                .forEach(n -> result.add(parseNode(n)));
             return result;
         }
 
         private static BaseEntity parseSet(JsonNode node) {
             SetEntity<BaseEntity> result = new SetEntity<>();
-            node.get(FormatsConsts.SET_SIGNAL).forEach(n ->
-                result.add(parseNode(n))
-            );
+            node.get(FormatsConsts.SET_SIGNAL)
+                .forEach(n -> result.add(parseNode(n)));
             return result;
         }
 
         private static BaseEntity parseMap(JsonNode node) {
             MapEntity<BaseEntity, BaseEntity> result = new MapEntity<>();
-            node.get(FormatsConsts.MAP_SIGNAL).forEach(n -> {
-                BaseEntity key = parseNode(n.get(FormatsConsts.KEY_SIGNAL));
-                BaseEntity value = parseNode(n.get(FormatsConsts.VALUE_SIGNAL));
-                result.add(key, value);
-            });
+            node.get(FormatsConsts.MAP_SIGNAL)
+                .forEach(n -> {
+                    BaseEntity key = parseNode(n.get(FormatsConsts.KEY_SIGNAL));
+                    BaseEntity value = parseNode(n.get(FormatsConsts.VALUE_SIGNAL));
+                    result.add(key, value);
+                });
             return result;
         }
 
@@ -172,6 +171,5 @@ public final class EntityParser extends StdDeserializer<Object> {
         private static BaseEntity parseFloat(JsonNode node) {
             return FloatEntity.valueOf(node.asDouble());
         }
-
     }
 }

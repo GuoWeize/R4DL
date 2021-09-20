@@ -71,12 +71,13 @@ public final class FormatsConsts {
 
     /* Requirement elements formats */
 
-    public static final String ENTITY_SIGNAL = FORMATS.get("entity_signal");
+    public static final String ENTITY_ID = FORMATS.get("entity_id");
+    public static final String ENTITY_TYPE = FORMATS.get("entity_type");
+    public static final String ENTITY_COMMENT = FORMATS.get("entity_comment");
     public static final String MAP_SIGNAL = FORMATS.get("map_signal");
     public static final String LIST_SIGNAL = FORMATS.get("list_signal");
     public static final String SET_SIGNAL = FORMATS.get("set_signal");
     public static final String KEY_SIGNAL = FORMATS.get("key_signal");
     public static final String VALUE_SIGNAL = FORMATS.get("value_signal");
-    public static final String LINK_SIGNAL = FORMATS.get("link_signal");
 
 }
