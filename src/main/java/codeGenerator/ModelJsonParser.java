@@ -87,8 +87,8 @@ public final class ModelJsonParser extends StdDeserializer<Object> {
 
     private void generateJavaFile(String name, Map<String, String> fields2type, boolean isRequirement) {
         StringBuilder content = new StringBuilder()
-            .append(GeneralJavaHeaderGenerator.generateImports())
-            .append(GeneralJavaHeaderGenerator.generateJavadoc(name + ".java", PathConsts.file(ModeEnum.MODEL, TypeEnum.JSON)))
+            .append(JavaHeaderGenerator.generateImports())
+            .append(JavaHeaderGenerator.generateJavadoc(name + ".java", PathConsts.file(ModeEnum.MODEL, TypeEnum.JSON)))
             .append(generateFileHead(name))
             .append(generateFields(name, fields2type))
             .append(generateGetType(name))

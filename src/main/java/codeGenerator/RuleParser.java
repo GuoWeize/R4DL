@@ -40,8 +40,8 @@ public final class RuleParser extends StdDeserializer<Object> {
     public Object deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
             throws IOException {
         JsonNode root = jsonParser.getCodec().readTree(jsonParser);
-        String contents = GeneralJavaHeaderGenerator.generateImports()
-            + GeneralJavaHeaderGenerator.generateJavadoc(PathConsts.RULE_JAVA_NAME, PathConsts.file(ModeEnum.RULE, TypeEnum.JSON))
+        String contents = JavaHeaderGenerator.generateImports()
+            + JavaHeaderGenerator.generateJavadoc(PathConsts.RULE_JAVA_NAME, PathConsts.file(ModeEnum.RULE, TypeEnum.JSON))
             + String.format("public final class %s {\n\n", PathConsts.RULE_JAVA_CLASS)
             + parseRules(root)
             + "}\n";

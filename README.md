@@ -254,43 +254,100 @@ The basic format is: `[ <entity>, <entity>, ... ]`, in where `<entity>`s are sep
 
 If a field of entity is not specified, it should be the default, see [`this`](#how-to-write-requirements-models).
 
-## Structure of Source Directory
+## Structure of Main Directory
 ```
-├── main
-│   ├── generated: auto-generated classes, including classes of customized types and class of rule.
-│   │   ├── <requirement dataset1 name>
-│   │   │   ├── $<type 1>.java
-│   │   │   ├── $<type 2>.java
-│   │   │   ├── ...
-│   │   │   └── $rule$.java
-│   │   ├── <requirement dataset2 name>
-│   │   │   ├── $<type 1>.java
-│   │   │   ├── $<type 2>.java
-│   │   │   ├── ...
-│   │   │   └── $rule$.java
-│   │   └── ... ...
-│   ├── java
-│   │   ├── api
-│   │   ├── basicTypes
-│   │   ├── codeGenerator
-│   │   ├── dynamics
-│   │   ├── exceptions
-│   │   ├── grpc
-│   │   ├── judge
-│   │   ├── languageParser
-│   │   ├── reqParser
-│   │   └── util
-│   ├── proto: Protobuf files
-│   │   └── requirement.proto: define natrual language requirement request and structuralization response.
-│   └── resources
-│   │   ├── log
-│   │   ├── models
-│   │   ├── requirments
-│   │   ├── rules
-│   │   ├── thesaurus
-│   │   ├── config.properties
-│   │   ├── formats.properties
-│   │   ├── operators.properties
-│   │   └── log4j2.xml
-└── test: testing module
+├── generated (auto-generated classes, including classes of customized types and class of rule)
+│   ├── <requirement dataset name>
+│   │   ├── $<customized type name>.java
+│   │   ├── ... ...
+│   │   └── $rule$.java
+│   └── ... ...
+├── java
+│   ├── api
+│   │   └── Main.java
+│   ├── basicTypes
+│   │   ├── BaseEntity.java
+│   │   ├── primitive
+│   │   │   ├── BasePrimitiveEntity.java
+│   │   │   ├── BoolEntity.java
+│   │   │   ├── IntEntity.java
+│   │   │   ├── FloatEntity.java
+│   │   │   └── StringEntity.java
+│   │   └── collection
+│   │       ├── BaseCollectionEntity.java
+│   │       ├── ListEntity.java
+│   │       ├── SetEntity.java
+│   │       └── MapEntity.java
+│   ├── codeGenerator
+│   │   ├── JavaHeaderGenerator.java
+│   │   ├── LogicParser.java
+│   │   ├── ModelJsonParser.java
+│   │   └── RuleParser.java
+│   ├── dynamics
+│   │   ├── Builder.java
+│   │   ├── Compiler.java
+│   │   └── TypeManager.java
+│   ├── exceptions
+│   │   ├── TokenInvalidException.java
+│   │   └── TypeInvalidException.java
+│   ├── grpc
+│   │   ├── Request.java
+│   │   ├── Response.java
+│   │   ├── RequestOrBuilder.java
+│   │   ├── ResponseOrBuilder.java
+│   │   ├── Requirement.java
+│   │   ├── StructurationGrpc.java
+│   │   └── Client.java
+│   ├── judge
+│   │   └── Processor.java
+│   ├── languageParser
+│   │   ├── BaseParser.java
+│   │   ├── ModelTextParser.java
+│   │   └── RuleTextParser.java
+│   ├── reqParser
+│   │   ├── EntityParser.java
+│   │   └── RequirementParser.java
+│   └── util
+│       ├── FormatsConsts.java
+│       ├── ModeEnum.java
+│       ├── OperatorConsts.java
+│       ├── PathCosts.java
+│       ├── TextReader.java
+│       ├── ThesaurusReader.java
+│       └── TypeEnum.java
+├── proto: Protobuf files
+│   └── requirement.proto (define natrual language requirement request and structuralization response)
+└── resources
+    ├── log
+    │   ├── <log name>.log
+    │   └── log4j2.xml
+    ├── entities
+    │   ├── <requirement dataset name>
+    │   │   ├── <requirements file>.txt
+    │   │   ├── <entity type>.txt
+    │   │   ├── ... ...
+    │   │   ├── <entity name>.json
+    │   │   └── ... ...
+    │   └── ... ...
+    ├── models
+    │   ├── <requirement dataset name>
+    │   │   ├── <file name>.r4dl
+    │   │   ├── ... ...
+    │   │   ├── <file name>.json
+    │   │   └── ... ...
+    │   └── ... ...
+    ├── rules
+    │   ├── <requirement dataset name>
+    │   │   ├── <file name>.r4dl
+    │   │   ├── ... ...
+    │   │   ├── <file name>.json
+    │   │   └── ... ...
+    │   └── ... ...
+    ├── thesaurus
+    │   ├── antonym (dictionary of antonym words)
+    │   └── synonym (dictionary of synonym words)
+    └── properties
+        ├── config.properties
+        ├── formats.properties
+        └── operators.properties
 ```

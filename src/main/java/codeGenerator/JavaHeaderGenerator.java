@@ -7,7 +7,7 @@ import java.util.Date;
  * @author Guo Weize
  * @date 2021/4/30
  */
-public final class GeneralJavaHeaderGenerator {
+public final class JavaHeaderGenerator {
 
     private static final String BASE_ENTITY = "import basicTypes.BaseEntity;\n";
     private static final String PRIMITIVE = "import basicTypes.primitive.*;\n";
