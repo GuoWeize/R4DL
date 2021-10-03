@@ -1,0 +1,102 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://buaa.edu.cn/guo_weize/entities_schema.json",
+
+    "definitions": {
+        "identifier": {
+            "type": "string",
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+        },
+        "ID-string": {
+            "type": "string",
+            "pattern": "^([A-Za-z0-9-_/]|\\s)*$"
+        },
+        "user-defined-property":{
+            "type": "string",
+            "pattern": "(^[A-Za-z_][A-Za-z0-9_]*$)|[#*:]"
+        },
+        "any-object": {
+            "anyOf": [
+                { "$ref": "#/definitions/user-defined" },
+                { "$ref": "#/definitions/link-object" },
+                { "$ref": "#/definitions/basic-object" },
+                { "$ref": "#/definitions/array-object" },
+                { "$ref": "#/definitions/set-object" },
+                { "$ref": "#/definitions/map-object" }
+            ]
+        },
+        "basic-object": {
+            "anyOf": [
+                { "type": "boolean" },
+                { "type": "number" },
+                { "type": "string" }
+            ]
+        },
+        "array-object": {
+            "type": "object",
+            "properties": {
+                "[]": {
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/any-object" },
+                    "uniqueItems": true
+                }
+            },
+            "required": [ "[]" ],
+            "additionalProperties": false
+        },
+        "set-object": {
+            "type": "object",
+            "properties": {
+                "()": {
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/any-object" },
+                    "uniqueItems": true
+                }
+            },
+            "required": [ "()" ],
+            "additionalProperties": false
+        },
+        "map-object": {
+            "type": "object",
+            "properties": {
+                "{}": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "K": { "$ref": "#/definitions/any-object" },
+                            "V": { "$ref": "#/definitions/any-object" }
+                        },
+                        "required": [ "K", "V" ],
+                        "additionalProperties": false
+                    },
+                    "uniqueItems": true
+                }
+            },
+            "required": [ "{}" ],
+            "additionalProperties": false
+        },
+        "user-defined": {
+            "type": "object",
+            "properties": {
+                "*": { "$ref": "#/definitions/identifier" },
+                ":": { "type": "string" },
+                "#": { "$ref": "#/definitions/ID-string" }
+            },
+            "required": [ "#", "*" ],
+            "propertyNames": { "$ref": "#/definitions/user-defined-property" },
+            "additionalProperties": { "$ref": "#/definitions/any-object" }
+        },
+        "link-object": {
+            "type": "object",
+            "minProperties": 1,
+            "maxProperties": 1,
+            "propertyNames": { "$ref": "#/definitions/identifier" },
+            "additionalProperties": { "$ref": "#/definitions/ID-string" }
+        }
+    },
+    "type": "array",
+    "items": {
+        "$ref": "#/definitions/user-defined"
+    }
+}

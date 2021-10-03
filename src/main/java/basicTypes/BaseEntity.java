@@ -27,10 +27,10 @@ public abstract class BaseEntity {
     public abstract String getType();
 
     /**
-     * Only entities of requirement types can be processed by next steps.
-     * @return whether this entity is a requirement type
+     * Check if it is null.
+     * @return BoolEntity
      */
-    public abstract boolean isRequirement();
+    public abstract BoolEntity isNull();
 
     /**
      * An Interface of no-static method of {@code equal}.
@@ -39,19 +39,16 @@ public abstract class BaseEntity {
      */
     public abstract BoolEntity equal(final BaseEntity entity);
 
-    /**
-     * Check whether entity1 is equal to entity2, which means all fields of two entities are equal.<br>
-     * If there is null, return a "false" BoolEntity.
-     * @param entity1 an entity that extends {@link BaseEntity}
-     * @param entity2 another entity that extends {@link BaseEntity}
-     * @return A "true" BoolEntity if two entities are equal, "false" BoolEntity otherwise
-     */
-    public static BoolEntity equal(final BaseEntity entity1, final BaseEntity entity2) {
-        if (entity1 == null || entity2 == null) {
-            return BoolEntity.FALSE;
-        }
-        return entity1.equal(entity2);
-    }
+//    /**
+//     * Check whether entity1 is equal to entity2, which means all fields of two entities are equal.<br>
+//     * If there is null, return a "false" BoolEntity.
+//     * @param entity1 an entity that extends {@link BaseEntity}
+//     * @param entity2 another entity that extends {@link BaseEntity}
+//     * @return A "true" BoolEntity if two entities are equal, "false" BoolEntity otherwise
+//     */
+//    public static BoolEntity equal(final BaseEntity entity1, final BaseEntity entity2) {
+//        return entity1.equal(entity2);
+//    }
 
     /**
      * Check whether the real type matched the expectation.
@@ -76,7 +73,4 @@ public abstract class BaseEntity {
         return false;
     }
 
-    public final BoolEntity isNull(Object entity) {
-        return BoolEntity.valueOf(entity == null);
-    }
 }

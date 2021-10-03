@@ -19,7 +19,7 @@ import java.util.function.Function;
  * @author Guo Weize
  * @date 2021/02/01
  */
-public final class MapEntity<K extends BaseEntity, V extends BaseEntity> extends BaseCollectionEntity {
+public final class MapEntity<K extends BaseEntity, V extends BaseEntity> extends BaseCollection {
 
     private String keyType = TYPE_UNDEFINED;
     private String valueType = TYPE_UNDEFINED;

@@ -119,61 +119,61 @@ public final class LogicParser {
 
     private static String greater(List<String> arguments) {
         checkArgsNumberAmount(arguments, i -> i == 2);
-        return String.format("BasePrimitiveEntity.compare(%s, %s, \">\")", arguments.get(0), arguments.get(1));
+        return String.format("BasePrimitive.compare(%s, %s, \">\")", arguments.get(0), arguments.get(1));
     }
 
     private static String less(List<String> arguments) {
         checkArgsNumberAmount(arguments, i -> i == 2);
-        return String.format("BasePrimitiveEntity.compare(%s, %s, \"<\")", arguments.get(0), arguments.get(1));
+        return String.format("BasePrimitive.compare(%s, %s, \"<\")", arguments.get(0), arguments.get(1));
     }
 
     private static String notLess(List<String> arguments) {
         checkArgsNumberAmount(arguments, i -> i == 2);
-        return String.format("BasePrimitiveEntity.compare(%s, %s, \">=\")", arguments.get(0), arguments.get(1));
+        return String.format("BasePrimitive.compare(%s, %s, \">=\")", arguments.get(0), arguments.get(1));
     }
 
     private static String notGreater(List<String> arguments) {
         checkArgsNumberAmount(arguments, i -> i == 2);
-        return String.format("BasePrimitiveEntity.compare(%s, %s, \"<=\")", arguments.get(0), arguments.get(1));
+        return String.format("BasePrimitive.compare(%s, %s, \"<=\")", arguments.get(0), arguments.get(1));
     }
 
     private static String maximum(List<String> arguments) {
         checkArgsNumberAmount(arguments, i -> i > 1);
-        return String.format("BasePrimitiveEntity.max(%s)", String.join(ARGS_DELIMITER, arguments));
+        return String.format("BasePrimitive.max(%s)", String.join(ARGS_DELIMITER, arguments));
     }
 
     private static String minimum(List<String> arguments) {
         checkArgsNumberAmount(arguments, i -> i > 1);
-        return String.format("BasePrimitiveEntity.min(%s)", String.join(ARGS_DELIMITER, arguments));
+        return String.format("BasePrimitive.min(%s)", String.join(ARGS_DELIMITER, arguments));
     }
 
     private static String add(List<String> arguments) {
         checkArgsNumberAmount(arguments, i -> i > 1);
         if (arguments.size() == 2) {
-            return String.format("BasePrimitiveEntity.calculate(%s, %s, \"+\")", arguments.get(0), arguments.get(1));
+            return String.format("BasePrimitive.calculate(%s, %s, \"+\")", arguments.get(0), arguments.get(1));
         }
-        return String.format("BasePrimitiveEntity.summation(%s)", String.join(ARGS_DELIMITER, arguments));
+        return String.format("BasePrimitive.summation(%s)", String.join(ARGS_DELIMITER, arguments));
     }
 
     private static String sub(List<String> arguments) {
         checkArgsNumberAmount(arguments, i -> i == 1 || i == 2);
         if (arguments.size() == 1) {
-            return String.format("BasePrimitiveEntity.negative(%s)", arguments.get(0));
+            return String.format("BasePrimitive.negative(%s)", arguments.get(0));
         }
-        return String.format("BasePrimitiveEntity.calculate(%s, %s, \"-\")", arguments.get(0), arguments.get(1));
+        return String.format("BasePrimitive.calculate(%s, %s, \"-\")", arguments.get(0), arguments.get(1));
     }
 
     private static String multiple(List<String> arguments) {
         checkArgsNumberAmount(arguments, i -> i > 1);
         if (arguments.size() == 2) {
-            return String.format("BasePrimitiveEntity.calculate(%s, %s, \"*\")", arguments.get(0), arguments.get(1));
+            return String.format("BasePrimitive.calculate(%s, %s, \"*\")", arguments.get(0), arguments.get(1));
         }
-        return String.format("BasePrimitiveEntity.product(%s)", String.join(ARGS_DELIMITER, arguments));
+        return String.format("BasePrimitive.product(%s)", String.join(ARGS_DELIMITER, arguments));
     }
 
     private static String divide(List<String> arguments) {
         checkArgsNumberAmount(arguments, i -> i == 2);
-        return String.format("BasePrimitiveEntity.calculate(%s, %s, \"/\")", arguments.get(0), arguments.get(1));
+        return String.format("BasePrimitive.calculate(%s, %s, \"/\")", arguments.get(0), arguments.get(1));
     }
 
     private static String size(List<String> arguments) {

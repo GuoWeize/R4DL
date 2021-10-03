@@ -12,9 +12,10 @@ import java.util.stream.Stream;
  * @author Guo Weize
  * @date 2021/2/1
  */
-public final class IntEntity extends BasePrimitiveEntity {
+public final class IntEntity extends BaseNumber {
 
     private final int value;
+    private static final String TYPE_NAME = "integer";
 
     private IntEntity(int value) {
         this.value = value;
@@ -28,15 +29,18 @@ public final class IntEntity extends BasePrimitiveEntity {
         return value;
     }
 
-    public static Stream<IntEntity> range(BaseEntity startInclusive, BaseEntity endExclusive) {
-        checkMatched(startInclusive.getType(), "integer");
-        checkMatched(endExclusive.getType(), "integer");
-        return IntStream.range(((IntEntity)startInclusive).value, ((IntEntity)endExclusive).value).mapToObj(IntEntity::new);
+    @Override
+    protected double getNum() {
+        return value;
+    }
+
+    public static Stream<IntEntity> range(IntEntity startInclusive, IntEntity endExclusive) {
+        return IntStream.range((startInclusive).value, (endExclusive).value).mapToObj(IntEntity::new);
     }
 
     @Override
     public String getType() {
-        return "integer";
+        return TYPE_NAME;
     }
 
     @Override
@@ -45,7 +49,7 @@ public final class IntEntity extends BasePrimitiveEntity {
             return BoolEntity.FALSE;
         }
         return BoolEntity.valueOf(
-            getValue() == ((IntEntity) entity).getValue()
+            value == ((IntEntity) entity).value
         );
     }
 
@@ -57,4 +61,5 @@ public final class IntEntity extends BasePrimitiveEntity {
     public String toString() {
         return Integer.toString(value);
     }
+
 }

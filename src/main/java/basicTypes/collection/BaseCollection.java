@@ -1,6 +1,7 @@
 package basicTypes.collection;
 
 import basicTypes.BaseEntity;
+import basicTypes.primitive.BoolEntity;
 import basicTypes.primitive.IntEntity;
 
 /**
@@ -10,7 +11,7 @@ import basicTypes.primitive.IntEntity;
  * @author Guo Weize
  * @date 2021/2/1
  */
-public abstract class BaseCollectionEntity extends BaseEntity {
+public abstract class BaseCollection extends BaseEntity {
 
     /**
      * Annotate the item type that is not defined yet.
@@ -34,7 +35,7 @@ public abstract class BaseCollectionEntity extends BaseEntity {
     public abstract IntEntity size();
 
     @Override
-    public final boolean isRequirement() {
-        return false;
+    public final BoolEntity isNull() {
+        return BoolEntity.FALSE;
     }
 }

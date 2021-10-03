@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  * @author Guo Weize
  * @date 2021/02/01
  */
-public final class ListEntity<E extends BaseEntity> extends BaseCollectionEntity {
+public final class ListEntity<E extends BaseEntity> extends BaseCollection {
 
     /** Entity type of this list */
     private String type = TYPE_UNDEFINED;

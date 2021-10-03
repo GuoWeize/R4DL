@@ -11,8 +11,10 @@ import java.util.Objects;
  * @author Guo Weize
  * @date 2021/2/1
  */
-public final class StringEntity extends BasePrimitiveEntity {
+public final class StringEntity extends BasePrimitive {
+
     private final String value;
+    private static final String TYPE_NAME = "string";
 
     private StringEntity(String value) {
         this.value = value;
@@ -52,7 +54,7 @@ public final class StringEntity extends BasePrimitiveEntity {
 
     @Override
     public String getType() {
-        return STRING;
+        return TYPE_NAME;
     }
 
     @Override

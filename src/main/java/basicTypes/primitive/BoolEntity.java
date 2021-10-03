@@ -11,11 +11,13 @@ import java.util.Objects;
  * @author Guo Weize
  * @date 2021/2/1
  */
-public final class BoolEntity extends BasePrimitiveEntity {
+public final class BoolEntity extends BasePrimitive {
+
     public final static BoolEntity TRUE = new BoolEntity(true);
     public final static BoolEntity FALSE = new BoolEntity(false);
 
     private final boolean value;
+    private static final String TYPE_NAME = "boolean";
 
     private BoolEntity(boolean value) {
         this.value = value;
@@ -43,7 +45,7 @@ public final class BoolEntity extends BasePrimitiveEntity {
 
     @Override
     public String getType() {
-        return "boolean";
+        return TYPE_NAME;
     }
 
     @Override
@@ -51,7 +53,7 @@ public final class BoolEntity extends BasePrimitiveEntity {
         if (! Objects.equals(getType(), entity.getType())) {
             return FALSE;
         }
-        return getValue() == ((BoolEntity) entity).getValue() ? TRUE: FALSE;
+        return value == ((BoolEntity) entity).value ? TRUE: FALSE;
     }
 
     public static BoolEntity newInstance() {

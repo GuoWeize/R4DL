@@ -39,7 +39,9 @@ import java.util.function.Predicate;
 @Slf4j
 public final class EntityParser extends StdDeserializer<Object> {
 
+    /** {@literal Map: <customized type> -> {set of all entities of this type} } */
     public static final Map<String, Set<BaseEntity>> ENTITIES = new HashMap<>(16);
+    /** {@literal Map: <customized type> -> {Map: <entity ID> -> specific entity} } */
     private static final Map<String, Map<String, BaseEntity>> ENTITIES_ID = new HashMap<>(16);
     private static final Map<BaseEntity, String> REQS2ID = new HashMap<>(16);
 
@@ -72,6 +74,14 @@ public final class EntityParser extends StdDeserializer<Object> {
         return REQS2ID.get(entity);
     }
 
+    public static BaseEntity getEntityById(String type, String id) {
+        if (ENTITIES_ID.containsKey(type) && ENTITIES_ID.get(type).containsKey(id)) {
+            return ENTITIES_ID.get(type).get(id);
+        }
+        log.error(String.format("Can not find \"%s\" entity of ID \"%s\"", type, id));
+        return null;
+    }
+
     private static class Parser {
         private static final Map<Predicate<JsonNode>, Function<JsonNode, BaseEntity>> CASES = Map.ofEntries(
             Map.entry((node) -> node.has(FormatsConsts.ENTITY_TYPE), Parser::parseEntity),
@@ -93,6 +103,11 @@ public final class EntityParser extends StdDeserializer<Object> {
             return Parser.parseLink(node);
         }
 
+        private static boolean isRequirement(BaseEntity entity) {
+            
+            return false;
+        }
+
         private static BaseEntity parseEntity(JsonNode node) {
             var iterator = node.fields();
             var signal = iterator.next();
@@ -106,7 +121,7 @@ public final class EntityParser extends StdDeserializer<Object> {
                 ENTITIES.put(type, new HashSet<>(32));
             }
             ENTITIES_ID.get(type).putIfAbsent(entityId, entity);
-            if (entity.isRequirement()) {
+            if (isRequirement(entity)) {
                 REQS2ID.put(entity, entityId);
             }
             ENTITIES.get(type).add(entity);

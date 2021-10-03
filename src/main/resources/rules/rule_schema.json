@@ -1,0 +1,50 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "identifier": {
+            "type": "string",
+            "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+        },
+        "ID-string": {
+            "type": "string",
+            "pattern": "^([A-Za-z0-9-_/]|\\s)*$"
+        },
+        "object": {
+
+        },
+
+        "user-defined-rule": {
+            "type": "object",
+            "properties": {
+                "?": { "type": "boolean" },
+                ":": { "type": "string" },
+                "#": { "$ref": "#/definitions/ID-string" },
+                "*": { "$ref": "#/definitions/identifier" },
+                "$": {
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/identifier" }
+                },
+                "~": { "$ref": "#/definitions/object" }
+            },
+            "required": [ "?", "#", "*", "$", "~" ],
+            "additionalProperties": false
+        },
+        "basic-type": {
+            "type": "object",
+            "properties": {
+                "boolean": { "type": "boolean" },
+                "integer": { "type": "integer" },
+                "float": { "type": "number" },
+                "string": { "type": "string" }
+            },
+            "minProperties": 1,
+            "maxProperties": 1,
+            "additionalProperties": false
+        }
+    },
+
+    "type": "array",
+    "items": {
+        "$ref": "#/definitions/user-defined-rule"
+    }
+}

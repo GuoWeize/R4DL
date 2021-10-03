@@ -316,20 +316,22 @@ If a field of entity is not specified, it should be the default, see [`this`](#h
 │       ├── ThesaurusReader.java
 │       └── TypeEnum.java
 ├── proto: Protobuf files
-│   └── requirement.proto (define natrual language requirement request and structuralization response)
+│   └── requirement.proto (defining natrual language requirement request and structuralization response)
 └── resources
     ├── log
     │   ├── <log name>.log
     │   └── log4j2.xml
     ├── entities
+    │   ├── entity_schema.json
     │   ├── <requirement dataset name>
-    │   │   ├── <requirements file>.txt
-    │   │   ├── <entity type>.txt
+    │   │   ├── <requirements dataset>.txt
+    │   │   ├── <requirement type>.json
     │   │   ├── ... ...
     │   │   ├── <entity name>.json
     │   │   └── ... ...
     │   └── ... ...
     ├── models
+    │   ├── model_schema.json
     │   ├── <requirement dataset name>
     │   │   ├── <file name>.r4dl
     │   │   ├── ... ...
@@ -337,6 +339,7 @@ If a field of entity is not specified, it should be the default, see [`this`](#h
     │   │   └── ... ...
     │   └── ... ...
     ├── rules
+    │   ├── rule_schema.json
     │   ├── <requirement dataset name>
     │   │   ├── <file name>.r4dl
     │   │   ├── ... ...

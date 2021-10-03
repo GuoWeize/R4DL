@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  * @author Guo Weize
  * @date 2021/02/01
  */
-public final class SetEntity<E extends BaseEntity> extends BaseCollectionEntity {
+public final class SetEntity<E extends BaseEntity> extends BaseCollection {
 
     /** Entity type of this set */
     private String type = TYPE_UNDEFINED;

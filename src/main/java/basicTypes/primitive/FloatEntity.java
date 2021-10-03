@@ -10,9 +10,10 @@ import java.util.Objects;
  * @author Guo Weize
  * @date 2021/2/1
  */
-public final class FloatEntity extends BasePrimitiveEntity {
+public final class FloatEntity extends BaseNumber {
 
     private final double value;
+    private static final String TYPE_NAME = "float";
 
     private FloatEntity(double value) {
         this.value = value;
@@ -27,8 +28,13 @@ public final class FloatEntity extends BasePrimitiveEntity {
     }
 
     @Override
+    protected double getNum() {
+        return value;
+    }
+
+    @Override
     public String getType() {
-        return FLOAT;
+        return TYPE_NAME;
     }
 
     @Override
@@ -37,7 +43,7 @@ public final class FloatEntity extends BasePrimitiveEntity {
             return BoolEntity.FALSE;
         }
         return BoolEntity.valueOf(
-            getValue() == ((FloatEntity) entity).getValue()
+            value == ((FloatEntity) entity).value
         );
     }
 

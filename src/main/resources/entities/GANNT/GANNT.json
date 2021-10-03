@@ -581,6 +581,8 @@
         ":": "The class of dependency collection returns an exception if there is a loop.",
         "event": {
             "()": [{
+                "#": "if there is a loop",
+                "*": "condition",
                 "agent": {"entity": "loop"},
                 "operation": {"operation": "there be"}
             }]

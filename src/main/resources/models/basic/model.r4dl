@@ -50,9 +50,3 @@ requirement interface {
     caller functional;
     callee functional;
 }
-
-requirement changeField {
-    relationship string;
-    req1changedField set<string>;
-    req2changedField set<string>;
-}
