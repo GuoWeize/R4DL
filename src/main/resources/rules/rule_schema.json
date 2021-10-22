@@ -9,8 +9,20 @@
             "type": "string",
             "pattern": "^([A-Za-z0-9-_/]|\\s)*$"
         },
-        "object": {
+        "basic-object": {
+            "oneOf": [
+                { "type": "boolean" },
+                { "type": "integer" },
+                { "type": "string" }
+            ]
+        },
 
+
+        "object": {
+            "oneOf": [
+                { "$ref": "#/definitions/basic-object" },
+                {}
+            ]
         },
 
         "user-defined-rule": {
@@ -27,18 +39,6 @@
                 "~": { "$ref": "#/definitions/object" }
             },
             "required": [ "?", "#", "*", "$", "~" ],
-            "additionalProperties": false
-        },
-        "basic-type": {
-            "type": "object",
-            "properties": {
-                "boolean": { "type": "boolean" },
-                "integer": { "type": "integer" },
-                "float": { "type": "number" },
-                "string": { "type": "string" }
-            },
-            "minProperties": 1,
-            "maxProperties": 1,
             "additionalProperties": false
         }
     },

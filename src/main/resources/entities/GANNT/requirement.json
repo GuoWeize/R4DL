@@ -355,7 +355,7 @@
     {
         "#": "FR-26",
         "*": "functional",
-        ":": "Task property GUI class provides interface and functions to add and remove dependencies by using an object of the dependency collection.",
+        ":": "A task property GUI class provides interface and functions to add and remove dependencies by using an object of the dependency collection.",
         "agent": {"entity": "task property GUI class"},
         "operation": {"operation": "add"},
         "input": {
@@ -1142,11 +1142,11 @@
             "()": [
                 {"entity": "selected tasks"},
                 {"entity": "original parents of selected tasks"},
-                {"entity": "relationship between selected tasks and their original parents"}
+                {"entity": "relationship between selected tasks and their new parents"}
             ]
         },
         "output": {
-            "()": [{"entity": "relationship between selected tasks and their original parents"}]
+            "()": [{"entity": "relationship between selected tasks and their new parents"}]
         }
     },
     {
@@ -1293,13 +1293,6 @@
     {
         "#": "FR-86",
         "*": "functional",
-        ":": "There can be multiple holidays.",
-        "agent": {"entity": "multiple holidays"},
-        "operation": {"operation": "there be"}
-    },
-    {
-        "#": "FR-87",
-        "*": "functional",
         ":": "The class for holidays provides functions to get the start/end date.",
         "agent": {"entity": "holiday class"},
         "operation": {"operation": "get"},
@@ -1308,7 +1301,7 @@
         }
     },
     {
-        "#": "FR-88",
+        "#": "FR-87",
         "*": "functional",
         ":": "The class for holidays also provides a function to check if a special date is in holiday.",
         "agent": {"entity": "holiday class"},
@@ -1321,7 +1314,7 @@
         }
     },
     {
-        "#": "FR-89",
+        "#": "FR-88",
         "*": "functional",
         ":": "A human resource assignment class is used to represent the relationship between one task and one human resource.",
         "agent": {"entity": "human resource assignment class"},
@@ -1335,7 +1328,7 @@
         }
     },
     {
-        "#": "FR-90",
+        "#": "FR-89",
         "*": "functional",
         ":": "The human resource assignment class provides functions to get the task and the human resource.",
         "agent": {"entity": "human resource assignment class"},
@@ -1348,7 +1341,7 @@
         }
     },
     {
-        "#": "FR-91",
+        "#": "FR-90",
         "*": "functional",
         ":": "GUI needs to provide ability to delete resources from a project.",
         "agent": {"entity": "GUI"},
@@ -1364,7 +1357,7 @@
         }
     },
     {
-        "#": "FR-92",
+        "#": "FR-91",
         "*": "functional",
         ":": "An assignment of a resource to a task is captured as a relationship.",
         "operation": {"operation": "capture"},
@@ -1378,7 +1371,7 @@
         }
     },
     {
-        "#": "FR-93",
+        "#": "FR-92",
         "*": "functional",
         ":": "When a resource is removed, all the tasks where the resource is assigned need to be updated.",
         "event": {
@@ -1400,7 +1393,7 @@
         }
     },
     {
-        "#": "FR-94",
+        "#": "FR-93",
         "*": "functional",
         ":": "A GUI provides interface and functions to edit the properties of objects of the human resource class.",
         "agent": {"entity": "GUI"},
@@ -1413,7 +1406,7 @@
         }
     },
     {
-        "#": "FR-95",
+        "#": "FR-94",
         "*": "functional",
         ":": "GUI needs to provide ability to link tasks in a project.",
         "agent": {"entity": "GUI"},
@@ -1423,7 +1416,7 @@
         }
     },
     {
-        "#": "FR-96",
+        "#": "FR-95",
         "*": "functional",
         ":": "The fact of linking of one task to another should be captured as dependency between two tasks.",
         "operation": {"operation": "capture"},
@@ -1435,7 +1428,7 @@
         }
     },
     {
-        "#": "FR-97",
+        "#": "FR-96",
         "*": "functional",
         ":": "When a two or more tasks are link, there should be check conducted for potential collisions on the chart.",
         "event": {
@@ -1457,7 +1450,7 @@
         }
     },
     {
-        "#": "FR-98",
+        "#": "FR-97",
         "*": "functional",
         ":": "The start/end dates for the graph can be either flexible or rigid.",
         "agent": {"entity": "start/end dates for the graph"},

@@ -1,0 +1,572 @@
+[
+    {
+        "#": "show",
+        "*": "operation",
+        "reaction": "show"
+    },
+    {
+        "#": "supervise",
+        "*": "operation",
+        "reaction": ""
+    },
+    {
+        "#": "indicate",
+        "*": "operation",
+        "reaction": "indicate"
+    },
+    {
+        "#": "initiate",
+        "*": "operation",
+        "reaction": "initiate"
+    },
+    {
+        "#": "provide",
+        "*": "operation",
+        "reaction": "provide"
+    },
+    {
+        "#": "be able to continue",
+        "*": "operation",
+        "reaction": "continue",
+        "isAble": true
+    },
+    {
+        "#": "be capable of being moved",
+        "*": "operation",
+        "reaction": "be moved",
+        "isAble": true
+    },
+    {
+        "#": "perform",
+        "*": "operation",
+        "reaction": "perform"
+    },
+    {
+        "#": "request",
+        "*": "operation",
+        "reaction": "request"
+    },
+    {
+        "#": "harmonise",
+        "*": "operation",
+        "reaction": "harmonise"
+    },
+    {
+        "#": "ensure",
+        "*": "operation",
+        "reaction": "ensure"
+    },
+    {
+        "#": "require",
+        "*": "operation",
+        "reaction": "require"
+    },
+    {
+        "#": "be able to supervise",
+        "*": "operation",
+        "reaction": "supervise",
+        "isAble": true
+    },
+    {
+        "#": "be compatible with",
+        "*": "operation",
+        "reaction": "be compatible with"
+    },
+    {
+        "#": "calculate",
+        "*": "operation",
+        "reaction": "calculate"
+    },
+    {
+        "#": "select",
+        "*": "operation",
+        "reaction": "select"
+    },
+    {
+        "#": "take place",
+        "*": "operation",
+        "reaction": "take place"
+    },
+    {
+        "#": "specify",
+        "*": "operation",
+        "reaction": "specify"
+    },
+    {
+        "#": "acknowledge",
+        "*": "operation",
+        "reaction": "acknowledge"
+    },
+    {
+        "#": "pass",
+        "*": "operation",
+        "reaction": "pass"
+    },
+    {
+        "#": "switch",
+        "*": "operation",
+        "reaction": "switch"
+    },
+    {
+        "#": "increase",
+        "*": "operation",
+        "reaction": "increase"
+    },
+    {
+        "#": "seek",
+        "*": "operation",
+        "reaction": "seek"
+    },
+    {
+        "#": "decide",
+        "*": "operation",
+        "reaction": "decide"
+    },
+    {
+        "#": "be below",
+        "*": "operation",
+        "reaction": "be below"
+    },
+    {
+        "#": "release",
+        "*": "operation",
+        "reaction": "release"
+    },
+    {
+        "#": "be possible to command",
+        "*": "operation",
+        "reaction": "command",
+        "isAble": true
+    },
+    {
+        "#": "fail to contact",
+        "*": "operation",
+        "reaction": "contact",
+        "isNot": true
+    },
+    {
+        "#": "ask to enter",
+        "*": "operation",
+        "reaction": "ask to enter"
+    },
+    {
+        "#": "equip",
+        "*": "operation",
+        "reaction": "equip"
+    },
+    {
+        "#": "be possible",
+        "*": "operation",
+        "reaction": "be possible"
+    },
+    {
+        "#": "there be not",
+        "*": "operation",
+        "reaction": "there be",
+        "isNot": true
+    },
+    {
+        "#": "exceed",
+        "*": "operation",
+        "reaction": "exceed"
+    },
+    {
+        "#": "execute",
+        "*": "operation",
+        "reaction": "execute"
+    },
+    {
+        "#": "there be",
+        "*": "operation",
+        "reaction": "there be"
+    },
+    {
+        "#": "command",
+        "*": "operation",
+        "reaction": "command"
+    },
+    {
+        "#": "bring",
+        "*": "operation",
+        "reaction": "bring"
+    },
+    {
+        "#": "fail to acknowledge",
+        "*": "operation",
+        "reaction": "acknowledge",
+        "isNot": true
+    },
+    {
+        "#": "not influence",
+        "*": "operation",
+        "reaction": "influence",
+        "isNot": true
+    },
+    {
+        "#": "disconnect",
+        "*": "operation",
+        "reaction": "disconnect"
+    },
+    {
+        "#": "be possible to allow",
+        "*": "operation",
+        "reaction": "allow",
+        "isAble": true
+    },
+    {
+        "#": "be possible to drive",
+        "*": "operation",
+        "reaction": "drive",
+        "isAble": true
+    },
+    {
+        "#": "be possible to select",
+        "*": "operation",
+        "reaction": "select",
+        "isAble": true
+    },
+    {
+        "#": "be possible to order",
+        "*": "operation",
+        "reaction": "order",
+        "isAble": true
+    },
+    {
+        "#": "be possible to revoke",
+        "*": "operation",
+        "reaction": "revoke",
+        "isAble": true
+    },
+    {
+        "#": "be possible to send",
+        "*": "operation",
+        "reaction": "send",
+        "isAble": true
+    },
+    {
+        "#": "be possible to use",
+        "*": "operation",
+        "reaction": "use",
+        "isAble": true
+    },
+    {
+        "#": "be moving",
+        "*": "operation",
+        "reaction": "be moving"
+    },
+    {
+        "#": "be stationary",
+        "*": "operation",
+        "reaction": "be stationary"
+    },
+    {
+        "#": "be possible to indicate",
+        "*": "operation",
+        "reaction": "indicate",
+        "isAble": true
+    },
+    {
+        "#": "be able to transmit",
+        "*": "operation",
+        "reaction": "transmit",
+        "isAble": true
+    },
+    {
+        "#": "have the possibility to confirm",
+        "*": "operation",
+        "reaction": "confirm",
+        "isAble": true
+    },
+    {
+        "#": "receive",
+        "*": "operation",
+        "reaction": "receive"
+    },
+    {
+        "#": "remain valid",
+        "*": "operation",
+        "reaction": "remain valid"
+    },
+    {
+        "#": "enable",
+        "*": "operation",
+        "reaction": "enable"
+    },
+    {
+        "#": "start",
+        "*": "operation",
+        "reaction": "start"
+    },
+    {
+        "#": "offer",
+        "*": "operation",
+        "reaction": "offer"
+    },
+    {
+        "#": "determine",
+        "*": "operation",
+        "reaction": "determine"
+    },
+    {
+        "#": "support",
+        "*": "operation",
+        "reaction": "support"
+    },
+    {
+        "#": "extend",
+        "*": "operation",
+        "reaction": "extend"
+    },
+    {
+        "#": "display",
+        "*": "operation",
+        "reaction": "display"
+    },
+    {
+        "#": "not acknowledge",
+        "*": "operation",
+        "reaction": "acknowledge",
+        "isNot": true
+    },
+    {
+        "#": "be able to confirm",
+        "*": "operation",
+        "reaction": "confirm",
+        "isAble": true
+    },
+    {
+        "#": "be able to consult",
+        "*": "operation",
+        "reaction": "consult",
+        "isAble": true
+    },
+    {
+        "#": "be able to override",
+        "*": "operation",
+        "reaction": "override",
+        "isAble": true
+    },
+    {
+        "#": "be able to release",
+        "*": "operation",
+        "reaction": "release",
+        "isAble": true
+    },
+    {
+        "#": "use",
+        "*": "operation",
+        "reaction": "use"
+    },
+    {
+        "#": "have the possibility to select",
+        "*": "operation",
+        "reaction": "select",
+        "isAble": true
+    },
+    {
+        "#": "know",
+        "*": "operation",
+        "reaction": "know"
+    },
+    {
+        "#": "apply",
+        "*": "operation",
+        "reaction": "apply"
+    },
+    {
+        "#": "be capable of receiving",
+        "*": "operation",
+        "reaction": "receive",
+        "isAble": true
+    },
+    {
+        "#": "be capable of sending",
+        "*": "operation",
+        "reaction": "send",
+        "isAble": true
+    },
+    {
+        "#": "be able to determine",
+        "*": "operation",
+        "reaction": "determine",
+        "isAble": true
+    },
+    {
+        "#": "be capable of being isolated",
+        "*": "operation",
+        "reaction": "be isolated",
+        "isAble": true
+    },
+    {
+        "#": "be capable of supervising",
+        "*": "operation",
+        "reaction": "supervise",
+        "isAble": true
+    },
+    {
+        "#": "transmit",
+        "*": "operation",
+        "reaction": "transmit"
+    },
+    {
+        "#": "enter",
+        "*": "operation",
+        "reaction": "enter"
+    },
+    {
+        "#": "send",
+        "*": "operation",
+        "reaction": "send"
+    },
+    {
+        "#": "check",
+        "*": "operation",
+        "reaction": "check"
+    },
+    {
+        "#": "confirm",
+        "*": "operation",
+        "reaction": "confirm"
+    },
+    {
+        "#": "be different",
+        "*": "operation",
+        "reaction": "be different"
+    },
+    {
+        "#": "not show",
+        "*": "operation",
+        "reaction": "show",
+        "isNot": true
+    },
+    {
+        "#": "be based on",
+        "*": "operation",
+        "reaction": "be based on"
+    },
+    {
+        "#": "supervise",
+        "*": "operation",
+        "reaction": "supervise"
+    },
+    {
+        "#": "have the capability of being supervised",
+        "*": "operation",
+        "reaction": "be supervised",
+        "isAble": true
+    },
+    {
+        "#": "not be operative",
+        "*": "operation",
+        "reaction": "be operative",
+        "isNot": true
+    },
+    {
+        "#": "be available",
+        "*": "operation",
+        "reaction": "be available"
+    },
+    {
+        "#": "leave",
+        "*": "operation",
+        "reaction": "leave"
+    },
+    {
+        "#": "not be active",
+        "*": "operation",
+        "reaction": "be active",
+        "isNot": true
+    },
+    {
+        "#": "remain",
+        "*": "operation",
+        "reaction": "remain"
+    },
+    {
+        "#": "may show",
+        "*": "operation",
+        "reaction": "show",
+        "isAble": true
+    },
+    {
+        "#": "respect",
+        "*": "operation",
+        "reaction": "respect"
+    },
+    {
+        "#": "be operating",
+        "*": "operation",
+        "reaction": "be operating"
+    },
+    {
+        "#": "obtain",
+        "*": "operation",
+        "reaction": "obtain"
+    },
+    {
+        "#": "be able to run",
+        "*": "operation",
+        "reaction": "run",
+        "isAble": true
+    },
+    {
+        "#": "occur",
+        "*": "operation",
+        "reaction": "occur"
+    },
+    {
+        "#": "order",
+        "*": "operation",
+        "reaction": "order"
+    },
+    {
+        "#": "give",
+        "*": "operation",
+        "reaction": "give"
+    },
+    {
+        "#": "change",
+        "*": "operation",
+        "reaction": "change"
+    },
+    {
+        "#": "isolate",
+        "*": "operation",
+        "reaction": "isolate"
+    },
+    {
+        "#": "appear",
+        "*": "operation",
+        "reaction": "appear"
+    },
+    {
+        "#": "alert",
+        "*": "operation",
+        "reaction": "alert"
+    },
+    {
+        "#": "come",
+        "*": "operation",
+        "reaction": "come"
+    },
+    {
+        "#": "be required to acknowledge",
+        "*": "operation",
+        "reaction": "acknowledge"
+    },
+    {
+        "#": "suppress",
+        "*": "operation",
+        "reaction": "suppress"
+    },
+    {
+        "#": "detect",
+        "*": "operation",
+        "reaction": "detect"
+    },
+    {
+        "#": "stop",
+        "*": "operation",
+        "reaction": "stop"
+    }
+]
