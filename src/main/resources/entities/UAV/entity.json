@@ -1,0 +1,1272 @@
+[
+    {
+        "#": "_VehicleCore_",
+        "*": "entity",
+        "base": "_VehicleCore_"
+    },
+    {
+        "#": "_UIMiddleware_",
+        "*": "entity",
+        "base": "_UIMiddleware_"
+    },
+    {
+        "#": "_SingleUAVFlightPlanScheduler_",
+        "*": "entity",
+        "base": "_SingleUAVFlightPlanScheduler_"
+    },
+    {
+        "#": "_UAVActivationManager_",
+        "*": "entity",
+        "base": "_UAVActivationManager_"
+    },
+    {
+        "#": "_VaadinUI_",
+        "*": "entity",
+        "base": "_VaadinUI_"
+    },
+    {
+        "#": "_RealTimeFlightUI_",
+        "*": "entity",
+        "base": "_RealTimeFlightUI_"
+    },
+    {
+        "#": "_GCS_",
+        "*": "entity",
+        "base": "_GCS_"
+    },
+    {
+        "#": "_CoordinateSystem_",
+        "*": "entity",
+        "base": "_CoordinateSystem_"
+    },
+    {
+        "#": "_GCSMiddleware_",
+        "*": "entity",
+        "base": "_GCSMiddleware_"
+    },
+    {
+        "#": "_FlightManager_",
+        "*": "entity",
+        "base": "_FlightManager_"
+    },
+    {
+        "#": "_ObjectAvoidance_",
+        "*": "entity",
+        "base": "_ObjectAvoidance_"
+    },
+    {
+        "#": "_FlightRouteManager_",
+        "*": "entity",
+        "base": "_FlightRouteManager_"
+    },
+    {
+        "#": "_FlightSchedulingandExecution_",
+        "*": "entity",
+        "base": "_FlightSchedulingandExecution_"
+    },
+    {
+        "#": "_MissionPlanner_",
+        "*": "entity",
+        "base": "_MissionPlanner_"
+    },
+    {
+        "#": "_CGS_",
+        "*": "entity",
+        "base": "_CGS_"
+    },
+    {
+        "#": "_MapComponent_",
+        "*": "entity",
+        "base": "_MapComponent_"
+    },
+    {
+        "#": "_DronologyRuntimeMonitor_",
+        "*": "entity",
+        "base": "_DronologyRuntimeMonitor_"
+    },
+    {
+        "#": "_RouteCreationUI_",
+        "*": "entity",
+        "base": "_RouteCreationUI_"
+    },
+    {
+        "#": "_RouteAssignmentUI_",
+        "*": "entity",
+        "base": "_RouteAssignmentUI_"
+    },
+    {
+        "#": "_UAVRegistrationManager_",
+        "*": "entity",
+        "base": "_UAVRegistrationManager_"
+    },
+    {
+        "#": "_ActivityLogger_",
+        "*": "entity",
+        "base": "_ActivityLogger_"
+    },
+    {
+        "#": "_InternalSimulator_",
+        "*": "entity",
+        "base": "_InternalSimulator_"
+    },
+    {
+        "#": "UAV",
+        "*": "entity",
+        "base": "UAV"
+    },
+    {
+        "#": "UAVs",
+        "*": "entity",
+        "base": "UAV",
+        "isAll": true
+    },
+    {
+        "#": "each UAV",
+        "*": "entity",
+        "base": "UAV",
+        "isAll": true
+    },
+    {
+        "#": "all UAVs",
+        "*": "entity",
+        "base": "UAV",
+        "isAll": true
+    },
+    {
+        "#": "active UAV",
+        "*": "entity",
+        "base": "UAV",
+        "constraints": {"()": ["active"]}
+    },
+    {
+        "#": "each activated UAV",
+        "*": "entity",
+        "base": "UAV",
+        "constraints": {"()": ["activated"]},
+        "isAll": true
+    },
+    {
+        "#": "each UAV defining its basic attributes",
+        "*": "entity",
+        "base": "UAV",
+        "constraints": {"()": ["defining its basic attributes"]},
+        "isAll": true
+    },
+    {
+        "#": "UAV that is awaiting execution",
+        "*": "entity",
+        "base": "UAV",
+        "constraints": {"()": ["that is awaiting execution"]}
+    },
+    {
+        "#": "UAV which is currently hovering in place",
+        "*": "entity",
+        "base": "UAV",
+        "constraints": {"()": ["which is currently hovering in place"]}
+    },
+    {
+        "#": "UAV currently on the ground",
+        "*": "entity",
+        "base": "UAV",
+        "constraints": {"()": ["currently on the ground"]}
+    },
+    {
+        "#": "given UAV",
+        "*": "entity",
+        "base": "UAV",
+        "constraints": {"()": ["given"]}
+    },
+    {
+        "#": "group of UAVs",
+        "*": "entity",
+        "base": "group",
+        "content": {"entity": "UAVs"}
+    },
+    {
+        "#": "virtual UAVs",
+        "*": "entity",
+        "base": "UAV",
+        "constraints": {"()": ["virtual"]},
+        "isAll": true
+    },
+    {
+        "#": "selected UAV",
+        "*": "entity",
+        "base": "UAV",
+        "constraints": {"()": ["selected"]}
+    },
+    {
+        "#": "one or multiple UAVs",
+        "*": "entity",
+        "base": "UAV",
+        "constraints": {"()": ["one or multiple"]},
+        "isAll": true
+    },
+    {
+        "#": "one or more selected UAVs",
+        "*": "entity",
+        "base": "UAV",
+        "constraints": {"()": ["one or more", "selected"]},
+        "isAll": true
+    },
+    {
+        "#": "newly connected UAVs",
+        "*": "entity",
+        "base": "UAV",
+        "constraints": {"()": ["newly connected"]},
+        "isAll": true
+    },
+    {
+        "#": "multiple UAVs",
+        "*": "entity",
+        "base": "UAV",
+        "constraints": {"()": ["multiple"]},
+        "isAll": true
+    },
+    {
+        "#": "all associated UAVs",
+        "*": "entity",
+        "base": "UAV",
+        "constraints": {"()": ["associated"]},
+        "isAll": true
+    },
+    {
+        "#": "respective UAV",
+        "*": "entity",
+        "base": "UAV",
+        "constraints": {"()": ["respective"]}
+    },
+    {
+        "#": "UAVs that are registered",
+        "*": "entity",
+        "base": "UAV",
+        "constraints": {"()": ["that are registered"]}
+    },
+    {
+        "#": "UAV's current flight",
+        "*": "entity",
+        "base": "current flight",
+        "owner": {"entity": "UAV"}
+    },
+    {
+        "#": "UAV's destination",
+        "*": "entity",
+        "base": "destination",
+        "owner": {"entity": "UAV"}
+    },
+    {
+        "#": "UAV's original launch location",
+        "*": "entity",
+        "base": "launch location",
+        "constraints": {"()": ["original"]},
+        "owner": {"entity": "UAV"}
+    },
+    {
+        "#": "UAV's current position",
+        "*": "entity",
+        "base": "position",
+        "constraints": {"()": ["current"]},
+        "owner": {"entity": "UAV"}
+    },
+    {
+        "#": "UAV's current longitude",
+        "*": "entity",
+        "base": "longitude",
+        "constraints": {"()": ["current"]},
+        "owner": {"entity": "UAV"}
+    },
+    {
+        "#": "UAV's current latitude",
+        "*": "entity",
+        "base": "latitude",
+        "constraints": {"()": ["current"]},
+        "owner": {"entity": "UAV"}
+    },
+    {
+        "#": "UAV's active flight plans",
+        "*": "entity",
+        "base": "flight plan",
+        "constraints": {"()": ["active"]},
+        "isAll": true,
+        "owner": {"entity": "UAV"}
+    },
+    {
+        "#": "UAV's current location",
+        "*": "entity",
+        "base": "location",
+        "constraints": {"()": ["current"]},
+        "owner": {"entity": "UAV"}
+    },
+    {
+        "#": "UAV's properties",
+        "*": "entity",
+        "base": "property",
+        "owner": {"entity": "UAV"},
+        "isAll": true
+    },
+    {
+        "#": "all scheduled flight plans for that UAV",
+        "*": "entity",
+        "base": "flight plan",
+        "constraints": {"()": ["scheduled"]},
+        "owner": {"entity": "UAV"},
+        "isAll": true
+    },
+    {
+        "#": "control of that UAV",
+        "*": "entity",
+        "base": "UAV",
+        "property": {"entity": "control"}
+    },
+    {
+        "#": "control",
+        "*": "entity",
+        "base": "control"
+    },
+    {
+        "#": "location of active UAVs",
+        "*": "entity",
+        "base": "location",
+        "owner": {"entity": "active UAVs"}
+    },
+    {
+        "#": "active UAVs",
+        "*": "entity",
+        "base": "UAV",
+        "constraints": {"()": ["active"]},
+        "isAll": true
+    },
+    {
+        "#": "proximity of a UAV",
+        "*": "entity",
+        "base": "proximity",
+        "owner": {"entity": "UAV"}
+    },
+    {
+        "#": "capabilities of the UAV",
+        "*": "entity",
+        "base": "capability",
+        "owner": {"entity": "UAV"},
+        "isAll": true
+    },
+    {
+        "#": "activation of a newly detected UAV",
+        "*": "entity",
+        "base": "activation",
+        "owner": {"entity": "newly detected UAV"}
+    },
+    {
+        "#": "newly detected UAV",
+        "*": "entity",
+        "base": "UAV",
+        "constraints": {"()": ["newly detected"]}
+    },
+    {
+        "#": "maximum numbers of allowed activated UAVs",
+        "*": "entity",
+        "base": "number",
+        "constraints": {"()": ["maximum"]},
+        "owner": {"entity": "allowed activated UAVs"},
+        "isAll": true
+    },
+    {
+        "#": "allowed activated UAVs",
+        "*": "entity",
+        "base": "UAV",
+        "constraints": {"()": ["allowed", "activated"]},
+        "isAll": true
+    },
+    {
+        "#": "behavior of a UAV",
+        "*": "entity",
+        "base": "behavior",
+        "owner": {"entity": "UAV"}
+    },
+    {
+        "#": "location of the UAV",
+        "*": "entity",
+        "base": "location",
+        "owner": {"entity": "UAV"}
+    },
+    {
+        "#": "flight plans of selected UAV",
+        "*": "entity",
+        "base": "flight plan",
+        "owner": {"entity": "selected UAV"},
+        "isAll": true
+    },
+    {
+        "#": "name of all currently activated UAVs",
+        "*": "entity",
+        "base": "name",
+        "owner": {"entity": "all currently activated UAVs"}
+    },
+    {
+        "#": "all currently activated UAVs",
+        "*": "entity",
+        "base": "UAV",
+        "constraints": {"()": ["currently activated"]},
+        "isAll": true
+    },
+    {
+        "#": "status of all currently activated UAVs",
+        "*": "entity",
+        "base": "status",
+        "owner": {"entity": "all currently activated UAVs"}
+    },
+    {
+        "#": "UAV state transition diagram",
+        "*": "entity",
+        "base": "UAV state transition diagram"
+    },
+    {
+        "#": "allowed state transitions",
+        "*": "entity",
+        "base": "state transition",
+        "constraints": {"()": ["allowed"]},
+        "isAll": true
+    },
+    {
+        "#": "client",
+        "*": "entity",
+        "base": "client"
+    },
+    {
+        "#": "notifications",
+        "*": "entity",
+        "base": "notification",
+        "isAll": true
+    },
+    {
+        "#": "specific events",
+        "*": "entity",
+        "base": "event",
+        "constraints": {"()": ["specific"]},
+        "isAll": true
+    },
+    {
+        "#": "unique ID",
+        "*": "entity",
+        "base": "ID",
+        "constraints": {"()": ["unique"]}
+    },
+    {
+        "#": "flight plan",
+        "*": "entity",
+        "base": "flight plan"
+    },
+    {
+        "#": "flight plans",
+        "*": "entity",
+        "base": "flight plan",
+        "isAll": true
+    },
+    {
+        "#": "instance of each registered drone",
+        "*": "entity",
+        "base": "drone",
+        "constraints": {"()": ["registered"]},
+        "property": {"entity": "instance"},
+        "isAll": true
+    },
+    {
+        "#": "instance",
+        "*": "entity",
+        "base": "instance"
+    },
+    {
+        "#": "UAV_TYPE",
+        "*": "entity",
+        "base": "UAV_TYPE"
+    },
+    {
+        "#": "each waypoint",
+        "*": "entity",
+        "base": "waypoint",
+        "isAll": true
+    },
+    {
+        "#": "coordinates that include longitude, latitude and altitude",
+        "*": "entity",
+        "base": "coordinate",
+        "content": {"entity": "longitude, latitude and altitude"},
+        "isAll": true
+    },
+    {
+        "#": "longitude, latitude and altitude",
+        "*": "entity",
+        "base": "longitude, latitude and altitude"
+    },
+    {
+        "#": "next waypoint",
+        "*": "entity",
+        "base": "waypoint",
+        "constraints": {"()": ["next"]}
+    },
+    {
+        "#": "managed list of pending flight plans",
+        "*": "entity",
+        "base": "list",
+        "constraints": {"()": ["managed"]},
+        "content": {"entity": "pending flight plans"}
+    },
+    {
+        "#": "pending flight plan",
+        "*": "entity",
+        "base": " flight plan",
+        "constraints": {"()": ["pending"]}
+    },
+    {
+        "#": "pending flight plans",
+        "*": "entity",
+        "base": " flight plan",
+        "constraints": {"()": ["pending"]},
+        "isAll": true
+    },
+    {
+        "#": "flight plan assigned",
+        "*": "entity",
+        "base": "flight plan",
+        "constraints": {"()": ["assigned"]}
+    },
+    {
+        "#": "final waypoint of UAV's current flight plan",
+        "*": "entity",
+        "base": "waypoint",
+        "constraints": {"()": ["final"]},
+        "owner": {"entity": "UAV's current flight plan"}
+    },
+    {
+        "#": "UAV's current flight plan",
+        "*": "entity",
+        "base": "flight plan",
+        "constraints": {"()": ["current"]},
+        "owner": {"entity": "UAV"}
+    },
+    {
+        "#": "next assigned flight plan",
+        "*": "entity",
+        "base": "flight plan",
+        "constraints": {"()": ["next assigned"]}
+    },
+    {
+        "#": "UI clients",
+        "*": "entity",
+        "base": "UI client",
+        "isAll": true
+    },
+    {
+        "#": "interface for registering UI clients",
+        "*": "entity",
+        "base": "UI client",
+        "constraints": {"()": ["registering"]},
+        "property": {"entity": "interface"},
+        "isAll": true
+    },
+    {
+        "#": "control-client",
+        "*": "entity",
+        "base": "control-client"
+    },
+    {
+        "#": "command",
+        "*": "entity",
+        "base": "command"
+    },
+    {
+        "#": "commands",
+        "*": "entity",
+        "base": "command",
+        "isAll": true
+    },
+    {
+        "#": "map",
+        "*": "entity",
+        "base": "map"
+    },
+    {
+        "#": "stationary or moving object",
+        "*": "entity",
+        "base": "object",
+        "constraints": {"()": ["stationary", "moving"]}
+    },
+    {
+        "#": "evasive directives",
+        "*": "entity",
+        "base": "directive",
+        "constraints": {"()": ["evasive"]},
+        "isAll": true
+    },
+    {
+        "#": "evasive actions",
+        "*": "entity",
+        "base": "action",
+        "constraints": {"()": ["evasive"]},
+        "isAll": true
+    },
+    {
+        "#": "system",
+        "*": "entity",
+        "base": "system"
+    },
+    {
+        "#": "active onboard Obstacle Avoidance",
+        "*": "entity",
+        "base": "Obstacle Avoidance",
+        "constraints": {"()": ["active", "onboard"]}
+    },
+    {
+        "#": "directives",
+        "*": "entity",
+        "base": "directive",
+        "isAll": true
+    },
+    {
+        "#": "request",
+        "*": "entity",
+        "base": "request"
+    },
+    {
+        "#": "Dronology",
+        "*": "entity",
+        "base": "Dronology"
+    },
+    {
+        "#": "connection",
+        "*": "entity",
+        "base": "connection"
+    },
+    {
+        "#": "reconnect",
+        "*": "entity",
+        "base": "reconnect"
+    },
+    {
+        "#": "return to home command",
+        "*": "entity",
+        "base": "command",
+        "constraints": {"()": ["return to home"]}
+    },
+    {
+        "#": "additional waypoint",
+        "*": "entity",
+        "base": "waypoint",
+        "constraints": {"()": ["additional"]}
+    },
+    {
+        "#": "additional routing commands",
+        "*": "entity",
+        "base": "command",
+        "constraints": {"()": ["additional", "routing"]},
+        "isAll": true
+    },
+    {
+        "#": "flight route",
+        "*": "entity",
+        "base": "flight route"
+    },
+    {
+        "#": "flight routes",
+        "*": "entity",
+        "base": "flight route",
+        "isAll": true
+    },
+    {
+        "#": "ordered sequence of waypoints",
+        "*": "entity",
+        "base": "sequence",
+        "constraints": {"()": ["ordered"]},
+        "content": {"entity": "waypoints"}
+    },
+    {
+        "#": "waypoints",
+        "*": "entity",
+        "base": "waypoint",
+        "isAll": true
+    },
+    {
+        "#": "all flight routes",
+        "*": "entity",
+        "base": "flight route",
+        "isAll": true
+    },
+    {
+        "#": "VALID_FLIGHT_ROUTE",
+        "*": "entity",
+        "base": "VALID_FLIGHT_ROUTE"
+    },
+    {
+        "#": "customized takeoff altitude",
+        "*": "entity",
+        "base": "takeoff altitude",
+        "constraints": {"()": ["customized"]}
+    },
+    {
+        "#": "system's default takeoff altitude",
+        "*": "entity",
+        "base": "takeoff altitude",
+        "constraints": {"()": ["default"]},
+        "owner": {"entity": "system"}
+    },
+    {
+        "#": "coordinates",
+        "*": "entity",
+        "base": "coordinate",
+        "isAll": true
+    },
+    {
+        "#": "alternate formats",
+        "*": "entity",
+        "base": "format",
+        "constraints": {"()": ["alternate"]},
+        "isAll": true
+    },
+    {
+        "#": "two coordinates",
+        "*": "entity",
+        "base": "coordinate",
+        "constraints": {"()": ["two"]}
+    },
+    {
+        "#": "distance",
+        "*": "entity",
+        "base": "distance"
+    },
+    {
+        "#": "first coordinate",
+        "*": "entity",
+        "base": "coordinate",
+        "constraints": {"()": ["first"]}
+    },
+    {
+        "#": "second coordinate",
+        "*": "entity",
+        "base": "coordinate",
+        "constraints": {"()": ["second"]}
+    },
+    {
+        "#": "direction",
+        "*": "entity",
+        "base": "direction"
+    },
+    {
+        "#": "hover in place command",
+        "*": "entity",
+        "base": "command",
+        "constraints": {"()": ["hover in place"]}
+    },
+    {
+        "#": "hover in place mode",
+        "*": "entity",
+        "base": "mode",
+        "constraints": {"()": ["hover in place"]}
+    },
+    {
+        "#": "originally designated waypoint",
+        "*": "entity",
+        "base": "waypoint",
+        "constraints": {"()": ["originally designated"]}
+    },
+    {
+        "#": "predefined FlightPatterns",
+        "*": "entity",
+        "base": "FlightPatterns",
+        "constraints": {"()": ["predefined"]}
+    },
+    {
+        "#": "mission",
+        "*": "entity",
+        "base": "mission"
+    },
+    {
+        "#": "active mission",
+        "*": "entity",
+        "base": "mission",
+        "constraints": {"()": ["active"]}
+    },
+    {
+        "#": "execution",
+        "*": "entity",
+        "base": "execution"
+    },
+    {
+        "#": "route",
+        "*": "entity",
+        "base": "route"
+    },
+    {
+        "#": "routes",
+        "*": "entity",
+        "base": "route",
+        "isAll": true
+    },
+    {
+        "#": "specific UAV_ID",
+        "*": "entity",
+        "base": "UAV_ID",
+        "constraints": {"()": ["specific"]}
+    },
+    {
+        "#": "scheduled flight",
+        "*": "entity",
+        "base": "flight",
+        "constraints": {"()": ["scheduled"]}
+    },
+    {
+        "#": "currently executing flight plan",
+        "*": "entity",
+        "base": "flight plan",
+        "constraints": {"()": ["currently executing"]}
+    },
+    {
+        "#": "flight pattern",
+        "*": "entity",
+        "base": "flight pattern"
+    },
+    {
+        "#": "flight patterns",
+        "*": "entity",
+        "base": "flight pattern",
+        "isAll": true
+    },
+    {
+        "#": "",
+        "*": "entity",
+        "base": "",
+        "constraints": {"()": [""]},
+        "property": {"entity": ""},
+        "isAll": true
+    },
+    {
+        "#": "longitude of waypoints",
+        "*": "entity",
+        "base": "longitude",
+        "owner": {"entity": "waypoints"}
+    },
+    {
+        "#": "latitude of waypoints",
+        "*": "entity",
+        "base": "latitude",
+        "owner": {"entity": "waypoints"}
+    },
+    {
+        "#": "altitude of waypoints",
+        "*": "entity",
+        "base": "altitude",
+        "owner": {"entity": "waypoints"}
+    },
+    {
+        "#": "any paths",
+        "*": "entity",
+        "base": "path",
+        "isAll": true
+    },
+    {
+        "#": "overlap",
+        "*": "entity",
+        "base": "overlap"
+    },
+    {
+        "#": "warning",
+        "*": "entity",
+        "base": "warning"
+    },
+    {
+        "#": "all current and scheduled flight plans",
+        "*": "entity",
+        "base": "flight plans",
+        "constraints": {"()": ["current", "scheduled"]},
+        "isAll": true
+    },
+    {
+        "#": "further activation requests",
+        "*": "entity",
+        "base": "request",
+        "constraints": {"()": ["further activation"]},
+        "isAll": true
+    },
+    {
+        "#": "UAV meta-data information",
+        "*": "entity",
+        "base": "UAV meta-data information"
+    },
+    {
+        "#": "takeoff command",
+        "*": "entity",
+        "base": "command",
+        "constraints": {"()": ["takeoff"]}
+    },
+    {
+        "#": "goto command",
+        "*": "entity",
+        "base": "command",
+        "constraints": {"()": ["goto"]}
+    },
+    {
+        "#": "landing command",
+        "*": "entity",
+        "base": "command",
+        "constraints": {"()": ["landing"]}
+    },
+    {
+        "#": "ground altitude",
+        "*": "entity",
+        "base": "altitude",
+        "constraints": {"()": ["ground"]}
+    },
+    {
+        "#": "state of the battery",
+        "*": "entity",
+        "base": "state",
+        "owner": {"entity": "battery"}
+    },
+    {
+        "#": "battery",
+        "*": "entity",
+        "base": "battery"
+    },
+    {
+        "#": "all flight plan related events",
+        "*": "entity",
+        "base": "event",
+        "constraints": {"()": ["flight plan related"]},
+        "isAll": true
+    },
+    {
+        "#": "all commands sent to a _CGS_",
+        "*": "entity",
+        "base": "command",
+        "constraints": {"()": ["sent to a _CGS_"]},
+        "isAll": true
+    },
+    {
+        "#": "all commands received from a _CGS_",
+        "*": "entity",
+        "base": "command",
+        "constraints": {"()": ["received from a _CGS_"]},
+        "isAll": true
+    },
+    {
+        "#": "list of all active UAVs",
+        "*": "entity",
+        "base": "list",
+        "content": {"entity": "all active UAVs"}
+    },
+    {
+        "#": "all active UAVs",
+        "*": "entity",
+        "base": "UAV",
+        "constraints": {"()": ["active"]},
+        "isAll": true
+    },
+    {
+        "#": "list of all existing routes",
+        "*": "entity",
+        "base": "list",
+        "content": {"entity": "all existing routes"}
+    },
+    {
+        "#": "all existing routes",
+        "*": "entity",
+        "base": "route",
+        "constraints": {"()": ["existing"]},
+        "isAll": true
+    },
+    {
+        "#": "commands from UIs",
+        "*": "entity",
+        "base": "command",
+        "constraints": {"()": ["from UIs"]},
+        "isAll": true
+    },
+    {
+        "#": "commands forwards to Dronology",
+        "*": "entity",
+        "base": "command",
+        "constraints": {"()": ["forwards to Dronology"]},
+        "isAll": true
+    },
+    {
+        "#": "creation of flight routes",
+        "*": "entity",
+        "base": "flight route",
+        "property": {"entity": "creation"},
+        "isAll": true
+    },
+    {
+        "#": "creation",
+        "*": "entity",
+        "base": "creation"
+    },
+    {
+        "#": "modification of flight routes",
+        "*": "entity",
+        "base": "flight route",
+        "property": {"entity": "modification"},
+        "isAll": true
+    },
+    {
+        "#": "modification",
+        "*": "entity",
+        "base": "modification"
+    },
+    {
+        "#": "existing route",
+        "*": "entity",
+        "base": "route",
+        "constraints": {"()": ["existing"]}
+    },
+    {
+        "#": "mission plan upon request",
+        "*": "entity",
+        "base": "mission pla",
+        "constraints": {"()": ["upon request"]}
+    },
+    {
+        "#": "stored configuration parameters",
+        "*": "entity",
+        "base": "configuration parameter",
+        "constraints": {"()": ["stored"]},
+        "isAll": true
+    },
+    {
+        "#": "map view",
+        "*": "entity",
+        "base": "map view"
+    },
+    {
+        "#": "existing routes",
+        "*": "entity",
+        "base": "route",
+        "constraints": {"()": ["existing"]},
+        "isAll": true
+    },
+    {
+        "#": "details about the selected UAV and its flight plans",
+        "*": "entity",
+        "base": "detail",
+        "constraints": {"()": ["selected UAV and its flight plans"]},
+        "isAll": true
+    },
+    {
+        "#": "flight",
+        "*": "entity",
+        "base": "flight"
+    },
+    {
+        "#": "flight plans assigned to a UAV",
+        "*": "entity",
+        "base": "flight plan",
+        "constraints": {"()": ["assigned to a UAV"]},
+        "isAll": true
+    },
+    {
+        "#": "starting ending",
+        "*": "entity",
+        "base": "starting ending"
+    },
+    {
+        "#": "intermediate waypoint markers",
+        "*": "entity",
+        "base": "waypoint marker",
+        "constraints": {"()": ["intermediate"]},
+        "isAll": true
+    },
+    {
+        "#": "valid altitude values",
+        "*": "entity",
+        "base": "altitude value",
+        "constraints": {"()": ["valid"]},
+        "isAll": true
+    },
+    {
+        "#": "valid speed values",
+        "*": "entity",
+        "base": "speed value",
+        "constraints": {"()": ["valid"]},
+        "isAll": true
+    },
+    {
+        "#": "waypoint",
+        "*": "entity",
+        "base": "waypoint"
+    },
+    {
+        "#": "each route",
+        "*": "entity",
+        "base": "route",
+        "isAll": true
+    },
+    {
+        "#": "textual description",
+        "*": "entity",
+        "base": "description",
+        "constraints": {"()": ["textual"]}
+    },
+    {
+        "#": "set of waypoints",
+        "*": "entity",
+        "base": "set",
+        "content": {"entity": "waypoints"}
+    },
+    {
+        "#": "UI",
+        "*": "entity",
+        "base": "UI"
+    },
+    {
+        "#": "newly created or modified route",
+        "*": "entity",
+        "base": "route",
+        "constraints": {"()": ["newly created", "modified"]}
+    },
+    {
+        "#": "user",
+        "*": "entity",
+        "base": "user"
+    },
+    {
+        "#": "users",
+        "*": "entity",
+        "base": "user",
+        "isAll": true
+    },
+    {
+        "#": "all currently active flight plans",
+        "*": "entity",
+        "base": "flight plan",
+        "constraints": {"()": ["currently active"]},
+        "isAll": true
+    },
+    {
+        "#": "flight operations",
+        "*": "entity",
+        "base": "flight operation",
+        "isAll": true
+    },
+    {
+        "#": "emergency operations",
+        "*": "entity",
+        "base": "operation",
+        "constraints": {"()": ["emergency"]},
+        "isAll": true
+    },
+    {
+        "#": "emergency",
+        "*": "entity",
+        "base": "emergency"
+    },
+    {
+        "#": "monitoring messages",
+        "*": "entity",
+        "base": "message",
+        "constraints": {"()": ["monitoring"]},
+        "isAll": true
+    },
+    {
+        "#": "clients",
+        "*": "entity",
+        "base": "client",
+        "isAll": true
+    },
+    {
+        "#": "new monitoring message",
+        "*": "entity",
+        "base": "message",
+        "constraints": {"()": ["new monitoring"]}
+    },
+    {
+        "#": "all subscribed clients",
+        "*": "entity",
+        "base": "client",
+        "constraints": {"()": ["subscribed"]},
+        "isAll": true
+    },
+    {
+        "#": "messages",
+        "*": "entity",
+        "base": "message",
+        "isAll": true
+    },
+    {
+        "#": "any Dronology component",
+        "*": "entity",
+        "base": "Dronology component",
+        "isAll": true
+    },
+    {
+        "#": "multiple _GCS_",
+        "*": "entity",
+        "base": "_GCS_",
+        "constraints": {"()": ["multiple"]},
+        "isAll": true
+    },
+    {
+        "#": "predefined set of steps",
+        "*": "entity",
+        "base": "set",
+        "constraints": {"()": ["predefined"]},
+        "content": {"entity": "steps"}
+    },
+    {
+        "#": "steps",
+        "*": "entity",
+        "base": "step",
+        "isAll": true
+    },
+    {
+        "#": "connection between a _GCS_ and Dronology",
+        "*": "entity",
+        "base": "connection",
+        "constraints": {"()": ["between a _GCS_ and Dronology"]}
+    },
+    {
+        "#": "state messages",
+        "*": "entity",
+        "base": "state message",
+        "isAll": true
+    },
+    {
+        "#": "mode change messages",
+        "*": "entity",
+        "base": "mode change message",
+        "isAll": true
+    },
+    {
+        "#": "commands sent from Dronology",
+        "*": "entity",
+        "base": "command",
+        "constraints": {"()": ["sent from Dronology"]},
+        "isAll": true
+    },
+    {
+        "#": "connection to the _GCS_ from the _GCSMiddleware_",
+        "*": "entity",
+        "base": "connection",
+        "constraints": {"()": ["to the _GCS_", "from the _GCSMiddleware_"]}
+    },
+    {
+        "#": "UAV command",
+        "*": "entity",
+        "base": "UAV command"
+    },
+    {
+        "#": "message frequency",
+        "*": "entity",
+        "base": "message frequency"
+    },
+    {
+        "#": "different types of map layers",
+        "*": "entity",
+        "base": "map layer",
+        "property": {"entity": "different types"},
+        "isAll": true
+    },
+    {
+        "#": "different types",
+        "*": "entity",
+        "base": "type",
+        "constraints": {"()": ["different"]},
+        "isAll": true
+    }
+]

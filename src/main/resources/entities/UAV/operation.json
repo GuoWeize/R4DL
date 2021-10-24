@@ -1,0 +1,414 @@
+[
+    {
+        "#": "request",
+        "*": "operation",
+        "reaction": "request"
+    },
+    {
+        "#": "transition",
+        "*": "operation",
+        "reaction": "transition"
+    },
+    {
+        "#": "register",
+        "*": "operation",
+        "reaction": "register"
+    },
+    {
+        "#": "send",
+        "*": "operation",
+        "reaction": "send"
+    },
+    {
+        "#": "assign",
+        "*": "operation",
+        "reaction": "assign"
+    },
+    {
+        "#": "not assign",
+        "*": "operation",
+        "reaction": "assign",
+        "isNot": true
+    },
+    {
+        "#": "execute",
+        "*": "operation",
+        "reaction": "execute"
+    },
+    {
+        "#": "ensure",
+        "*": "operation",
+        "reaction": "ensure"
+    },
+    {
+        "#": "associate",
+        "*": "operation",
+        "reaction": "associate"
+    },
+    {
+        "#": "specify",
+        "*": "operation",
+        "reaction": "specify"
+    },
+    {
+        "#": "maintain",
+        "*": "operation",
+        "reaction": "maintain"
+    },
+    {
+        "#": "have",
+        "*": "operation",
+        "reaction": "have"
+    },
+    {
+        "#": "not have",
+        "*": "operation",
+        "reaction": "have",
+        "isNot": true
+    },
+    {
+        "#": "reach",
+        "*": "operation",
+        "reaction": "reach"
+    },
+    {
+        "#": "cancel",
+        "*": "operation",
+        "reaction": "cancel"
+    },
+    {
+        "#": "provide",
+        "*": "operation",
+        "reaction": "provide"
+    },
+    {
+        "#": "issue",
+        "*": "operation",
+        "reaction": "issue"
+    },
+    {
+        "#": "not issue",
+        "*": "operation",
+        "reaction": "issue",
+        "isNot": true
+    },
+    {
+        "#": "load",
+        "*": "operation",
+        "reaction": "load"
+    },
+    {
+        "#": "display",
+        "*": "operation",
+        "reaction": "display"
+    },
+    {
+        "#": "be within",
+        "*": "operation",
+        "reaction": "be within"
+    },
+    {
+        "#": "take",
+        "*": "operation",
+        "reaction": "take"
+    },
+    {
+        "#": "ensure",
+        "*": "operation",
+        "reaction": "ensure"
+    },
+    {
+        "#": "forward",
+        "*": "operation",
+        "reaction": "forward"
+    },
+    {
+        "#": "activate",
+        "*": "operation",
+        "reaction": "activate"
+    },
+    {
+        "#": "loss",
+        "*": "operation",
+        "reaction": "loss"
+    },
+    {
+        "#": "attempt",
+        "*": "operation",
+        "reaction": "attempt"
+    },
+    {
+        "#": "return",
+        "*": "operation",
+        "reaction": "return"
+    },
+    {
+        "#": "define",
+        "*": "operation",
+        "reaction": "define"
+    },
+    {
+        "#": "persist",
+        "*": "operation",
+        "reaction": "persist"
+    },
+    {
+        "#": "require",
+        "*": "operation",
+        "reaction": "require"
+    },
+    {
+        "#": "give",
+        "*": "operation",
+        "reaction": "give"
+    },
+    {
+        "#": "compute",
+        "*": "operation",
+        "reaction": "compute"
+    },
+    {
+        "#": "halt",
+        "*": "operation",
+        "reaction": "halt"
+    },
+    {
+        "#": "be active",
+        "*": "operation",
+        "reaction": "be active"
+    },
+    {
+        "#": "rescind",
+        "*": "operation",
+        "reaction": "rescind"
+    },
+    {
+        "#": "notify",
+        "*": "operation",
+        "reaction": "notify"
+    },
+    {
+        "#": "notify to continue",
+        "*": "operation",
+        "reaction": "continue"
+    },
+    {
+        "#": "notify to takeoff",
+        "*": "operation",
+        "reaction": "takeoff"
+    },
+    {
+        "#": "notify to hover",
+        "*": "operation",
+        "reaction": "hover"
+    },
+    {
+        "#": "manage",
+        "*": "operation",
+        "reaction": "manage"
+    },
+    {
+        "#": "schedule",
+        "*": "operation",
+        "reaction": "schedule"
+    },
+    {
+        "#": "contain",
+        "*": "operation",
+        "reaction": "contain"
+    },
+    {
+        "#": "abort",
+        "*": "operation",
+        "reaction": "abort"
+    },
+    {
+        "#": "document",
+        "*": "operation",
+        "reaction": "document"
+    },
+    {
+        "#": "overlap",
+        "*": "operation",
+        "reaction": "overlap"
+    },
+    {
+        "#": "support",
+        "*": "operation",
+        "reaction": "support"
+    },
+    {
+        "#": "deactivate",
+        "*": "operation",
+        "reaction": "deactivate"
+    },
+    {
+        "#": "reject",
+        "*": "operation",
+        "reaction": "reject"
+    },
+    {
+        "#": "store",
+        "*": "operation",
+        "reaction": "store"
+    },
+    {
+        "#": "approximate",
+        "*": "operation",
+        "reaction": "approximate"
+    },
+    {
+        "#": "move",
+        "*": "operation",
+        "reaction": "move"
+    },
+    {
+        "#": "update",
+        "*": "operation",
+        "reaction": "update"
+    },
+    {
+        "#": "log",
+        "*": "operation",
+        "reaction": "log"
+    },
+    {
+        "#": "enable",
+        "*": "operation",
+        "reaction": "enable"
+    },
+    {
+        "#": "accept",
+        "*": "operation",
+        "reaction": "accept"
+    },
+    {
+        "#": "configure",
+        "*": "operation",
+        "reaction": "configure"
+    },
+    {
+        "#": "be loading",
+        "*": "operation",
+        "reaction": "load"
+    },
+    {
+        "#": "position",
+        "*": "operation",
+        "reaction": "position"
+    },
+    {
+        "#": "select",
+        "*": "operation",
+        "reaction": "select"
+    },
+    {
+        "#": "remove",
+        "*": "operation",
+        "reaction": "remove"
+    },
+    {
+        "#": "not start",
+        "*": "operation",
+        "reaction": "start",
+        "isNot": true
+    },
+    {
+        "#": "may reorder",
+        "*": "operation",
+        "reaction": "reorder",
+        "isAble": true
+    },
+    {
+        "#": "may remove",
+        "*": "operation",
+        "reaction": "remove",
+        "isAble": true
+    },
+    {
+        "#": "distinguish",
+        "*": "operation",
+        "reaction": "distinguish"
+    },
+    {
+        "#": "include",
+        "*": "operation",
+        "reaction": "include"
+    },
+    {
+        "#": "allow to create and modify",
+        "*": "operation",
+        "reaction": "create and modify"
+    },
+    {
+        "#": "allow to delete",
+        "*": "operation",
+        "reaction": "delete"
+    },
+    {
+        "#": "allow to apply",
+        "*": "operation",
+        "reaction": "apply"
+    },
+    {
+        "#": "allow to perform",
+        "*": "operation",
+        "reaction": "perform"
+    },
+    {
+        "#": "allow to follow",
+        "*": "operation",
+        "reaction": "follow"
+    },
+    {
+        "#": "occur",
+        "*": "operation",
+        "reaction": "occur"
+    },
+    {
+        "#": "retrieve",
+        "*": "operation",
+        "reaction": "retrieve"
+    },
+    {
+        "#": "distribute",
+        "*": "operation",
+        "reaction": "distribute"
+    },
+    {
+        "#": "receive",
+        "*": "operation",
+        "reaction": "receive"
+    },
+    {
+        "#": "be able to receive",
+        "*": "operation",
+        "reaction": "receive",
+        "isAble": true
+    },
+    {
+        "#": "handle",
+        "*": "operation",
+        "reaction": "handle"
+    },
+    {
+        "#": "follow",
+        "*": "operation",
+        "reaction": "follow"
+    },
+    {
+        "#": "be lost",
+        "*": "operation",
+        "reaction": "be lost"
+    },
+    {
+        "#": "report",
+        "*": "operation",
+        "reaction": "report"
+    },
+    {
+        "#": "transmit",
+        "*": "operation",
+        "reaction": "transmit"
+    }
+]

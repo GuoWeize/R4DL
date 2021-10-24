@@ -1,5 +1,16 @@
 function in_out_include
-(functional, functional / functional, condition / condition, functional / condition, condition) -> boolean {
+(functional, functional) -> boolean {
+    or (
+        and (
+            {$1$.input include $2$.input}, {$1$.output include $2$.output}
+        ),
+        and (
+            {$2$.input include $1$.input}, {$2$.output include $1$.output}
+        )
+    )
+}
+function in_out_include
+(condition, condition) -> boolean {
     or (
         and (
             {$1$.input include $2$.input}, {$1$.output include $2$.output}
@@ -13,7 +24,7 @@ function in_out_include
 function operation_contradict
 (operation, operation) -> boolean {
     and (
-        {$1$.reaction == $2$.reaction},
+        {$1$.reaction synonym $2$.reaction},
         {! $1$.isAble},
         {! $2$.isAble},
         {$1$.isNot != $2$.isNot}
@@ -21,7 +32,15 @@ function operation_contradict
 }
 
 function base_contradict
-(functional, functional / functional, condition / condition, functional / condition, condition) -> boolean {
+(functional, functional) -> boolean {
+    and (
+        {$1$.agent == $2$.agent},
+        operation_contradict($1$.operation, $2$.operation),
+        in_out_include($1$, $2$)
+    )
+}
+function base_contradict
+(condition, condition) -> boolean {
     and (
         {$1$.agent == $2$.agent},
         operation_contradict($1$.operation, $2$.operation),
@@ -34,13 +53,23 @@ function operation_include
     or (
         {$1$ == $2$},
         and (
-            {$1$.reaction == $2$.reaction}, $2$.isAble, {! $1$.isAble}
+            {$1$.reaction synonym $2$.reaction}, $2$.isAble, {! $1$.isAble}
         )
     )
 }
 
 function base_include
-(functional, functional / functional, condition / condition, functional / condition, condition) -> boolean {
+(functional, functional) -> boolean {
+    and (
+        {$1$.agent == $2$.agent},
+        operation_include($1$.operation, $2$.operation),
+        {$1$.input include $2$.input},
+        {$1$.output include $2$.output},
+        {$1$.restriction include $2$.restriction}
+    )
+}
+function base_include
+(functional, condition) -> boolean {
     and (
         {$1$.agent == $2$.agent},
         operation_include($1$.operation, $2$.operation),
@@ -60,9 +89,11 @@ function operation_event_condition
 function entity_include
 (entity, entity) -> boolean {
     or (
-        {$1$ == $2$.entirety},
+        {$1$ == $2$.owner},
+        {$2$ == $1$.property},
+        {$2$ == $1$.content},
         and (
-            {$1$.base == $2$.base}, {$2$.modifier include $1$.modifier}
+            {$1$.base synonym $2$.base}, {$2$.modifier include $1$.modifier}
         )
     )
 }
