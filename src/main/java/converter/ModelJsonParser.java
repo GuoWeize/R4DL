@@ -1,4 +1,4 @@
-package codeGenerator;
+package converter;
 
 import dynamics.TypeManager;
 import exceptions.TokenInvalidException;

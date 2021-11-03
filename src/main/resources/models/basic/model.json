@@ -2,16 +2,15 @@
     {
         "?": false,
         "#": "operation",
-        ":": "operation type for FR's operation",
-        "reaction": "string",
-        "isAble": "boolean",
-        "isNot": "boolean"
+        "reaction": {"string": ""},
+        "isAble": {"boolean": false},
+        "isNot": {"boolean": false}
     },
     {
         "?": false,
         "#": "entity",
         "base": "string",
-        "isAll": {"boolean": true},
+        "isAll": {"boolean": false},
         "owner": "entity",
         "content": "entity",
         "property": "entity",
@@ -20,7 +19,6 @@
     {
         "?": false,
         "#": "condition",
-        ":": "condition type in FR's event",
         "agent": "entity",
         "operation": "operation",
         "input": {"()": "entity"},

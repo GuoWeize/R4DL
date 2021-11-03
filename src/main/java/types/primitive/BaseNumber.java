@@ -1,4 +1,4 @@
-package basicTypes.primitive;
+package types.primitive;
 
 import java.util.Arrays;
 

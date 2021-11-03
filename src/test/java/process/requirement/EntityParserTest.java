@@ -1,13 +1,12 @@
 package process.requirement;
 
-import api.Main;
 import dynamics.Compiler;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import reqParser.EntityParser;
+import serializator.EntityParser;
 import util.ModeEnum;
 import util.PathConsts;
 import util.TypeEnum;

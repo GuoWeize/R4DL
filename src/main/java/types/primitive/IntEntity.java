@@ -1,6 +1,6 @@
-package basicTypes.primitive;
+package types.primitive;
 
-import basicTypes.BaseEntity;
+import types.BaseEntity;
 
 import java.util.Objects;
 import java.util.stream.IntStream;

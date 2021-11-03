@@ -265,7 +265,7 @@ If a field of entity is not specified, it should be the default, see [`this`](#h
 ├── java
 │   ├── api
 │   │   └── Main.java
-│   ├── basicTypes
+│   ├── types
 │   │   ├── BaseEntity.java
 │   │   ├── primitive
 │   │   │   ├── BasePrimitiveEntity.java
@@ -278,7 +278,7 @@ If a field of entity is not specified, it should be the default, see [`this`](#h
 │   │       ├── ListEntity.java
 │   │       ├── SetEntity.java
 │   │       └── MapEntity.java
-│   ├── codeGenerator
+│   ├── converter
 │   │   ├── JavaHeaderGenerator.java
 │   │   ├── LogicParser.java
 │   │   ├── ModelJsonParser.java
@@ -300,11 +300,11 @@ If a field of entity is not specified, it should be the default, see [`this`](#h
 │   │   └── Client.java
 │   ├── judge
 │   │   └── Processor.java
-│   ├── languageParser
+│   ├── parser
 │   │   ├── BaseParser.java
 │   │   ├── ModelTextParser.java
 │   │   └── RuleTextParser.java
-│   ├── reqParser
+│   ├── serializator
 │   │   ├── EntityParser.java
 │   │   └── RequirementParser.java
 │   └── util

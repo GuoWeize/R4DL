@@ -1,5 +1,7 @@
 package exceptions;
 
+import util.Token;
+
 import java.io.IOException;
 
 /**
@@ -11,6 +13,11 @@ public final class TokenInvalidException extends IOException {
     public TokenInvalidException(String reason) {
         super("Token gotten is invalid.");
         System.out.println(reason);
+    }
+
+    public TokenInvalidException(Token.Type real, Token.Type expectation) {
+        super("Token type is not matched.");
+        System.out.printf("Token gotten is: \"%s\", but requires \"%s\".%n", real.name(), expectation.name());
     }
 
     public TokenInvalidException(String real, String expectation) {

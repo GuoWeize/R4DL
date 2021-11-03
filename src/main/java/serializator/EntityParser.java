@@ -1,14 +1,14 @@
-package reqParser;
+package serializator;
 
 import dynamics.Builder;
-import basicTypes.BaseEntity;
-import basicTypes.collection.ListEntity;
-import basicTypes.collection.MapEntity;
-import basicTypes.collection.SetEntity;
-import basicTypes.primitive.BoolEntity;
-import basicTypes.primitive.FloatEntity;
-import basicTypes.primitive.IntEntity;
-import basicTypes.primitive.StringEntity;
+import types.BaseEntity;
+import types.collection.ListEntity;
+import types.collection.MapEntity;
+import types.collection.SetEntity;
+import types.primitive.BoolEntity;
+import types.primitive.FloatEntity;
+import types.primitive.IntEntity;
+import types.primitive.StringEntity;
 import lombok.extern.slf4j.Slf4j;
 import util.FormatsConsts;
 

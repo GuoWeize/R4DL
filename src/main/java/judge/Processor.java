@@ -1,12 +1,12 @@
 package judge;
 
 import dynamics.Compiler;
-import basicTypes.BaseEntity;
-import basicTypes.collection.ListEntity;
-import basicTypes.primitive.BoolEntity;
+import types.BaseEntity;
+import types.collection.ListEntity;
+import types.primitive.BoolEntity;
 import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
-import reqParser.EntityParser;
+import serializator.EntityParser;
 import util.ThesaurusReader;
 
 import java.lang.reflect.InvocationTargetException;

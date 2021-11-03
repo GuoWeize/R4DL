@@ -57,7 +57,7 @@ public final class FormatsConsts {
     public static final String NOT_GREATER = "<=";
     public static final String ARROW = "->";
     static final Set<String> MULTIPLE_CHARS_SIGNAL = Set.of(
-            EQUAL, NOT_EQUAL, NOT_LESS, NOT_GREATER, ARROW
+        EQUAL, NOT_EQUAL, NOT_LESS, NOT_GREATER, ARROW
     );
 
     /* Json file formats: fields' names */

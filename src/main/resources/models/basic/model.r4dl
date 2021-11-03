@@ -1,12 +1,12 @@
 type operation {
     reaction string;
-    isAble boolean;
-    isNot boolean;
+    isAble boolean = false;
+    isNot boolean = false;
 }
 
 type entity {
     base string;
-    isAll boolean;
+    isAll boolean = false;
     owner entity;
     content entity;
     property entity;

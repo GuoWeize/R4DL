@@ -1,6 +1,6 @@
-package basicTypes;
+package types;
 
-import basicTypes.primitive.BoolEntity;
+import types.primitive.BoolEntity;
 
 /**
  * @author Guo Weize

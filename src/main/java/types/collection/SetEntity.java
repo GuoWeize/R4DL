@@ -1,8 +1,8 @@
-package basicTypes.collection;
+package types.collection;
 
-import basicTypes.BaseEntity;
-import basicTypes.primitive.BoolEntity;
-import basicTypes.primitive.IntEntity;
+import types.BaseEntity;
+import types.primitive.BoolEntity;
+import types.primitive.IntEntity;
 import exceptions.TypeInvalidException;
 
 import java.util.HashSet;

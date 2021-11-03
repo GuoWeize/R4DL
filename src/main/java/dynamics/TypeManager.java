@@ -1,6 +1,6 @@
 package dynamics;
 
-import basicTypes.BaseEntity;
+import types.BaseEntity;
 import exceptions.TypeInvalidException;
 
 import java.util.Map;

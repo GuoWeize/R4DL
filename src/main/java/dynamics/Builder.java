@@ -1,6 +1,6 @@
 package dynamics;
 
-import basicTypes.BaseEntity;
+import types.BaseEntity;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Method;

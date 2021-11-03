@@ -1,6 +1,6 @@
-package basicTypes.primitive;
+package types.primitive;
 
-import basicTypes.BaseEntity;
+import types.BaseEntity;
 import util.ThesaurusReader;
 
 import java.util.Objects;

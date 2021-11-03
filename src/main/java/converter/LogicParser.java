@@ -1,4 +1,4 @@
-package codeGenerator;
+package converter;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import util.OperatorConsts;

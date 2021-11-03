@@ -1,4 +1,4 @@
-package codeGenerator;
+package converter;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

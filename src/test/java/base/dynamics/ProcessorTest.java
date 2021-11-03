@@ -7,7 +7,7 @@ import dynamics.Compiler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import judge.Processor;
-import reqParser.EntityParser;
+import serializator.EntityParser;
 import util.ModeEnum;
 import util.PathConsts;
 import util.TypeEnum;

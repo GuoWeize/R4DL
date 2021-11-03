@@ -1,4 +1,4 @@
-package codeGenerator;
+package converter;
 
 import dynamics.TypeManager;
 import lombok.extern.slf4j.Slf4j;

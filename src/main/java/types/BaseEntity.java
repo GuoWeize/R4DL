@@ -1,6 +1,6 @@
-package basicTypes;
+package types;
 
-import basicTypes.primitive.BoolEntity;
+import types.primitive.BoolEntity;
 import exceptions.TypeInvalidException;
 
 import java.util.Objects;

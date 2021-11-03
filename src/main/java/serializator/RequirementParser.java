@@ -1,4 +1,4 @@
-package reqParser;
+package serializator;
 
 import util.ModeEnum;
 import util.PathConsts;
