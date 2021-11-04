@@ -36,7 +36,7 @@ public final class TextReader {
         'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'
     ).map(character -> (int)character ).collect(Collectors.toCollection(HashSet::new));
     private static final Set<Integer> SYMBOL_CHAR = Stream.of(
-        '`', '!', '"', '#', '%', '&', '\'', '(', ')', '*', '+', ',', '-', '/', ':', ';',
+        '.', '!', '"', '#', '$', '%', '&', '\'', '(', ')', '*', '+', ',', '-', '/', ':', ';',
         '<', '=', '>', '?', '@', '[', '\\', ']', '^', '`', '{', '|', '}', '~'
     ).map(character -> (int)character ).collect(Collectors.toCollection(HashSet::new));
 
@@ -81,9 +81,6 @@ public final class TextReader {
      * @return the next token read
      */
     public static Token nextToken() {
-        if (charRead == END_OF_FILE) {
-            return Token.end;
-        }
         if (rollback != null) {
             Token temp = rollback;
             rollback = null;
@@ -91,6 +88,9 @@ public final class TextReader {
         }
         while (true) {
             readChar();
+            if (charRead == END_OF_FILE) {
+                return Token.end;
+            }
             if (NUMBER_CHAR.contains(charRead)) {
                 return readNumber();
             }
@@ -108,7 +108,7 @@ public final class TextReader {
 
     private static Token readNumber() {
         StringBuilder sb = new StringBuilder();
-        sb.append(charRead);
+        sb.append((char)charRead);
         boolean hasPoint = false;
         while (true) {
             readChar();
@@ -117,11 +117,11 @@ public final class TextReader {
                     rollBackChar();
                     return Token.number(sb.toString());
                 }
-                sb.append(charRead);
+                sb.append((char)charRead);
                 hasPoint = true;
             }
             else if (NUMBER_CHAR.contains(charRead)) {
-                sb.append(charRead);
+                sb.append((char)charRead);
             }
             else {
                 rollBackChar();
@@ -133,11 +133,11 @@ public final class TextReader {
 
     private static Token readWord() {
         StringBuilder sb = new StringBuilder();
-        sb.append(charRead);
+        sb.append((char)charRead);
         while (true) {
             readChar();
             if (NUMBER_CHAR.contains(charRead) || LETTER_CHAR.contains(charRead)) {
-                sb.append(charRead);
+                sb.append((char)charRead);
             }
             else {
                 rollBackChar();
@@ -155,7 +155,7 @@ public final class TextReader {
                 return Token.string(sb.toString());
             }
             else {
-                sb.append(charRead);
+                sb.append((char)charRead);
             }
         }
     }
@@ -217,6 +217,15 @@ public final class TextReader {
             throw new TokenInvalidException(next.type, expectation);
         }
         return next;
+    }
+
+    public static void main(String[] args) {
+        TextReader.readFile("/Users/gwz/Desktop/Code/R4DL/src/main/resources/models/basic/model.r4dl");
+        Token forward = nextToken();
+        while (! forward.is(Token.end)) {
+            System.out.print(forward.value + " ");
+            forward = nextToken();
+        }
     }
 
 }

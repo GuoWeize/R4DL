@@ -2,169 +2,169 @@ function in_out_include
 (functional, functional) boolean :
 or (
     and (
-        {($1$.input) include ($2$.input)}, {($1$.output) include ($2$.output)}
+        include (($1$.input), ($2$.input)),
+        include (($1$.output), ($2$.output))
     ),
     and (
-        {($2$.input) include ($1$.input)}, {($2$.output) include ($1$.output)}
+        include (($2$.input), ($1$.input)),
+        include (($2$.output), ($1$.output))
     )
 )
 function in_out_include
 (condition, condition) boolean :
 or (
     and (
-        {($1$.input) include ($2$.input)}, {($1$.output) include ($2$.output)}
+        include (($1$.input), ($2$.input)),
+        include (($1$.output), ($2$.output))
     ),
     and (
-        {($2$.input) include ($1$.input)}, {($2$.output) include ($1$.output)}
+        include (($2$.input), ($1$.input)),
+        include (($2$.output), ($1$.output))
     )
 )
 
 function operation_contradict
 (operation, operation) boolean :
 and (
-    {($1$.reaction) synonym ($2$.reaction)},
-    {! ($1$.isAble)},
-    {! ($2$.isAble)},
-    {($1$.isNot) != ($2$.isNot)}
+    synonym (($1$.reaction), ($2$.reaction)),
+    ! (($1$.isAble)),
+    ! (($2$.isAble)),
+    != (($1$.isNot), ($2$.isNot))
 )
-
 
 function base_contradict
 (functional, functional) boolean :
 and (
-    {($1$.agent) == ($2$.agent)},
-    operation_contradict(($1$.operation), ($2$.operation)),
-    in_out_include($1$, $2$)
+    == (($1$.agent), ($2$.agent)),
+    operation_contradict (($1$.operation), ($2$.operation)),
+    in_out_include ($1$, $2$)
 )
 function base_contradict
 (condition, condition) boolean :
 and (
-    {($1$.agent) == ($2$.agent)},
-    operation_contradict(($1$.operation), ($2$.operation)),
-    in_out_include($1$, $2$)
+    == (($1$.agent), ($2$.agent)),
+    operation_contradict (($1$.operation), ($2$.operation)),
+    in_out_include ($1$, $2$)
 )
 
 function operation_include
 (operation, operation) boolean :
 or (
-    {$1$ == $2$},
+    == ($1$, $2$),
     and (
-        {($1$.reaction) synonym ($2$.reaction)},
+        synonym (($1$.reaction), ($2$.reaction)),
         ($2$.isAble),
-        {! ($1$.isAble)}
+        ! (($1$.isAble))
     )
 )
 
 function base_include
 (functional, functional) boolean :
 and (
-    {($1$.agent) == ($2$.agent)},
-    operation_include(($1$.operation), ($2$.operation)),
-    {($1$.input) include ($2$.input)},
-    {($1$.output) include ($2$.output)},
-    {($1$.restriction) include ($2$.restriction)}
+    == (($1$.agent), ($2$.agent)),
+    operation_include (($1$.operation), ($2$.operation)),
+    include (($1$.input), ($2$.input)),
+    include (($1$.output), ($2$.output)),
+    include (($1$.restriction), ($2$.restriction))
 )
 function base_include
 (functional, condition) boolean :
 and (
-    {($1$.agent) == ($2$.agent)},
-    operation_include(($1$.operation), ($2$.operation)),
-    {($1$.input) include ($2$.input)},
-    {($1$.output) include ($2$.output)},
-    {($1$.restriction) include ($2$.restriction)}
+    == (($1$.agent), ($2$.agent)),
+    operation_include (($1$.operation), ($2$.operation)),
+    include (($1$.input), ($2$.input)),
+    include (($1$.output), ($2$.output)),
+    include (($1$.restriction), ($2$.restriction))
 )
 
 function operation_event_condition
 (functional, functional) boolean :
-for all condition in ($2$.event) (
-    base_include($1$, condition)
-)
+for all condition in ($2$.event)
+    base_include ($1$, condition)
 
 function entity_include
 (entity, entity) boolean :
 or (
-    {$1$ == ($2$.owner)},
-    {$2$ == ($1$.property)},
-    {$2$ == ($1$.content)},
+    == ($1$, ($2$.owner)),
+    == ($2$, ($1$.property)),
+    == ($2$, ($1$.content)),
     and (
-        {($1$.base) synonym ($2$.base)},
-        {($2$.modifier) include ($1$.modifier)}
+        synonym (($1$.base), ($2$.base)),
+        include (($2$.modifier), ($1$.modifier))
     )
 )
 
 function input_output_condition
 (functional, functional) boolean :
-for any inEntity in ($2$.input) (
-    for any outEntity in ($1$.output) (
-        entity_include(outEntity, inEntity)
-    )
-)
+for any inEntity in ($2$.input)
+    for any outEntity in ($1$.output)
+        entity_include (outEntity, inEntity)
 
 rule operation_inconsistency
 (functional, functional) boolean :
 and (
-    {($1$.event) == ($2$.event)},
-    base_contradict($1$, $2$)
+    == (($1$.event), ($2$.event)),
+    base_contradict ($1$, $2$)
 )
 
 rule restriction_inconsistency
 (functional, functional) boolean :
 and (
-    {($1$.event) == ($2$.event)},
-    {($1$.agent) == ($2$.agent)},
-    {($1$.operation) == ($2$.operation)},
-    in_out_include($1$, $2$),
-    {! {($1$.restriction) == ($2$.restriction)}}
+    == (($1$.event), ($2$.event)),
+    == (($1$.agent), ($2$.agent)),
+    == (($1$.operation), ($2$.operation)),
+    in_out_include ($1$, $2$),
+    != (($1$.restriction), ($2$.restriction))
 )
 
 rule event_inconsistency
 (functional) boolean :
-for all event1 in ($1$.event) (
-    for any event2 in ($1$.event) (
-        base_contradict(event1, event2)
-    )
-)
+for all event1 in ($1$.event)
+    for any event2 in ($1$.event)
+        base_contradict (event1, event2)
 
 rule operation_inclusion
 (functional, functional) boolean :
 and (
-    {($1$.event) == ($2$.event)},
-    base_include($1$, $2$)
+    == (($1$.event), ($2$.event)),
+    base_include ($1$, $2$)
 )
 
 rule event_inclusion
 (functional, functional) boolean :
 and (
-    {($1$.event) include ($2$.event)},
-    {($1$.agent) == ($2$.agent)},
-    {($1$.operation) == ($2$.operation)},
-    {($1$.input) include ($2$.input)},
-    {($1$.output) include ($2$.output)},
-    {($1$.restriction) == ($2$.restriction)}
+    include (($1$.event), ($2$.event)),
+    == (($1$.agent), ($2$.agent)),
+    == (($1$.operation), ($2$.operation)),
+    include (($1$.input), ($2$.input)),
+    include (($1$.output), ($2$.output)),
+    == (($1$.restriction), ($2$.restriction))
 )
 
 rule operation_event_interlock
 (list<functional>) boolean :
 and (
-    {{size_of $1$} > 1},
-    operation_event_condition(
-        ($1$ [{{size_of $1$} - 1}] ),
+    > (size_of($1$), 1),
+    operation_event_condition (
+        ($1$ [-(size_of($1$), 1)] ),
         ($1$[0])
     ),
-    for all index from 0 to {{size_of $1$} - 2} (
-        operation_event_condition(($1$[index]), ($1$[{index + 1}]) )
-    )
+    for all index from 0 to -(size_of($1$), 2)
+        operation_event_condition (
+            ($1$[index]), ($1$[+(index, 1)])
+        )
 )
 
 rule input_output_interlock
 (list<functional>) boolean :
 and (
-    {{size_of $1$} > 1},
-    input_output_condition(
-        ($1$[{{size_of $1$} - 1}]),
+    > (size_of($1$), 1),
+    input_output_condition (
+        ($1$ [-(size_of($1$), 1)] ),
         ($1$[0])
     ),
-    for all index from 0 to {{size_of $1$} - 2} (
-        input_output_condition(($1$[index]), ($1$[{index + 1}]))
-    )
+    for all index from 0 to -(size_of($1$), 2)
+        input_output_condition (
+            ($1$[index]), ($1$[+(index, 1)])
+        )
 )

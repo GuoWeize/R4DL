@@ -44,13 +44,13 @@ public final class Token {
     public static final Token less = new Token(Type.less, "<");
     public static final Token lessEqual = new Token(Type.lessEqual, "<=");
     public static final Token greater = new Token(Type.greater, ">");
-    public static final Token greaterEqual = new Token(Type.greater, ">=");
-    public static final Token openParen = new Token(Type.greater, "(");
-    public static final Token closeParen = new Token(Type.greater, ")");
-    public static final Token openBracket = new Token(Type.greater, "[");
-    public static final Token closeBracket = new Token(Type.greater, "]");
-    public static final Token openBrace = new Token(Type.greater, "{");
-    public static final Token closeBrace = new Token(Type.greater, "}");
+    public static final Token greaterEqual = new Token(Type.greaterEqual, ">=");
+    public static final Token openParen = new Token(Type.openParen, "(");
+    public static final Token closeParen = new Token(Type.closeParen, ")");
+    public static final Token openBracket = new Token(Type.openBracket, "[");
+    public static final Token closeBracket = new Token(Type.closeBracket, "]");
+    public static final Token openBrace = new Token(Type.openBrace, "{");
+    public static final Token closeBrace = new Token(Type.closeBrace, "}");
 
     private static final Map<Character, Token> mapping = Map.ofEntries(
         Map.entry(',', Token.comma),
@@ -81,7 +81,7 @@ public final class Token {
 
     @Override
     public String toString() {
-        return this.type + this.value;
+        return this.value;
     }
 
      static Token word(String value) {

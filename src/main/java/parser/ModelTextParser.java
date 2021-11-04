@@ -60,10 +60,13 @@ public final class ModelTextParser extends BaseParser {
         while (true) {
             fields.append(BaseParser.DELIMITER).append(fieldDefinition());
             TextReader.nextTokenWithTest(Token.semicolon);
-            Token temp = TextReader.nextToken();
-            if (temp.is(Token.closeBrace)) {
-                TextReader.rollback(temp);
+            Token forward = TextReader.nextToken();
+            if (forward.is(Token.closeBrace)) {
+                TextReader.rollback(forward);
                 break;
+            }
+            else {
+                TextReader.rollback(forward);
             }
         }
         return fields;
@@ -77,7 +80,7 @@ public final class ModelTextParser extends BaseParser {
     private static StringBuilder fieldDefinition() throws TokenInvalidException {
         StringBuilder field = new StringBuilder();
         Token name = TextReader.nextTokenWithTest(Token.Type.identifier);
-        field.append("\"").append(name).append("\"").append(":");
+        field.append("\"").append(name.value).append("\"").append(":");
 
         Token type = TextReader.nextToken();
 
@@ -218,6 +221,11 @@ public final class ModelTextParser extends BaseParser {
             throw new TokenInvalidException(type.type, Token.Type.identifier);
         }
         return sb;
+    }
+
+    public static void main(String[] args) throws IOException {
+        TextReader.readFile("/Users/gwz/Desktop/Code/R4DL/src/main/resources/models/basic/model.r4dl");
+        System.out.println(parse());
     }
 
 }

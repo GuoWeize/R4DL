@@ -41,18 +41,4 @@ public abstract class BaseParser {
         log.info("Finish parse rule definition file: " + filePath);
     }
 
-    protected static String typeConvert(String type) {
-        return KEYWORDS.contains(type) ? type: "$" + type;
-    }
-
-    protected static String identifierConvert(String identifier) {
-        identifier = identifier.replaceAll("\\$", "_RDS_CHAR_DOLLAR_");
-        identifier = identifier.replaceAll("\\.", "._RDS_CHAR_DOLLAR__RDS_CHAR_DOLLAR_");
-        identifier = identifier.replaceAll("_RDS_CHAR_DOLLAR_", "\\$");
-        if (! identifier.startsWith("$")) {
-            return "$$" + identifier;
-        }
-        return identifier;
-    }
-
 }

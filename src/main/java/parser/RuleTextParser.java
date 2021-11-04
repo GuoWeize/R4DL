@@ -115,6 +115,9 @@ public final class RuleTextParser extends BaseParser {
             TextReader.rollback(forward);
             sb.append(braceObject());
         }
+        else if (forward.isKeyword("for")) { // 量词运算
+            sb.append(quantification());
+        }
         else { // 变量 ? 运算调用 ?
             TextReader.rollback(forward);
             sb.append(identifierOrFunction());
@@ -210,6 +213,7 @@ public final class RuleTextParser extends BaseParser {
         if (forward.is(Token.closeParen)) {
             return sb.append("]}");
         }
+        TextReader.rollback(forward);
         while (true) {
             sb.append(object());
             forward = TextReader.nextToken();
@@ -224,6 +228,53 @@ public final class RuleTextParser extends BaseParser {
             }
         }
         return sb.append("]}");
+    }
+
+    /**
+     * 量词运算 ::= "for" 量词 变量 量词范围 "(" 对象 ")"
+     * 量词 ::= "any" | "all"
+     */
+    private static StringBuilder quantification() throws TokenInvalidException {
+        StringBuilder sb = new StringBuilder();
+        sb.append("{");
+        Token forward = TextReader.nextToken();
+        if (!forward.isKeyword("any") && !forward.isKeyword("all")) {
+            throw new TokenInvalidException(forward.value, List.of("any", "all"));
+        }
+        sb.append("\"").append(forward.value).append("\":[");
+        forward = TextReader.nextTokenWithTest(Token.Type.identifier);
+        sb.append("\"").append(forward.value).append("\",");
+        sb.append(range());
+        sb.append(object());
+        return sb.append("]}");
+    }
+
+    /**
+     * 量词范围 ::= "in" 对象 | "from" 对象 "to" 对象
+     */
+    private static StringBuilder range() throws TokenInvalidException {
+        StringBuilder sb = new StringBuilder();
+        Token forward = TextReader.nextToken();
+        if (forward.isKeyword("in")) {
+            sb.append(object()).append(",");
+        }
+        else if (forward.isKeyword("from")) {
+            sb.append(object()).append(",");
+            forward = TextReader.nextToken();
+            if (!forward.isKeyword("to")) {
+                throw new TokenInvalidException(forward.value, "to");
+            }
+            sb.append(object()).append(",");
+        }
+        else {
+            throw new TokenInvalidException(forward.value, List.of("in", "from"));
+        }
+        return sb;
+    }
+
+    public static void main(String[] args) throws IOException {
+        TextReader.readFile("/Users/gwz/Desktop/Code/R4DL/src/main/resources/rules/basic/rule.r4dl");
+        System.out.println(parse());
     }
 
 }
