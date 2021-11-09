@@ -5,8 +5,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import converter.ModelJsonParser;
-import converter.RuleParser;
+import generator.JavaClassGenerator;
+import generator.JavaRuleGenerator;
 import judge.Processor;
 import parser.BaseParser;
 import serializator.EntityParser;
@@ -27,8 +27,8 @@ import java.util.Objects;
 public class Main {
 
     private static final Map<ModeEnum, JsonDeserializer<?>> PARSERS = Map.ofEntries(
-        Map.entry(ModeEnum.MODEL, new ModelJsonParser()),
-        Map.entry(ModeEnum.RULE, new RuleParser()),
+        Map.entry(ModeEnum.MODEL, new JavaClassGenerator()),
+        Map.entry(ModeEnum.RULE, new JavaRuleGenerator()),
         Map.entry(ModeEnum.REQUIREMENT, new EntityParser())
     );
 

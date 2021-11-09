@@ -20,7 +20,7 @@ public final class OperatorConsts {
         Properties props = new Properties();
         try {
             props.load(new FileInputStream(
-                System.getProperty("user.dir") + "/src/main/resources/operators.properties")
+                System.getProperty("user.dir") + "/src/main/resources/properties/operators.properties")
             );
             Enumeration<?> en = props.propertyNames();
             while (en.hasMoreElements()) {

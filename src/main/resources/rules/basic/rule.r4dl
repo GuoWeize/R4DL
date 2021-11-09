@@ -90,7 +90,7 @@ or (
     == ($2$, ($1$.content)),
     and (
         synonym (($1$.base), ($2$.base)),
-        include (($2$.modifier), ($1$.modifier))
+        include (($2$.constraints), ($1$.constraints))
     )
 )
 

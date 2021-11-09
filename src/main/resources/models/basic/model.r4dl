@@ -50,8 +50,3 @@ requirement interface {
     caller functional;
     callee functional;
 }
-
-requirement test {
-    f_1 float;
-    f_2 set<list<map<integer, string>>>;
-}

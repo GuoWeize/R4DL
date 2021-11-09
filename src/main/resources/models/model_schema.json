@@ -67,8 +67,15 @@
             "additionalProperties": { "$ref": "#/definitions/any-type" }
         }
     },
-    "type": "array",
-    "items": {
-        "$ref": "#/definitions/user-defined"
+    "type": "object",
+    "maxProperties": 1,
+    "minProperties": 1,
+    "properties": {
+        "": {
+            "type": "array",
+            "items": {
+                "$ref": "#/definitions/user-defined"
+            }
+        }
     }
 }

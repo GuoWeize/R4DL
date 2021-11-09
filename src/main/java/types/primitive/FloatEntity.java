@@ -27,6 +27,10 @@ public final class FloatEntity extends BaseNumber {
         return value;
     }
 
+    public FloatEntity negative() {
+        return new FloatEntity(- this.value);
+    }
+
     @Override
     protected double getNum() {
         return value;

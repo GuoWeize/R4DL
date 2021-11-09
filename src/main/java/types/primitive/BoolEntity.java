@@ -27,8 +27,8 @@ public final class BoolEntity extends BasePrimitive {
         return value ? TRUE: FALSE;
     }
 
-    public static BoolEntity not(BoolEntity bool) {
-        return bool.value ? FALSE: TRUE;
+    public BoolEntity not() {
+        return this.value ? FALSE: TRUE;
     }
 
     public static BoolEntity and(BoolEntity... arguments) {

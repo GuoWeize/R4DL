@@ -34,6 +34,10 @@ public final class IntEntity extends BaseNumber {
         return value;
     }
 
+    public IntEntity negative() {
+        return new IntEntity(- this.value);
+    }
+
     public static Stream<IntEntity> range(IntEntity startInclusive, IntEntity endExclusive) {
         return IntStream.range((startInclusive).value, (endExclusive).value).mapToObj(IntEntity::new);
     }

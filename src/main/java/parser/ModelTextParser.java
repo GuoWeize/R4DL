@@ -20,9 +20,9 @@ public final class ModelTextParser extends BaseParser {
      * 模型定义 ::= { "type" 类型定义体 } { "requirement" 类型定义体 } "requirement" 类型定义体
      * 类型定义体	::= 标识符 "{" 所有字段定义 "}"
      */
-    static String parse() throws IOException {
+    static String parse(String fileName) throws IOException {
         StringBuilder sb = new StringBuilder();
-        sb.append("[");
+        sb.append("{\"").append(fileName).append("\":[");
         List<StringBuilder> definitions = new ArrayList<>();
         while (true) {
             Token type = TextReader.nextToken();
@@ -48,7 +48,7 @@ public final class ModelTextParser extends BaseParser {
             definitions.add(definition);
         }
         sb.append(String.join(",", definitions));
-        sb.append("]");
+        sb.append("]}");
         return sb.toString();
     }
 
@@ -225,7 +225,7 @@ public final class ModelTextParser extends BaseParser {
 
     public static void main(String[] args) throws IOException {
         TextReader.readFile("/Users/gwz/Desktop/Code/R4DL/src/main/resources/models/basic/model.r4dl");
-        System.out.println(parse());
+        System.out.println(parse("basic"));
     }
 
 }

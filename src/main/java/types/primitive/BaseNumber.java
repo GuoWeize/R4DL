@@ -15,18 +15,6 @@ public abstract class BaseNumber extends BasePrimitive {
     protected abstract double getNum();
 
     /**
-     * Calculate the negative number of given number.
-     * @param num to calculate
-     * @return the negative number.
-     */
-    public static IntEntity negative(IntEntity num) {
-        return IntEntity.valueOf(- num.getValue());
-    }
-    public static FloatEntity negative(FloatEntity num) {
-        return FloatEntity.valueOf(- num.getValue());
-    }
-
-    /**
      * Summation of a string of numbers.
      * @param numbers to be summed
      * @return the result.

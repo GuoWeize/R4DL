@@ -20,9 +20,9 @@ public final class RuleTextParser extends BaseParser {
      * 规则定义 ::= { 自定义运算定义 } { 关系识别规则定义 } 关系识别规则定义
      * 自定义运算定义 ::= "function" 运算命名 "(" 参数列表 ")" ":" 类型标识 对象
      */
-    static String parse() throws IOException {
+    static String parse(String fileName) throws IOException {
         StringBuilder sb = new StringBuilder();
-        sb.append("[");
+        sb.append("{\"").append(fileName).append("\":[");
         List<StringBuilder> definitions = new ArrayList<>();
         while (true) {
             Token type = TextReader.nextToken();
@@ -54,7 +54,7 @@ public final class RuleTextParser extends BaseParser {
             definitions.add(definition);
         }
         sb.append(String.join(",", definitions));
-        sb.append("]");
+        sb.append("]}");
         return sb.toString();
     }
 
@@ -243,7 +243,7 @@ public final class RuleTextParser extends BaseParser {
         }
         sb.append("\"").append(forward.value).append("\":[");
         forward = TextReader.nextTokenWithTest(Token.Type.identifier);
-        sb.append("\"").append(forward.value).append("\",");
+        sb.append("{\"%\":\"").append(forward.value).append("\"},");
         sb.append(range());
         sb.append(object());
         return sb.append("]}");
@@ -274,7 +274,7 @@ public final class RuleTextParser extends BaseParser {
 
     public static void main(String[] args) throws IOException {
         TextReader.readFile("/Users/gwz/Desktop/Code/R4DL/src/main/resources/rules/basic/rule.r4dl");
-        System.out.println(parse());
+        System.out.println(parse("basic"));
     }
 
 }

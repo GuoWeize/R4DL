@@ -30,7 +30,12 @@ public abstract class BaseEntity {
      * Check if it is null.
      * @return BoolEntity
      */
-    public abstract BoolEntity isNull();
+    public static BoolEntity isNull(BaseEntity entity) {
+        if (entity == null) {
+            return BoolEntity.TRUE;
+        }
+        return BoolEntity.FALSE;
+    }
 
     /**
      * An Interface of no-static method of {@code equal}.
@@ -38,17 +43,6 @@ public abstract class BaseEntity {
      * @return A "true" BoolEntity if two entities are equal, "false" BoolEntity otherwise
      */
     public abstract BoolEntity equal(final BaseEntity entity);
-
-//    /**
-//     * Check whether entity1 is equal to entity2, which means all fields of two entities are equal.<br>
-//     * If there is null, return a "false" BoolEntity.
-//     * @param entity1 an entity that extends {@link BaseEntity}
-//     * @param entity2 another entity that extends {@link BaseEntity}
-//     * @return A "true" BoolEntity if two entities are equal, "false" BoolEntity otherwise
-//     */
-//    public static BoolEntity equal(final BaseEntity entity1, final BaseEntity entity2) {
-//        return entity1.equal(entity2);
-//    }
 
     /**
      * Check whether the real type matched the expectation.

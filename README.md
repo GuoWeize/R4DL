@@ -278,7 +278,7 @@ If a field of entity is not specified, it should be the default, see [`this`](#h
 │   │       ├── ListEntity.java
 │   │       ├── SetEntity.java
 │   │       └── MapEntity.java
-│   ├── converter
+│   ├── generator
 │   │   ├── JavaHeaderGenerator.java
 │   │   ├── LogicParser.java
 │   │   ├── ModelJsonParser.java

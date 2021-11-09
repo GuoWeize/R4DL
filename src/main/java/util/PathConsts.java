@@ -23,7 +23,7 @@ public final class PathConsts {
     static {
         Properties props = new Properties();
         try {
-            props.load(new FileInputStream(PROJECT_PATH + "/src/main/resources/config.properties"));
+            props.load(new FileInputStream(PROJECT_PATH + "/src/main/resources/properties/config.properties"));
             Enumeration<?> en = props.propertyNames();
             while (en.hasMoreElements()) {
                 String key = (String) en.nextElement();

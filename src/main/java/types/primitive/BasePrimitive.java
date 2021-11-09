@@ -68,9 +68,9 @@ public abstract class BasePrimitive extends BaseEntity {
         return StringEntity.valueOf(String.join("", Collections.nCopies(integer.getValue(), string.getValue())));
     }
 
-    @Override
-    public final BoolEntity isNull() {
-        return BoolEntity.FALSE;
-    }
+//    @Override
+//    public final BoolEntity isNull() {
+//        return BoolEntity.FALSE;
+//    }
 
 }

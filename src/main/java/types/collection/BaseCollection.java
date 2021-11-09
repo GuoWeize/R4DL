@@ -34,8 +34,8 @@ public abstract class BaseCollection extends BaseEntity {
      */
     public abstract IntEntity size();
 
-    @Override
-    public final BoolEntity isNull() {
-        return BoolEntity.FALSE;
-    }
+//    @Override
+//    public final BoolEntity isNull() {
+//        return BoolEntity.FALSE;
+//    }
 }

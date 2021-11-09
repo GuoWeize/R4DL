@@ -18,8 +18,6 @@ import java.nio.file.Paths;
 @Slf4j
 public abstract class BaseParser {
 
-    private static final String TRUE = "true";
-    private static final String FALSE = "false";
     protected static final String DELIMITER = ", ";
 
     public static void run() {
@@ -31,7 +29,7 @@ public abstract class BaseParser {
         String filePath = PathConsts.file(mode, TypeEnum.LANGUAGE);
         TextReader.readFile(filePath);
         try {
-            String result = (mode == ModeEnum.MODEL) ? ModelTextParser.parse(): RuleTextParser.parse();
+            String result = (mode == ModeEnum.MODEL) ? ModelTextParser.parse("basic"): RuleTextParser.parse("basic");
             String outputFilePath = PathConsts.file(mode, TypeEnum.JSON);
             Files.write(Paths.get(outputFilePath), result.getBytes(StandardCharsets.UTF_8));
         }

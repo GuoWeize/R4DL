@@ -1,4 +1,4 @@
-package converter;
+package generator;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -9,28 +9,33 @@ import java.util.Date;
  */
 public final class JavaHeaderGenerator {
 
-    private static final String BASE_ENTITY = "import basicTypes.BaseEntity;\n";
-    private static final String PRIMITIVE = "import basicTypes.primitive.*;\n";
-    private static final String COLLECTION = "import basicTypes.collection.*;\n";
+    private static final String BASE_ENTITY = "import types.BaseEntity;\n";
+    private static final String PRIMITIVE = "import types.primitive.*;\n";
+    private static final String COLLECTION = "import types.collection.*;\n";
     private static final String IMPORTS = BASE_ENTITY + PRIMITIVE + COLLECTION + "\n";
+
+    private static String packageName = "";
+
+    static void setPackageName(String name) {
+        packageName = name;
+    }
 
     /**
      * Generate Java file imports.
      */
     static String generateImports() {
-        return IMPORTS;
+        return "package " + packageName + ";\n\n" + IMPORTS;
     }
 
     /**
      * Generate Java file Javadoc.
      */
-    static String generateJavadoc(String fileName, String referredFile) {
+    static String generateJavadoc(String fileName) {
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         return String.format(
-            "/**\n * Auto-generated Java file: %s\n *\n * @author %s\n * @date %s\n */\n",
+            "/**\n * Auto-generated Java file: %s\n *\n * @author Guo Weize\n * @date %s\n */\n",
             fileName,
-            referredFile,
             formatter.format(date)
         );
     }
