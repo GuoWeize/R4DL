@@ -3,7 +3,7 @@ package generator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import dynamics.TypeManager;
+import parser.TypeManager;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
@@ -40,16 +40,13 @@ public final class JavaClassGenerator extends StdDeserializer<Object> {
     @Override
     public Object deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
         throws IOException {
-        TYPES.clear();
         JsonNode root = jsonParser.getCodec().readTree(jsonParser);
         List<String> temp = new ArrayList<>();
         root.fieldNames().forEachRemaining(temp::add);
         String name = temp.get(0);
         JsonNode nodes = root.get(name);
         JavaHeaderGenerator.setPackageName(name);
-
         nodes.forEach(this::customizedType);
-        TypeManager.initialization(TYPES);
         log.info("Finish parse model JSON file: ");
         return null;
     }
@@ -59,7 +56,7 @@ public final class JavaClassGenerator extends StdDeserializer<Object> {
         Map<String, String> fields2value = new HashMap<>(8);
         boolean isRequirement = node.get("?").asBoolean();
         String name = node.get("#").asText();
-        TYPES.add(name);
+        TypeManager.add(name, isRequirement);
         node.fields().forEachRemaining(entry -> {
             if (!Objects.equals(entry.getKey(), "?") && !Objects.equals(entry.getKey(), "#")) {
                 String fieldName = entry.getKey();
@@ -141,7 +138,8 @@ public final class JavaClassGenerator extends StdDeserializer<Object> {
             return "(" + parseType(node) + ") MapEntity.newInstance()";
         }
         else {
-            return "null";
+            String type = node.asText();
+            return "c_" + type + ".NULL";
         }
     }
 
@@ -153,6 +151,7 @@ public final class JavaClassGenerator extends StdDeserializer<Object> {
             .append(generateFileHead(className))
             .append(generateFields(fields2type, fields2value))
             .append(generateGetType(name))
+            .append(generateIsNULL())
             .append(generateEquals(className, fields2type))
             .append(generateNewInstance(className))
             .append(generateFileEnd());
@@ -172,7 +171,7 @@ public final class JavaClassGenerator extends StdDeserializer<Object> {
     }
 
     private String generateFileHead(String name) {
-        return String.format("public final class %s extends BaseEntity {\n", name);
+        return String.format("public final class %s extends BaseEntity {\n    public static %s NULL = new %s();\n\n", name, name, name);
     }
 
     private String generateFields(Map<String, String> fields2type, Map<String, String> fields2value) {
@@ -195,6 +194,10 @@ public final class JavaClassGenerator extends StdDeserializer<Object> {
         return String.format("    @Override\n    public String getType() {\n        return \"%s\";\n    }\n\n", name);
     }
 
+    private String generateIsNULL() {
+        return "    @Override\n    public BoolEntity isNull() {\n        return this.equal(NULL);\n    }\n\n";
+    }
+
     private String generateIsRequirement(boolean isRequirement) {
         return String.format("    @Override\n    public boolean isRequirement() {\n        return %b;\n    }\n\n", isRequirement);
     }
@@ -203,17 +206,22 @@ public final class JavaClassGenerator extends StdDeserializer<Object> {
         String result = fields2type.keySet().stream()
             .map(field -> String.format("%s.equal(that.%s)", "f_" + field, "f_" + field))
             .collect(Collectors.joining(",\n            "));
-        return new StringBuilder("    @Override\n")
-            .append("    public BoolEntity equal(BaseEntity entity) {\n")
-            .append("        if (! getType().equals(entity.getType())) {\n")
-            .append("            return BoolEntity.FALSE;\n")
-            .append("        }\n")
-            .append(String.format("        %s that = (%s)entity;\n", name, name))
-            .append("        return BoolEntity.and(\n")
-            .append(String.format("            %s\n", result))
-            .append("        );\n")
-            .append("    }\n")
-            .toString();
+        return "    @Override\n"
+            + "    public BoolEntity equal(BaseEntity entity) {\n"
+            + "        if (! getType().equals(entity.getType())) {\n"
+            + "            return BoolEntity.FALSE;\n"
+            + "        }\n"
+            + String.format("        %s that = (%s)entity;\n", name, name)
+            + "        if (this == NULL) {\n"
+            + "            return BoolEntity.valueOf(that == NULL);\n"
+            + "        }\n"
+            + "        if (that == NULL) {\n"
+            + "            return BoolEntity.valueOf(false);\n"
+            + "        }\n"
+            + "        return BoolEntity.and(\n"
+            + String.format("            %s\n", result)
+            + "        );\n"
+            + "    }\n\n";
     }
 
     private String generateNewInstance(String name) {

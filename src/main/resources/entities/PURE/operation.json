@@ -7,7 +7,7 @@
     {
         "#": "supervise",
         "*": "operation",
-        "reaction": ""
+        "reaction": "supervise"
     },
     {
         "#": "indicate",
@@ -443,11 +443,6 @@
         "#": "be based on",
         "*": "operation",
         "reaction": "be based on"
-    },
-    {
-        "#": "supervise",
-        "*": "operation",
-        "reaction": "supervise"
     },
     {
         "#": "have the capability of being supervised",

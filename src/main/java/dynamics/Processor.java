@@ -1,12 +1,11 @@
-package judge;
+package dynamics;
 
-import dynamics.Compiler;
 import types.BaseEntity;
 import types.collection.ListEntity;
 import types.primitive.BoolEntity;
 import com.google.common.collect.Sets;
 import lombok.extern.slf4j.Slf4j;
-import serializator.EntityParser;
+import serializator.EntityManager;
 import util.ThesaurusReader;
 
 import java.lang.reflect.InvocationTargetException;
@@ -106,7 +105,7 @@ public final class Processor {
     private static String reqs2ID(List<BaseEntity> reqs) {
         return "["
             + reqs.stream()
-            .map(req -> req.getType().substring(1) + "@" + EntityParser.getId(req))
+            .map(req -> req.getType().substring(1) + "@" + EntityManager.getId(req))
             .collect(Collectors.joining(", "))
             + "]";
     }
@@ -124,7 +123,7 @@ public final class Processor {
     }
 
     private static Set<List<BaseEntity>> getListArgs(String argType) {
-        Set<BaseEntity> requirements = EntityParser.ENTITIES.get(argType);
+        Set<BaseEntity> requirements = EntityManager.ENTITIES.get(argType);
         List<Set<BaseEntity>> reqs = new ArrayList<>();
         Set<List<BaseEntity>> result = new HashSet<>();
         for (int i = 0; i < requirements.size(); i++) {
@@ -138,7 +137,7 @@ public final class Processor {
     private static Set<List<BaseEntity>> getArgs(List<String> argsTypes) {
         List<Set<BaseEntity>> results = new ArrayList<>();
         for (String type: argsTypes) {
-            results.add(EntityParser.ENTITIES.getOrDefault(type, new HashSet<>()));
+            results.add(EntityManager.ENTITIES.getOrDefault(type, new HashSet<>()));
         }
         return distinct(Sets.cartesianProduct(results));
     }
@@ -153,7 +152,7 @@ public final class Processor {
             log.error("Can not parse reversible arguments of different types.");
             throw new IllegalArgumentException();
         }
-        List<BaseEntity> requirements = new ArrayList<>(EntityParser.ENTITIES.get(argsTypes.get(0)));
+        List<BaseEntity> requirements = new ArrayList<>(EntityManager.ENTITIES.get(argsTypes.get(0)));
         int size = requirements.size();
         for (int i = 0; i < size - 1; i++) {
             BaseEntity req1 = requirements.get(i);

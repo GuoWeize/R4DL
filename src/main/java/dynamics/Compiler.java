@@ -15,7 +15,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import lombok.extern.slf4j.Slf4j;
-import util.PathConsts;
 
 /**
  * Compiler of dynamic generated Java files, and save all classes.
@@ -31,10 +30,10 @@ public final class Compiler {
     /** Class of rules */
     private static Class<?> ruleClass;
 
-    /**
-     * Main method of {@link Compiler}.
-     */
-    public static void run() {
+    private static String packageName = "demo";
+
+    public static void loadPackage(String packageName) {
+        Compiler.packageName = packageName;
         ENTITIES_CLASSES.clear();
         Set<String> allFiles = getAllJavaFiles();
         compile(allFiles);
@@ -42,11 +41,17 @@ public final class Compiler {
         Builder.initialization();
     }
 
-    public static Map<String, Class<?>> getEntitiesClasses() {
+    public static void unloadClasses() {
+        ENTITIES_CLASSES.clear();
+        ruleClass = null;
+        System.gc();
+    }
+
+    static Map<String, Class<?>> getEntitiesClasses() {
         return ENTITIES_CLASSES;
     }
 
-    public static Class<?> getRuleClass () {
+    static Class<?> getRuleClass () {
         return ruleClass;
     }
 
@@ -57,9 +62,9 @@ public final class Compiler {
     private static void compile(Set<String> allFiles) {
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
         List<String> paras = allFiles.stream()
-            .map( (name) -> PathConsts.DYNAMICS_JAVA_CODE_DIR + name + ".java")
+            .map( (name) -> "/Users/gwz/Desktop/Code/R4DL/src/main/generated/" + packageName + "/" + name + ".java")
             .collect(Collectors.toList());
-        paras.add(0, PathConsts.DYNAMICS_CLASS_DIR);
+        paras.add(0, "/Users/gwz/Desktop/Code/R4DL/target/classes/");
         paras.add(0, "-d");
         String[] arguments = paras.toArray(new String[0]);
         int result = compiler.run(null, null, null, arguments);
@@ -72,13 +77,12 @@ public final class Compiler {
      */
     private static void saveClasses(Set<String> allFiles) {
         try {
-            URL url = new URL("file://" + PathConsts.DYNAMICS_CLASS_DIR);
+            URL url = new URL("file://" + "/Users/gwz/Desktop/Code/R4DL/target/classes/");
             URLClassLoader loader = new URLClassLoader(new URL[]{url});
+            ruleClass = loader.loadClass(packageName + ".rule");
             for (String className: allFiles) {
-                if (Objects.equals(className, PathConsts.RULE_JAVA_CLASS)) {
-                    ruleClass = loader.loadClass(className);
-                } else {
-                    ENTITIES_CLASSES.put(className, loader.loadClass(className));
+                if (! Objects.equals(className, "rule")) {
+                    ENTITIES_CLASSES.put(className, loader.loadClass(packageName + "." + className));
                 }
             }
         } catch (ClassNotFoundException | MalformedURLException e) {
@@ -92,7 +96,7 @@ public final class Compiler {
      */
     private static Set<String> getAllJavaFiles() {
         Set<String> javaFilenames = new HashSet<>();
-        File file = new File(PathConsts.DYNAMICS_JAVA_CODE_DIR);
+        File file = new File("/Users/gwz/Desktop/Code/R4DL/src/main/generated/" + packageName);
         for (File f: Objects.requireNonNull(file.listFiles())) {
             String fileName = f.getName();
             if (f.isFile() && fileName.endsWith(".java")) {
@@ -101,6 +105,10 @@ public final class Compiler {
         }
         log.info("All Java files are: " + javaFilenames);
         return javaFilenames;
+    }
+
+    public static void main(String[] args) {
+        loadPackage("basic");
     }
 
 }

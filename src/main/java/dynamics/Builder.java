@@ -46,7 +46,7 @@ public final class Builder {
      */
     public static void setField(BaseEntity entity, String fieldName, Object value) {
         try {
-            entity.getClass().getField(fieldName).set(entity, value);
+            entity.getClass().getField("f_" + fieldName).set(entity, value);
         } catch (Exception e) {
             log.error(String.format("Can not set field \"%s\" in entity \"%s\"", fieldName, entity), e);
         }
@@ -60,7 +60,7 @@ public final class Builder {
      */
     public static BaseEntity getField(BaseEntity entity, String fieldName) {
         try {
-            return (BaseEntity)entity.getClass().getField(fieldName).get(entity);
+            return (BaseEntity)entity.getClass().getField("f_" + fieldName).get(entity);
         } catch (Exception e) {
             log.error(String.format("Can not get field \"%s\" in entity \"%s\"", fieldName, entity), e);
             return null;
@@ -74,7 +74,7 @@ public final class Builder {
      */
     public static BaseEntity newInstance(String className) {
         try {
-            return (BaseEntity) TYPE_NAME2CONSTRUCTOR.get(className).invoke(null);
+            return (BaseEntity) TYPE_NAME2CONSTRUCTOR.get("c_" + className).invoke(null);
         } catch (Exception e) {
             log.error("can not new an instance of class \"" + className + "\".", e);
             return null;

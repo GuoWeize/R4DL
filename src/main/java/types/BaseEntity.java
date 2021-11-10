@@ -26,14 +26,14 @@ public abstract class BaseEntity {
      */
     public abstract String getType();
 
-    /**
-     * Check if it is null.
-     * @return BoolEntity
-     */
-    public static BoolEntity isNull(BaseEntity entity) {
-        if (entity == null) {
-            return BoolEntity.TRUE;
-        }
+//    public static BoolEntity isNull(BaseEntity entity) {
+//        if (entity == null) {
+//            return BoolEntity.TRUE;
+//        }
+//        return BoolEntity.FALSE;
+//    }
+
+    public BoolEntity isNull() {
         return BoolEntity.FALSE;
     }
 

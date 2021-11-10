@@ -7,9 +7,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import generator.JavaClassGenerator;
 import generator.JavaRuleGenerator;
-import judge.Processor;
+import dynamics.Processor;
 import parser.BaseParser;
-import serializator.EntityParser;
+import serializator.EntityManager;
 import util.ModeEnum;
 import util.PathConsts;
 import util.TypeEnum;
@@ -29,14 +29,14 @@ public class Main {
     private static final Map<ModeEnum, JsonDeserializer<?>> PARSERS = Map.ofEntries(
         Map.entry(ModeEnum.MODEL, new JavaClassGenerator()),
         Map.entry(ModeEnum.RULE, new JavaRuleGenerator()),
-        Map.entry(ModeEnum.REQUIREMENT, new EntityParser())
+        Map.entry(ModeEnum.REQUIREMENT, new EntityManager())
     );
 
     public static void run(final String model, final String rule, final String requirement) {
         PathConsts.initialization(model, rule, requirement);
         definitions2json();
         json2java();
-        judge();
+//        judge();
     }
 
     public static void definitions2json() {
@@ -50,11 +50,11 @@ public class Main {
         parseJsonFile(ModeEnum.RULE);
     }
 
-    public static void judge() {
-        Compiler.run();
-        parseJsonFile(ModeEnum.REQUIREMENT);
-        Processor.run();
-    }
+//    public static void judge() {
+//        Compiler.run();
+//        parseJsonFile(ModeEnum.REQUIREMENT);
+//        Processor.run();
+//    }
 
     private static void clearJavaFiles() {
         File file = new File(PathConsts.DYNAMICS_JAVA_CODE_DIR);
