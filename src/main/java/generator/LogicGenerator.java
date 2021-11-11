@@ -110,7 +110,7 @@ public final class LogicGenerator {
 
     private static String isNull(List<String> arguments) {
         checkArgsNumberAmount(arguments, UNARY);
-        return String.format("BaseEntity.isNull(%s)", arguments.get(0));
+        return String.format("%s.isNull()", arguments.get(0));
     }
 
     private static String not(List<String> arguments) {

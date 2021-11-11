@@ -179,7 +179,7 @@ public final class EntityManager extends StdDeserializer<Object> {
         module.addDeserializer(Object.class, new EntityManager());
         mapper.registerModule(module);
 
-        File file = new File("/Users/gwz/Desktop/Code/R4DL/src/main/resources/entities/PURE/entity.json");
+        File file = new File("/Users/gwz/Desktop/Code/R4DL/src/main/resources/entities/UAV/entity.json");
         long length = file.length();
         byte[] content = new byte[(int) length];
         try {
