@@ -171,11 +171,23 @@ public final class JavaClassGenerator extends StdDeserializer<Object> {
     }
 
     private String generateFileHead(String name) {
-        return String.format("public final class %s extends BaseEntity {\n    public static %s NULL = new %s();\n\n", name, name, name);
+        return String.format("public final class %s extends BaseEntity {\n\n    public static %s NULL = new %s();\n", name, name, name);
     }
 
     private String generateFields(Map<String, String> fields2type, Map<String, String> fields2value) {
         StringBuilder content = new StringBuilder();
+        content.append("    static {\n");
+        for (Map.Entry<String, String> entry: fields2type.entrySet()) {
+            String filed = entry.getKey();
+            String fieldName = "f_" + filed;
+            content.append("        NULL.")
+                .append(fieldName)
+                .append(" = ")
+                .append(fields2value.getOrDefault(filed, "null"))
+                .append(";\n");
+        }
+        content.append("    }\n\n");
+
         for (Map.Entry<String, String> entry: fields2type.entrySet()) {
             String filed = entry.getKey();
             String fieldName = "f_" + filed;
