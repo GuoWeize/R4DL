@@ -186,12 +186,20 @@ public final class LogicGenerator {
 
     private static String and(List<String> arguments) {
         checkArgsNumberAmount(arguments, MULTI_ARGS);
-        return String.format("BoolEntity.and(%s)", String.join(ARGS_DELIMITER, arguments));
+        List<String> temp = new ArrayList<>();
+        for (String arg: arguments) {
+            temp.add(arg + ".getValue()");
+        }
+        return String.format("BoolEntity.valueOf(%s)", String.join(" && ", temp));
     }
 
     private static String or(List<String> arguments) {
         checkArgsNumberAmount(arguments, MULTI_ARGS);
-        return String.format("BoolEntity.or(%s)", String.join(ARGS_DELIMITER, arguments));
+        List<String> temp = new ArrayList<>();
+        for (String arg: arguments) {
+            temp.add(arg + ".getValue()");
+        }
+        return String.format("BoolEntity.valueOf(%s)", String.join(" || ", temp));
     }
 
     private static String maximum(List<String> arguments) {

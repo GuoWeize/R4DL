@@ -35,14 +35,6 @@ public final class BoolEntity extends BasePrimitive {
         return this.value ? True: False;
     }
 
-    public static BoolEntity and(BoolEntity... arguments) {
-        return Arrays.stream(arguments).allMatch(BoolEntity::getValue) ? TRUE: FALSE;
-    }
-
-    public static BoolEntity or(BoolEntity... arguments) {
-        return Arrays.stream(arguments).anyMatch(BoolEntity::getValue) ? TRUE: FALSE;
-    }
-
     public boolean getValue() {
         return value;
     }

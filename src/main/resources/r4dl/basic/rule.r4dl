@@ -136,26 +136,29 @@ and (
     base_include ($1$, $2$)
 )
 
-rule event_inclusion
-(functional, functional) boolean :
-and (
-    include (($1$.event), ($2$.event)),
-    == (($1$.agent), ($2$.agent)),
-    == (($1$.operation), ($2$.operation)),
-    include (($1$.input), ($2$.input)),
-    include (($1$.output), ($2$.output)),
-    == (($1$.restriction), ($2$.restriction))
-)
-
-function entity_similar
+function entity_include2
 (entity, entity) boolean :
-and (
-    synonym (($1$.base), ($2$.base)),
-    include (($2$.constraints), ($1$.constraints))
+or (
+    and (
+        ! (is_null(($2$.owner))),
+        == ($1$, ($2$.owner))
+    ),
+    and (
+        ! (is_null(($1$.property))),
+        == (($1$.property), $2$)
+    ),
+    and (
+        ! (is_null(($1$.content))),
+        == (($1$.content), $2$)
+    ),
+    and (
+        == (($1$.base), ($2$.base)),
+        include (($2$.constraints), ($1$.constraints))
+    )
 )
 
 rule interlock
 (functional, functional) boolean :
 for any inEntity in ($2$.input)
     for any outEntity in ($1$.output)
-        entity_similar (outEntity, inEntity)
+        entity_include2 (outEntity, inEntity)

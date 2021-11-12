@@ -41,7 +41,10 @@ public final class StringEntity extends BasePrimitive {
     }
 
     public static BoolEntity synonym(StringEntity string1, StringEntity string2) {
-        return BoolEntity.valueOf(ThesaurusReader.isSynonym(string1.getValue(), string2.getValue()));
+        return BoolEntity.valueOf(
+            ThesaurusReader.isSynonym(string1.getValue(), string2.getValue())
+            || Objects.equals(string1.value, string2.value)
+        );
     }
 
     public static BoolEntity antonym(StringEntity string1, StringEntity string2) {

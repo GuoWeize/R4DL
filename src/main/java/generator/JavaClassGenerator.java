@@ -221,8 +221,8 @@ public final class JavaClassGenerator extends StdDeserializer<Object> {
 
     private String generateEquals(String name, Map<String, String> fields2type) {
         String result = fields2type.keySet().stream()
-            .map(field -> String.format("%s.equal(that.%s)", "f_" + field, "f_" + field))
-            .collect(Collectors.joining(",\n            "));
+            .map(field -> String.format("%s.equal(that.%s).getValue()", "f_" + field, "f_" + field))
+            .collect(Collectors.joining(" &&\n            "));
         return "    @Override\n"
             + "    public BoolEntity equal(BaseEntity entity) {\n"
             + "        if (! getType().equals(entity.getType())) {\n"
@@ -235,7 +235,7 @@ public final class JavaClassGenerator extends StdDeserializer<Object> {
             + "        if (that == NULL) {\n"
             + "            return BoolEntity.valueOf(false);\n"
             + "        }\n"
-            + "        return BoolEntity.and(\n"
+            + "        return BoolEntity.valueOf(\n"
             + String.format("            %s\n", result)
             + "        );\n"
             + "    }\n\n";
