@@ -17,6 +17,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import util.PathConsts;
 
 /**
  * Parse entity models from file.
@@ -27,7 +28,7 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 @Slf4j
 public final class JavaClassGenerator extends StdDeserializer<Object> {
 
-    private static final Set<String> TYPES = new HashSet<>(16);
+    private static String ruleset;
 
     private JavaClassGenerator(Class<?> vc) {
         super(vc);
@@ -155,7 +156,15 @@ public final class JavaClassGenerator extends StdDeserializer<Object> {
             .append(generateEquals(className, fields2type))
             .append(generateNewInstance(className))
             .append(generateFileEnd());
-        String path = "/Users/gwz/Desktop/Code/R4DL/src/main/generated/basic/" + className + ".java";
+        String path = PathConsts.JavaCodes + ruleset + PathConsts.separator + className + ".java";
+        File directory = new File(PathConsts.JavaCodes);
+        if (! directory.exists()) {
+            directory.mkdir();
+        }
+        directory = new File(PathConsts.JavaCodes + ruleset + PathConsts.separator);
+        if (! directory.exists()) {
+            directory.mkdir();
+        }
         try {
             File file = new File(path);
             if (!file.createNewFile()) {
@@ -210,10 +219,6 @@ public final class JavaClassGenerator extends StdDeserializer<Object> {
         return "    @Override\n    public BoolEntity isNull() {\n        return this.equal(NULL);\n    }\n\n";
     }
 
-    private String generateIsRequirement(boolean isRequirement) {
-        return String.format("    @Override\n    public boolean isRequirement() {\n        return %b;\n    }\n\n", isRequirement);
-    }
-
     private String generateEquals(String name, Map<String, String> fields2type) {
         String result = fields2type.keySet().stream()
             .map(field -> String.format("%s.equal(that.%s)", "f_" + field, "f_" + field))
@@ -246,13 +251,16 @@ public final class JavaClassGenerator extends StdDeserializer<Object> {
         return "}\n";
     }
 
-    public static void main(String[] args) {
+    public static void generateClassFiles(String packageName) {
+        ruleset = packageName;
+
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
         module.addDeserializer(Object.class, new JavaClassGenerator());
         mapper.registerModule(module);
 
-        File file = new File("/Users/gwz/Desktop/Code/R4DL/src/main/resources/models/basic/model.json");
+        String path = PathConsts.R4DL + packageName + PathConsts.separator + "model.json";
+        File file = new File(path);
         long length = file.length();
         byte[] content = new byte[(int) length];
         try {
@@ -268,6 +276,10 @@ public final class JavaClassGenerator extends StdDeserializer<Object> {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) {
+        generateClassFiles("basic");
     }
 
 }

@@ -43,7 +43,9 @@ public final class SetEntity<E extends BaseEntity> extends BaseCollection {
         if (Objects.equals(type, TYPE_UNDEFINED)) {
             type = entity.getType();
         }
-        checkMatched(entity.getType(), type);
+        else {
+            checkMatched(entity.getType(), type);
+        }
         entities.add(entity);
     }
 
@@ -93,6 +95,9 @@ public final class SetEntity<E extends BaseEntity> extends BaseCollection {
      * @throws TypeInvalidException if entity has illegal type.
      */
     public BoolEntity include(SetEntity<?> set) {
+        if (entities.isEmpty()) {
+            return BoolEntity.valueOf(set.entities.isEmpty());
+        }
         return set.allMatch(this::contains);
     }
 

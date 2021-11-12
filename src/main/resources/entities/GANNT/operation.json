@@ -30,6 +30,11 @@
         "reaction": "remove"
     },
     {
+        "#": "have",
+        "*": "operation",
+        "reaction": "have"
+    },
+    {
         "#": "can have",
         "*": "operation",
         "reaction": "have",

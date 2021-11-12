@@ -21,6 +21,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import util.PathConsts;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -52,12 +53,22 @@ public final class EntityManager extends StdDeserializer<Object> {
     public EntityManager() { this(null); }
     public EntityManager(Class<?> vc) { super(vc); }
 
-    @Override
-    public List<BaseEntity> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
-        throws IOException {
+    public static void readFiles(String dataset, List<String> types) {
+        initialization();
+        for (String type: types) {
+            EntityManager.readFile(PathConsts.Entities + dataset + PathConsts.separator + type + ".json");
+        }
+    }
+
+    public static void initialization() {
         ENTITIES_ID.clear();
         REQS2ID.clear();
         ENTITIES.clear();
+    }
+
+    @Override
+    public List<BaseEntity> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
+        throws IOException {
         List<BaseEntity> result = new ArrayList<>();
         JsonNode node = jsonParser.getCodec().readTree(jsonParser);
         node.forEach(n -> result.add(Parser.parseNode(n)));
@@ -129,6 +140,10 @@ public final class EntityManager extends StdDeserializer<Object> {
             var pair = node.fields().next();
             String entityType = pair.getKey();
             String entityId = pair.getValue().asText();
+            if (! EntityManager.ENTITIES_ID.get(entityType).containsKey(entityId)) {
+                System.out.println(entityType + ": " + entityId);
+                System.exit(-1);
+            }
             return EntityManager.ENTITIES_ID.get(entityType).get(entityId);
         }
 
@@ -171,15 +186,13 @@ public final class EntityManager extends StdDeserializer<Object> {
         }
     }
 
-    public static void main(String[] args) {
-        Compiler.loadPackage("basic");
-
+    private static void readFile(String path) {
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
         module.addDeserializer(Object.class, new EntityManager());
         mapper.registerModule(module);
 
-        File file = new File("/Users/gwz/Desktop/Code/R4DL/src/main/resources/entities/UAV/entity.json");
+        File file = new File(path);
         long length = file.length();
         byte[] content = new byte[(int) length];
         try {
@@ -195,6 +208,13 @@ public final class EntityManager extends StdDeserializer<Object> {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) {
+        Compiler.loadPackage("basic");
+
+        EntityManager.initialization();
+        EntityManager.readFiles("UAV", List.of("entity", "operation", "requirement"));
     }
 
 }

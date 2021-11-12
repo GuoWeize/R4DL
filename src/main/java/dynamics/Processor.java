@@ -1,5 +1,6 @@
 package dynamics;
 
+import generator.JavaRuleGenerator;
 import types.BaseEntity;
 import types.collection.ListEntity;
 import types.primitive.BoolEntity;
@@ -29,7 +30,6 @@ import java.util.stream.Collectors;
 @Slf4j
 public final class Processor {
 
-    private static final int REVERSIBLE = 2;
     private static final Set<String> REVERSIBLE_RULES = new HashSet<>();
     private static final Map<String, String> RULE_2_LIST_ARG = new HashMap<>();
     private static final Map<Method, List<String>> METHOD_2_ARGUMENTS = new HashMap<>();
@@ -60,7 +60,8 @@ public final class Processor {
     }
 
     private static void initialArgs() {
-        for (Method rule: Compiler.getRuleClass().getMethods()) {
+        Method[] rules = Compiler.getRuleClass().getMethods();
+        for (Method rule: rules) {
             if (! BLACKLIST.contains(rule.getName())) {
                 List<String> args = Arrays.stream(rule.getParameterTypes())
                     .map(Class::getName)
@@ -70,19 +71,42 @@ public final class Processor {
         }
     }
 
+    private static List<String> getTypes(List<String> typeList) {
+        List<String> result = new ArrayList<>();
+        for (String typeName: typeList) {
+            String[] list = typeName.split("\\.");
+            if (list.length > 1) {
+                String type = list[list.length -1];
+                if (type.startsWith("c_")) {
+                    result.add(type.substring(2));
+                }
+                else {
+                    result.add(type);
+                }
+            }
+            else {
+                result.add(typeName);
+            }
+        }
+        return result;
+    }
+
     private static void judgeRules() {
         log.info("Judgement started.");
         for (var entry: METHOD_2_ARGUMENTS.entrySet()) {
             Set<List<BaseEntity>> args;
-            if (entry.getValue().contains("basicTypes.collection.ListEntity")) {
-                String ruleName = entry.getKey().getName();
-                args = getListArgs(RULE_2_LIST_ARG.get(ruleName));
-            } else if (REVERSIBLE_RULES.contains(entry.getKey().getName())) {
-                args = getReversibleArgs(entry.getValue());
+            Method rule = entry.getKey();
+            List<String> types = Processor.getTypes(entry.getValue());
+            if (types.contains("ListEntity")) {
+                String ruleName = rule.getName();
+                String type = RULE_2_LIST_ARG.get(ruleName);
+                args = getListArgs(type);
+            } else if (REVERSIBLE_RULES.contains(rule.getName())) {
+                args = getReversibleArgs(types);
             } else {
-                args = getArgs(entry.getValue());
+                args = getArgs(types);
             }
-            judgeRule(entry.getKey(), args);
+            judgeRule(rule, args);
         }
         log.info("Judgement finished.");
     }
@@ -93,19 +117,21 @@ public final class Processor {
         for (var entry: RELATIONSHIPS.entrySet()) {
             num += entry.getValue().size();
         }
-        log.warn(String.format("%s relationships in %s types are detected.", num, types));
+        System.out.printf("%s relationships of %s types are detected.%n", num, types);
+        log.warn(String.format("%s relationships of %s types are detected.", num, types));
         for (var entry: RELATIONSHIPS.entrySet()) {
             String relationships = entry.getValue().stream()
                 .map(Processor::reqs2ID)
                 .collect(Collectors.joining(", "));
             log.warn(String.format("%s: {%s}", entry.getKey(), relationships));
+            System.out.printf("%s: {%s}%n", entry.getKey(), relationships);
         }
     }
 
     private static String reqs2ID(List<BaseEntity> reqs) {
         return "["
             + reqs.stream()
-            .map(req -> req.getType().substring(1) + "@" + EntityManager.getId(req))
+            .map(req -> req.getType() + "@" + EntityManager.getId(req))
             .collect(Collectors.joining(", "))
             + "]";
     }
@@ -144,7 +170,7 @@ public final class Processor {
 
     private static Set<List<BaseEntity>> getReversibleArgs(List<String> argsTypes) {
         Set<List<BaseEntity>> results = new HashSet<>();
-        if (argsTypes.size() != REVERSIBLE) {
+        if (argsTypes.size() != 2) {
             log.error(String.format("Can not parse reversible arguments of %s.", argsTypes.size()));
             throw new IllegalArgumentException();
         }
@@ -169,7 +195,7 @@ public final class Processor {
         try {
             for (List<BaseEntity> reqArgs: requirements) {
                 Object result;
-                if (rule.getParameterTypes()[0].getName().contains("basicTypes.collection.ListEntity")) {
+                if (rule.getParameterTypes()[0].getName().contains("ListEntity")) {
                     result = rule.invoke(null, new ListEntity<>(reqArgs.get(0).getType(), reqArgs));
                 } else {
                     result = rule.invoke(null, reqArgs.toArray());
@@ -184,6 +210,18 @@ public final class Processor {
         } catch (IllegalAccessException | InvocationTargetException e) {
             log.error("Can not process judgement.", e);
         }
+    }
+
+    public static void main(String[] args) {
+        String datasetName = "PURE";
+
+        Compiler.loadPackage("basic");
+
+        EntityManager.readFiles(datasetName, List.of("entity", "operation", "requirement"));
+
+        JavaRuleGenerator.generateRuleFile("basic");
+        Processor.run();
+
     }
 
 }

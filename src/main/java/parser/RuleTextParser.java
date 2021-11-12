@@ -2,9 +2,12 @@ package parser;
 
 import exceptions.TokenInvalidException;
 import lombok.extern.slf4j.Slf4j;
+import util.PathConsts;
 import util.TextReader;
 import util.Token;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +19,21 @@ import java.util.List;
 @Slf4j
 public final class RuleTextParser extends BaseParser {
 
+    public static void parsePackage(String packageName) {
+        String modelFile = PathConsts.R4DL + packageName + PathConsts.separator + "rule.r4dl";
+        TextReader.readFile(modelFile);
+        try {
+            addToJsonFile(packageName, parse(packageName));
+        } catch (IOException e) {
+            log.error("Can not read file: " + modelFile, e);
+        }
+    }
+
     /**
      * 规则定义 ::= { 自定义运算定义 } { 关系识别规则定义 } 关系识别规则定义
      * 自定义运算定义 ::= "function" 运算命名 "(" 参数列表 ")" ":" 类型标识 对象
      */
-    static String parse(String fileName) throws IOException {
+    private static String parse(String fileName) throws IOException {
         StringBuilder sb = new StringBuilder();
         sb.append("{\"").append(fileName).append("\":[");
         List<StringBuilder> definitions = new ArrayList<>();
@@ -272,9 +285,25 @@ public final class RuleTextParser extends BaseParser {
         return sb;
     }
 
+    private static void addToJsonFile(String packageName, String contents){
+        String path = PathConsts.R4DL + packageName + PathConsts.separator + "rule.json";
+        try {
+            File file = new File(path);
+            if (! file.createNewFile()) {
+                log.warn(String.format("Replace \"%s\" before.", path));
+            }
+            FileWriter fileWriter = new FileWriter(file);
+            fileWriter.write(contents);
+            fileWriter.flush();
+            fileWriter.close();
+        } catch (IOException e) {
+            log.error("Can not parse r4dl file: " + path, e);
+        }
+        log.info("Finish parse r4dl file: " + path);
+    }
+
     public static void main(String[] args) throws IOException {
-        TextReader.readFile("/Users/gwz/Desktop/Code/R4DL/src/main/resources/rules/basic/rule.r4dl");
-        System.out.println(parse("basic"));
+        parsePackage("basic");
     }
 
 }

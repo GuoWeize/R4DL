@@ -1,9 +1,0 @@
-rule demo
-(functional) -> boolean {
-    {"at_least" synonym "at_most"}
-}
-
-rule demo2
-(functional) -> boolean {
-    {max( 1, 2, 3) == 3}
-}

@@ -494,9 +494,9 @@
         "base": "holiday class"
     },
     {
-        "#": "object of taskManager class",
+        "#": "object of TaskManager class",
         "*": "entity",
-        "base": "taskManager class",
+        "base": "TaskManager class",
         "property": {"entity": "object"}
     },
     {
@@ -715,6 +715,25 @@
         "constraints": {"()": ["parent"]}
     },
     {
+        "#": "start/end time of the tasks",
+        "*": "entity",
+        "base": "task",
+        "isAll": true,
+        "property": {"entity": "start/end time"}
+    },
+    {
+        "#": "start/end time of a task",
+        "*": "entity",
+        "base": "task",
+        "property": {"entity": "start/end time"}
+    },
+    {
+        "#": "start/end time of a subtask",
+        "*": "entity",
+        "base": "subtask",
+        "property": {"entity": "start/end time"}
+    },
+    {
         "#": "start/end time of the parent task",
         "*": "entity",
         "base": "parent task",
@@ -764,6 +783,13 @@
         "#": "start/end date of the holiday",
         "*": "entity",
         "base": "holiday",
+        "property": {"entity": "start/end date"}
+    },
+    {
+        "#": "start/end date of the tasks",
+        "*": "entity",
+        "base": "task",
+        "isAll": true,
         "property": {"entity": "start/end date"}
     },
     {

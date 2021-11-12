@@ -1,9 +1,5 @@
 package serializator;
 
-import util.ModeEnum;
-import util.PathConsts;
-import util.TypeEnum;
-
 import java.io.File;
 
 /**
@@ -13,8 +9,7 @@ import java.io.File;
 public final class RequirementParser {
 
     public static void run() {
-        String filePath = PathConsts.file(ModeEnum.REQUIREMENT, TypeEnum.LANGUAGE);
-        File file = new File(filePath);
+        File file = new File("");
 
 
     }

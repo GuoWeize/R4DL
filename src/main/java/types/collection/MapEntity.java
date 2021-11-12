@@ -143,6 +143,9 @@ public final class MapEntity<K extends BaseEntity, V extends BaseEntity> extends
      * @throws TypeInvalidException if entity has illegal type.
      */
     public BoolEntity include(MapEntity<?, ?> map) {
+        if (entities.isEmpty()) {
+            return BoolEntity.valueOf(map.entities.isEmpty());
+        }
         return map.allMatch(key -> contains(key, map.get(key)));
     }
 

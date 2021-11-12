@@ -459,7 +459,7 @@
         "agent": {"entity": "algorithm class"},
         "operation": {"operation": "modify"},
         "output": {
-            "()": [{"entity": "start or end date of the tasks"}]
+            "()": [{"entity": "start/end date of the tasks"}]
         }
     },
     {
@@ -469,7 +469,7 @@
         "agent": {"entity": "application"},
         "operation": {"operation": "keep track of"},
         "output": {
-            "()": [{"entity": "start/end times of the tasks"}]
+            "()": [{"entity": "start/end time of the tasks"}]
         }
     },
     {
@@ -1153,7 +1153,7 @@
         "#": "FR-78",
         "*": "functional",
         ":": "Milestone has only time point of occurrence.",
-        "agent": {"entity": "Milestone"},
+        "agent": {"entity": "milestone"},
         "operation": {"operation": "have"},
         "input": {
             "()": [{"entity": "time point of occurrence"}]

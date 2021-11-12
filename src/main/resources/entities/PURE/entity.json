@@ -40,6 +40,11 @@
         "base": "roll away protection"
     },
     {
+        "#": "supervision",
+        "*": "entity",
+        "base": "supervision"
+    },
+    {
         "#": "supervision appertaining",
         "*": "entity",
         "base": "supervision appertaining"
@@ -134,6 +139,11 @@
         "constraints": {"()": ["maximum"]}
     },
     {
+        "#": "shunting movement",
+        "*": "entity",
+        "base": "shunting movement"
+    },
+    {
         "#": "shunting movements",
         "*": "entity",
         "base": "shunting movements",
@@ -146,17 +156,22 @@
         "constraints": {"()": ["existing", "listed in the ccs tsi"]}
     },
     {
-        "#": "all locations of the authorised movement",
+        "#": "location",
         "*": "entity",
-        "base": "movement",
-        "constraints": {"()": ["authorised"]},
-        "property": {"entity": "all locations"}
+        "base": "location"
     },
     {
         "#": "all locations",
         "*": "entity",
         "base": "location",
         "isAll": true
+    },
+    {
+        "#": "all locations of the authorised movement",
+        "*": "entity",
+        "base": "movement",
+        "constraints": {"()": ["authorised"]},
+        "property": {"entity": "all locations"}
     },
     {
         "#": "permitted speed",
@@ -180,6 +195,11 @@
         "*": "entity",
         "base": "exit",
         "constraints": {"()": ["from shunting"]}
+    },
+    {
+        "#": "operation",
+        "*": "entity",
+        "base": "operation"
     },
     {
         "#": "transitions to and from national operation",
@@ -372,27 +392,27 @@
         "base": "brake intervention"
     },
     {
-        "#": "failures of the trainborne equipment",
-        "*": "entity",
-        "base": "trainborne equipment",
-        "property": {"entity": "failures"}
-    },
-    {
         "#": "failures",
         "*": "entity",
         "base": "failure",
         "isAll": true
     },
     {
-        "#": "safety of train supervision",
+        "#": "failures of the trainborne equipment",
         "*": "entity",
-        "base": "train supervision",
-        "property": {"entity": "safety"}
+        "base": "trainborne equipment",
+        "property": {"entity": "failures"}
     },
     {
         "#": "safety",
         "*": "entity",
         "base": "safety"
+    },
+    {
+        "#": "safety of train supervision",
+        "*": "entity",
+        "base": "train supervision",
+        "property": {"entity": "safety"}
     },
     {
         "#": "etcs trainborne equipment",
@@ -443,15 +463,15 @@
         "base": "information"
     },
     {
+        "#": "isolation",
+        "*": "entity",
+        "base": "isolation"
+    },
+    {
         "#": "isolation of the etcs trainborne equipment",
         "*": "entity",
         "base": "etcs trainborne equipment",
         "property": {"entity": "isolation"}
-    },
-    {
-        "#": "isolation",
-        "*": "entity",
-        "base": "isolation"
     },
     {
         "#": "vehicle braking system",
@@ -560,15 +580,21 @@
         "constraints": {"()": ["on the tandem traction unit"]}
     },
     {
-        "#": "position of the front end of the train",
+        "#": "etcs trainborne equipment on traction unit",
         "*": "entity",
-        "base": "front end of the train",
-        "property": {"entity": "position"}
+        "base": "etcs trainborne equipment",
+        "constraints": {"()": ["on traction unit"]}
     },
     {
         "#": "position",
         "*": "entity",
         "base": "position"
+    },
+    {
+        "#": "position of the front end of the train",
+        "*": "entity",
+        "base": "front end of the train",
+        "property": {"entity": "position"}
     },
     {
         "#": "location of the entire train",
@@ -582,6 +608,11 @@
         "*": "entity",
         "base": "track",
         "constraints": {"()": ["ahead of driver"]}
+    },
+    {
+        "#": "end",
+        "*": "entity",
+        "base": "end"
     },
     {
         "#": "end of the on sight section",
@@ -630,16 +661,16 @@
         "constraints": {"()": ["standardised"]}
     },
     {
-        "#": "transmission of information recorded to other media",
-        "*": "entity",
-        "base": "transmission",
-        "owner": {"entity": "information recorded to other media"}
-    },
-    {
         "#": "information recorded to other media",
         "*": "entity",
         "base": "information",
         "constraints": {"()": ["recorded to other media"]}
+    },
+    {
+        "#": "transmission of information recorded to other media",
+        "*": "entity",
+        "base": "transmission",
+        "owner": {"entity": "information recorded to other media"}
     },
     {
         "#": "data entry",
@@ -708,15 +739,15 @@
         "constraints": {"()": ["from national train control systems"]}
     },
     {
+        "#": "result",
+        "*": "entity",
+        "base": "result"
+    },
+    {
         "#": "result of the self-test",
         "*": "entity",
         "base": "self-test",
         "property": {"entity": "result"}
-    },
-    {
-        "#": "result",
-        "*": "entity",
-        "base": "result"
     },
     {
         "#": "level transitions",
@@ -773,8 +804,7 @@
         "*": "entity",
         "base": "speed",
         "isAll": true,
-        "constraints": {"()": ["permitted", "allowed"]},
-        "property": {"entity": ""}
+        "constraints": {"()": ["permitted", "allowed"]}
     },
     {
         "#": "override control",
@@ -866,6 +896,12 @@
         "base": "power supply"
     },
     {
+        "#": "own train identification",
+        "*": "entity",
+        "base": "train identification",
+        "constraints": {"()": ["owm"]}
+    },
+    {
         "#": "own train identification of etcs trainborne equipment",
         "*": "entity",
         "base": "etcs trainborne equipment",
@@ -901,15 +937,20 @@
         "constraints": {"()": ["regarding lowering"]}
     },
     {
+        "#": "raising",
+        "*": "entity",
+        "base": "raising"
+    },
+    {
         "#": "raising of the pantograph",
         "*": "entity",
         "base": "pantograph",
         "property": {"entity": "raising"}
     },
     {
-        "#": "raising",
+        "#": "opening/closing",
         "*": "entity",
-        "base": "raising"
+        "base": "opening/closing"
     },
     {
         "#": "opening/closing of the circuit breaker",
@@ -918,26 +959,21 @@
         "property": {"entity": "opening/closing"}
     },
     {
-        "#": "opening/closing",
-        "*": "entity",
-        "base": "opening/closing"
-    },
-    {
         "#": "new target location",
         "*": "entity",
         "base": "target location",
         "constraints": {"()": ["new"]}
     },
     {
+        "#": "occurrence",
+        "*": "entity",
+        "base": "occurrence"
+    },
+    {
         "#": "occurrence of a failure",
         "*": "entity",
         "base": "failure",
         "property": {"entity": "occurrence"}
-    },
-    {
-        "#": "occurrence",
-        "*": "entity",
-        "base": "occurrence"
     },
     {
         "#": "rbc area",
@@ -1033,18 +1069,18 @@
         "constraints": {"()": ["used for supervision of movement authorities"]}
     },
     {
+        "#": "trains",
+        "*": "entity",
+        "base": "train",
+        "isAll": true
+    },
+    {
         "#": "special classes of trains",
         "*": "entity",
         "base": "class",
         "isAll": true,
         "constraints": {"()": ["special"]},
         "owner": {"entity": "trains"}
-    },
-    {
-        "#": "trains",
-        "*": "entity",
-        "base": "train",
-        "isAll": true
     },
     {
         "#": "maximum line speed and track speed and special speed levels",
@@ -1159,15 +1195,26 @@
         "constraints": {"()": ["lower"]}
     },
     {
+        "#": "front end",
+        "*": "entity",
+        "base": "front end"
+    },
+    {
         "#": "front end of the train",
         "*": "entity",
         "base": "train",
         "property": {"entity": "front end"}
     },
     {
-        "#": "front end",
+        "#": "rear end",
         "*": "entity",
-        "base": "front end"
+        "base": "rear end"
+    },
+    {
+        "#": "rear end of the train",
+        "*": "entity",
+        "base": "train",
+        "property": {"entity": "rear end"}
     },
     {
         "#": "dynamic train speed profile",
@@ -1190,6 +1237,11 @@
         "#": "standstill",
         "*": "entity",
         "base": "standstill"
+    },
+    {
+        "#": "system",
+        "*": "entity",
+        "base": "system"
     },
     {
         "#": "train trip condition",
@@ -1250,5 +1302,24 @@
         "*": "entity",
         "base": "intervention",
         "constraints": {"()": ["from etcs equipment"]}
+    },
+    {
+        "#": "transfer from full supervision to partial supervision",
+        "*": "entity",
+        "base": "transfer",
+        "constraints": {"()": ["from full supervision to partial supervision"]}
+    },
+    {
+        "#": "passing from one rbc to another",
+        "*": "entity",
+        "base": "passing",
+        "constraints": {"()": ["from one rbc to another"]}
+    },
+    {
+        "#": "national requirements",
+        "*": "entity",
+        "base": "requirement",
+        "constraints": {"()": ["national"]},
+        "isAll": true
     }
 ]

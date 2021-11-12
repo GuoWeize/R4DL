@@ -31,6 +31,10 @@ public final class BoolEntity extends BasePrimitive {
         return this.value ? FALSE: TRUE;
     }
 
+    public BaseEntity select(BaseEntity True, BaseEntity False) {
+        return this.value ? True: False;
+    }
+
     public static BoolEntity and(BoolEntity... arguments) {
         return Arrays.stream(arguments).allMatch(BoolEntity::getValue) ? TRUE: FALSE;
     }

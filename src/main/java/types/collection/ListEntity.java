@@ -54,7 +54,9 @@ public final class ListEntity<E extends BaseEntity> extends BaseCollection {
         if (Objects.equals(type, TYPE_UNDEFINED)) {
             type = entity.getType();
         }
-        checkMatched(entity.getType(), type);
+        else {
+            checkMatched(entity.getType(), type);
+        }
         entities.add(entity);
     }
 
@@ -104,6 +106,9 @@ public final class ListEntity<E extends BaseEntity> extends BaseCollection {
      * @throws TypeInvalidException if entity has illegal type.
      */
     public BoolEntity include(ListEntity<?> list) {
+        if (entities.isEmpty()) {
+            return BoolEntity.valueOf(list.entities.isEmpty());
+        }
         return list.allMatch(this::contains);
     }
 

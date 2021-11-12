@@ -589,7 +589,7 @@
         ":": "When requested, the _CoordinateSystem_ shall transform coordinates to alternate formats.",
         "event": {
             "()": [{
-                "#": "-condition",
+                "#": "30-condition",
                 "*": "condition",
                 "operation": {"operation": "request"},
                 "input": {
@@ -664,7 +664,7 @@
         ":": "When the hover in place command is issued, the _FlightManager_ shall halt the UAV in place and maintain its current position.",
         "event": {
             "()": [{
-                "#": "-condition",
+                "#": "33-condition",
                 "*": "condition",
                 "operation": {"operation": "issue"},
                 "input": {
@@ -689,14 +689,7 @@
         "*": "functional",
         ":": "When the hover in place command is issued, the _FlightManager_ shall halt the UAV in place and maintain its current position.",
         "event": {
-            "()": [{
-                "#": "-condition",
-                "*": "condition",
-                "operation": {"operation": "issue"},
-                "input": {
-                    "()": [{"entity": "hover in place command"}]
-                }
-            }]
+            "()": [{"condition": "33-condition"}]
         },
         "agent": {"entity": "_FlightManager_"},
         "operation": {"operation": "maintain"},
@@ -710,7 +703,7 @@
         ":": "If a flight route is assigned to a UAV which is currently hovering in place, the _FlightManager_ shall assign the route and maintain the hover in place mode.",
         "event": {
             "()": [{
-                "#": "-condition",
+                "#": "34-condition",
                 "*": "condition",
                 "operation": {"operation": "assign"},
                 "input": {
@@ -732,17 +725,7 @@
         "*": "functional",
         ":": "If a flight route is assigned to a UAV which is currently hovering in place, the _FlightManager_ shall assign the route and maintain the hover in place mode.",
         "event": {
-            "()": [{
-                "#": "-condition",
-                "*": "condition",
-                "operation": {"operation": "assign"},
-                "input": {
-                    "()": [{"entity": "flight route"}]
-                },
-                "output": {
-                    "()": [{"entity": "UAV which is currently hovering in place"}]
-                }
-            }]
+            "()": [{"condition": "34-condition"}]
         },
         "agent": {"entity": "_FlightManager_"},
         "operation": {"operation": "maintain"},
@@ -889,7 +872,7 @@
         ":": "If a route contains a specific UAV_ID, the _SingleUAVFlightPlanScheduler_ shall assign the route to the given UAV.",
         "event": {
             "()": [{
-                "#": "-condition",
+                "#": "40-condition",
                 "*": "condition",
                 "agent": {"entity": "route"},
                 "operation": {"operation": "contain"},

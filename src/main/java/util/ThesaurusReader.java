@@ -35,8 +35,8 @@ public final class ThesaurusReader {
 
     public static void initialization() {
         try {
-            readDictionary(PathConsts.SYNONYM_FILE_NAME, SYNONYMS);
-            readDictionary(PathConsts.ANTONYM_FILE_NAME, ANTONYMS);
+            readDictionary(PathConsts.Thesaurus + "synonym", SYNONYMS);
+            readDictionary(PathConsts.Thesaurus + "antonym", ANTONYMS);
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -60,7 +60,7 @@ public final class ThesaurusReader {
     public static void main(String[] args) {
         initialization();
         System.out.println(isSynonym("create", "make"));
-        System.out.println(isAntonym("create", "Destroy"));
+        System.out.println(isAntonym("bust", "repair"));
     }
 
 }

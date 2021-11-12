@@ -5,6 +5,11 @@
         "reaction": "request"
     },
     {
+        "#": "transform",
+        "*": "operation",
+        "reaction": "transform"
+    },
+    {
         "#": "transition",
         "*": "operation",
         "reaction": "transition"

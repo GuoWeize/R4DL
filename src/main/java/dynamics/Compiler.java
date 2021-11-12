@@ -15,6 +15,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import lombok.extern.slf4j.Slf4j;
+import util.PathConsts;
 
 /**
  * Compiler of dynamic generated Java files, and save all classes.
@@ -30,7 +31,7 @@ public final class Compiler {
     /** Class of rules */
     private static Class<?> ruleClass;
 
-    private static String packageName = "demo";
+    private static String packageName;
 
     public static void loadPackage(String packageName) {
         Compiler.packageName = packageName;
@@ -61,10 +62,11 @@ public final class Compiler {
      */
     private static void compile(Set<String> allFiles) {
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
+        String directoryPath = PathConsts.JavaCodes + packageName + PathConsts.separator;
         List<String> paras = allFiles.stream()
-            .map( (name) -> "/Users/gwz/Desktop/Code/R4DL/src/main/generated/" + packageName + "/" + name + ".java")
+            .map( (name) -> directoryPath + name + ".java")
             .collect(Collectors.toList());
-        paras.add(0, "/Users/gwz/Desktop/Code/R4DL/target/classes/");
+        paras.add(0, PathConsts.JavaClasses);
         paras.add(0, "-d");
         String[] arguments = paras.toArray(new String[0]);
         int result = compiler.run(null, null, null, arguments);
@@ -77,7 +79,7 @@ public final class Compiler {
      */
     private static void saveClasses(Set<String> allFiles) {
         try {
-            URL url = new URL("file://" + "/Users/gwz/Desktop/Code/R4DL/target/classes/");
+            URL url = new URL("file://" + PathConsts.JavaClasses);
             URLClassLoader loader = new URLClassLoader(new URL[]{url});
             ruleClass = loader.loadClass(packageName + ".rule");
             for (String className: allFiles) {
@@ -96,7 +98,7 @@ public final class Compiler {
      */
     private static Set<String> getAllJavaFiles() {
         Set<String> javaFilenames = new HashSet<>();
-        File file = new File("/Users/gwz/Desktop/Code/R4DL/src/main/generated/" + packageName);
+        File file = new File(PathConsts.JavaCodes + packageName);
         for (File f: Objects.requireNonNull(file.listFiles())) {
             String fileName = f.getName();
             if (f.isFile() && fileName.endsWith(".java")) {

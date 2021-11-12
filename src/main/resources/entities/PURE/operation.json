@@ -510,6 +510,11 @@
         "reaction": "occur"
     },
     {
+        "#": "define",
+        "*": "operation",
+        "reaction": "define"
+    },
+    {
         "#": "order",
         "*": "operation",
         "reaction": "order"

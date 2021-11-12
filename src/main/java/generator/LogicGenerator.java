@@ -51,6 +51,7 @@ public final class LogicGenerator {
         Map.entry("*", LogicGenerator::multiple),
         Map.entry("merge", LogicGenerator::merge),
         // others
+        Map.entry("?", LogicGenerator::select),
         Map.entry("all", LogicGenerator::all),
         Map.entry("any", LogicGenerator::any),
         Map.entry("find", LogicGenerator::find),
@@ -235,6 +236,11 @@ public final class LogicGenerator {
     private static String merge(List<String> arguments) {
         checkArgsNumberAmount(arguments, MULTI_ARGS);
         return String.format("BaseCollection.merge(%s)", String.join(ARGS_DELIMITER, arguments));
+    }
+
+    private static String select(List<String> arguments) {
+        checkArgsNumberAmount(arguments, i -> i == 3);
+        return String.format("%s.select(%s, %s)", arguments.get(0), arguments.get(1), arguments.get(2));
     }
 
     private static String find(List<String> arguments) {

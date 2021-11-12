@@ -3,6 +3,7 @@ package generator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import dynamics.Processor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
@@ -16,6 +17,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import util.PathConsts;
 
 /**
  * Parse recognition rules from file.
@@ -25,6 +27,8 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
  */
 @Slf4j
 public final class JavaRuleGenerator extends StdDeserializer<Object> {
+
+    private static String ruleset;
 
     public JavaRuleGenerator() {
         this(null);
@@ -53,13 +57,13 @@ public final class JavaRuleGenerator extends StdDeserializer<Object> {
             + "public final class rule {\n\n"
             + rules
             + "}\n";
-        addToJavaFile(name, contents);
+        addToJavaFile(contents);
         log.info("Finish parse rule JSON file: ");
         return null;
     }
 
-    private void addToJavaFile(String packageName, String contents){
-        String path = "/Users/gwz/Desktop/Code/R4DL/src/main/generated/" + packageName + "/rule.java";
+    private void addToJavaFile(String contents){
+        String path = PathConsts.JavaCodes + ruleset + PathConsts.separator + "rule.java";
         try {
             File file = new File(path);
             if (! file.createNewFile()) {
@@ -78,7 +82,7 @@ public final class JavaRuleGenerator extends StdDeserializer<Object> {
         StringBuilder rule = new StringBuilder();
         boolean isRule = node.get("?").asBoolean();
         String name = node.get("#").asText();
-        String arguments = parseArgument(node.get("$"));
+        String arguments = parseArgument(name, node.get("$"));
         String returnType = JavaClassGenerator.parseType(node.get("*"));
         String logic = LogicGenerator.parse(node.get("~"));
         rule.append(String.format("    /**\n     * %s\n     * @return %s\n     */\n", name, returnType));
@@ -87,11 +91,16 @@ public final class JavaRuleGenerator extends StdDeserializer<Object> {
         return rule.toString();
     }
 
-    private String parseArgument(JsonNode node) {
+    private String parseArgument(String name, JsonNode node) {
         List<String> arguments = new ArrayList<>();
         int index = 1;
         for (JsonNode argument: node) {
-            arguments.add(JavaClassGenerator.parseType(argument) + " $" + index + "$");
+            String typeName = JavaClassGenerator.parseType(argument);
+            if (typeName.startsWith("ListEntity")) {
+                String elementType = typeName.substring(13, typeName.length()-1);
+                Processor.addListArg(name, elementType);
+            }
+            arguments.add(typeName + " $" + index + "$");
             index += 1;
         }
         return String.join(", ", arguments);
@@ -102,13 +111,16 @@ public final class JavaRuleGenerator extends StdDeserializer<Object> {
             (isRule ? "public": "private"), returns, name, argument, logic);
     }
 
-    public static void main(String[] args) {
+    public static void generateRuleFile(String packageName) {
+        ruleset = packageName;
+
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
         module.addDeserializer(Object.class, new JavaRuleGenerator());
         mapper.registerModule(module);
 
-        File file = new File("/Users/gwz/Desktop/Code/R4DL/src/main/resources/rules/basic/rule.json");
+        String path = PathConsts.R4DL + packageName + PathConsts.separator + "rule.json";
+        File file = new File(path);
         long length = file.length();
         byte[] content = new byte[(int) length];
         try {
@@ -124,6 +136,10 @@ public final class JavaRuleGenerator extends StdDeserializer<Object> {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) {
+        generateRuleFile("basic");
     }
 
 }

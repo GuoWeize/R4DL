@@ -2,9 +2,12 @@ package parser;
 
 import exceptions.TokenInvalidException;
 import lombok.extern.slf4j.Slf4j;
+import util.PathConsts;
 import util.TextReader;
 import util.Token;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,11 +19,21 @@ import java.util.List;
 @Slf4j
 public final class ModelTextParser extends BaseParser {
 
+    public static void parsePackage(String packageName) {
+        String modelFile = PathConsts.R4DL + packageName + PathConsts.separator + "model.r4dl";
+        TextReader.readFile(modelFile);
+        try {
+            addToJsonFile(packageName, parse(packageName));
+        } catch (IOException e) {
+            log.error("Can not read file: " + modelFile, e);
+        }
+    }
+
     /**
      * 模型定义 ::= { "type" 类型定义体 } { "requirement" 类型定义体 } "requirement" 类型定义体
      * 类型定义体	::= 标识符 "{" 所有字段定义 "}"
      */
-    static String parse(String fileName) throws IOException {
+    private static String parse(String fileName) throws IOException {
         StringBuilder sb = new StringBuilder();
         sb.append("{\"").append(fileName).append("\":[");
         List<StringBuilder> definitions = new ArrayList<>();
@@ -58,7 +71,7 @@ public final class ModelTextParser extends BaseParser {
     private static StringBuilder fieldsDefinitions() throws TokenInvalidException {
         StringBuilder fields = new StringBuilder();
         while (true) {
-            fields.append(BaseParser.DELIMITER).append(fieldDefinition());
+            fields.append(", ").append(fieldDefinition());
             TextReader.nextTokenWithTest(Token.semicolon);
             Token forward = TextReader.nextToken();
             if (forward.is(Token.closeBrace)) {
@@ -223,9 +236,24 @@ public final class ModelTextParser extends BaseParser {
         return sb;
     }
 
+    private static void addToJsonFile(String packageName, String contents){
+        String path = PathConsts.R4DL + packageName + PathConsts.separator + "model.json";
+        try {
+            File file = new File(path);
+            if (! file.createNewFile()) {
+                log.warn(String.format("Replace \"%s\" before.", path));
+            }
+            FileWriter fileWriter = new FileWriter(file);
+            fileWriter.write(contents);
+            fileWriter.flush();
+            fileWriter.close();
+        } catch (IOException e) {
+            log.error("Can not write file: " + path, e);
+        }
+    }
+
     public static void main(String[] args) throws IOException {
-        TextReader.readFile("/Users/gwz/Desktop/Code/R4DL/src/main/resources/models/basic/model.r4dl");
-        System.out.println(parse("basic"));
+        parsePackage("basic");
     }
 
 }
