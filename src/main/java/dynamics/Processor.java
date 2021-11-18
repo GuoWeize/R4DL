@@ -120,11 +120,12 @@ public final class Processor {
         System.out.printf("%s relationships of %s types are detected.%n", num, types);
         log.warn(String.format("%s relationships of %s types are detected.", num, types));
         for (var entry: RELATIONSHIPS.entrySet()) {
+            int count = entry.getValue().size();
             String relationships = entry.getValue().stream()
                 .map(Processor::reqs2ID)
                 .collect(Collectors.joining(", "));
             log.warn(String.format("%s: {%s}", entry.getKey(), relationships));
-            System.out.printf("%s: {%s}%n", entry.getKey(), relationships);
+            System.out.printf("%s: %s: {%s}%n", entry.getKey(), count, relationships);
         }
     }
 

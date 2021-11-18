@@ -141,15 +141,15 @@ function entity_include2
 or (
     and (
         ! (is_null(($2$.owner))),
-        == ($1$, ($2$.owner))
+        entity_include2 ($1$, ($2$.owner))
     ),
     and (
         ! (is_null(($1$.property))),
-        == (($1$.property), $2$)
+        entity_include2 (($1$.property), $2$)
     ),
     and (
         ! (is_null(($1$.content))),
-        == (($1$.content), $2$)
+        entity_include2 (($1$.content), $2$)
     ),
     and (
         == (($1$.base), ($2$.base)),

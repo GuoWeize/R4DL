@@ -19,8 +19,8 @@ import java.util.List;
 public class Demo {
 
     public static void main(String[] args) {
-        String packageName = "basic";
-        String datasetName = "PURE";
+        String packageName = "newly";
+        String datasetName = "GANNT";
 
         Processor.initialization();
         Builder.initialization();
