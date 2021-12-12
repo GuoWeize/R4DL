@@ -1,19 +1,115 @@
 [
     {
-        "#": "s1",
+        "#": "route.locked",
         "*": "state",
         "object": "route",
-        "name": "route.allocated"
+        "name": "route.locked"
     },
     {
-        "#": "e1",
+        "#": "switch.locked",
+        "*": "state",
+        "object": "switch",
+        "name": "switch.locked"
+    },
+    {
+        "#": "switch.normal",
+        "*": "state",
+        "object": "switch",
+        "name": "switch.normal"
+    },
+    {
+        "#": "track.locked",
+        "*": "state",
+        "object": "track",
+        "name": "track.locked"
+    },
+    {
+        "#": "switch.lock",
         "*": "event",
-        "name": "tTrain.OnRoute.s"
+        "name": "switch.lock"
     },
     {
-        "#": "permit1",
+        "#": "route.lock",
+        "*": "event",
+        "name": "route.lock"
+    },
+    {
+        "#": "route.unlock",
+        "*": "event",
+        "name": "route.unlock"
+    },
+    {
+        "#": "route.clear",
+        "*": "event",
+        "name": "route.clear"
+    },
+    {
+        "#": "route.locked imply switch.locked",
+        "*": "imply",
+        "state_1": {"state": "route.locked"},
+        "state_2": {"state": "switch.locked"}
+    },
+    {
+        "#": "switch.locked exclude route.locked",
+        "*": "exclude",
+        "state_1": {"state": "switch.locked"},
+        "state_2": {"state": "route.locked"}
+    },
+    {
+        "#": "switch.lock coincide route.unlock",
+        "*": "coincide",
+        "event_1": {"event": "switch.lock"},
+        "event_2": {"event": "route.unlock"}
+    },
+    {
+        "#": "route.unlock forbid switch.lock",
+        "*": "forbid",
+        "event_1": {"event": "route.unlock"},
+        "event_2": {"event": "switch.lock"}
+    },
+    {
+        "#": "track.locked permit route.clear",
         "*": "permit",
-        "state_1": {"state": "s1"},
-        "event_2": {"event": "e1"}
+        "state_1": {"state": "track.locked"},
+        "event_2": {"event": "route.clear"}
+    },
+    {
+        "#": "track.locked disallow route.clear",
+        "*": "disallow",
+        "state_1": {"state": "track.locked"},
+        "event_2": {"event": "route.clear"}
+    },
+    {
+        "#": "switch.normal permit route.clear",
+        "*": "permit",
+        "state_1": {"state": "switch.normal"},
+        "event_2": {"event": "route.clear"}
+    },
+    {
+        "#": "route.clear trigger switch.normal in 1s",
+        "*": "trigger",
+        "state_1": {"state": "switch.normal"},
+        "event_2": {"event": "route.clear"},
+        "time_3": 1
+    },
+    {
+        "#": "route.locked disallow route.lock",
+        "*": "disallow",
+        "state_1": {"state": "route.locked"},
+        "event_2": {"event": "route.lock"}
+    },
+    {
+        "#": "route.lock terminate route.locked in 3s",
+        "*": "terminate",
+        "state_1": {"state": "route.locked"},
+        "event_2": {"event": "route.lock"},
+        "time_3": 1
+    },
+    {
+        "#": "route.lock trigger route.locked in 1s",
+        "*": "trigger",
+        "state_1": {"state": "route.locked"},
+        "event_2": {"event": "route.lock"},
+        "time_3": 1
     }
 ]

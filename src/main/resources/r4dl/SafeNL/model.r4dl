@@ -2,10 +2,6 @@ type event {
     name string;
 }
 
-type time {
-    clock integer;
-}
-
 type state {
     object string;
     name string;
@@ -36,19 +32,19 @@ requirement disallow {
 requirement within_forbid {
     event_1 event;
     event_2 event;
-    time_3 time;
+    time_3 integer;
 }
 
 requirement trigger {
     state_1 state;
     event_2 event;
-    time_3 time;
+    time_3 integer;
 }
 
 requirement terminate {
     state_1 state;
     event_2 event;
-    time_3 time;
+    time_3 integer;
 }
 
 requirement forbid {
