@@ -1,0 +1,52 @@
+type operation {
+    reaction string;
+    isAble boolean = false;
+    isNot boolean = false;
+}
+
+type entity {
+    base string;
+    isAll boolean = false;
+    owner entity;
+    content entity;
+    property entity;
+    constraints set<string>;
+}
+
+type condition {
+    agent entity;
+    operation operation;
+    input set<entity>;
+    output set<entity>;
+    restriction set<string>;
+}
+
+requirement functional {
+    event set<condition>;
+    agent entity;
+    operation operation;
+    input set<entity>;
+    output set<entity>;
+    restriction set<string>;
+}
+
+requirement performance {
+    metrics string;
+    statistics integer;
+    comp integer;
+    value integer;
+    unit string;
+}
+
+requirement reliability {
+    metrics string;
+    comp1 integer;
+    time string;
+    comp2 integer;
+    probability integer;
+}
+
+requirement interface {
+    caller functional;
+    callee functional;
+}
