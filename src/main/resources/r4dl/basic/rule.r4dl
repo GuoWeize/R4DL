@@ -108,3 +108,15 @@ rule precondition
 for any cond in ($2$.event)
     similar ($1$, cond)
 
+function tongyi
+(operation, operation) boolean:
+and (
+    == (($1$.isAble), ($2$.isAble)),
+    == (($1$.isNot), ($2$.isNot)),
+    synonym (($1$.reaction), ($2$.reaction))
+)
+
+rule require
+(functional, functional) boolean:
+for any i in ($1$.event)
+    tongyi ((i.operation), ($2$.operation))

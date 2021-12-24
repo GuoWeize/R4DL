@@ -16,7 +16,7 @@ public class Demo {
 
     public static void main(String[] args) {
         String packageName = "basic";
-        String datasetName = "PURE";
+        String datasetName = "GANNT";
 
         Processor.initialization();
         Builder.initialization();
